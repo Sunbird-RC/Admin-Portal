@@ -1,0 +1,52 @@
+<app-header></app-header>
+<!-- Sidebar  -->
+<div class="wrapper mtop6 row">
+    <nav id="sidebar" class="col-3">
+        <ul id="sideMenu" class="list-unstyled components">
+            <li class="menu" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">
+                <a class="a-menu"routerLink="/started/get-started" (click)="openMenu('get-started')">Get Started</a>
+            </li>
+            <li class="menu" routerLinkActive="active-link">
+                <a class="a-menu" routerLink="/a">Dashboard</a>
+            </li>
+            <li class="menu" class="active">
+                <a href="#homeSubmenu">Settings</a>
+                <ul class=" list-unstyled" id="homeSubmenu">
+                    <li class="menu" routerLinkActive="active-link">
+                        <a class="a-menu" routerLink="/#">Workflow</a>
+                    </li>
+                    <li class="menu" routerLinkActive="active-link">
+                        <a class="a-menu" routerLink="/setting/vc-template">VC template</a>
+                    </li>
+                    <li class="menu" routerLinkActive="active-link">
+                        <a class="a-menu" routerLink="/setting/ownership">Ownership</a>
+                    </li>
+                    <li class="menu" routerLinkActive="active-link">
+                        <a class="a-menu" routerLink="/setting/rules">Rules</a>
+                    </li>
+                    <li class="menu" routerLinkActive="active-link">
+                        <a class="a-menu" routerLink="/setting/theme">Theme</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="menu" routerLinkActive="active-link">
+                <a class="a-menu" routerLink="/#">Help</a>
+            </li>
+            <li class="menu" routerLinkActive="active-link">
+                <a class="a-menu" routerLink="/#">Account</a>
+            </li>
+
+        </ul>
+    </nav>
+
+    <div class="col-9">
+        <div *ngIf="activeMenu === 'get-started'">
+            <get-started></get-started>
+        </div>
+        <div *ngIf="activeMenu === 'ownership'">
+            <ownership></ownership>
+        </div>
+    </div>
+
+</div>

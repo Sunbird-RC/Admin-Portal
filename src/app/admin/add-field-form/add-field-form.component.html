@@ -1,0 +1,12 @@
+<form-builder [form]="myForm" [options]="options" (change)="onChange($event)" (submit)="onSubmit($event)">
+</form-builder>
+
+<footer class="footer fixed-bottom">
+  <div class="container-fluid">
+    <div>
+      <button class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2 ml-2">Save</button>
+      <button (click)="cancel()" class="btn btn-sec-bg float-end submit-button px-3 my-2 ml-2">Cancel</button>
+
+    </div>
+  </div>
+</footer>

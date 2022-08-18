@@ -1,0 +1,28 @@
+<div id="content" class="pl-5 py-3 lh-base">
+
+
+  <div>
+    <p class="p16 fw-bold">Issuance VC</p>
+    <div class="card">
+      <div class="row ml-1 p-3">
+        <img *ngFor="let item of thumbnailItems" class="templateThumb col-2 mr-3" src="{{item?.thumbnailUrl}}" />
+        <span class="l12 fw-bold">Volunteering Certificate</span>
+      </div>
+    </div>
+    <div class="p-3">
+      <button class=" p14 btn btn-sec-bg submit-button text-secondary-color"><i class="fa fa-plus"
+          aria-hidden="true"></i> Add Template</button>
+    </div>
+  </div>
+
+
+  <div class="mt-4">
+    <p class="p16 fw-bold">Attestation VC</p>
+    <p class="p16 fw-bold">Select the workflow name (thats previous screen) -> template</p>
+
+    <button class=" p14 btn btn-sec-bg submit-button text-secondary-color"><i class="fa fa-plus" aria-hidden="true"></i>
+      Add Template</button>
+  </div>
+
+
+</div>

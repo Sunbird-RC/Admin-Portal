@@ -55,7 +55,6 @@
     "bootstrap": "^4.5.0",
     "core-js": "^2.4.1",
     "country-state-city": "^3.0.1",
-    "fs": "^0.0.1-security",
     "iso-639-1": "^2.1.11",
     "jexl": "^2.3.0",
     "json-refs": "^3.0.4",
@@ -108,9 +107,6 @@
   },
   "browser": {
     "http": false,
-    "https": false,
-    "fs": false,
-    "os": false,
-    "path": false
+    "https": false
   }
 }

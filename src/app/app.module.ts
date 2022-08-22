@@ -112,7 +112,7 @@ function initConfig(config: AppConfig) {
 }
 
 import ISO6391 from 'iso-639-1';
-import { PagesComponent } from './pages/pages.component';
+// import { PagesComponent } from './pages/pages.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
@@ -130,7 +130,8 @@ import { AddFieldFormComponent } from './admin/add-field-form/add-field-form.com
 import { NgJsonEditorModule } from 'ang-jsoneditor';
 import { CreateVcTemplateComponent } from './admin/create-vc-template/create-vc-template.component';
 import { OwnershipComponent } from './admin/ownership/ownership.component';
-import { SidemenuComponent } from './admin/sidemenu/sidemenu.component' 
+import { SidemenuComponent } from './admin/sidemenu/sidemenu.component';
+import { DashboardComponent } from './admin/dashboard/dashboard.component' 
 
 @NgModule({
   declarations: [
@@ -168,7 +169,8 @@ import { SidemenuComponent } from './admin/sidemenu/sidemenu.component'
     AddFieldFormComponent,
     CreateVcTemplateComponent,
     OwnershipComponent,
-    SidemenuComponent
+    SidemenuComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

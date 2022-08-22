@@ -18,14 +18,15 @@ import { DocumentsComponent } from './documents/documents.component';
 import { AddDocumentComponent } from './documents/add-document/add-document.component';
 import { ScanQrCodeComponent } from './documents/scan-qr-code/scan-qr-code.component';
 import { BrowseDocumentsComponent } from './documents/browse-documents/browse-documents.component';
-import { PagesComponent } from './pages/pages.component';
+// import { PagesComponent } from './pages/pages.component';
 import { DocDetailViewComponent } from './documents/doc-detail-view/doc-detail-view.component';
 import { GetStartedComponent } from './admin/get-started/get-started.component';
 import { CreateEntityComponent } from '../app/admin/create-entity/create-entity.component';
 import { ConfigWorkflowComponent } from './admin/config-workflow/config-workflow.component';
 import { CreateVcTemplateComponent } from './admin/create-vc-template/create-vc-template.component';
 import { OwnershipComponent} from './admin/ownership/ownership.component';
-import { SidemenuComponent } from './admin/sidemenu/sidemenu.component'
+import { SidemenuComponent } from './admin/sidemenu/sidemenu.component';
+import { DashboardComponent } from './admin/dashboard/dashboard.component'
 // import { FaqComponent } from './custom-components/faq/faq.component';
 const routes: Routes = [
 // Home
@@ -80,7 +81,7 @@ const routes: Routes = [
 },
 
 // Pages
-{ path: 'page/:page', component: PagesComponent },
+// { path: 'page/:page', component: PagesComponent },
 
 // Tables
 { path: ':entity/attestation/:table', component: TablesComponent, canActivate: [AuthGuard] },
@@ -111,6 +112,8 @@ const routes: Routes = [
 { path: 'create-vc', component: CreateVcTemplateComponent },
 { path: 'ownership', component: OwnershipComponent },
 { path: 'sidemenu', component: SidemenuComponent },
+{ path: 'dashboard', component: DashboardComponent },
+
 
 
 

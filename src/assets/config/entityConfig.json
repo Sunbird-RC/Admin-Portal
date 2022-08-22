@@ -5,18 +5,18 @@
             "entity": [
                 {
                     "entityName": "Institute",
-                    "schemaUrl": "https://raw.githubusercontent.com/Sunbird-RC/demo-education-registry/main/schemas/Institute.json",
+                    "schemaUrl": "/assets/schemas/education/Institute.json",
                     "config" : {
 
                     }
                 },
                 {
                     "entityName": "Teacher",
-                    "entityUrl": "https://raw.githubusercontent.com/Sunbird-RC/demo-education-registry/main/schemas/Teacher.json"
+                    "entityUrl": "/assets/schemas/education/Teacher.json"
                 },
                 {
                     "entityName": "Student",
-                    "schemaUrl": "https://raw.githubusercontent.com/Sunbird-RC/demo-education-registry/main/schemas/Student.json",
+                    "schemaUrl": "/assets/schemas/education/Student.json",
                     "config" : {
 
                     }
@@ -28,11 +28,11 @@
             "entity": [
                 {
                     "entityName": "Skill Certificate",
-                    "entischemaUrltyUrl": "https://raw.githubusercontent.com/Sunbird-RC/demo-certificate-issuance/main/schemas/SkillCertificate.json"
+                    "entischemaUrltyUrl": "/assets/schemas/certificate-issuance/SkillCertificate.json"
                 },
                 {
                     "entityName": "Training Certificate",
-                    "entityUrl": "https://raw.githubusercontent.com/Sunbird-RC/demo-certificate-issuance/main/schemas/TrainingCertificate.json"
+                    "entityUrl": "/assets/schemas/certificate-issuance/TrainingCertificate.json"
                 }
             ]
         }

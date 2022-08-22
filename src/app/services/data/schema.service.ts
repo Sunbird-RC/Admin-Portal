@@ -10,6 +10,8 @@ export class SchemaService {
 
   schemaUrl = this.config.getEnv('schemaUrl');
   configFolder = this.config.getEnv('configFolder');
+  referanceSchema = this.config.getEnv('referanceSchema');
+
 
   constructor(public dataService: DataService,private config: AppConfig) {
   }
@@ -84,8 +86,17 @@ export class SchemaService {
   }
 
   getEntitySchemaJSON() {
-    let url = `.${this.configFolder}/entityConfig.json`;
+    let url = `.${this.referanceSchema}/entityConfig.json`;
     url.replace('//', '/');
+    const req = {
+      url: url
+    };
+
+    return this.dataService.get(req);
+  }
+
+  getJSONData(fileUrl) {
+    let url = fileUrl;
     const req = {
       url: url
     };

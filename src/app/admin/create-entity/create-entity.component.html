@@ -49,7 +49,7 @@
 
                     <ul id="sideMenu" class="list-unstyled components">
 
-                        <li class="menu" (click)="openEntity(i)" *ngFor="let menuItem of apiEntityName; let i = index">
+                        <li class="menu" (click)="openEntity(i)" *ngFor="let menuItem of entityList; let i = index">
                             <a class="a-menu"> {{menuItem?.entityName}}
                                 <i *ngIf="active0" class="fa fa-ellipsis-h text-grey-color float-end mt-1 p14"
                                     aria-hidden="true"></i>

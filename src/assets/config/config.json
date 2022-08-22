@@ -6,11 +6,12 @@
         "realm": "sunbird-rc"
     },
     "configFolder": "/assets/config/ui-config",
+    "referanceSchema" : "/assets/config",
     "languageFolder": "/assets/i18n",
-    "title": "Education-Sunbird",
+    "title": "Admin Portal",
     "baseUrl": "http://localhost:4200/registry/api/v1",
     "schemaUrl": "http://localhost:4200/registry/api/docs/swagger.json",
-    "footerText": "Education-Sunbird",
+    "footerText": "Admin Portal",
     "languages": [
         "en",
         "hi"

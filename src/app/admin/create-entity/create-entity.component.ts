@@ -20,7 +20,7 @@ export class CreateEntityComponent implements OnInit {
   entityName: string;
   description: string;
 
-
+  entityList: any;
   apiEntityName: any = [
     {
       'entityName': "Education Board",
@@ -80,7 +80,7 @@ export class CreateEntityComponent implements OnInit {
   currentMenu: number = 0;
   menus: any;
   an_menus: any;
-  // entityFieldList: any = [];
+  entityProperties: any = [];
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -93,10 +93,6 @@ export class CreateEntityComponent implements OnInit {
     this.editorOptions.mode = 'code';
     this.editorOptions.history = true;
     this.editorOptions.onChange = () => this.jsonEditor.get();
-
-
-
-
 
     this.activeRoute.params.subscribe(params => {
       this.params = params;
@@ -111,7 +107,7 @@ export class CreateEntityComponent implements OnInit {
 
       this.entityFields = this.apiEntityName[0]
 
-      //this.getSchemaJSON();
+      this.getSchemaJSON();
 
       console.log(this.entityFields);
 
@@ -137,12 +133,59 @@ export class CreateEntityComponent implements OnInit {
 
   getSchemaJSON() {
     this.schemaService.getEntitySchemaJSON().subscribe((data) => {
-      this.SchemaUrl = data.entitySchema[this.usecase + "SchemaUrl"];
-      console.log(this.SchemaUrl);
+      this.SchemaUrl = data['usecase'][this.usecase];
+      this.entityList = data['usecase'][this.usecase]['entity'];
+      this.getEntityFields();
+
+      console.log({ data });
     })
   }
 
+  async getEntityFields() {
+    //let url = "https://raw.githubusercontent.com/Sunbird-RC/demo-education-registry/main/schemas/Institute.json";
+    // await fetch(this.entityList[0].schemaUrl)
+    //   //await fetch(url)
+    //   .then(res => res.json())
+    //   .then(data => {
+    //     console.log({ data });
+    //   let  properties = data.definitions[this.entityList[0].entityName].properties;
+    //     this.entityProperties =  this.createObjectFormat(properties);
+    //     // data = JSON.parse(data);
 
+    //     console.log(this.entityProperties);
+
+    //   });
+
+    this.schemaService.getJSONData(this.entityList[0].schemaUrl).subscribe((res)=>{
+           console.log({ res });
+      let  properties = res.definitions[this.entityList[0].entityName].properties;
+        this.entityProperties =  this.createObjectFormat(properties);
+        console.log(this.entityProperties);
+    })
+
+  }
+
+  createObjectFormat(entityProperties) {
+
+    console.log({ entityProperties });
+    let tempFieldObj = [];
+
+    Object.keys(entityProperties).forEach(function (key) {
+
+      if (typeof (entityProperties[key]) == 'object') {
+        let data = entityProperties[key];
+        
+        tempFieldObj.push(
+          {
+            "key": key,
+            data
+          })
+      }
+    });
+
+     return tempFieldObj; 
+
+  }
 
   showAddForm() {
     this.isAddFormPg = true;

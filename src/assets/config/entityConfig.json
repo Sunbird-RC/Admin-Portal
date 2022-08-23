@@ -2,6 +2,9 @@
     "usecase": {
         "education": {
             "name": "Education",
+            "steps" : [
+                "createSchema", "configurations", "create-vc", "ownership", "test-publish"
+            ],
             "entity": [
                 {
                     "entityName": "Institute",
@@ -12,7 +15,7 @@
                 },
                 {
                     "entityName": "Teacher",
-                    "entityUrl": "/assets/schemas/education/Teacher.json"
+                    "schemaUrl": "/assets/schemas/education/Teacher.json"
                 },
                 {
                     "entityName": "Student",
@@ -25,14 +28,17 @@
         },
         "issuance": {
             "name": "Issuance",
+            "steps" : [
+                "createSchema", "create-vc",  "test-publish"
+            ],
             "entity": [
                 {
                     "entityName": "Skill Certificate",
-                    "entischemaUrltyUrl": "/assets/schemas/certificate-issuance/SkillCertificate.json"
+                    "schemaUrl": "/assets/schemas/certificate-issuance/SkillCertificate.json"
                 },
                 {
                     "entityName": "Training Certificate",
-                    "entityUrl": "/assets/schemas/certificate-issuance/TrainingCertificate.json"
+                    "schemaUrl": "/assets/schemas/certificate-issuance/TrainingCertificate.json"
                 }
             ]
         }

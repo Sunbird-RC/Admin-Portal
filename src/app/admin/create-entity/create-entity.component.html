@@ -44,15 +44,38 @@
         <div class="col-md-3">
             <div class="wrapper">
                 <!--Top menu -->
-                <div class="sidebar">
+                <div id="sideMenu" class="sidebar">
+                    <ul class="list-unstyled">
+                        <p class="p16 fw-bold pl-3 text-uppercase">Common </p>
+                       
+                        <li class="menu" (click)="openEntity(0)">
+                            <a class="a-menu"> Common schema
+                                <!-- <i *ngIf="active0" class="fa fa-ellipsis-h text-grey-color float-end mt-1 p14"
+                                    aria-hidden="true"></i> -->
+
+                                    <div *ngIf="active0" class="dropdown p14 float-end">
+                                        <i class="fa fa-ellipsis-h text-grey-color" aria-hidden="true"></i>
+                                        <div class="dropdown-content dropdown-content-margin">
+                                            <a href="#" class="ml-0">Edit</a>
+                                            <a href="#" class="ml-0">Delete</a>
+                                        </div>
+                                    </div>
+                            </a>
+                        </li>
+                    </ul>
                     <p class="p16 fw-bold pl-3 text-uppercase">Entity </p>
 
-                    <ul id="sideMenu" class="list-unstyled components">
+                    <ul class="list-unstyled components">
 
-                        <li class="menu" (click)="openEntity(i)" *ngFor="let menuItem of entityList; let i = index">
+                        <li class="menu" (click)="openEntity(i + 1)" *ngFor="let menuItem of entityList; let i = index">
                             <a class="a-menu"> {{menuItem?.entityName}}
-                                <i *ngIf="active0" class="fa fa-ellipsis-h text-grey-color float-end mt-1 p14"
-                                    aria-hidden="true"></i>
+                                <div *ngIf="active0" class="dropdown p14 float-end">
+                                    <i class="fa fa-ellipsis-h text-grey-color" aria-hidden="true"></i>
+                                    <div class="dropdown-content dropdown-content-margin">
+                                        <a href="#" class="ml-0">Edit</a>
+                                        <a href="#" class="ml-0">Delete</a>
+                                    </div>
+                                </div>
                             </a>
                         </li>
 
@@ -78,10 +101,11 @@
 
 
         <div class="col-md-9 p-2 mb-6">
-            <div class="step" *ngIf="active0 && entityFieldList.length">
+            <div class="step" *ngIf="active0 && entityProperties.length">
                 <div class="d-flex flex-justify-between card-body pr-2 py-2">
                     <div class="heading-2">
-                        <h3>{{entityFields?.entityName}}</h3>
+                        <h3>{{entityName}}</h3>
+                        <p class="p14 text-grey-color">Education Board is council authorised to invite and add VC issuers</p>
                     </div>
                     <div *ngIf="!isShowJson">
                         <button class="float-end p14 btn btn-sec-bg submit-button text-secondary-color"
@@ -94,18 +118,18 @@
                     <div class="card w-100">
 
                         <ul class="list-unstyled p-3">
-                            <li class="fieldBorder p-1 mb-2" *ngFor="let field of entityFieldList">
+                            <li class="fieldBorder p-1 mb-2" *ngFor="let field of entityProperties">
 
                                 <input type="text" id="title" name="lname" class="m-2 py-1 px-2 fieldInput p14"
                                     value="{{field?.title}}">
                                 <input type="text" id="lname" name="lname" class="m-2  py-1 px-2 fieldInput p14"
-                                    value="{{field?.type}}">
+                                    value="{{field?.data?.type}}">
                                 <div class="float-end">
-                                    <span class="m-2 mr-3 l12" *ngIf="field?.required">
+                                    <span class="m-2 mr-3 l12" *ngIf="field?.data?.required">
                                         <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" checked>
                                         <label for="vehicle1"> &nbsp; Mandatory</label>
                                     </span>
-                                    <span class="m-2 mr-3 l12" *ngIf="!field?.required">
+                                    <span class="m-2 mr-3 l12" *ngIf="!field?.data?.required">
                                         <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" unchecked>
                                         <label for="vehicle1"> &nbsp; Mandatory</label>
                                     </span>
@@ -173,7 +197,7 @@
                 </div>
             </div>
 
-            <div class="p-3" *ngIf="active0 && !entityFieldList.length">
+            <div class="p-3" *ngIf="active0 && !entityProperties.length">
                 <p class="p16 fw-bold"> No schema added yet.</p>
                 <p class="p14">Please add entity level schema. You can also add common schema example address, field
                     name and field name which can be used or references in other schemas.</p>
@@ -201,7 +225,7 @@
 
 
     <div *ngIf="isAddFormPg" class="p-5">
-        <add-field-form [jsonSchema]="entityFieldList" (newItemEvent)="jsonSchemaData($event)"
+        <add-field-form [jsonSchema]="entityProperties" (newItemEvent)="jsonSchemaData($event)"
             (backEvent)="goBackEvent($event)"></add-field-form>
     </div>
 

@@ -17,8 +17,8 @@ export class CreateEntityComponent implements OnInit {
   params: any;
   usecase: any;
   entity: any;
-  entityName: string;
-  description: string;
+  entityName: any;
+  description: any;
 
   entityList: any;
   apiEntityName: any = [
@@ -81,6 +81,8 @@ export class CreateEntityComponent implements OnInit {
   menus: any;
   an_menus: any;
   entityProperties: any = [];
+  entityKey: any;
+  processSteps: any;
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -135,6 +137,7 @@ export class CreateEntityComponent implements OnInit {
     this.schemaService.getEntitySchemaJSON().subscribe((data) => {
       this.SchemaUrl = data['usecase'][this.usecase];
       this.entityList = data['usecase'][this.usecase]['entity'];
+      this.processSteps = data['usecase'][this.usecase]['steps'];
       this.getEntityFields();
 
       console.log({ data });
@@ -158,7 +161,9 @@ export class CreateEntityComponent implements OnInit {
 
     this.schemaService.getJSONData(this.entityList[0].schemaUrl).subscribe((res)=>{
            console.log({ res });
-      let  properties = res.definitions[this.entityList[0].entityName].properties;
+           this.entityName = res.definitions[res.title].title;
+           this.entityKey = res.title;
+      let  properties = res.definitions[res.title].properties;
         this.entityProperties =  this.createObjectFormat(properties);
         console.log(this.entityProperties);
     })
@@ -174,10 +179,12 @@ export class CreateEntityComponent implements OnInit {
 
       if (typeof (entityProperties[key]) == 'object') {
         let data = entityProperties[key];
+        let title = ( entityProperties[key].hasOwnProperty('title') &&  entityProperties[key].title) ?  entityProperties[key].title : key;
         
         tempFieldObj.push(
           {
             "key": key,
+            "title": title,
             data
           })
       }

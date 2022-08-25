@@ -1,0 +1,97 @@
+select {
+    // height: 34px;
+    // width: 100%;
+    // left: 1px;
+    // top: 22px;
+    border-radius: 4px;
+    background: #FFFFFF;
+    border: 1px solid #EFEFEF;
+    box-sizing: border-box;
+    border-radius: 4px;
+    padding: 11px 10px;
+    width: 100%;
+}
+
+// select option {
+//     height: 34px; 
+// }
+
+
+.inputField {
+    height: 40px;
+    width: 505px;
+    left: -5px;
+    top: 8px;
+    border-radius: 4px;
+    border: 1px solid #EFEFEF !important;
+}
+
+
+
+.div-scroll {
+    overflow-y: scroll; /* Show vertical scrollbar */
+    overflow-x: scroll; /* Show horizontal scrollbar */
+  }
+@media(min-width:768px){
+    .h-card{
+        min-height: 570px !important;
+        height: auto;
+      }
+      .setHeight{
+        height: 614px !important;
+        max-height: 614px !important;
+    }
+}
+@media(max-width:768px){
+    .p-sm-0{
+        padding: 0 !important;
+    }
+}
+
+.mt-23{
+    margin-top: -23px;
+}
+.modal-content {
+    width: 45%;
+    height: 425px;
+    margin: 10% 30%;
+}
+
+.w-0{
+    width: 0 !important;
+}
+  
+
+
+.box{
+    float:left;
+    margin-right:10px;
+}
+.clear{
+    clear:both;
+}
+
+.wrapper {
+    display: grid;
+    //grid-template-columns: repeat(2, 1fr);;
+  }
+
+  .desc {
+    height: 90px;
+}
+
+.prevBtn 
+{
+    margin: 1px 0 -2px 20px;
+    z-index: 9999;
+    position: absolute;
+}
+
+.templateThumb {
+    width: 120px;
+    height: 172px;
+    //border: 2px solid #1987B6;
+    border: 1px solid #d7d5d5;
+    box-sizing: border-box;
+    margin: 4px 0 2px 2px;
+}

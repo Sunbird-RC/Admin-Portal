@@ -1,7 +1,7 @@
 {
     "environment": "development",
     "keycloak": {
-        "url": "https://demo-education-registry.xiv.in/auth",
+        "url": "https://sunbird-certificate-demo.xiv.in/auth",
         "clientId": "registry-frontend",
         "realm": "sunbird-rc"
     },

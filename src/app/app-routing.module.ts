@@ -26,7 +26,8 @@ import { ConfigWorkflowComponent } from './admin/config-workflow/config-workflow
 import { CreateVcTemplateComponent } from './admin/create-vc-template/create-vc-template.component';
 import { OwnershipComponent} from './admin/ownership/ownership.component';
 import { SidemenuComponent } from './admin/sidemenu/sidemenu.component';
-import { DashboardComponent } from './admin/dashboard/dashboard.component'
+import { DashboardComponent } from './admin/dashboard/dashboard.component';
+import { AddTemplateComponent } from './admin/add-template/add-template.component';
 // import { FaqComponent } from './custom-components/faq/faq.component';
 const routes: Routes = [
 // Home
@@ -113,6 +114,7 @@ const routes: Routes = [
 { path: 'ownership', component: OwnershipComponent },
 { path: 'sidemenu', component: SidemenuComponent },
 { path: 'dashboard', component: DashboardComponent },
+{ path: 'add-template', component: AddTemplateComponent },
 
 
 

@@ -131,7 +131,8 @@ import { NgJsonEditorModule } from 'ang-jsoneditor';
 import { CreateVcTemplateComponent } from './admin/create-vc-template/create-vc-template.component';
 import { OwnershipComponent } from './admin/ownership/ownership.component';
 import { SidemenuComponent } from './admin/sidemenu/sidemenu.component';
-import { DashboardComponent } from './admin/dashboard/dashboard.component' 
+import { DashboardComponent } from './admin/dashboard/dashboard.component';
+import { AddTemplateComponent } from './admin/add-template/add-template.component';
 
 @NgModule({
   declarations: [
@@ -170,7 +171,8 @@ import { DashboardComponent } from './admin/dashboard/dashboard.component'
     CreateVcTemplateComponent,
     OwnershipComponent,
     SidemenuComponent,
-    DashboardComponent
+    DashboardComponent,
+    AddTemplateComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,48 @@
+<div class="row m-2 h-100">
+    <div class="card col-sm-4 p-2 mb-4">
+        <p class="fs-5 fw-bold"> Add Sample data to test the template</p>
+        <p class="fs-7">Note that this sample data for testing and will not be saved</p>
+        <form>
+            <div class="form-group">
+                <label for="issuerName">Issuer Name</label>
+                <input type="text" class="form-control" id="issuerName" placeholder="Issuer Name">
+            </div>
+            <div class="form-group">
+                <label for="beneficiaryName">Beneficiary Name</label>
+                <input type="text" class="form-control" id="beneficiaryName" placeholder="Beneficiary Name">
+            </div>
+            <div class="form-group">
+                <label for="vaccinationDate">Vaccination Date</label>
+                <input type="date" class="form-control" id="vaccinationDate">
+            </div>
+            <div class="form-group">
+                <label for="vaccinationStatus">Vaccination Status</label>
+                <select class="form-select">
+                    <option selected value="0">Open this select menu</option>
+                    <option value="1">Fully Vaccinated</option>
+                    <option value="2">Partially Vaccinated</option>
+                    <option value="3">Not Vaccinated</option>
+                  </select>
+            </div>
+            <button type="submit" class="btn btn-primary pl-3 pr-3">Test</button>
+        </form>
+    </div>
+
+
+    <div class="card col-sm-8 mb-4">
+        <div class="p-3 mt-2">
+            <div class="flex-justify-between clearfix">
+                <div class="float-left">Preview</div>
+                <div class="float-right">
+                    <button class="btn btn-primary mr-2">Print</button>
+                    <button class="btn btn-danger">Verify Certificate</button>
+                </div>
+            </div>
+            <div class="pt-4">
+                <img [src]="linkImage" width= 100% height= 100%>
+            </div>
+        </div>
+    </div>
+
+
+</div>

@@ -133,6 +133,8 @@ import { OwnershipComponent } from './admin/ownership/ownership.component';
 import { SidemenuComponent } from './admin/sidemenu/sidemenu.component';
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { AddTemplateComponent } from './admin/add-template/add-template.component';
+import { TestAndLaunchComponent } from './admin/test-and-launch/test-and-launch.component';
+import { TestAndVerifyComponent } from './admin/test-and-verify/test-and-verify.component';
 
 @NgModule({
   declarations: [
@@ -172,7 +174,9 @@ import { AddTemplateComponent } from './admin/add-template/add-template.componen
     OwnershipComponent,
     SidemenuComponent,
     DashboardComponent,
-    AddTemplateComponent
+    AddTemplateComponent,
+    TestAndLaunchComponent,
+    TestAndVerifyComponent
   ],
   imports: [
     BrowserModule,

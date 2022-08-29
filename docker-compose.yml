@@ -13,6 +13,8 @@ services:
       retries: 4
   db:
     image: postgres
+    volumes:
+      - ./db-data:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=registry
       - POSTGRES_USER=postgres

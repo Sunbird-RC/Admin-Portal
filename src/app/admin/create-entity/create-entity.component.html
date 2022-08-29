@@ -42,7 +42,7 @@
 <div id="schemaEntity" class="container mt-1 ml-12">
     <div class="row" *ngIf="!isAddFormPg">
         <div class="col-md-3">
-            <div class="wrapper" *ngIf="!(active4)">
+            <div class="wrapper">
                 <!--Top menu -->
                 <div id="sideMenu" class="sidebar" *ngIf="!(active4)">
                     <ul class="list-unstyled">
@@ -277,7 +277,7 @@
                     class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2">Save and Next</button>
                 <button *ngIf="active1"
                     class="btn btn-sec-bg float-end submit-button px-3 my-2 ml-2 mr-2 ">Skip</button> &nbsp;
-                <button *ngIf="active2 || active3 || active4"
+                <button *ngIf="active2 || active3"
                     class="btn  float-end btn-primary btn-primary-sm px-3 my-2 ml-2 mr-2">Save as Draft</button> &nbsp;
                 <button *ngIf="active4"
                     class="btn  float-end btn-primary btn-primary-sm px-3 my-2 ml-2 mr-2">Save</button> &nbsp;

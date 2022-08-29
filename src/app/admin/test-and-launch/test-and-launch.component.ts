@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'test-and-launch',
@@ -9,9 +10,11 @@ export class TestAndLaunchComponent implements OnInit {
   linkImage: string = "assets/images/thumbnail.png";
   fixedImage: string = "assets/images/thumbnail.png"
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
-
+  testAndVerify(){
+    this.router.navigate(['/test-and-verify'], { skipLocationChange:true});
+  }
 }

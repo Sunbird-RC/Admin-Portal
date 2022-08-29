@@ -11,10 +11,10 @@
     <div class="card p-4">
         <div class="row">
         <div class="card col-sm-3 ml-2">
-            <button type="button" class="btn_img">
+            <button type="button" class="btn_img" (click)="testAndVerify()">
                 <img [src] ="linkImage" alt="To be inserted" width="100%"> 
             </button>
-            <button type= "button" class="btn btn-light"> Vaccination Certificate</button>
+            <button type= "button" class="btn btn-light" (click)="testAndVerify()"> Vaccination Certificate</button>
         </div>
         <div class=" card col-sm-3">
             <img [src] ="fixedImage" alt="To be inserted">

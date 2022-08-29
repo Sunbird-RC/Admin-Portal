@@ -168,4 +168,4 @@ services:
   nginx:
     image: dockerhub/sunbird-rc-nginx
     ports:
-      - "80:80"
+      - "81:80"

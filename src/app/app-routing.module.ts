@@ -28,6 +28,8 @@ import { OwnershipComponent} from './admin/ownership/ownership.component';
 import { SidemenuComponent } from './admin/sidemenu/sidemenu.component';
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { AddTemplateComponent } from './admin/add-template/add-template.component';
+import { TestAndLaunchComponent } from './admin/test-and-launch/test-and-launch.component';
+import { TestAndVerifyComponent } from './admin/test-and-verify/test-and-verify.component';
 // import { FaqComponent } from './custom-components/faq/faq.component';
 const routes: Routes = [
 // Home
@@ -115,6 +117,8 @@ const routes: Routes = [
 { path: 'sidemenu', component: SidemenuComponent },
 { path: 'dashboard', component: DashboardComponent },
 { path: 'add-template', component: AddTemplateComponent },
+{ path: 'test-and-launch', component: TestAndLaunchComponent},
+{ path: 'test-and-verify', component: TestAndVerifyComponent}
 
 
 

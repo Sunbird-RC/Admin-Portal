@@ -44,11 +44,11 @@
         <div class="col-md-3">
             <div class="wrapper">
                 <!--Top menu -->
-                <div id="sideMenu" class="sidebar">
+                <div id="sideMenu" class="sidebar" *ngIf="!(active4)">
                     <ul class="list-unstyled">
                         <p class="p16 fw-bold pl-3 text-uppercase">Common </p>
                        
-                        <li class="menu" (click)="openEntity(0)">
+                        <li class="menu" (click)="openEntity(0)" >
                             <a class="a-menu"> Common schema
                                 <!-- <i *ngIf="active0" class="fa fa-ellipsis-h text-grey-color float-end mt-1 p14"
                                     aria-hidden="true"></i> -->
@@ -217,6 +217,9 @@
             <div *ngIf="active3">
                 <ownership></ownership>
             </div>
+            <div *ngIf="active4">
+                <test-and-launch></test-and-launch>
+            </div>
 
         </div>
 
@@ -270,12 +273,14 @@
         <div class="container-fluid">
             <div>
 
-                <button (click)="nextStep()"
+                <button (click)="nextStep()" 
                     class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2">Save and Next</button>
                 <button *ngIf="active1"
                     class="btn btn-sec-bg float-end submit-button px-3 my-2 ml-2 mr-2 ">Skip</button> &nbsp;
                 <button *ngIf="active2 || active3"
                     class="btn  float-end btn-primary btn-primary-sm px-3 my-2 ml-2 mr-2">Save as Draft</button> &nbsp;
+                <button *ngIf="active4"
+                    class="btn  float-end btn-primary btn-primary-sm px-3 my-2 ml-2 mr-2">Save</button> &nbsp;
 
             </div>
         </div>

@@ -6,8 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./test-and-launch.component.scss']
 })
 export class TestAndLaunchComponent implements OnInit {
-  linkImage: string = "assets/images/linkImage.jpeg";
-  fixedImage: string = "assets/images/fixedImage.jpeg"
+  linkImage: string = "assets/images/thumbnail.png";
+  fixedImage: string = "assets/images/thumbnail.png"
 
   constructor() { }
 

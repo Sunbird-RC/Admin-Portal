@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./test-and-verify.component.scss']
 })
 export class TestAndVerifyComponent implements OnInit {
-  linkImage: string ="assets/images/linkImage.jpeg";
+  linkImage: string ="assets/images/thumbnail.png";
   constructor() { }
 
   ngOnInit(): void {

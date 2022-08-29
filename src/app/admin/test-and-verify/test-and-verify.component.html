@@ -3,7 +3,7 @@
         <p class="fs-5 fw-bold"> Add Sample data to test the template</p>
         <p class="fs-7">Note that this sample data for testing and will not be saved</p>
         <form>
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label for="issuerName">Issuer Name</label>
                 <input type="text" class="form-control" id="issuerName" placeholder="Issuer Name">
             </div>
@@ -23,6 +23,22 @@
                     <option value="2">Partially Vaccinated</option>
                     <option value="3">Not Vaccinated</option>
                   </select>
+            </div> -->
+            <div class="form-group" *ngFor="let key of objectKeys(formdata)">
+        
+                <div *ngFor='let obj of formdata[key]'>
+                    <label for={{obj.id}}>{{obj.placeholder}}</label>
+                    <div *ngIf="obj.type != 'option'">
+                        <input  type={{obj.type}} class="form-control" id={{obj.id}} name={{obj.id}} placeholder={{obj.placeholder}}>
+                    </div>
+                    <div *ngIf="obj.type == 'option'">
+                        <select class="form-select">
+                            <option value="default">Open this select menu</option>
+                            <option *ngFor="let status of vaccinationStatus" [value]="status">{{status}}</option>
+                        </select>
+                    </div>
+                    
+                </div>
             </div>
             <button type="submit" class="btn btn-primary pl-3 pr-3">Test</button>
         </form>

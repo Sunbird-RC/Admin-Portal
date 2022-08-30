@@ -221,6 +221,9 @@ export class CreateEntityComponent implements OnInit {
     let url = "/create/" + this.usecase + "/entity/" + entityName;
     this.router.navigate([url])
   }
+  saveConfigurations(){
+    this.router.navigate(['/configurations'],{ skipLocationChange: true})
+  }
 
   openEntity(n) {
     this.sideMenu = document.querySelector('#sideMenu');

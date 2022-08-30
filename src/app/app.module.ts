@@ -135,6 +135,7 @@ import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { AddTemplateComponent } from './admin/add-template/add-template.component';
 import { TestAndLaunchComponent } from './admin/test-and-launch/test-and-launch.component';
 import { TestAndVerifyComponent } from './admin/test-and-verify/test-and-verify.component';
+import { ConfigurationsComponent } from './admin/configurations/configurations.component';
 
 @NgModule({
   declarations: [
@@ -176,7 +177,8 @@ import { TestAndVerifyComponent } from './admin/test-and-verify/test-and-verify.
     DashboardComponent,
     AddTemplateComponent,
     TestAndLaunchComponent,
-    TestAndVerifyComponent
+    TestAndVerifyComponent,
+    ConfigurationsComponent
   ],
   imports: [
     BrowserModule,

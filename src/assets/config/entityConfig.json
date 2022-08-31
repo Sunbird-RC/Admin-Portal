@@ -2,10 +2,23 @@
     "usecase": {
         "education": {
             "name": "Education",
+            "commonField" : "/assets/schemas/education/Common.json",
             "steps" : [
-                "createSchema", "configurations", "create-vc", "ownership", "test-publish"
+                {
+                    "title" : "Create Schema",
+                    "key" : "createSchema"
+                },
+                {
+                    "title" : "Create VC template",
+                    "key" : "create-vc"
+                },
+                {
+                    "title" : "Test and Launch",
+                    "key" : "test-publish"
+                }
             ],
             "entity": [
+                
                 {
                     "entityName": "Institute",
                     "schemaUrl": "/assets/schemas/education/Institute.json",
@@ -29,7 +42,18 @@
         "issuance": {
             "name": "Issuance",
             "steps" : [
-                "createSchema", "create-vc",  "test-publish"
+                {
+                    "title" : "Create Schema",
+                    "key" : "createSchema"
+                },
+                {
+                    "title" : "Create VC template",
+                    "key" : "create-vc"
+                },
+                {
+                    "title" : "Test and Launch",
+                    "key" : "test-publish"
+                }
             ],
             "entity": [
                 {
@@ -41,6 +65,24 @@
                     "schemaUrl": "/assets/schemas/certificate-issuance/TrainingCertificate.json"
                 }
             ]
+        },
+        "divoc": {
+            "name": "divoc",
+            "steps" : [
+                {
+                    "title" : "Create Schema",
+                    "key" : "createSchema"
+                },
+                {
+                    "title" : "Create VC template",
+                    "key" : "create-vc"
+                },
+                {
+                    "title" : "Test and Launch",
+                    "key" : "test-publish"
+                }
+            ],
+            "entity": []
         }
     }
 }

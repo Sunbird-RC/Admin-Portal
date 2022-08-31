@@ -803,7 +803,7 @@ label {
      /*  Json Editor : start*/
 
   .json-editor, div.jsoneditor-outer , .ace-jsoneditor, textarea.jsoneditor-text{
-    min-height: 400px !important;
+    min-height: 600px !important;
     width: 100%;
   }
 
@@ -819,3 +819,7 @@ label {
     height: 700px !important;
 }
  /*  Json Editor : end */
+
+ .btn-bg-grey {
+     background-color: #CCCCCC !important;
+ }

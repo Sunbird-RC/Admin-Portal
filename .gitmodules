@@ -1,6 +1,0 @@
-[submodule "src/schemas/education"]
-	path = src/schemas/education
-	url = git@github.com:Sunbird-RC/demo-education-registry.git
-[submodule "src/schemas/certificate-issuance"]
-	path = src/schemas/certificate-issuance
-	url = git@github.com:Sunbird-RC/demo-certificate-issuance.git

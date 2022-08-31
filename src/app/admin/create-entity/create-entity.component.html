@@ -7,84 +7,66 @@
 
     <nav class="card mt-0 p-2 ml-32" [hidden]="isAddFormPg">
 
+        <!-- <ul id="stepList" *ngFor="let steps of processSteps; let i = index"> -->
         <ul id="stepList">
-            <li class="col-md-2 tab" id="step1"><strong>
+            <li *ngFor="let steps of processSteps; let i = index" class="col-md-2 tab" id="step{{i + 1}}"><strong>
                     <i class="float-end fa fas fa-chevron-right text-grey-color mt-3 fs-3 next-arrow"></i>
-                    <span class="l10">STEP 1</span> <br />
-                    <span class="p14 fw-bold">Create Schema</span>
-                </strong></li>
-            <li id="step2" class="col-md-2 tab"><strong>
-                    <i class="float-end fa fas fa-chevron-right text-grey-color mt-3 fs-3 next-arrow"></i>
-                    <span class="l10">STEP 2</span> <br />
-                    <span class="p14 fw-bold">Configuring Workflows</span>
-                </strong></li>
-            <li id="step3" class="col-md-2 tab"><strong>
-                    <i class="float-end fa fas fa-chevron-right text-grey-color mt-3 fs-3 next-arrow"></i>
-                    <span class="l10">STEP 3</span> <br />
-                    <span class="p14 fw-bold">Create VC template</span>
-                </strong></li>
-            <li id="step4" class="col-md-2 tab"><strong>
-                    <i class="float-end fa fas fa-chevron-right text-grey-color mt-3 fs-3 next-arrow"></i>
-                    <span class="l10">STEP 4</span> <br />
-                    <span class="p14 fw-bold">Ownership</span>
-                </strong></li>
-            <li id="step5" class="col-md-2 tab"><strong>
-                    <i class="float-end fa fas fa-chevron-right text-grey-color mt-3 fs-3 next-arrow"></i>
-                    <span class="l10">STEP 5</span> <br />
-                    <span class="p14 fw-bold">Test and Launch</span>
+                    <span class="l10">STEP {{i + 1}}</span> <br />
+                    <span class="p14 fw-bold">{{steps?.title}}</span>
                 </strong></li>
         </ul>
-
-
-
     </nav>
 </header>
+
 <div id="schemaEntity" class="container mt-1 ml-12">
     <div class="row" *ngIf="!isAddFormPg">
         <div class="col-md-3">
             <div class="wrapper">
                 <!--Top menu -->
-                <div id="sideMenu" class="sidebar" *ngIf="!(active4)">
-                    <ul class="list-unstyled">
+                <div id="sideMenu" class="sidebar">
+                    <ul class="list-unstyled" *ngIf="containCommonField && isActive == 'createSchema'">
                         <p class="p16 fw-bold pl-3 text-uppercase">Common </p>
-                       
-                        <li class="menu" (click)="openEntity(0)" >
+
+                        <li class="menu" (click)="openEntity(0, 'Common')">
                             <a class="a-menu"> Common schema
-                                <!-- <i *ngIf="active0" class="fa fa-ellipsis-h text-grey-color float-end mt-1 p14"
+                                <!-- <i *ngIf="isActive == 'createSchema'" class="fa fa-ellipsis-h text-grey-color float-end mt-1 p14"
                                     aria-hidden="true"></i> -->
 
-                                    <div *ngIf="active0" class="dropdown p14 float-end">
-                                        <i class="fa fa-ellipsis-h text-grey-color" aria-hidden="true"></i>
-                                        <div class="dropdown-content dropdown-content-margin">
-                                            <a href="#" class="ml-0">Edit</a>
-                                            <a href="#" class="ml-0">Delete</a>
-                                        </div>
+                                <!-- <div *ngIf="isActive == 'createSchema'" class="dropdown p14 float-end">
+                                    <i class="fa fa-ellipsis-h text-grey-color" aria-hidden="true"></i>
+                                    <div class="dropdown-content dropdown-content-margin">
+                                        <a href="#" class="ml-0">Edit</a>
+                                        <a href="#" class="ml-0">Delete</a>
                                     </div>
+                                </div> -->
                             </a>
                         </li>
                     </ul>
                     <p class="p16 fw-bold pl-3 text-uppercase">Entity </p>
 
                     <ul class="list-unstyled components">
-
-                        <li class="menu" (click)="openEntity(i + 1)" *ngFor="let menuItem of entityList; let i = index">
-                            <a class="a-menu"> {{menuItem?.entityName}}
-                                <div *ngIf="active0" class="dropdown p14 float-end">
-                                    <i class="fa fa-ellipsis-h text-grey-color" aria-hidden="true"></i>
-                                    <div class="dropdown-content dropdown-content-margin">
-                                        <a href="#" class="ml-0">Edit</a>
-                                        <a href="#" class="ml-0">Delete</a>
+                        <ng-template ngFor let-menuItem [ngForOf]="entityListArr" let-i="index">
+                            <li class="menu" *ngIf="menuItem?.title != 'Common' && menuItem?.title"
+                                (click)="openEntity(i + 1, menuItem?.title)">
+                                <a class="a-menu"> {{menuItem?.title}}
+                                    <div *ngIf="isActive == 'createSchema'" class="dropdown p14 float-end">
+                                        <i class="fa fa-ellipsis-h text-grey-color" aria-hidden="true"></i>
+                                        <div class="dropdown-content dropdown-content-margin">
+                                            <a data-toggle="modal" data-target="#addEntity"
+                                                (click)="openEntityModal('edit', i)" class="ml-0">Edit</a>
+                                            <a (click)="deleteEntity(i)" class="ml-0">Delete</a>
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
-                        </li>
+                                </a>
+                            </li>
+                        </ng-template>
 
                     </ul>
-                    <ul class="list-unstyled">
+                    <ul class="list-unstyled" *ngIf="isActive == 'createSchema'">
                         <li>
                             <button class="m-3 p14 btn btn-sec-bg submit-button text-secondary-color"
-                                data-toggle="modal" data-target="#addEntity"><i class="fa fa-plus"
-                                    aria-hidden="true"></i> Add Entity</button>
+                                data-toggle="modal" data-target="#addEntity" (click)="openEntityModal('add')"><i
+                                    class="fa fa-plus" aria-hidden="true"></i> Add Entity</button>
                         </li>
                         <!-- <li >
                             <a> Common
@@ -101,88 +83,169 @@
 
 
         <div class="col-md-9 p-2 mb-6">
-            <div class="step" *ngIf="active0 && entityProperties.length">
+            <div class="step" *ngIf="isActive == 'createSchema'">
                 <div class="d-flex flex-justify-between card-body pr-2 py-2">
                     <div class="heading-2">
                         <h3>{{entityName}}</h3>
-                        <p class="p14 text-grey-color">Education Board is council authorised to invite and add VC issuers</p>
+                        <p class="p14 text-grey-color">{{description}}</p>
                     </div>
-                    <div *ngIf="!isShowJson">
+                    <div *ngIf="!isShowJson && entityProperties.length">
                         <button class="float-end p14 btn btn-sec-bg submit-button text-secondary-color"
                             (click)="showJson()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Schema of
                             Entity</button>
                     </div>
                 </div>
-                <div *ngIf="!isShowJson">
+
+                <div *ngIf="!isShowJson && entityProperties.length">
                     <p class="p16">Fields</p>
                     <div class="card w-100">
-
-                        <ul class="list-unstyled p-3">
-                            <li class="fieldBorder p-1 mb-2" *ngFor="let field of entityProperties">
-
-                                <input type="text" id="title" name="lname" class="m-2 py-1 px-2 fieldInput p14"
-                                    value="{{field?.title}}">
-                                <input type="text" id="lname" name="lname" class="m-2  py-1 px-2 fieldInput p14"
-                                    value="{{field?.data?.type}}">
-                                <div class="float-end">
-                                    <span class="m-2 mr-3 l12" *ngIf="field?.data?.required">
-                                        <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" checked>
-                                        <label for="vehicle1"> &nbsp; Mandatory</label>
-                                    </span>
-                                    <span class="m-2 mr-3 l12" *ngIf="!field?.data?.required">
-                                        <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" unchecked>
-                                        <label for="vehicle1"> &nbsp; Mandatory</label>
-                                    </span>
-                                    <!-- <input type="text" id="lname" name="lname" class="m-2  py-1 px-2 fieldInput"> -->
-
-                                    <select name="visibility" id="visibility"
-                                        class="fieldInput m-2  py-1 px-3 mr-3 p14">
-                                        <option value="public"> <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                                            Public
-                                        </option>
-                                        <option value="private"> <i class="fa fa-ellipsis-h " aria-hidden="true"></i>
-                                            Private
-                                        </option>
-                                        <option value="personal"> <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                                            Personal
-                                        </option>
-                                    </select>
+                        <div class="px-3">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="p12 text-grey-color" scope="col"> Label </th>
+                                        <th class="p12 text-grey-color" scope="col"> Field Type</th>
+                                        <th class="p12 text-grey-color" scope="col"> Mandatory</th>
+                                        <th class="p12 text-grey-color" scope="col"> Description </th>
+                                        <th class="p12 text-grey-color" scope="col"> Visibility </th>
+                                        <th class="p12 text-grey-color" scope="col"> </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
 
 
-                                    <div class="dropdown p14">
-                                        <i class="fa fa-ellipsis-h m-3 text-grey-color" aria-hidden="true"></i>
-                                        <div class="dropdown-content">
-                                            <a href="#">View</a>
-                                            <a href="#">Delete</a>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </li>
-                        </ul>
+                                    <ng-template ngFor let-field [ngForOf]="entityProperties" let-i="index">
+                                        <ng-template [ngIf]="field?.type == 'array' || field?.type == 'object'"
+                                            class="p-4">
+                                            <p class="mt-3 fw-bold">
+                                                {{field?.propertyName}}
+                                            </p>
 
 
+                                            <ng-template ngFor let-arrayfield [ngForOf]="entityProperties[i].data"
+                                                let-j="index">
 
-                        <!-- <span class="m-3 p14 mbtn-10 submit-button text-secondary-color" data-toggle="modal"
-                    data-target="#addFieldModal">
-                    <i class="fa fa-plus" aria-hidden="true"></i>
-                    Add Field</span> -->
+                                                <tr style="border: white solid;" [hidden]="!arrayfield?.data?.title">
+                                                    <!-- <tr style="border: white solid;" *ngFor="let arrayfield of entityProperties[i].data; let j = index"> -->
 
-                        <span class="m-3 p14 mbtn-10 submit-button text-secondary-color" (click)="showAddForm()">
-                            <i class="fa fa-plus" aria-hidden="true"></i>
-                            Add Field</span>
+
+                                                    <td>
+                                                        <span class="p14">{{arrayfield?.data?.title}}</span>
+                                                    </td>
+
+                                                    <td>
+                                                        <span class="p14">{{arrayfield?.data?.type}}</span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="p14" *ngIf="arrayfield?.data?.required">Yes</span>
+                                                        <span class="p14" *ngIf="!arrayfield?.data?.required">No</span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="p14">{{arrayfield?.description}}</span>
+                                                    </td>
+                                                    <td>
+                                                        <select name="visibility" id="visibility"
+                                                            class="fieldInput p14 m-2  py-1 px-3 mr-3">
+                                                            <option value="public"> <i class="fa fa-ellipsis-h"
+                                                                    aria-hidden="true"></i>
+                                                                Public
+                                                            </option>
+                                                            <option value="private"> <i class="fa fa-ellipsis-h "
+                                                                    aria-hidden="true"></i>
+                                                                Private
+                                                            </option>
+                                                            <option value="personal"> <i class="fa fa-ellipsis-h"
+                                                                    aria-hidden="true"></i>
+                                                                Personal
+                                                            </option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <div class="dropdown p14">
+                                                            <i class="fa fa-ellipsis-h  text-grey-color"
+                                                                aria-hidden="true"></i>
+                                                            <div class="dropdown-content">
+                                                                <a (click)="viewField('nasted', i, j)">View</a>
+                                                                <a (click)="deleteField('nasted', i, j)">Delete</a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </ng-template>
+                                        </ng-template>
+
+                                        <ng-template [ngIf]="field?.type == 'string'">
+                                            <tr [hidden]="!field?.data?.title">
+
+
+                                                <td>
+                                                    <span class="p14">{{field?.data?.title}}</span>
+                                                </td>
+
+                                                <td>
+                                                    <span class="p14">{{field?.data?.type}}</span>
+                                                </td>
+                                                <td>
+                                                    <span class="p14" *ngIf="field?.data?.required">Yes</span>
+                                                    <span class="p14" *ngIf="!field?.data?.required">No</span>
+                                                </td>
+                                                <td>
+                                                    <span class="p14">{{field?.description}}</span>
+                                                </td>
+                                                <td>
+                                                    <select name="visibility" id="visibility"
+                                                        class="fieldInput p14 m-2  py-1 px-3 mr-3">
+                                                        <option value="public"> <i class="fa fa-ellipsis-h"
+                                                                aria-hidden="true"></i>
+                                                            Public
+                                                        </option>
+                                                        <option value="private"> <i class="fa fa-ellipsis-h "
+                                                                aria-hidden="true"></i>
+                                                            Private
+                                                        </option>
+                                                        <option value="personal"> <i class="fa fa-ellipsis-h"
+                                                                aria-hidden="true"></i>
+                                                            Personal
+                                                        </option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <div class="dropdown p14">
+                                                        <i class="fa fa-ellipsis-h  text-grey-color"
+                                                            aria-hidden="true"></i>
+                                                        <div class="dropdown-content">
+                                                            <a (click)="viewField('string', i, j)">View</a>
+                                                            <a (click)="deleteField('string', i, j)">Delete</a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+
+                                    </ng-template>
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
                     </div>
 
-
                 </div>
+
+
+
+
+
                 <div *ngIf="isShowJson">
                     <div class="">
                         <!-- <create-vc-template></create-vc-template> -->
-                        <json-editor [options]="editorOptions" [data]="jsonFields"></json-editor>
-                        <footer class="footer fixed-bottom">
+                        <json-editor *ngIf="properties" [options]="editorOptions" [data]="properties"
+                            [(ngModel)]="properties" (change)="getJsonData($event)"></json-editor>
+                        <footer class="footer fixed-bottom fixed-bottom-json">
                             <div class="container-fluid">
                                 <div>
-                                    <button
+                                    <button (change)="getJsonData($event)"
                                         class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2">Save</button>
                                     <button (click)="showJson()"
                                         class="btn btn-sec-bg float-end submit-button px-3 my-2">Cancel</button>
@@ -195,40 +258,50 @@
                       [(ngModel)]="jsonFields"></json-editor> -->
                     </div>
                 </div>
+
+                <!-- <div class="card-body" *ngIf="entityListArr.length">
+                    <span class="m-3 p14 mbtn-10 submit-button text-secondary-color" (click)="showAddForm()">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                        Add Field</span>
+                </div> -->
+                <div class="p-3 sm-card" *ngIf="entityListArr.length">
+                    <span class="m-3 p14 mbtn-10 submit-button text-secondary-color" (click)="showAddForm()">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                        Add Field</span>
+                </div>
+
+                <div class="p-3" *ngIf="isActive == 'createSchema' && !entityListArr.length">
+                    <p class="p16 fw-bold"> No schema added yet.</p>
+                    <p class="p14">Please add entity level schema. You can also add common schema example address, field
+                        name and field name which can be used or references in other schemas.</p>
+
+                </div>
             </div>
-
-            <div class="p-3" *ngIf="active0 && !entityProperties.length">
-                <p class="p16 fw-bold"> No schema added yet.</p>
-                <p class="p14">Please add entity level schema. You can also add common schema example address, field
-                    name and field name which can be used or references in other schemas.</p>
-
-            </div>
-
-            <div *ngIf="active1">
+            <div *ngIf="isActive == 'configurations'">
                 <config-workflow></config-workflow>
             </div>
 
 
 
-            <div *ngIf="active2">
+            <div *ngIf="isActive =='create-vc'">
                 <create-vc-template></create-vc-template>
             </div>
 
-            <div *ngIf="active3">
+            <div *ngIf="isActive == 'ownership'">
                 <ownership></ownership>
             </div>
-            <div *ngIf="active4">
+            <div *ngIf="isActive == 'test-publish'">
                 <test-and-launch></test-and-launch>
             </div>
 
+
+
+
         </div>
-
-
     </div>
 
-
     <div *ngIf="isAddFormPg" class="p-5">
-        <add-field-form [jsonSchema]="entityProperties" (newItemEvent)="jsonSchemaData($event)"
+        <add-field-form [jsonSchema]="compFieldJson" (newItemEvent)="jsonSchemaData($event)"
             (backEvent)="goBackEvent($event)"></add-field-form>
     </div>
 
@@ -250,7 +323,8 @@
                     </div>
 
                     <div class="mt-2">
-                        <span class="l12 fw-bold">Enter Description<span class="text-muted"> (optional)</span></span>
+                        <span class="l12 fw-bold">Enter Description<span class="text-muted">
+                                (optional)</span></span>
                         <textarea [(ngModel)]="description"
                             class="w-100 desc input-field modal-input-field p14 pl-3 inputField"></textarea>
                         <span class="l12 text-grey-color">Description about the entity</span>
@@ -272,15 +346,16 @@
     <footer class="footer fixed-bottom">
         <div class="container-fluid">
             <div>
-
-                <button (click)="nextStep()" 
-                    class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2">Save and Next</button>
-                <button *ngIf="active1"
+                <button *ngIf="isActive == 'create-vc' || isActive == 'test-publish'" (click)="backStep()"
+                class="btn btn-sec-bg submit-button px-3 my-2 ml-2 mr-2 ">Back</button> &nbsp;
+                <button (click)="nextStep()"
+                    class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2">Save and
+                    Next</button>
+                <button *ngIf="isActive == 'configurations'"
                     class="btn btn-sec-bg float-end submit-button px-3 my-2 ml-2 mr-2 ">Skip</button> &nbsp;
-                <button *ngIf="active2 || active3"
-                    class="btn  float-end btn-primary btn-primary-sm px-3 my-2 ml-2 mr-2">Save as Draft</button> &nbsp;
-                <button *ngIf="active4"
-                    class="btn  float-end btn-primary btn-primary-sm px-3 my-2 ml-2 mr-2">Save</button> &nbsp;
+                <button *ngIf="isActive == 'create-vc' || isActive == 'ownership'"
+                    class="btn  float-end btn-primary btn-primary-sm px-3 my-2 ml-2 mr-2">Save as Draft</button>
+                &nbsp;
 
             </div>
         </div>

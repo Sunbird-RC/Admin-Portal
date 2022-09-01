@@ -10,6 +10,7 @@
     "Institute"
   ],
   "title": "Institute",
+  "description":  "This is institute Entity",
   "definitions": {
     "Institute": {
       "$id": "#/properties/Institute",

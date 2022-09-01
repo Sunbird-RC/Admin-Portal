@@ -213,3 +213,22 @@ border-radius: 4px;
 .activeMenu{
   background: #F6F8FC;
 }
+
+.table td{
+  padding: 7px 0 0 0 !important;
+}
+
+.table tr{
+  padding: 0 !important;
+}
+
+.fixed-bottom-json {
+  z-index: 20000;
+}
+
+
+.sm-card  {
+  background-color: var(--cardBackground) !important;
+    border: 1px solid var(--cardBorder) !important;
+}
+

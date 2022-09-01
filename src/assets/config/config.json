@@ -1,11 +1,11 @@
 {
     "environment": "development",
     "keycloak": {
-        "url": "https://sunbird-certificate-demo.xiv.in/auth",
-        "clientId": "registry-frontend",
+        "url": "https://demo-admin-portal.xiv.in/auth",
+        "clientId": "admin-portal",
         "realm": "sunbird-rc"
     },
-    "configFolder": "/assets/config/ui-config",
+    "configFolder": "/assets/config",
     "referanceSchema" : "/assets/config",
     "languageFolder": "/assets/i18n",
     "title": "Admin Portal",

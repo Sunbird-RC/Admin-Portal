@@ -27,6 +27,7 @@ export class KeycloakloginComponent implements OnInit {
         localStorage.setItem('setLanguage', res['attributes'].locale[0]);
       }
     });
+    
     this.user = this.keycloakService.getUsername();
     this.keycloakService.getToken().then((token)=>{
       console.log('keyCloak teacher token - ', token);
@@ -34,11 +35,11 @@ export class KeycloakloginComponent implements OnInit {
       localStorage.setItem('loggedInUser', this.user);
       console.log('---------',this.config.getEnv('appType'))
       if(this.config.getEnv('appType') && this.config.getEnv('appType') === 'digital_wallet'){
-        this.profileUrl = this.entity+'/documents'
+        this.profileUrl = 'home' ;
       }else{
-        this.profileUrl = '/profile/'+this.entity;
+        this.profileUrl =  'home' ;//'/profile/'+this.entity;
       }
-      this.router.navigate([this.profileUrl]);
+      this.router.navigate(['home']);
 
     });
   }

@@ -143,6 +143,6 @@ services:
       timeout: 10s
       retries: 4
   nginx:
-    image: dockerhub/sunbird-rc-nginx
+    image: tejashjl/admin
     ports:
       - "81:80"

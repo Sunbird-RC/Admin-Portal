@@ -110,7 +110,7 @@ export class AddTemplateComponent implements OnInit {
 
   editTemplate() {
     localStorage.setItem('sampleData', JSON.stringify(this.sampleData));
-   this.router.navigate(['/preview-html'], { state: { item: this.sampleData } });
+   this.router.navigate(['/edit-template'], { state: { item: this.sampleData } });
   }
 
 

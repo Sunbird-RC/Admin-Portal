@@ -124,7 +124,7 @@ const routes: Routes = [
 { path: 'add-template', component: AddTemplateComponent },
 { path: 'test-and-launch', component: TestAndLaunchComponent},
 { path: 'test-and-verify', component: TestAndVerifyComponent},
-{ path: 'configurations', component: ConfigurationsComponent}
+{ path: 'configurations', component: ConfigurationsComponent},
 { path: 'edit-template', component: EditTemplateComponent},
 { path: 'dlogin', component: DloginComponent},
 

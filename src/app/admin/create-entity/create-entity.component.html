@@ -23,7 +23,7 @@
         <div class="col-md-3">
             <div class="wrapper">
                 <!--Top menu -->
-                <div id="sideMenu" class="sidebar">
+                <div id="sideMenu" class="sidebar" *ngIf="isActive != 'test-publish'">
                     <ul class="list-unstyled" *ngIf="containCommonField && isActive == 'createSchema'">
                         <p class="p16 fw-bold pl-3 text-uppercase">Common </p>
 
@@ -82,7 +82,7 @@
         </div>
 
 
-        <div class="col-md-9 p-2 mb-6">
+        <div class="col-md-9 p-2 mb-6" [ngClass]="{'col-md-12': isActive == 'test-publish'}">
             <div class="step" *ngIf="isActive == 'createSchema'">
                 <div class="d-flex flex-justify-between card-body pr-2 py-2">
                     <div class="heading-2">
@@ -388,7 +388,9 @@
                 <button *ngIf="isActive == 'create-vc' || isActive == 'ownership'"
                     class="btn  float-end btn-primary btn-primary-sm px-3 my-2 ml-2 mr-2">Save as Draft</button>
                 &nbsp;
-
+                <button *ngIf="isActive == 'test-publish'"
+                    class="btn btn-sec-bg float-end submit-button px-3 my-2 ml-2 mr-2 " data-toggle="modal" data-target="#saveConfig"> Save</button>
+                    &nbsp;
             </div>
         </div>
     </footer>

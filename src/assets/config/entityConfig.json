@@ -83,6 +83,24 @@
                 }
             ],
             "entity": []
+        },
+        "new": {
+            "name": "",
+            "steps" : [
+                {
+                    "title" : "Create Schema",
+                    "key" : "createSchema"
+                },
+                {
+                    "title" : "Create VC template",
+                    "key" : "create-vc"
+                },
+                {
+                    "title" : "Test and Launch",
+                    "key" : "test-publish"
+                }
+            ],
+            "entity": []
         }
     }
 }

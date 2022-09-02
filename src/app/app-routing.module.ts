@@ -30,6 +30,7 @@ import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { AddTemplateComponent } from './admin/add-template/add-template.component';
 import { TestAndLaunchComponent } from './admin/test-and-launch/test-and-launch.component';
 import { TestAndVerifyComponent } from './admin/test-and-verify/test-and-verify.component';
+import { ConfigurationsComponent } from './admin/configurations/configurations.component';
 import { EditTemplateComponent } from './admin/edit-template/edit-template.component';
 import { DloginComponent } from './admin/dlogin/dlogin.component';
 // import { FaqComponent } from './custom-components/faq/faq.component';
@@ -123,6 +124,7 @@ const routes: Routes = [
 { path: 'add-template', component: AddTemplateComponent },
 { path: 'test-and-launch', component: TestAndLaunchComponent},
 { path: 'test-and-verify', component: TestAndVerifyComponent},
+{ path: 'configurations', component: ConfigurationsComponent},
 { path: 'edit-template', component: EditTemplateComponent},
 { path: 'dlogin', component: DloginComponent},
 

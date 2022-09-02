@@ -2,44 +2,28 @@
     <div class="card col-sm-4 p-2 mb-4">
         <p class="fs-5 fw-bold"> Add Sample data to test the template</p>
         <p class="fs-7">Note that this sample data for testing and will not be saved</p>
-        <form>
-            <!-- <div class="form-group">
+        <form #testForm="ngForm" (ngSubmit)="getValues()" >
+            <div class="form-group">
                 <label for="issuerName">Issuer Name</label>
-                <input type="text" class="form-control" id="issuerName" placeholder="Issuer Name">
+                <input type="text" class="form-control" id="issuerName" placeholder="Issuer Name" name="issuerName" [(ngModel)]="issuerName">
             </div>
             <div class="form-group">
                 <label for="beneficiaryName">Beneficiary Name</label>
-                <input type="text" class="form-control" id="beneficiaryName" placeholder="Beneficiary Name">
+                <input type="text" class="form-control" id="beneficiaryName" placeholder="Beneficiary Name" name="beneficiaryName" [(ngModel)]="beneficiaryName">
             </div>
             <div class="form-group">
                 <label for="vaccinationDate">Vaccination Date</label>
-                <input type="date" class="form-control" id="vaccinationDate">
+                <input type="date" class="form-control" id="vaccinationDate" name="vaccinationDate" [(ngModel)]="vaccDate">
             </div>
             <div class="form-group">
                 <label for="vaccinationStatus">Vaccination Status</label>
-                <select class="form-select">
-                    <option selected value="0">Open this select menu</option>
+                <select class="custom-select" name="vaccinationStatus" [(ngModel)]="vaccStatus">
                     <option value="1">Fully Vaccinated</option>
                     <option value="2">Partially Vaccinated</option>
                     <option value="3">Not Vaccinated</option>
                   </select>
-            </div> -->
-            <div class="form-group" *ngFor="let key of objectKeys(formdata)">
-        
-                <div *ngFor='let obj of formdata[key]'>
-                    <label for={{obj.id}}>{{obj.placeholder}}</label>
-                    <div *ngIf="obj.type != 'option'">
-                        <input  type={{obj.type}} class="form-control" id={{obj.id}} name={{obj.id}} placeholder={{obj.placeholder}}>
-                    </div>
-                    <div *ngIf="obj.type == 'option'">
-                        <select class="form-select">
-                            <option value="default">Open this select menu</option>
-                            <option *ngFor="let status of vaccinationStatus" [value]="status">{{status}}</option>
-                        </select>
-                    </div>
-                    
-                </div>
             </div>
+            
             <button type="submit" class="btn btn-primary pl-3 pr-3">Test</button>
         </form>
     </div>
@@ -47,11 +31,11 @@
 
     <div class="card col-sm-8 mb-4">
         <div class="p-3 mt-2">
-            <div class="flex-justify-between clearfix">
+            <div class="flex-justify-between clearfix fw-bold">
                 <div class="float-left">Preview</div>
                 <div class="float-right">
-                    <button class="btn btn-primary mr-2">Print</button>
-                    <button class="btn btn-danger">Verify Certificate</button>
+                    <button class="mr-2 btn btn-sec-bg submit-button text-secondary-color">Print</button>
+                    <button class="btn btn-sec-bg submit-button text-secondary-color">Verify Certificate</button>
                 </div>
             </div>
             <div class="pt-4">

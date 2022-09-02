@@ -9,19 +9,26 @@ export class TestAndVerifyComponent implements OnInit {
   linkImage: string ="assets/images/thumbnail.png";
   vaccinationStatus : Array<String>;
   formdata : any;
+
+  issuerName: String;
+  beneficiaryName : String;
+  vaccDate : Date;
+  vaccStatus : String;
+
   objectKeys = Object.keys;
   constructor() { 
     this.vaccinationStatus = [ "Fully vaccinated", "Partially Vaccinated", "Not Vaccinated" ]
-    this.formdata = {
-      'Issuer Name' : [{'type':'text', 'placeholder':'Issuer Name', 'id':'issuerName'}],
-      'Beneficiary Name' : [{'type':'text', 'placeholder':'Beneficiary Name', 'id':'beneficiaryName'}],
-      'Vaccination Date' : [{'type':'date', 'placeholder':'Vacciantion Date', 'id':'vaccDate'}],
-      'Vaccination Status' : [{'type':'option', 'placeholder':'Vaccination Status', 'id':'vaccStatus'}]
-    }
   }
 
   ngOnInit(): void {
   }
 
+
+  getValues(){
+    console.log(this.issuerName);
+    console.log(this.beneficiaryName);
+    console.log(this.vaccDate);
+    console.log(this.vaccStatus);
+  }
   
 }

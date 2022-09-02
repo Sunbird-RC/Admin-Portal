@@ -23,7 +23,7 @@
         <div class="col-md-3">
             <div class="wrapper">
                 <!--Top menu -->
-                <div id="sideMenu" class="sidebar">
+                <div id="sideMenu" class="sidebar" *ngIf="isActive != 'test-publish'">
                     <ul class="list-unstyled" *ngIf="containCommonField && isActive == 'createSchema'">
                         <p class="p16 fw-bold pl-3 text-uppercase">Common </p>
 
@@ -82,7 +82,7 @@
         </div>
 
 
-        <div class="col-md-9 p-2 mb-6">
+        <div class="col-md-9 p-2 mb-6" [ngClass]="{'col-md-12': isActive == 'test-publish'}">
             <div class="step" *ngIf="isActive == 'createSchema'">
                 <div class="d-flex flex-justify-between card-body pr-2 py-2">
                     <div class="heading-2">
@@ -343,6 +343,38 @@
         </div>
     </div>
 
+    <div id="saveConfig" class="modal fade" role="dialog" aria-labelledby="saveConfig">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Save Configuration</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="container mt-1">
+                    <div class="mb-3">
+                        <span class="l12 fw-bold">Enter Configuration Name</span>
+                        <input id="configName" class="w-100 input-field modal-input-field p14 p-2 inputField"
+                            placeholder="Enter Configuration name" type="text" />
+                    </div>
+
+                    <div class="mt-2">
+                        <span class="l12 fw-bold">Enter Description<span class="text-muted"> (optional)</span></span>
+                        <textarea id="description"
+                            class="w-100 desc input-field modal-input-field p14 pl-3 inputField"></textarea>
+                        <span class="l12 text-grey-color">Description about the entity</span>
+                    </div>
+
+
+                    <div class="mt-4">
+                        <button data-dismiss="modal" aria-label="Close"
+                            class="btn text-capitalize float-end btn-primary btn-primary-sm p1"
+                            (click)="saveConfigurations()">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+
     <footer class="footer fixed-bottom">
         <div class="container-fluid">
             <div>
@@ -356,7 +388,9 @@
                 <button *ngIf="isActive == 'create-vc' || isActive == 'ownership'"
                     class="btn  float-end btn-primary btn-primary-sm px-3 my-2 ml-2 mr-2">Save as Draft</button>
                 &nbsp;
-
+                <button *ngIf="isActive == 'test-publish'"
+                    class="btn btn-sec-bg float-end submit-button px-3 my-2 ml-2 mr-2 " data-toggle="modal" data-target="#saveConfig"> Save</button>
+                    &nbsp;
             </div>
         </div>
     </footer>

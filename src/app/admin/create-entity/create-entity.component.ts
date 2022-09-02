@@ -367,6 +367,9 @@ export class CreateEntityComponent implements OnInit {
       this['active' + (this.currentTab - 1)] = true;
     }
   }
+  saveConfigurations(){
+    this.router.navigate(['/configurations'],{ skipLocationChange: true})
+  }
 
 
   openEntityModal(action, i) {

@@ -1,0 +1,100 @@
+<div class="row h-100">
+    <div class="card col-sm-3 p-4">
+        <nav >
+            <ul  class="list-unstyled ">
+                <li class="border-bottom pb-2">
+                    <a class="fw-bold">Dashboard</a>
+                </li>
+                
+                <li routerLink="/#" class="border-bottom pb-2">
+                    <a class="fw-bold">Configurations</a>
+                    <div>
+                    <a class="p14">TENANT CONFIGURATION NAME 1</a>
+                    <ul class=" list-unstyled">
+                        <li *ngFor="let text of tenantConfigList" class="menu">
+                            <a class="pl-3">{{text}}</a>
+                        </li>
+                    </ul>
+                    </div>
+                </li>
+                <li class="border-bottom pb-2">
+                    <a class="fw-bold">Help</a>
+                </li>
+                <li class="border-bottom pb-2">
+                    <a class="fw-bold">Account</a>
+                </li>
+            </ul>
+        </nav>
+
+
+
+
+        <!-- <div class="border-bottom fw-bold">Dashboard</div>
+        <div class="border-bottom">
+            <p class="fw-bold">Configurations</p>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <p class="list-group-item-heading p14">TENANT CONFIGURATION NAME 1</p>
+                    <p *ngFor="let text of tenantConfigList" class="list-group-item-text">{{text}}</p>
+
+                </li>
+            </ul>
+        </div>
+        <div class="border-bottom fw-bold">Help</div>
+        <div class="border-bottom fw-bold">Account</div> -->
+    </div>
+    
+    <div class="card col-sm-9 p-4">
+        <div>
+            <h1 class="float-left">Tenant Configuration Name 1</h1>
+            <button class="btn btn-primary float-right">Add New Configuration</button>
+        </div>
+        <div class="card">
+            <h3 class="pl-3">Entity</h3>
+            <div class="row p-2 m-2">
+                <div class="card card-bottom col-sm-3 p-2 ">
+                    <div class="card-title fw-bold">Facility Centre</div>
+                    <div><h2>0</h2>
+                        <div class="card-text">Records</div>
+                        <button class="btn btn-sec-bg submit-button text-secondary-color">View/Add</button>
+                    </div></div>
+                <div class="card card-bottom col-sm-3 p-2">
+                    <div class="card-title fw-bold">Doctors</div>
+                    <div><h2>0</h2>
+                        <div class="card-text">Records</div>
+                        <button class="btn btn-sec-bg submit-button text-secondary-color">View/Add</button>
+                    </div></div>
+                <div class="card card-bottom col-sm-3 p-2">
+                    <div class="card-title fw-bold">Beneficiary</div>
+                    <div><h2>0</h2>
+                        <div class="card-text">Records</div>
+                        <button class="btn btn-sec-bg submit-button text-secondary-color">View/Add</button>
+                    </div></div>
+                <div class="card card-bottom col-sm-3 p-2">
+                    <div class="card-title fw-bold">Staff</div>
+                    <div><h2>0</h2>
+                        <div class="card-text">Records</div>
+                        <button class="btn btn-sec-bg submit-button text-secondary-color">View/Add</button>
+                    </div></div>
+            </div>
+        </div>
+        <div class="card">
+            <h3 class="pl-3">Documents(Verified Credentials)</h3>
+            <div class="row p-2 m-2">
+                <div class="card card-bottom col-sm-3 p-2">
+                    <div class="card-title fw-bold">Vaccination Certificate</div>
+                    <div><h2>0</h2>
+                        <div class="card-text">Records</div>
+                        <button class="btn btn-sec-bg submit-button text-secondary-color">View/Add</button>
+                    </div></div>
+                <div class="card card-bottom col-sm-3 p-2">
+                    <div class="card-title fw-bold">Proof of Experience</div>
+                    <div><h2>0</h2>
+                    <div class="card-text">Records</div>
+                    <button class="btn btn-sec-bg submit-button text-secondary-color">View/Add</button>
+                </div></div>
+            </div>
+        </div>
+    </div>
+</div>
+

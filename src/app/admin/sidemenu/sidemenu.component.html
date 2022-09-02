@@ -3,6 +3,42 @@
 <div class="wrapper mtop6 row">
     <nav id="sidebar" class="col-3">
         <ul id="sideMenu" class="list-unstyled components">
+            <!-- <li class="menu" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">
+                <a class="a-menu"routerLink="/started/get-started" (click)="openMenu('get-started')">Get Started</a>
+            </li> -->
+            <li class="menu mbottom" class="active-link" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">
+                <a class="a-menu" routerLink="/#"><b>Dashboard</b></a>
+            </li>
+            <li class="menu mbottom" routerLinkActive="active-link">
+                <a class="a-menu" routerLink="/a"><b>Configurations</b></a>
+            </li>
+
+            <li class="menu mbottom" routerLinkActive="active-link">
+                <a class="a-menu" routerLink="/#"><b>Help</b></a>
+            </li>
+            <li class="menu mbottom" routerLinkActive="active-link">
+                <a class="a-menu" routerLink="/#"><b>Account</b></a>
+            </li>
+
+        </ul>
+    </nav>
+
+    <div class="col-9">
+        <div *ngIf="activeMenu === 'get-started'">
+            <get-started></get-started>
+        </div>
+        <div *ngIf="activeMenu === 'ownership'">
+            <ownership></ownership>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- <app-header></app-header>
+<div class="wrapper mtop6 row">
+    <nav id="sidebar" class="col-3">
+        <ul id="sideMenu" class="list-unstyled components">
             <li class="menu" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">
                 <a class="a-menu"routerLink="/started/get-started" (click)="openMenu('get-started')">Get Started</a>
             </li>
@@ -49,4 +85,4 @@
         </div>
     </div>
 
-</div>
+</div> -->

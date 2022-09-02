@@ -68,6 +68,7 @@
         },
         "divoc": {
             "name": "divoc",
+            "commonField" : "/assets/schemas/divoc/Common.json",
             "steps" : [
                 {
                     "title" : "Create Schema",
@@ -82,7 +83,14 @@
                     "key" : "test-publish"
                 }
             ],
-            "entity": []
+            "entity": [{
+                "entityName": "Vaccination Certificate",
+                "schemaUrl": "/assets/schemas/certificate-issuance/VaccinationCertificate.json"
+            },
+            {
+                "entityName": "Vaccinator",
+                "schemaUrl": "/assets/schemas/certificate-issuance/Vaccinator.json"
+            }]
         },
         "new": {
             "name": "",

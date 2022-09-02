@@ -8,5 +8,5 @@ ARG configuration=production
 RUN npm run build -- --outputPath=./dist/out
 # Stage 2, use the compiled app, ready for production with Nginx
 FROM dockerhub/sunbird-rc-nginx
-COPY --from=build /app/dist/out/ /usr/share/nginx/html
-COPY /nginx-custom.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /app/dist/out/ /usr/share/nginx/html/admin
+COPY /deps/nginx.conf /etc/nginx/conf.d/default.conf

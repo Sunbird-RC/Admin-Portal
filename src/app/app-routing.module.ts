@@ -36,8 +36,8 @@ import { DloginComponent } from './admin/dlogin/dlogin.component';
 // import { FaqComponent } from './custom-components/faq/faq.component';
 const routes: Routes = [
 // Home
-{ path: '', component: SidemenuComponent },
-//{ path: '', component: KeycloakloginComponent,  canActivate: [AuthGuard]},
+//{ path: '', component: SidemenuComponent },
+{ path: '', component: KeycloakloginComponent,  canActivate: [AuthGuard]},
 
 { path: 'setting/:page', component: SidemenuComponent },
 { path: 'started/:page', component: SidemenuComponent },

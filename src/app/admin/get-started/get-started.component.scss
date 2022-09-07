@@ -206,7 +206,7 @@ a.article:hover {
     position: relative;
     width: auto !important;
     flex-wrap: nowrap;
-    padding-left: 8px;
+    // padding-left: 8px;
 }
 
 .col {
@@ -240,6 +240,7 @@ a.article:hover {
     border-radius: 4px;
     padding: 2px !important;
     margin: 3px !important;
+    width: 100%;
 }
 
 /* Create a custom checkbox */
@@ -300,18 +301,16 @@ a.article:hover {
 
 @media (max-width: 768px) {
     .row{
-        overflow-x: scroll;
-        min-height: 180px;
+    overflow-x: scroll;
+    min-height: 229px;
     }
     
-
     .card .card-body{
-        min-height: 180px;
-        text-overflow: hidden;
-        min-width: 270px;
+    min-height: 229px;
+    text-overflow: hidden;
+    min-width: 170px;
     }
-        
-}
+    }
 
 .to-0{
 text-overflow: ellipsis;
@@ -327,9 +326,9 @@ text-overflow: ellipsis;
  }
 
  .min-ht{
-    min-height: 254px;
- }
-
- .min-ht2{
-    min-height: 84px;
- }
+    min-height: 229px;
+    }
+    
+    .min-ht2{
+    min-height: 80px;
+    }

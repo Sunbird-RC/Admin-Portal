@@ -138,6 +138,7 @@ import { TestAndVerifyComponent } from './admin/test-and-verify/test-and-verify.
 import { ConfigurationsComponent } from './admin/configurations/configurations.component';
 import { EditTemplateComponent } from './admin/edit-template/edit-template.component';
 import { DloginComponent } from './admin/dlogin/dlogin.component';
+import { AdvanceEditorComponent } from './admin/advance-editor/advance-editor.component';
 
 @NgModule({
   declarations: [
@@ -182,7 +183,8 @@ import { DloginComponent } from './admin/dlogin/dlogin.component';
     TestAndVerifyComponent,
     ConfigurationsComponent,
     EditTemplateComponent,
-    DloginComponent
+    DloginComponent,
+    AdvanceEditorComponent
   ],
   imports: [
     BrowserModule,

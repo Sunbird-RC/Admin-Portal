@@ -9,7 +9,7 @@
 
         <!-- <ul id="stepList" *ngFor="let steps of processSteps; let i = index"> -->
         <ul id="stepList">
-            <li *ngFor="let steps of processSteps; let i = index" class="col-md-2 tab" id="step{{i + 1}}"><strong>
+            <li *ngFor="let steps of processSteps; let i = index" class="col-md-2 col-4 tab" id="step{{i + 1}}"><strong>
                     <i class="float-end fa fas fa-chevron-right text-grey-color mt-3 fs-3 next-arrow"></i>
                     <span class="l10">STEP {{i + 1}}</span> <br />
                     <span class="p14 fw-bold">{{steps?.title}}</span>
@@ -18,10 +18,10 @@
     </nav>
 </header>
 
-<div id="schemaEntity" class="container mt-1 ml-12">
+<div id="schemaEntity" class="container-fluid mt-1 ml-12">
     <div class="row" *ngIf="!isAddFormPg">
         <div class="col-md-3">
-            <div class="wrapper">
+            <div class="wrapper ps-2 -e-2">
                 <!--Top menu -->
                 <div id="sideMenu" class="sidebar" *ngIf="isActive != 'test-publish'">
                     <ul class="list-unstyled" *ngIf="containCommonField && isActive == 'createSchema'">
@@ -48,7 +48,7 @@
                         <ng-template ngFor let-menuItem [ngForOf]="entityListArr" let-i="index">
                             <li class="menu" *ngIf="menuItem?.title != 'Common' && menuItem?.title"
                                 (click)="openEntity(i + 1, menuItem?.title)">
-                                <a class="a-menu"> {{menuItem?.title}}
+                                <a class="a-menu mb-4"> {{menuItem?.title}}
                                     <div *ngIf="isActive == 'createSchema'" class="dropdown p14 float-end">
                                         <i class="fa fa-ellipsis-h text-grey-color" aria-hidden="true"></i>
                                         <div class="dropdown-content dropdown-content-margin">
@@ -377,16 +377,16 @@
 
     <footer class="footer fixed-bottom">
         <div class="container-fluid">
-            <div>
+            <div class="btn-holders">
                 <button *ngIf="isActive == 'create-vc' || isActive == 'test-publish'" (click)="backStep()"
-                class="btn btn-sec-bg submit-button px-3 my-2 ml-2 mr-2 ">Back</button> &nbsp;
+                class="btn btn-sec-bg submit-button px-3 my-2 ml-2 mr-2">Back</button> &nbsp;
                 <button (click)="nextStep()" [disabled]="!entityProperties.length"
                     class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2">Save and
                     Next</button>
                 <button *ngIf="isActive == 'configurations'"
                     class="btn btn-sec-bg float-end submit-button px-3 my-2 ml-2 mr-2 ">Skip</button> &nbsp;
                 <button *ngIf="isActive == 'create-vc' || isActive == 'ownership'"
-                    class="btn  float-end btn-primary btn-primary-sm px-3 my-2 ml-2 mr-2">Save as Draft</button>
+                    class="btn float-end btn-primary btn-primary-sm px-3 my-2 ml-2 mr-2">Save as Draft</button>
                 &nbsp;
                 <button *ngIf="isActive == 'test-publish'"
                     class="btn btn-sec-bg float-end submit-button px-3 my-2 ml-2 mr-2 " data-toggle="modal" data-target="#saveConfig"> Save</button>

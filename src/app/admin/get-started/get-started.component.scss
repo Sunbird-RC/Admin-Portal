@@ -325,10 +325,13 @@ text-overflow: ellipsis;
     border-radius: 10px;
  }
 
- .min-ht{
+.min-ht{
     min-height: 229px;
-    }
+}
     
-    .min-ht2{
+.min-ht2{
     min-height: 80px;
-    }
+}
+.card-title {
+    margin-bottom: 0.0rem !important;
+}

@@ -82,7 +82,7 @@
         </div>
 
 
-        <div class="col-md-9 p-2 mb-6" [ngClass]="{'col-md-12': isActive == 'test-publish'}">
+        <div class="col-md-9 mb-6" [ngClass]="{'col-md-12': isActive == 'test-publish'}">
             <div class="step" *ngIf="isActive == 'createSchema'">
                 <div class="d-flex flex-justify-between card-body pr-2 py-2">
                     <div class="heading-2">
@@ -377,20 +377,21 @@
 
     <footer class="footer fixed-bottom">
         <div class="container-fluid">
-            <div class="btn-holders">
-                <button *ngIf="isActive == 'create-vc' || isActive == 'test-publish'" (click)="backStep()"
-                class="btn btn-sec-bg submit-button px-3 my-2 ml-2 mr-2">Back</button> &nbsp;
-                <button (click)="nextStep()" [disabled]="!entityProperties.length"
-                    class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2">Save and
-                    Next</button>
-                <button *ngIf="isActive == 'configurations'"
-                    class="btn btn-sec-bg float-end submit-button px-3 my-2 ml-2 mr-2 ">Skip</button> &nbsp;
-                <button *ngIf="isActive == 'create-vc' || isActive == 'ownership'"
-                    class="btn float-end btn-primary btn-primary-sm px-3 my-2 ml-2 mr-2">Save as Draft</button>
-                &nbsp;
-                <button *ngIf="isActive == 'test-publish'"
-                    class="btn btn-sec-bg float-end submit-button px-3 my-2 ml-2 mr-2 " data-toggle="modal" data-target="#saveConfig"> Save</button>
-                    &nbsp;
+            <div class="row btn-holder">
+               <div class="col-3">
+                <button *ngIf="isActive == 'create-vc' || isActive == 'test-publish'" (click)="backStep()"class="btn btn-sec-bg submit-button px-3 my-2 ml-2 mr-2">Back</button>
+               </div> 
+
+                <div class="col-9">
+                    <button (click)="nextStep()" [disabled]="!entityProperties.length" class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2">Save and Next</button>
+
+                    <button *ngIf="isActive == 'configurations'" class="btn btn-sec-bg float-end submit-button px-3 my-2 ml-2 mr-2 ">Skip</button>
+
+                    <button *ngIf="isActive == 'create-vc' || isActive == 'ownership'" class="btn float-end btn-primary btn-primary-sm px-3 my-2 ml-2 mr-2">Save as Draft</button>
+                
+                    <button *ngIf="isActive == 'test-publish'" class="btn btn-sec-bg float-end submit-button px-3 my-2 ml-2 mr-2 " data-toggle="modal" data-target="#saveConfig"> Save</button>
+                </div>
+                   
             </div>
         </div>
     </footer>

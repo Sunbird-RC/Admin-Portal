@@ -314,11 +314,11 @@
                     <div class="">
                         <!-- <create-vc-template></create-vc-template> -->
                         <json-editor *ngIf="properties" [options]="editorOptions" [data]="properties"
-                            [(ngModel)]="properties" (change)="getJsonData($event)"></json-editor>
+                            [(ngModel)]="properties" (change)="readConvertJsonData($event)"></json-editor>
                         <footer class="footer fixed-bottom fixed-bottom-json">
                             <div class="container-fluid">
                                 <div>
-                                    <button (change)="getJsonData($event)"
+                                    <button (click)="readConvertJsonData($event)"
                                         class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2">Save</button>
                                     <button (click)="hideJSon()"
                                         class="btn btn-sec-bg float-end submit-button px-3 my-2">Cancel</button>

@@ -79,11 +79,11 @@ export class CreateEntityComponent implements OnInit {
 
     this.activeRoute.params.subscribe(params => {
       this.params = params;
-     
+
 
       if (this.params.hasOwnProperty('step')) {
         this.currentTab = Number(params.step);
-      }else{
+      } else {
         this.currentTab = 0;
       }
 
@@ -168,12 +168,12 @@ export class CreateEntityComponent implements OnInit {
         //  this.entityListArr.push(res);
         this.usecaseSchema.push(res);
         this.defination.push(res);
-      //  this.activeMenuNo = j;
+        //  this.activeMenuNo = j;
 
         // this.entityKey = res.title;
         if (j == (this.entityList.length - 1)) {
           this.getEntityProperties();
-          this.location.replaceState('/create/' +  this.currentTab + '/' + this.usecase + '/' +  this.usecaseSchema[1].title);
+          this.location.replaceState('/create/' + this.currentTab + '/' + this.usecase + '/' + this.usecaseSchema[1].title);
           this.activeMenuNo = 1;
         }
       })
@@ -186,7 +186,7 @@ export class CreateEntityComponent implements OnInit {
           // this.entityListArr.push(res);
 
           // this.entityKey = "Common";
-        //  this.activeMenuNo = j;
+          //  this.activeMenuNo = j;
 
           this.usecaseSchema.push(this.commonschemaDefination);
           //  this.properties = this.commonschemaDefination.definitions;
@@ -209,7 +209,7 @@ export class CreateEntityComponent implements OnInit {
 
   getEntityPropertiesByIndex(j) {
     let res = this.usecaseSchema[j];
-this.activeMenuNo = j;
+    this.activeMenuNo = j;
 
     if (this.usecaseSchema[j].title !== "Common" && this.usecaseSchema[j].title !== "common") {
       let res = this.usecaseSchema[j];
@@ -241,7 +241,7 @@ this.activeMenuNo = j;
         "data": this.readPropertyObj(this.properties)
       };
 
-    
+
 
     } else {
       let res = this.usecaseSchema[j];
@@ -250,7 +250,7 @@ this.activeMenuNo = j;
       this.usecaseSchema[j].definitions = {
         "propertyName": res.title,
         "propertyKey": res.title,
-        "type":  'object',
+        "type": 'object',
         "data": this.readPropertyObj(this.properties)
       };
 
@@ -264,47 +264,105 @@ this.activeMenuNo = j;
   convertIntoSBRCSchema(sProperties) {
     let tempFieldObj = {};
 
-    for (let i = 0; i < sProperties.data.length; i++) {
-      if (sProperties.data[i].hasOwnProperty('propertyKey')) {
+    if (sProperties.hasOwnProperty('propertyKey')) {
 
-
-        let field = sProperties.data[i];
-
-        if((field['$ref'] != "" && field.type == 'array') && (sProperties.propertyKey != 'Common' && sProperties.propertyKey != 'common'))
-        {
-          tempFieldObj[field.propertyKey]= { 
-            "type": "array",
-            "items" : {
-              "$ref" : field['$ref']
-            }
-          }
-        }else if((field['$ref'] != "" && field.type == 'object' ) && (sProperties.propertyKey != 'Common' && sProperties.propertyKey != 'common'))
-        {
-          tempFieldObj[field.propertyKey]= { 
-              "$ref" : field['$ref']
-            }
-        }else{
-
-        tempFieldObj[field.propertyKey] = {
-          "$id": field['$id'],
-          "type": field['type'],
-          "title": field['propertyName'],
-          "properties": {}
-        }
-
-        if (field.hasOwnProperty('data')) {
-          for (let j = 0; j < field.data.length; j++) {
-            let property = field.data[j];
-            tempFieldObj[field.propertyKey]['properties'][property.key] = property.data
-          }
-        }
-
+      tempFieldObj[sProperties.propertyKey] = {
+        "$id": sProperties['$id'],
+        "type": sProperties['type'],
+        "title": sProperties['propertyName'],
+        "properties": {}
       }
 
-      
+      for (let i = 0; i < sProperties.data.length; i++) {
+        if (sProperties.data[i].hasOwnProperty('propertyKey')) {
+          let field = sProperties.data[i];
+
+          if ((field['$ref'] != "" && field.type == 'array') && (sProperties.propertyKey != 'Common' && sProperties.propertyKey != 'common')) {
+            tempFieldObj[field.propertyKey] = {
+              "type": "array",
+              "items": {
+                "$ref": field['$ref']
+              }
+            }
+          } else if ((field['$ref'] != "" && field.type == 'object') && (sProperties.propertyKey != 'Common' && sProperties.propertyKey != 'common')) {
+            tempFieldObj[field.propertyKey] = {
+              "$ref": field['$ref']
+            }
+          } else {
+
+            tempFieldObj[field.propertyKey] = {
+              "$id": field['$id'],
+              "type": field['type'],
+              "title": field['propertyName'],
+              "properties": {}
+            }
+
+            if (field.hasOwnProperty('data')) {
+              for (let j = 0; j < field.data.length; j++) {
+                let property = field.data[j];
+                tempFieldObj[field.propertyKey]['properties'][property.key] = property.data
+              }
+            }
+
+          }
+        }else{
+          let property = sProperties.data[i];
+          tempFieldObj[sProperties.propertyKey]['properties'][property.key] = property.data
+
+        }
 
       }
     }
+
+    /* for (let i = 0; i < sProperties.data.length; i++) {
+       if (sProperties.data[i].hasOwnProperty('propertyKey')) {
+ 
+ 
+         let field = sProperties.data[i];
+ 
+         if((field['$ref'] != "" && field.type == 'array') && (sProperties.propertyKey != 'Common' && sProperties.propertyKey != 'common'))
+         {
+           tempFieldObj[field.propertyKey]= { 
+             "type": "array",
+             "items" : {
+               "$ref" : field['$ref']
+             }
+           }
+         }else if((field['$ref'] != "" && field.type == 'object' ) && (sProperties.propertyKey != 'Common' && sProperties.propertyKey != 'common'))
+         {
+           tempFieldObj[field.propertyKey]= { 
+               "$ref" : field['$ref']
+             }
+         }else{
+ 
+         tempFieldObj[field.propertyKey] = {
+           "$id": field['$id'],
+           "type": field['type'],
+           "title": field['propertyName'],
+           "properties": {}
+         }
+ 
+         if (field.hasOwnProperty('data')) {
+           for (let j = 0; j < field.data.length; j++) {
+             let property = field.data[j];
+             tempFieldObj[field.propertyKey]['properties'][property.key] = property.data
+           }
+         }
+ 
+       }
+       }else  if (sProperties.hasOwnProperty('propertyKey')) {
+         let field = sProperties.data[i];
+ 
+         tempFieldObj[field.propertyKey] = {
+           "$id": field['$id'],
+           "type": field['type'],
+           "title": field['propertyName'],
+           "properties": {}
+         }
+ 
+         
+       }
+     }*/
 
     return tempFieldObj;
 
@@ -386,16 +444,14 @@ this.activeMenuNo = j;
           "data": self.readArraySchema(data)
         });
 
-        if(self.usecaseSchema[self.activeMenuNo].title != 'Common' && self.usecaseSchema[self.activeMenuNo].title != 'common')
-        {
+        if (self.usecaseSchema[self.activeMenuNo].title != 'Common' && self.usecaseSchema[self.activeMenuNo].title != 'common') {
           tempFieldObjSec[tempFieldObjSec.length - 1]['$ref'] = ((data.hasOwnProperty('$ref')) ? data['$ref'] : ((data.hasOwnProperty('items') && data.items.hasOwnProperty('$ref') ? data.items['$ref'] : '')));
         }
 
       } else if ((data.hasOwnProperty('$ref'))) {
         tempFieldObjSec.push(self.readCommonSchema(data));
 
-        if(self.usecaseSchema[self.activeMenuNo].title != 'Common' && self.usecaseSchema[self.activeMenuNo].title != 'common')
-        {
+        if (self.usecaseSchema[self.activeMenuNo].title != 'Common' && self.usecaseSchema[self.activeMenuNo].title != 'common') {
           tempFieldObjSec[tempFieldObjSec.length - 1]['$ref'] = data['$ref'];
         }
 
@@ -415,14 +471,13 @@ this.activeMenuNo = j;
           "propertyName": (data.hasOwnProperty('title') ? data.title : key),
           "propertyKey": key,
           "type": data.type,
-          "$ref": '', 
+          "$ref": '',
           "$id": (data.hasOwnProperty('$id')) ? data['$id'] : '',
           "data": self.readPropertyObj(data.properties)
 
         });
 
-        if(self.usecaseSchema[self.activeMenuNo].title != 'Common' && self.usecaseSchema[self.activeMenuNo].title != 'common')
-        {
+        if (self.usecaseSchema[self.activeMenuNo].title != 'Common' && self.usecaseSchema[self.activeMenuNo].title != 'common') {
           tempFieldObjSec[tempFieldObjSec.length - 1]['$ref'] = data['$ref'];
         }
 
@@ -478,7 +533,7 @@ this.activeMenuNo = j;
   //   return propertyObj;
   // }
 
-readCommonSchema(commonSchema) {
+  readCommonSchema(commonSchema) {
     let refUrl, refKey;
     let tempFieldObjSec = [];
     let tempFieldObj = [];
@@ -536,14 +591,13 @@ readCommonSchema(commonSchema) {
     this.isAddFormPg = false;
   }
 
-  showJson()
-  {
+  showJson() {
     this.isShowJson = !this.isShowJson;
     this.getEntityJson();
   }
 
   getEntityJson() {
-   
+
     let tempProperty: any;
     tempProperty = this.usecaseSchema[this.activeMenuNo];
     tempProperty.definitions = this.convertIntoSBRCSchema(this.usecaseSchema[this.activeMenuNo].definitions);
@@ -569,10 +623,10 @@ readCommonSchema(commonSchema) {
       this['active' + (this.currentTab - 1)] = false;
 
 
-    this.location.replaceState('/create/' +  this.currentTab + '/' + this.usecase + '/' + this.entityKey);
+      this.location.replaceState('/create/' + this.currentTab + '/' + this.usecase + '/' + this.entityKey);
     }
 
-    this.location.replaceState('/create/' +  this.currentTab + '/' + this.usecase + '/' + this.entityKey);
+    this.location.replaceState('/create/' + this.currentTab + '/' + this.usecase + '/' + this.entityKey);
 
 
   }
@@ -588,9 +642,9 @@ readCommonSchema(commonSchema) {
       this['active' + (this.currentTab - 1)] = true;
 
 
-    this.location.replaceState('/create/' +  this.currentTab + '/' + this.usecase + '/' + this.entityKey);
+      this.location.replaceState('/create/' + this.currentTab + '/' + this.usecase + '/' + this.entityKey);
     }
-    
+
 
   }
 
@@ -626,10 +680,9 @@ readCommonSchema(commonSchema) {
     this.an_menus[0].classList.add("activeMenu");
     this.entityKey = entitykey;
 
-    this.location.replaceState('/create/' +  this.currentTab + '/' + this.usecase + '/' + this.entityKey);
+    this.location.replaceState('/create/' + this.currentTab + '/' + this.usecase + '/' + this.entityKey);
 
-    if(this.isShowJson)
-    {
+    if (this.isShowJson) {
       this.getEntityJson();
     }
 
@@ -730,7 +783,7 @@ readCommonSchema(commonSchema) {
 
   }
 
-  getJsonData(event) {
+  readConvertJsonData(event) {
     let value = this.jsonEditor.get();
     this.usecaseSchema[this.activeMenuNo] = value;
     this.getEntityPropertiesByIndex(this.activeMenuNo);
@@ -871,13 +924,12 @@ readCommonSchema(commonSchema) {
     //alert(this.isActive);
     if (this.isActive == 'createSchema') {
 
-      for(let i=0; i< this.usecaseSchema.length; i++)
-      {
+      for (let i = 0; i < this.usecaseSchema.length; i++) {
         this.usecaseSchema[i].definitions = this.convertIntoSBRCSchema(this.usecaseSchema[i].definitions);
 
       }
-   let  schemaParams = {
-     'schema' :  this.usecaseSchema
+      let schemaParams = {
+        'schema': this.usecaseSchema
 
       }
 
@@ -888,5 +940,5 @@ readCommonSchema(commonSchema) {
   }
 
 
-  
+
 }

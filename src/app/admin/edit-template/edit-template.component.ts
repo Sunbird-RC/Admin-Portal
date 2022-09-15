@@ -43,6 +43,9 @@ export class EditTemplateComponent implements OnInit {
   certificateProperties: any;
   certificateTitle: any;
   propertyArr: any = [];
+  params: any;
+  entityName: any;
+  usecase: any;
 
   constructor(public router: Router, public route: ActivatedRoute, public toastMsg: ToastMessageService,
     public generalService: GeneralService, public schemaService: SchemaService) {
@@ -79,7 +82,19 @@ export class EditTemplateComponent implements OnInit {
 
   async ngOnInit() {
 
+    this.route.params.subscribe(params => {
+      this.params = params;
+      console.log({params});
+
+      if (this.params.hasOwnProperty('entity')) {
+        this.entityName = params.entity;
+        this.usecase = params.usecase.toLowerCase();
+
+      }
+  });
+
     await this.readHtmlSchemaContent(this.sampleData);
+    console.log(this.userHtml);
     this.grapesJSDefine();
     /* ------END-------------------------Advance Editor ----------------------- */
 
@@ -312,6 +327,10 @@ export class EditTemplateComponent implements OnInit {
         ]
       },
     });
+
+    var html = this.editor.getHtml();
+    console.log('html ---> ', html);
+    console.log('---------------------->', this.editor.runCommand('gjs-get-inlined-html'));
   }
 
   dataChange() {
@@ -489,8 +508,16 @@ export class EditTemplateComponent implements OnInit {
 
     var parser = new DOMParser();
     var htmlDoc = parser.parseFromString(htmlWithCss, 'text/html');
-    this.userHtml = htmlDoc.documentElement.innerHTML
+    this.userHtml = htmlDoc.documentElement.innerHTML;
 
+    let vcTrmplate = {
+      [this.entityName] :  this.userHtml
+    }
+
+    localStorage.setItem('schemaVc', JSON.stringify(vcTrmplate));
+    this.router.navigate(['/create/1/' + this.usecase + '/' + this.entityName]);
+
+/*
     // Creating a file object with some content
     var fileObj = new File([this.userHtml], this.templateName.replace(/\s+/g, '') + '.html');
 
@@ -533,7 +560,7 @@ export class EditTemplateComponent implements OnInit {
         })
       }
     })
-
+*/
   }
 
 

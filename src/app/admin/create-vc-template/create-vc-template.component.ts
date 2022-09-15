@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'create-vc-template',
@@ -12,9 +13,27 @@ export class CreateVcTemplateComponent implements OnInit {
   {
     "thumbnailUrl" : "/assets/images/thumbnail.png"
   }]
-  constructor() { }
+  params: any;
+  entityName: any;
+  usecase: any;
+  constructor(
+    private activeRoute: ActivatedRoute,
+    public router: Router
+  ) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+
+    this.activeRoute.params.subscribe(params => {
+      this.params = params;
+      console.log({params});
+
+      if (this.params.hasOwnProperty('entity')) {
+        this.entityName = params.entity;
+        this.usecase = params.usecase;
+
+
+      }
+  });
+  
   }
-
 }

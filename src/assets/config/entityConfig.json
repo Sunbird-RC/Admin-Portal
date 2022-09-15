@@ -85,11 +85,11 @@
             ],
             "entity": [{
                 "entityName": "Vaccination Certificate",
-                "schemaUrl": "/assets/schemas/certificate-issuance/VaccinationCertificate.json"
+                "schemaUrl": "/assets/schemas/divoc/VaccinationCertificate.json"
             },
             {
                 "entityName": "Vaccinator",
-                "schemaUrl": "/assets/schemas/certificate-issuance/Vaccinator.json"
+                "schemaUrl": "/assets/schemas/divoc/Vaccinator.json"
             }]
         },
         "new": {

@@ -9,7 +9,7 @@
 
         <!-- <ul id="stepList" *ngFor="let steps of processSteps; let i = index"> -->
         <ul id="stepList">
-            <li *ngFor="let steps of processSteps; let i = index" class="col-md-2 col-4 tab" id="step{{i + 1}}"><strong>
+            <li *ngFor="let steps of processSteps; let i = index" class="col-md-2 tab" id="step{{i}}"><strong>
                     <i class="float-end fa fas fa-chevron-right text-grey-color mt-3 fs-3 next-arrow"></i>
                     <span class="l10">STEP {{i + 1}}</span> <br />
                     <span class="p14 fw-bold">{{steps?.title}}</span>
@@ -23,11 +23,14 @@
         <div class="col-md-3">
             <div class="wrapper ps-2 -e-2">
                 <!--Top menu -->
-                <div id="sideMenu" class="sidebar" *ngIf="isActive != 'test-publish'">
+                <div id="sideMenu" class="sidebar">
                     <ul class="list-unstyled" *ngIf="containCommonField && isActive == 'createSchema'">
                         <p class="p16 fw-bold pl-3 text-uppercase">Common </p>
+                        <ng-template ngFor let-menuItem [ngForOf]="usecaseSchema" let-i="index">
 
-                        <li class="menu" (click)="openEntity(0, 'Common')">
+                        <li class="menu" 
+                        *ngIf="(menuItem?.title == 'Common' || menuItem?.title == 'common') && menuItem?.title"
+                        (click)="openEntity(i, menuItem?.title)">
                             <a class="a-menu"> Common schema
                                 <!-- <i *ngIf="isActive == 'createSchema'" class="fa fa-ellipsis-h text-grey-color float-end mt-1 p14"
                                     aria-hidden="true"></i> -->
@@ -41,14 +44,16 @@
                                 </div> -->
                             </a>
                         </li>
+                        </ng-template>
                     </ul>
                     <p class="p16 fw-bold pl-3 text-uppercase">Entity </p>
 
                     <ul class="list-unstyled components">
-                        <ng-template ngFor let-menuItem [ngForOf]="entityListArr" let-i="index">
-                            <li class="menu" *ngIf="menuItem?.title != 'Common' && menuItem?.title"
-                                (click)="openEntity(i + 1, menuItem?.title)">
-                                <a class="a-menu mb-4"> {{menuItem?.title}}
+                        <ng-template ngFor let-menuItem [ngForOf]="usecaseSchema" let-i="index">
+                            <li class="menu"
+                                *ngIf="(menuItem?.title != 'Common' && menuItem?.title != 'common') && menuItem?.title"
+                                (click)="openEntity(i, menuItem?.title)">
+                                <a class="a-menu"> {{menuItem?.title}}
                                     <div *ngIf="isActive == 'createSchema'" class="dropdown p14 float-end">
                                         <i class="fa fa-ellipsis-h text-grey-color" aria-hidden="true"></i>
                                         <div class="dropdown-content dropdown-content-margin">
@@ -82,21 +87,21 @@
         </div>
 
 
-        <div class="col-md-9 mb-6" [ngClass]="{'col-md-12': isActive == 'test-publish'}">
+        <div class="col-md-9 p-2 mb-6">
             <div class="step" *ngIf="isActive == 'createSchema'">
                 <div class="d-flex flex-justify-between card-body pr-2 py-2">
                     <div class="heading-2">
-                        <h3>{{entityName}}</h3>
+                        <h3>{{usecaseSchema[activeMenuNo]?.title}}</h3>
                         <p class="p14 text-grey-color">{{description}}</p>
                     </div>
-                    <div *ngIf="!isShowJson && entityProperties.length">
+                    <div *ngIf="!isShowJson && usecaseSchema[activeMenuNo]?.definitions?.data?.length">
                         <button class="float-end p14 btn btn-sec-bg submit-button text-secondary-color"
                             (click)="showJson()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Schema of
                             Entity</button>
                     </div>
                 </div>
 
-                <div *ngIf="!isShowJson && entityProperties.length">
+                <div *ngIf="!isShowJson && usecaseSchema[activeMenuNo]?.definitions?.data?.length">
                     <p class="p16">Fields</p>
                     <div class="card w-100">
                         <div class="px-3">
@@ -114,47 +119,110 @@
                                 <tbody>
 
 
-                                    <ng-template ngFor let-field [ngForOf]="entityProperties" let-i="index">
-                                        <ng-template [ngIf]="field?.type == 'array' || field?.type == 'object'"
-                                            class="p-4">
-                                            <p class="mt-3 fw-bold">
-                                                {{field?.propertyTitle}}
-                                            </p>
+                                    <!-- <ng-template ngFor let-field [ngForOf]="usecaseSchema[activeMenuNo]?.definitions" let-i="index"> -->
+                                    <ng-template
+                                        [ngIf]="usecaseSchema[activeMenuNo]?.definitions?.type == 'array' || usecaseSchema[activeMenuNo]?.definitions?.type == 'object'"
+                                        class="p-4">
+                                        <p class="mt-3 fw-bold">
+                                            {{usecaseSchema[activeMenuNo]?.definitions?.propertyName}}
+                                        </p>
 
 
-                                            <ng-template ngFor let-arrayfield [ngForOf]="entityProperties[i].data"
-                                                let-j="index">
+                                        <ng-template ngFor let-field
+                                            [ngForOf]="usecaseSchema[activeMenuNo]?.definitions?.data" let-j="index">
 
-                                                <tr style="border: white solid;" [hidden]="!arrayfield?.data?.title">
-                                                    <!-- <tr style="border: white solid;" *ngFor="let arrayfield of entityProperties[i].data; let j = index"> -->
+                                            <ng-template [ngIf]="field?.type == 'array' || field?.type == 'object'">
+                                                <p class="mt-3 fw-bold">
+                                                    {{field?.propertyName}}
+
+                                                </p>
+                                                <ng-template ngFor let-secArrayfield [ngForOf]="field?.data"
+                                                    let-k="index">
+                                                    <tr [hidden]="!secArrayfield?.data?.title"
+                                                        style="border: white solid;">
+
+                                                        <td>
+                                                            <span class="p14">{{secArrayfield?.data?.title}}</span>
+                                                        </td>
+
+                                                        <td>
+                                                            <span class="p14">{{secArrayfield?.data?.type}}</span>
+                                                        </td>
+                                                        <td>
+                                                            <span class="p14"
+                                                                *ngIf="secarrayfield?.data?.required">Yes</span>
+                                                            <span class="p14"
+                                                                *ngIf="!secarrayfield?.data?.required">No</span>
+                                                        </td>
+                                                        <td>
+                                                            <span class="p14">{{secarrayfield?.description}}</span>
+                                                        </td>
+                                                        <td>
+                                                            <select name="visiblity" id="visiblity"
+                                                                class="fieldInput p14 m-2  py-1 px-3 mr-3">
+                                                                <option selected
+                                                                    value="public"> <i class="fa fa-ellipsis-h"
+                                                                        aria-hidden="true"></i>
+                                                                    Public
+                                                                </option>
+                                                                <option
+                                                                    value="private"> <i class="fa fa-ellipsis-h "
+                                                                        aria-hidden="true"></i>
+                                                                    Private
+                                                                </option>
+                                                                <option
+                                                                    value="personal"> <i class="fa fa-ellipsis-h"
+                                                                        aria-hidden="true"></i>
+                                                                    Personal
+                                                                </option>
+                                                            </select>
+                                                        </td>
+                                                        <td>
+                                                            <div class="dropdown p14">
+                                                                <i class="fa fa-ellipsis-h  text-grey-color"
+                                                                    aria-hidden="true"></i>
+                                                                <div class="dropdown-content">
+                                                                    <a (click)="viewField('nasted', j, k)">View</a>
+                                                                    <a (click)="deleteField('nasted', j, k)">Delete</a>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+
+                                                </ng-template>
+
+                                                <tr style="border: white solid;" [hidden]="!field[j]?.title">
 
 
-                                                    <td>
-                                                        <span class="p14">{{arrayfield?.data?.title}}</span>
+                                                    <td> 
+                                                        <span class="p14">{{field[j]?.title}}</span>
                                                     </td>
 
                                                     <td>
-                                                        <span class="p14">{{arrayfield?.data?.type}}</span>
+                                                        <span class="p14">{{field?.data?.type}}</span>
                                                     </td>
                                                     <td>
-                                                        <span class="p14" *ngIf="arrayfield?.data?.required">Yes</span>
-                                                        <span class="p14" *ngIf="!arrayfield?.data?.required">No</span>
+                                                        <span class="p14" *ngIf="field?.data?.required">Yes</span>
+                                                        <span class="p14" *ngIf="!field?.data?.required">No</span>
                                                     </td>
                                                     <td>
-                                                        <span class="p14">{{arrayfield?.description}}</span>
+                                                        <span class="p14">{{field?.description}}</span>
                                                     </td>
                                                     <td>
-                                                        <select name="visibility" id="visibility"
+                                                        <select name="visiblity" id="visiblity"
                                                             class="fieldInput p14 m-2  py-1 px-3 mr-3">
-                                                            <option value="public"> <i class="fa fa-ellipsis-h"
+                                                            <option selected
+                                                                value="public"> <i class="fa fa-ellipsis-h"
                                                                     aria-hidden="true"></i>
                                                                 Public
                                                             </option>
-                                                            <option value="private"> <i class="fa fa-ellipsis-h "
+                                                            <option
+                                                                value="private"> <i class="fa fa-ellipsis-h "
                                                                     aria-hidden="true"></i>
                                                                 Private
                                                             </option>
-                                                            <option value="personal"> <i class="fa fa-ellipsis-h"
+                                                            <option
+                                                                value="personal"> <i class="fa fa-ellipsis-h"
                                                                     aria-hidden="true"></i>
                                                                 Personal
                                                             </option>
@@ -165,63 +233,68 @@
                                                             <i class="fa fa-ellipsis-h  text-grey-color"
                                                                 aria-hidden="true"></i>
                                                             <div class="dropdown-content">
-                                                                <a (click)="viewField('nasted', i, j)">View</a>
-                                                                <a (click)="deleteField('nasted', i, j)">Delete</a>
+                                                                <a (click)="viewField('nasted', j, '')">View</a>
+                                                                <a (click)="deleteField('nasted', j, '')">Delete</a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </ng-template>
+
+
+
+
+                                            <ng-template [ngIf]="field?.type == 'string'">
+                                                <tr [hidden]="!field?.data?.title">
+
+
+                                                    <td> 
+                                                        <span class="p14">{{field?.data?.title}}</span>
+                                                    </td>
+
+                                                    <td>
+                                                        <span class="p14">{{field?.data?.type}}</span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="p14" *ngIf="field?.data?.required">Yes</span>
+                                                        <span class="p14" *ngIf="!field?.data?.required">No</span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="p14">{{field?.description}}</span>
+                                                    </td>
+                                                    <td>
+                                                        <select name="visiblity" id="visiblity"
+                                                            class="fieldInput p14 m-2  py-1 px-3 mr-3">
+                                                            <option selected
+                                                                value="public"> <i class="fa fa-ellipsis-h"
+                                                                    aria-hidden="true"></i>
+                                                                Public
+                                                            </option>
+                                                            <option
+                                                                value="private"> <i class="fa fa-ellipsis-h "
+                                                                    aria-hidden="true"></i>
+                                                                Private
+                                                            </option>
+                                                            <option
+                                                                value="personal"> <i class="fa fa-ellipsis-h"
+                                                                    aria-hidden="true"></i>
+                                                                Personal
+                                                            </option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <div class="dropdown p14">
+                                                            <i class="fa fa-ellipsis-h  text-grey-color"
+                                                                aria-hidden="true"></i>
+                                                            <div class="dropdown-content">
+                                                                <a (click)="viewField('string', i, '')">View</a>
+                                                                <a (click)="deleteField('string', i, '')">Delete</a>
                                                             </div>
                                                         </div>
                                                     </td>
                                                 </tr>
                                             </ng-template>
                                         </ng-template>
-
-                                        <ng-template [ngIf]="field?.type == 'string'">
-                                            <tr [hidden]="!field?.data?.title">
-
-
-                                                <td>
-                                                    <span class="p14">{{field?.data?.title}}</span>
-                                                </td>
-
-                                                <td>
-                                                    <span class="p14">{{field?.data?.type}}</span>
-                                                </td>
-                                                <td>
-                                                    <span class="p14" *ngIf="field?.data?.required">Yes</span>
-                                                    <span class="p14" *ngIf="!field?.data?.required">No</span>
-                                                </td>
-                                                <td>
-                                                    <span class="p14">{{field?.description}}</span>
-                                                </td>
-                                                <td>
-                                                    <select name="visibility" id="visibility"
-                                                        class="fieldInput p14 m-2  py-1 px-3 mr-3">
-                                                        <option value="public"> <i class="fa fa-ellipsis-h"
-                                                                aria-hidden="true"></i>
-                                                            Public
-                                                        </option>
-                                                        <option value="private"> <i class="fa fa-ellipsis-h "
-                                                                aria-hidden="true"></i>
-                                                            Private
-                                                        </option>
-                                                        <option value="personal"> <i class="fa fa-ellipsis-h"
-                                                                aria-hidden="true"></i>
-                                                            Personal
-                                                        </option>
-                                                    </select>
-                                                </td>
-                                                <td>
-                                                    <div class="dropdown p14">
-                                                        <i class="fa fa-ellipsis-h  text-grey-color"
-                                                            aria-hidden="true"></i>
-                                                        <div class="dropdown-content">
-                                                            <a (click)="viewField('string', i, j)">View</a>
-                                                            <a (click)="deleteField('string', i, j)">Delete</a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </ng-template>
-
                                     </ng-template>
                                 </tbody>
 
@@ -247,7 +320,7 @@
                                 <div>
                                     <button (change)="getJsonData($event)"
                                         class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2">Save</button>
-                                    <button (click)="showJson()"
+                                    <button (click)="hideJSon()"
                                         class="btn btn-sec-bg float-end submit-button px-3 my-2">Cancel</button>
 
                                 </div>
@@ -259,18 +332,21 @@
                     </div>
                 </div>
 
-                <!-- <div class="card-body" *ngIf="entityListArr.length">
+                <!-- <div class="card-body" *ngIf="usecaseSchema.length">
                     <span class="m-3 p14 mbtn-10 submit-button text-secondary-color" (click)="showAddForm()">
                         <i class="fa fa-plus" aria-hidden="true"></i>
                         Add Field</span>
                 </div> -->
-                <div class="p-3 sm-card" *ngIf="entityListArr.length">
+
+                <p *ngIf="!isShowJson && !usecaseSchema[activeMenuNo]?.definitions?.data?.length" class="p16">Fields</p>
+
+                <div class="p-3 sm-card" *ngIf="usecaseSchema.length &&  !isShowJson">
                     <span class="m-3 p14 mbtn-10 submit-button text-secondary-color" (click)="showAddForm()">
                         <i class="fa fa-plus" aria-hidden="true"></i>
                         Add Field</span>
                 </div>
 
-                <div class="p-3" *ngIf="isActive == 'createSchema' && !entityListArr.length">
+                <div class="p-3" *ngIf="isActive == 'createSchema' && !usecaseSchema.length">
                     <p class="p16 fw-bold"> No schema added yet.</p>
                     <p class="p14">Please add entity level schema. You can also add common schema example address, field
                         name and field name which can be used or references in other schemas.</p>
@@ -343,55 +419,20 @@
         </div>
     </div>
 
-    <div id="saveConfig" class="modal fade" role="dialog" aria-labelledby="saveConfig">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Save Configuration</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="container mt-1">
-                    <div class="mb-3">
-                        <span class="l12 fw-bold">Enter Configuration Name</span>
-                        <input id="configName" class="w-100 input-field modal-input-field p14 p-2 inputField"
-                            placeholder="Enter Configuration name" type="text" />
-                    </div>
-
-                    <div class="mt-2">
-                        <span class="l12 fw-bold">Enter Description<span class="text-muted"> (optional)</span></span>
-                        <textarea id="description"
-                            class="w-100 desc input-field modal-input-field p14 pl-3 inputField"></textarea>
-                        <span class="l12 text-grey-color">Description about the entity</span>
-                    </div>
-
-
-                    <div class="mt-4">
-                        <button data-dismiss="modal" aria-label="Close"
-                            class="btn text-capitalize float-end btn-primary btn-primary-sm p1"
-                            (click)="saveConfigurations()">Save</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-      </div>
-
     <footer class="footer fixed-bottom">
         <div class="container-fluid">
-            <div class="row btn-holder">
-               <div class="col-3">
-                <button *ngIf="isActive == 'create-vc' || isActive == 'test-publish'" (click)="backStep()"class="btn btn-sec-bg submit-button px-3 my-2 ml-2 mr-2">Back</button>
-               </div> 
+            <div>
+                <button *ngIf="isActive == 'create-vc' || isActive == 'test-publish'" (click)="backStep()"
+                    class="btn btn-sec-bg submit-button px-3 my-2 ml-2 mr-2 ">Back</button> &nbsp;
+                <button (click)="nextStep()" [disabled]="!usecaseSchema[activeMenuNo]?.definitions?.data?.length"
+                    class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2">Save and
+                    Next</button>
+                <button *ngIf="isActive == 'configurations'"
+                    class="btn btn-sec-bg float-end submit-button px-3 my-2 ml-2 mr-2 ">Skip</button> &nbsp;
+                <button *ngIf="isActive == 'create-vc' || isActive == 'ownership'"
+                    class="btn  float-end btn-primary btn-primary-sm px-3 my-2 ml-2 mr-2">Save as Draft</button>
+                &nbsp;
 
-                <div class="col-9">
-                    <button (click)="nextStep()" [disabled]="!entityProperties.length" class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2">Save and Next</button>
-
-                    <button *ngIf="isActive == 'configurations'" class="btn btn-sec-bg float-end submit-button px-3 my-2 ml-2 mr-2 ">Skip</button>
-
-                    <button *ngIf="isActive == 'create-vc' || isActive == 'ownership'" class="btn float-end btn-primary btn-primary-sm px-3 my-2 ml-2 mr-2">Save as Draft</button>
-                
-                    <button *ngIf="isActive == 'test-publish'" class="btn btn-sec-bg float-end submit-button px-3 my-2 ml-2 mr-2 " data-toggle="modal" data-target="#saveConfig"> Save</button>
-                </div>
-                   
             </div>
         </div>
     </footer>

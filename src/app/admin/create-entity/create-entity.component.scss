@@ -188,7 +188,9 @@ border-radius: 4px;
 #stepList li {
   list-style-type: none;
   font-size: 12px;
+  width: 25%;
   float: left;
+  position: relative;
 }
 
 .fixed-bottom {

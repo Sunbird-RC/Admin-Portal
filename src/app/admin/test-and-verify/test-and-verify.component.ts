@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'test-and-verify',
@@ -16,11 +17,25 @@ export class TestAndVerifyComponent implements OnInit {
   vaccStatus : String;
 
   objectKeys = Object.keys;
-  constructor() { 
+  params: any;
+  entityName: any;
+  usecase: any;
+  constructor(public router: Router, public route: ActivatedRoute,) { 
     this.vaccinationStatus = [ "Fully vaccinated", "Partially Vaccinated", "Not Vaccinated" ]
   }
 
   ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.params = params;
+      console.log({params});
+
+      if (this.params.hasOwnProperty('entity')) {
+        this.entityName = params.entity;
+        this.usecase = params.usecase.toLowerCase();
+
+      }
+  });
+
   }
 
 
@@ -29,6 +44,10 @@ export class TestAndVerifyComponent implements OnInit {
     console.log(this.beneficiaryName);
     console.log(this.vaccDate);
     console.log(this.vaccStatus);
+  }
+
+  testAndVerify(){
+    this.router.navigate(['/create/2/' + this.usecase + '/' + this.entityName]);
   }
   
 }

@@ -9,12 +9,31 @@ import { Router } from '@angular/router';
 export class TestAndLaunchComponent implements OnInit {
   linkImage: string = "assets/images/thumbnail.png";
   fixedImage: string = "assets/images/thumbnail.png"
-
+  schemaName: string;
+  vcObject: any;
+  thumbnailItems: any = []
   constructor(private router: Router) { }
 
   ngOnInit(): void {
+
+    let schemaVc = localStorage.getItem('schemaVc');
+    if (schemaVc != undefined) {
+      schemaVc = JSON.parse(schemaVc);
+      let self = this;
+      Object.keys(schemaVc).forEach(function (key) {
+        self.schemaName = key;
+        self.vcObject = schemaVc[key];
+
+        self.thumbnailItems.push({
+          "thumbnailUrl": "/assets/images/thumbnail.png",
+          "title" : self.vcObject.name,
+          "description" : self.vcObject.description,
+          "html" : self.vcObject.html
+        })
+      });
+    }
   }
   testAndVerify(){
-    this.router.navigate(['/test-and-verify'], { skipLocationChange:true});
+    this.router.navigate(['/test-and-verify']);
   }
 }

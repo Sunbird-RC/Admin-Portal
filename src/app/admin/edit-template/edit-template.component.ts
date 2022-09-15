@@ -511,7 +511,11 @@ export class EditTemplateComponent implements OnInit {
     this.userHtml = htmlDoc.documentElement.innerHTML;
 
     let vcTrmplate = {
-      [this.entityName] :  this.userHtml
+      [this.entityName] :  {
+        'name' : this.templateName,
+        'description' : this.description,
+        'html' : this.userHtml
+      }
     }
 
     localStorage.setItem('schemaVc', JSON.stringify(vcTrmplate));

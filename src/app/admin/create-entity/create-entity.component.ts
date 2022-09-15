@@ -4,6 +4,7 @@ import { SchemaService } from '../../services/data/schema.service';
 import { JsonEditorComponent, JsonEditorOptions } from 'ang-jsoneditor';
 import { getLocaleDateFormat } from '@angular/common';
 import { Location } from '@angular/common';
+import { GeneralService } from 'src/app/services/general/general.service';
 
 
 @Component({
@@ -66,11 +67,22 @@ export class CreateEntityComponent implements OnInit {
   sselectedVal: any = "";
   templateName: any;
   configDescription: any;
+  schemaName: string;
+  vcObject: any;
+  userHtml: any;
+  issuerOsid: any;
+  oldTemplateName: string;
   constructor(
     private activeRoute: ActivatedRoute,
     public router: Router,
     public schemaService: SchemaService,
-    public location: Location) { }
+    public generalService: GeneralService,
+    public location: Location) {
+      this.generalService.getData('/Issuer').subscribe((res) => {
+
+        this.issuerOsid = res[0].osid;
+      });
+     }
 
   ngOnInit(): void {
 
@@ -957,8 +969,72 @@ export class CreateEntityComponent implements OnInit {
 
   saveConfiguration() {
     alert('save');
+
+    let schemaVc = localStorage.getItem('schemaVc');
+    if (schemaVc != undefined) {
+      schemaVc = JSON.parse(schemaVc);
+      let self = this;
+      Object.keys(schemaVc).forEach(function (key) {
+        self.schemaName = key;
+        self.vcObject = schemaVc[key];
+        self.userHtml = self.vcObject.html
+
+      //   self.thumbnailItems.push({
+      //     "thumbnailUrl": "/assets/images/thumbnail.png",
+      //     "title" : self.vcObject.name,
+      //     "description" : self.vcObject.description,
+      //     "html" : self.vcObject.html
+      //   })
+       });
+    }
+
+    // Creating a file object with some content
+    var fileObj = new File([this.userHtml], this.templateName.replace(/\s+/g, '') + '.html');
+
+
+    let str = this.templateName.replace(/\s+/g, '');
+    this.templateName = str.charAt(0).toUpperCase() + str.slice(1)
+    // Create form data
+    const formData = new FormData();
+    // Store form name as "file" with file data
+    formData.append("files", fileObj, fileObj.name);
+    this.generalService.postData('/Issuer/' + this.issuerOsid + '/schema/documents', formData).subscribe((res) => {
+
+      // this.schemaContent = JSON.parse(this.schemaContent);
+      let _self = this;
+      Object.keys(this.usecaseSchema[1]['properties']).forEach(function (key) {
+        _self.oldTemplateName = key;
+      });
+
+
+      this.usecaseSchema[1]._osConfig['certificateTemplates'] = { html: 'minio://' + res.documentLocations[0] }
+
+      let result = JSON.stringify(this.usecaseSchema[1]);
+
+      result = this.replaceAll(result, this.oldTemplateName, this.templateName);
+
+      let payload = {
+        "name": this.templateName,
+        "description": this.configDescription,
+        "schema": result
+      }
+
+      if (res.documentLocations[0]) {
+        this.generalService.postData('/Schema', payload).subscribe((res) => {
+          localStorage.setItem('content', '');
+          this.router.navigate(['/dashboard']);
+        }, (err) => {
+          console.log('err ----', err);
+       //   this.toastMsg.error('error', err.error.params.errmsg)
+
+        })
+      }
+    })
   }
 
-
+  replaceAll(str, find, replace) {
+    var escapedFind = find.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
+    return str.replace(new RegExp(escapedFind, 'g'), replace);
+  }
 
 }

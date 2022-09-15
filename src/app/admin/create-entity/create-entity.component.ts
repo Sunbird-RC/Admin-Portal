@@ -568,12 +568,10 @@ readCommonSchema(commonSchema) {
       this['active' + this.currentTab] = true;
       this['active' + (this.currentTab - 1)] = false;
 
-      alert(this.isActive);
 
     this.location.replaceState('/create/' +  this.currentTab + '/' + this.usecase + '/' + this.entityKey);
     }
 
-alert(this.isActive);
     this.location.replaceState('/create/' +  this.currentTab + '/' + this.usecase + '/' + this.entityKey);
 
 
@@ -589,7 +587,6 @@ alert(this.isActive);
       this['active' + this.currentTab] = false;
       this['active' + (this.currentTab - 1)] = true;
 
-      alert(this.isActive);
 
     this.location.replaceState('/create/' +  this.currentTab + '/' + this.usecase + '/' + this.entityKey);
     }

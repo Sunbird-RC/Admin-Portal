@@ -64,6 +64,8 @@ export class CreateEntityComponent implements OnInit {
   defination: any = [];
   processEntity: number = 0;
   sselectedVal: any = "";
+  templateName: any;
+  configDescription: any;
   constructor(
     private activeRoute: ActivatedRoute,
     public router: Router,
@@ -82,9 +84,21 @@ export class CreateEntityComponent implements OnInit {
 
 
       if (this.params.hasOwnProperty('step')) {
+
         this.currentTab = Number(params.step);
+        this.isActive = 'create-vc';
       } else {
         this.currentTab = 0;
+        this.isActive = 'createSchema'
+      }
+
+      switch ( this.currentTab) {
+        case 0: this.isActive = 'createSchema'
+          break;
+        case 1: this.isActive = 'create-vc'
+          break;
+          case 2: this.isActive = 'test-publish'
+          break;
       }
 
       // if (this.params.hasOwnProperty('entity')) {
@@ -305,7 +319,7 @@ export class CreateEntityComponent implements OnInit {
             }
 
           }
-        }else{
+        } else {
           let property = sProperties.data[i];
           tempFieldObj[sProperties.propertyKey]['properties'][property.key] = property.data
 
@@ -794,6 +808,8 @@ export class CreateEntityComponent implements OnInit {
   }
 
   hideJSon() {
+
+    this.getEntityPropertiesByIndex(this.activeMenuNo);
     this.isShowJson = !this.isShowJson;
 
   }
@@ -937,6 +953,10 @@ export class CreateEntityComponent implements OnInit {
 
 
     }
+  }
+
+  saveConfiguration() {
+    alert('save');
   }
 
 

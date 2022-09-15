@@ -287,8 +287,8 @@
                                                             <i class="fa fa-ellipsis-h  text-grey-color"
                                                                 aria-hidden="true"></i>
                                                             <div class="dropdown-content">
-                                                                <a (click)="viewField('string', i, '')">View</a>
-                                                                <a (click)="deleteField('string', i, '')">Delete</a>
+                                                                <a (click)="viewField('string', j, '')">View</a>
+                                                                <a (click)="deleteField('string', j, '')">Delete</a>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -419,14 +419,55 @@
         </div>
     </div>
 
+    <div class="modal right fade" id="prewiewProfile" tabindex="-1" role="dialog"
+    aria-labelledby="prewiewProfile">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header pt-4 border-0">
+                <h3 class="heading-5">Save Configuration</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="container mt-4">
+                <div class="mb-4">
+                    <p class="heading-4 font-700 mb-05">Enter Configuration Name</p>
+                    <input [(ngModel)]="templateName" class="w-100 input-field p14 p-3 inputField"
+                        placeholder="Enter Document name" type="text" />
+                </div>
+
+                <div class="mt-2">
+                    <p class="heading-4 font-700 mb-05">Enter Description<span
+                            class="text-muted">(optional)</span></p>
+                    <textarea [(ngModel)]="configDescription"
+                        class="w-100 desc py-2 input-field p14 pl-3 inputField"
+                        placeholder="Enter description"></textarea>
+                </div>
+
+
+                <div class="mt-4">
+                    <button (click)="saveConfiguration()" data-dismiss="modal" aria-label="Close"
+                        class="btn text-capitalize float-end btn-primary btn-primary-sm p1">Save</button>
+                    <button class="close" data-dismiss="modal" aria-label="Close"
+                        class="btn text-capitalize float-end btn-primary btn-primary-sm p1 sb-text-primary mr-2 bg-none">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
     <footer class="footer fixed-bottom">
         <div class="container-fluid">
             <div>
                 <button *ngIf="isActive == 'create-vc' || isActive == 'test-publish'" (click)="backStep()"
                     class="btn btn-sec-bg submit-button px-3 my-2 ml-2 mr-2 ">Back</button> &nbsp;
-                <button (click)="nextStep()" [disabled]="!usecaseSchema[activeMenuNo]?.definitions?.data?.length"
+                <button (click)="nextStep()" *ngIf="isActive != 'test-publish' && isActive != 'create-vc'" [disabled]="!usecaseSchema[activeMenuNo]?.definitions?.data?.length"
                     class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2">Save and
                     Next</button>
+                    <button (click)="nextStep()" *ngIf="isActive == 'create-vc'" 
+                    class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2">Save and
+                    Next</button>
+                    <button *ngIf="isActive == 'test-publish'" data-toggle="modal" data-target="#prewiewProfile"
+                    class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2">Save </button>
                 <button *ngIf="isActive == 'configurations'"
                     class="btn btn-sec-bg float-end submit-button px-3 my-2 ml-2 mr-2 ">Skip</button> &nbsp;
                 <button *ngIf="isActive == 'create-vc' || isActive == 'ownership'"

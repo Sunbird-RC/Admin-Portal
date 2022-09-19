@@ -13,7 +13,7 @@
                     "key" : "create-vc"
                 },
                 {
-                    "title" : "Test and Launch",
+                    "title" : "Publish",
                     "key" : "test-publish"
                 }
             ],
@@ -51,7 +51,7 @@
                     "key" : "create-vc"
                 },
                 {
-                    "title" : "Test and Launch",
+                    "title" : "Publish",
                     "key" : "test-publish"
                 }
             ],
@@ -79,7 +79,7 @@
                     "key" : "create-vc"
                 },
                 {
-                    "title" : "Test and Launch",
+                    "title" : "Publish",
                     "key" : "test-publish"
                 }
             ],
@@ -104,7 +104,7 @@
                     "key" : "create-vc"
                 },
                 {
-                    "title" : "Test and Launch",
+                    "title" : "Publish",
                     "key" : "test-publish"
                 }
             ],

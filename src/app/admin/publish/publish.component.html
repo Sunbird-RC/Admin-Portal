@@ -1,0 +1,64 @@
+<div id="content" class="p-5">
+    <div class="wrapped mp-0" *ngIf = "!isShow">
+        <div class="card" style="width: 450px;height: 299px;">
+
+            <div class="card-body" style="margin:10%; padding: 5%;">
+                <p class="wrapped bTitle">Publish to Explore APIs</p>
+                <div class="card-text lh-lg p14 wrapped">
+                    If you have completed the schema configuration,
+                    
+                </div>
+                <div class="card-text lh-lg p14 wrapped">
+                    
+                    click publish to explore API.
+                </div>
+
+                <div class="mt-4 wrapped">
+
+                    <a  class="float-end p14 btn btn-primary" (click)="changeVal()">Publish</a>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="wrapped mt-2" *ngIf = "!isShow">
+        <div class="card" style="width: 450px; height: 299px;">
+
+            <div class="card-body" style="margin:10%; padding: 5%;">
+                <p class="wrapped bTitle">Save to Publish Later</p>
+                <div class="card-text lh-lg p14 wrapped">
+                    You can save schema configuration as draft
+                    
+                </div>
+                <div class="card-text lh-lg p14 wrapped">
+                   
+                    and publish it later.
+                </div>
+                <div class="mt-4 wrapped">
+
+                    <a href="/dlogin" class="float-end p14 btn btn-primary">Save Draft</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="wrapped mt-2" *ngIf = "isShow">
+        <div class="card" style="width: 450px; height: 299px;">
+
+            <div class="card-body" style="margin:10%; padding: 5%;">
+                <p class="wrapped bTitle">Schema is Published</p>
+                <div class="card-text lh-lg p14 wrapped">
+                  <a href="#">Explore API here</a>  
+                    
+                </div>
+               
+                <div class="mt-4 wrapped">
+
+                    <a href="/dlogin" class="float-end p14 btn btn-primary">Go to Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

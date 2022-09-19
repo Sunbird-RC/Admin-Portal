@@ -139,6 +139,7 @@ import { ConfigurationsComponent } from './admin/configurations/configurations.c
 import { EditTemplateComponent } from './admin/edit-template/edit-template.component';
 import { DloginComponent } from './admin/dlogin/dlogin.component';
 import { AdvanceEditorComponent } from './admin/advance-editor/advance-editor.component';
+import { PublishComponent } from './admin/publish/publish.component';
 
 @NgModule({
   declarations: [
@@ -184,7 +185,8 @@ import { AdvanceEditorComponent } from './admin/advance-editor/advance-editor.co
     ConfigurationsComponent,
     EditTemplateComponent,
     DloginComponent,
-    AdvanceEditorComponent
+    AdvanceEditorComponent,
+    PublishComponent
   ],
   imports: [
     BrowserModule,

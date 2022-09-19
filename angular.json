@@ -46,7 +46,6 @@
               "./node_modules/grapesjs-component-code-editor/dist/grapesjs-component-code-editor.min.css",
               "./node_modules/grapesjs-preset-newsletter/dist/grapesjs-preset-newsletter.css"
 
-
             ],
             "scripts": [
               "./node_modules/bootstrap/dist/js/bootstrap.min.js",

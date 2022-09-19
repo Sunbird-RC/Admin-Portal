@@ -33,6 +33,8 @@ import { TestAndVerifyComponent } from './admin/test-and-verify/test-and-verify.
 import { ConfigurationsComponent } from './admin/configurations/configurations.component';
 import { EditTemplateComponent } from './admin/edit-template/edit-template.component';
 import { DloginComponent } from './admin/dlogin/dlogin.component';
+import { PublishComponent } from './admin/publish/publish.component';
+
 // import { FaqComponent } from './custom-components/faq/faq.component';
 const routes: Routes = [
 // Home
@@ -115,18 +117,21 @@ const routes: Routes = [
 { path: 'get-started', component: GetStartedComponent },
 { path: 'create-entity', component: CreateEntityComponent },
 { path: 'create/:usecase', component: CreateEntityComponent },
-{ path: 'create/:usecase/entity/:entity', component: CreateEntityComponent },
+{ path: 'create/:step/:usecase/:entity', component: CreateEntityComponent },
 { path:'config-workflow',component: ConfigWorkflowComponent},
 { path: 'create-vc', component: CreateVcTemplateComponent },
 { path: 'ownership', component: OwnershipComponent },
 { path: 'home', component: SidemenuComponent },
 { path: 'dashboard', component: DashboardComponent },
 { path: 'add-template', component: AddTemplateComponent },
+{ path: 'edit-template', component: EditTemplateComponent},
+{ path: 'add-template/:usecase/:entity', component: AddTemplateComponent },
+{ path: 'edit-template/:usecase/:entity', component: EditTemplateComponent},
 { path: 'test-and-launch', component: TestAndLaunchComponent},
 { path: 'test-and-verify', component: TestAndVerifyComponent},
 { path: 'configurations', component: ConfigurationsComponent},
-{ path: 'edit-template', component: EditTemplateComponent},
 { path: 'dlogin', component: DloginComponent},
+{ path: 'publish', component: PublishComponent},
 
 
 

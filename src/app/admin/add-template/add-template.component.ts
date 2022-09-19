@@ -53,22 +53,38 @@ export class AddTemplateComponent implements OnInit {
   certificateContent: any;
   oldTemplateName;
   sampleData: any;
+  params: any;
+  entityName: any;
+  usecase: any;
   constructor(public schemaService: SchemaService,
     public toastMsg: ToastMessageService,
-    public router: Router,
     private route: ActivatedRoute,
     private formlyJsonschema: FormlyJsonschema,
     public generalService: GeneralService,
-    public http: HttpClient) { }
+    public http: HttpClient,
+    private activeRoute: ActivatedRoute,
+    public router: Router) { }
 
   ngOnInit(): void {
 
     this.getDocument();
 
-    this.generalService.getData('/Issuer').subscribe((res) => {
-      console.log(res);
-      this.issuerOsid = res[0].osid;
-    });
+    // this.generalService.getData('/Issuer').subscribe((res) => {
+    //   console.log(res);
+    //   this.issuerOsid = res[0].osid;
+    // });
+
+    this.activeRoute.params.subscribe(params => {
+      this.params = params;
+      console.log({params});
+
+      if (this.params.hasOwnProperty('entity')) {
+        this.entityName = params.entity;
+        this.usecase = params.usecase.toLowerCase();
+
+
+      }
+  });
 
   }
 
@@ -110,7 +126,7 @@ export class AddTemplateComponent implements OnInit {
 
   editTemplate() {
     localStorage.setItem('sampleData', JSON.stringify(this.sampleData));
-   this.router.navigate(['/edit-template'], { state: { item: this.sampleData } });
+   this.router.navigate(['/edit-template/' + this.usecase + '/' +this.entityName], { state: { item: this.sampleData } });
   }
 
 

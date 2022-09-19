@@ -13,7 +13,7 @@
                     "key" : "create-vc"
                 },
                 {
-                    "title" : "Test and Launch",
+                    "title" : "Publish",
                     "key" : "test-publish"
                 }
             ],
@@ -51,7 +51,7 @@
                     "key" : "create-vc"
                 },
                 {
-                    "title" : "Test and Launch",
+                    "title" : "Publish",
                     "key" : "test-publish"
                 }
             ],
@@ -79,17 +79,17 @@
                     "key" : "create-vc"
                 },
                 {
-                    "title" : "Test and Launch",
+                    "title" : "Publish",
                     "key" : "test-publish"
                 }
             ],
             "entity": [{
                 "entityName": "Vaccination Certificate",
-                "schemaUrl": "/assets/schemas/certificate-issuance/VaccinationCertificate.json"
+                "schemaUrl": "/assets/schemas/divoc/VaccinationCertificate.json"
             },
             {
                 "entityName": "Vaccinator",
-                "schemaUrl": "/assets/schemas/certificate-issuance/Vaccinator.json"
+                "schemaUrl": "/assets/schemas/divoc/Vaccinator.json"
             }]
         },
         "new": {
@@ -104,7 +104,7 @@
                     "key" : "create-vc"
                 },
                 {
-                    "title" : "Test and Launch",
+                    "title" : "Publish",
                     "key" : "test-publish"
                 }
             ],

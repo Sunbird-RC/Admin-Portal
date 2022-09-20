@@ -41,8 +41,8 @@ const routes: Routes = [
 //{ path: '', component: SidemenuComponent },
 { path: '', component: KeycloakloginComponent,  canActivate: [AuthGuard]},
 
-{ path: 'setting/:page', component: SidemenuComponent },
-{ path: 'started/:page', component: SidemenuComponent },
+{ path: 'setting/:page', component: SidemenuComponent , canActivate: [AuthGuard]},
+{ path: 'started/:page', component: SidemenuComponent , canActivate: [AuthGuard]},
 
 
 
@@ -114,27 +114,24 @@ const routes: Routes = [
 // { path: 'faq', component: FaqComponent },
 
 //admin component
-{ path: 'get-started', component: GetStartedComponent },
-{ path: 'create-entity', component: CreateEntityComponent },
-{ path: 'create/:usecase', component: CreateEntityComponent },
-{ path: 'create/:step/:usecase/:entity', component: CreateEntityComponent },
-{ path:'config-workflow',component: ConfigWorkflowComponent},
-{ path: 'create-vc', component: CreateVcTemplateComponent },
-{ path: 'ownership', component: OwnershipComponent },
-{ path: 'home', component: SidemenuComponent },
-{ path: 'dashboard', component: DashboardComponent },
-{ path: 'add-template', component: AddTemplateComponent },
-{ path: 'edit-template', component: EditTemplateComponent},
-{ path: 'add-template/:usecase/:entity', component: AddTemplateComponent },
-{ path: 'edit-template/:usecase/:entity', component: EditTemplateComponent},
-{ path: 'test-and-launch', component: TestAndLaunchComponent},
-{ path: 'test-and-verify', component: TestAndVerifyComponent},
-{ path: 'configurations', component: ConfigurationsComponent},
-{ path: 'dlogin', component: DloginComponent},
+{ path: 'get-started', component: GetStartedComponent , canActivate: [AuthGuard]},
+{ path: 'create-entity', component: CreateEntityComponent , canActivate: [AuthGuard]},
+{ path: 'create/:usecase', component: CreateEntityComponent, canActivate: [AuthGuard] },
+{ path: 'create/:step/:usecase/:entity', component: CreateEntityComponent, canActivate: [AuthGuard] },
+{ path:'config-workflow',component: ConfigWorkflowComponent, canActivate: [AuthGuard]},
+{ path: 'create-vc', component: CreateVcTemplateComponent, canActivate: [AuthGuard] },
+{ path: 'ownership', component: OwnershipComponent, canActivate: [AuthGuard] },
+{ path: 'home', component: SidemenuComponent, canActivate: [AuthGuard] },
+{ path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+{ path: 'add-template', component: AddTemplateComponent , canActivate: [AuthGuard]},
+{ path: 'edit-template', component: EditTemplateComponent, canActivate: [AuthGuard]},
+{ path: 'add-template/:usecase/:entity', component: AddTemplateComponent, canActivate: [AuthGuard] },
+{ path: 'edit-template/:usecase/:entity', component: EditTemplateComponent, canActivate: [AuthGuard]},
+{ path: 'test-and-launch', component: TestAndLaunchComponent, canActivate: [AuthGuard]},
+{ path: 'test-and-verify', component: TestAndVerifyComponent, canActivate: [AuthGuard]},
+{ path: 'configurations', component: ConfigurationsComponent, canActivate: [AuthGuard]},
+{ path: 'dlogin', component: DloginComponent, canActivate: [AuthGuard]},
 { path: 'publish', component: PublishComponent},
-
-
-
 
 
 

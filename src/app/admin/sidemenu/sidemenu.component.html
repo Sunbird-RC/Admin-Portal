@@ -24,8 +24,11 @@
     </nav>
 
     <div class="col">
-        <div *ngIf="activeMenu === 'get-started'">
+        <div *ngIf="!items.length">
             <get-started></get-started>
+        </div>
+        <div *ngIf="items.length"> 
+            <configurations [schemaItems]="items"></configurations>
         </div>
         <div *ngIf="activeMenu === 'ownership'">
             <ownership></ownership>

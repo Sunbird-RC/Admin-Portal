@@ -515,7 +515,8 @@ export class EditTemplateComponent implements OnInit {
         'name' : this.templateName,
         'description' : this.description,
         'html' : this.userHtml
-      }
+      },
+      'title' : this.usecase
     }
 
     localStorage.setItem('schemaVc', JSON.stringify(vcTrmplate));

@@ -460,7 +460,7 @@
             <div>
                 <button *ngIf="isActive == 'create-vc' || isActive == 'test-publish'" (click)="backStep()"
                     class="btn btn-sec-bg submit-button px-3 my-2 ml-2 mr-2 ">Back</button> &nbsp;
-                <button (click)="nextStep()" *ngIf="isActive != 'test-publish' && isActive != 'create-vc'" [disabled]="!usecaseSchema[activeMenuNo]?.definitions?.data?.length"
+                <button (click)="nextStep(); createSchema();" *ngIf="isActive == 'createSchema'" [disabled]="!usecaseSchema[activeMenuNo]?.definitions?.data?.length"
                     class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2">Save and
                     Next</button>
                     <button (click)="nextStep()" *ngIf="isActive == 'create-vc'" 

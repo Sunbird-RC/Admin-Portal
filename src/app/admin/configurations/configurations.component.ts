@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'configurations',
@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConfigurationsComponent implements OnInit {
   tenantConfigList:  Array<String>;
+  @Input() schemaItems;
   constructor() { 
     this.tenantConfigList = ['Schema','Workflow','VC Template','Ownership','Roles','Theme']
   }

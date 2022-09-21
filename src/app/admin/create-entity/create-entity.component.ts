@@ -55,7 +55,6 @@ export class CreateEntityComponent implements OnInit {
   properties: any;
   json_properties: any;
   actionIs: string;
-  activeMenuIndex: any;
   nastedFieldIndex: any;
   objFieldIndex: any;
   editJsonType: any;
@@ -78,11 +77,7 @@ export class CreateEntityComponent implements OnInit {
     public schemaService: SchemaService,
     public generalService: GeneralService,
     public location: Location) {
-      this.generalService.getData('/Issuer').subscribe((res) => {
-
-        this.issuerOsid = res[0].osid;
-      });
-     }
+  }
 
   ngOnInit(): void {
 
@@ -104,12 +99,12 @@ export class CreateEntityComponent implements OnInit {
         this.isActive = 'createSchema'
       }
 
-      switch ( this.currentTab) {
+      switch (this.currentTab) {
         case 0: this.isActive = 'createSchema'
           break;
         case 1: this.isActive = 'create-vc'
           break;
-          case 2: this.isActive = 'test-publish'
+        case 2: this.isActive = 'test-publish'
           break;
       }
 
@@ -164,10 +159,22 @@ export class CreateEntityComponent implements OnInit {
       if (this.schemaUrl.hasOwnProperty(['commonField'])) {
         this.schemaService.getJSONData(this.schemaUrl.commonField).subscribe((res) => {
           this.commonschemaDefination = res;
-          this.getEntityFields();
+
+          if (!localStorage.getItem('schemaParams') || JSON.parse(localStorage.getItem('schemaParams')).title != this.usecase) {
+            this.getEntityFields();
+          } else {
+            this.usecaseSchema = JSON.parse(localStorage.getItem('schemaParams')).schema;
+            this.getEntityProperties();
+          }
         })
       } else {
-        this.getEntityFields();
+        if (!localStorage.getItem('schemaParams')  || JSON.parse(localStorage.getItem('schemaParams')).title != this.usecase) {
+          this.getEntityFields();
+        } else {
+          this.usecaseSchema = JSON.parse(localStorage.getItem('schemaParams')).schema;
+          this.getEntityProperties();
+
+        }
       }
 
 
@@ -302,33 +309,63 @@ export class CreateEntityComponent implements OnInit {
       for (let i = 0; i < sProperties.data.length; i++) {
         if (sProperties.data[i].hasOwnProperty('propertyKey')) {
           let field = sProperties.data[i];
+          let tempFieldSecObj = {};
+
 
           if ((field['$ref'] != "" && field.type == 'array') && (sProperties.propertyKey != 'Common' && sProperties.propertyKey != 'common')) {
-            tempFieldObj[field.propertyKey] = {
+            tempFieldSecObj[field.propertyKey] = {
               "type": "array",
               "items": {
                 "$ref": field['$ref']
               }
             }
-          } else if ((field['$ref'] != "" && field.type == 'object') && (sProperties.propertyKey != 'Common' && sProperties.propertyKey != 'common')) {
-            tempFieldObj[field.propertyKey] = {
+            tempFieldObj[sProperties.propertyKey]['properties'][field.propertyKey] = tempFieldSecObj[field.propertyKey]
+
+          } else if ((field['$ref'] != "" && field.type == 'object' && field.hasOwnProperty('$ref')) && (sProperties.propertyKey != 'Common' && sProperties.propertyKey != 'common')) {
+            tempFieldSecObj[field.propertyKey] = {
               "$ref": field['$ref']
             }
+
+            tempFieldObj[sProperties.propertyKey]['properties'][field.propertyKey] = tempFieldSecObj[field.propertyKey]
+
           } else {
 
-            tempFieldObj[field.propertyKey] = {
-              "$id": field['$id'],
-              "type": field['type'],
-              "title": field['propertyName'],
-              "properties": {}
+            if (field['type'] == 'array') {
+
+              tempFieldSecObj[field.propertyKey] = {
+                "$id": field['$id'],
+                "type": field['type'],
+                "title": field['propertyName'],
+                "items": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+
+            } else {
+              tempFieldSecObj[field.propertyKey] = {
+                "$id": field['$id'],
+                "type": field['type'],
+                "title": field['propertyName'],
+                "properties": {}
+              }
             }
 
             if (field.hasOwnProperty('data')) {
               for (let j = 0; j < field.data.length; j++) {
                 let property = field.data[j];
-                tempFieldObj[field.propertyKey]['properties'][property.key] = property.data
+
+                if (field['type'] == 'array') {
+                  tempFieldSecObj[field.propertyKey]['items']['properties'][property.key] = property.data;
+
+                } else {
+                  tempFieldSecObj[field.propertyKey]['properties'][property.key] = property.data;
+
+                }
               }
             }
+
+            tempFieldObj[sProperties.propertyKey]['properties'][field.propertyKey] = tempFieldSecObj[field.propertyKey];
 
           }
         } else {
@@ -521,6 +558,19 @@ export class CreateEntityComponent implements OnInit {
             "visiblity": ['private'],
             data
           })
+      } else if (data.type == 'string') {
+        let title = (propertyObj[key].hasOwnProperty('title') && propertyObj[key].title) ? propertyObj[key].title : key;
+        if (typeof (data) == 'object') {
+          data['title'] = title;
+        }
+
+        tempFieldObjSec.push(
+          {
+            "key": key,
+            "type": (propertyObj[key].type == "string") ? 'string' : propertyObj[key].type,
+            "visiblity": ['private'],
+            data
+          })
       }
 
 
@@ -628,11 +678,6 @@ export class CreateEntityComponent implements OnInit {
     tempProperty = this.usecaseSchema[this.activeMenuNo];
     tempProperty.definitions = this.convertIntoSBRCSchema(this.usecaseSchema[this.activeMenuNo].definitions);
     this.properties = tempProperty;
-
-    console.log(this.properties);
-    console.log(tempProperty);
-
-
   }
 
 
@@ -669,6 +714,11 @@ export class CreateEntityComponent implements OnInit {
 
 
       this.location.replaceState('/create/' + this.currentTab + '/' + this.usecase + '/' + this.entityKey);
+      if (localStorage.getItem('schemaParams')  && JSON.parse(localStorage.getItem('schemaParams')).title == this.usecase) {
+        this.usecaseSchema = JSON.parse(localStorage.getItem('schemaParams')).schema;
+        this.getEntityProperties();
+      }
+
     }
 
 
@@ -680,10 +730,13 @@ export class CreateEntityComponent implements OnInit {
     if (action == 'add') {
       this.entityName = '';
       this.description = '';
+    }else{
+       this.entityName = this.usecaseSchema[i].title;
+       this.description = this.usecaseSchema[i].description;
     }
 
     this.actionIs = action;
-    this.activeMenuIndex = i;
+    this.activeMenuNo = i;
   }
 
   openEntity(index, entitykey) {
@@ -735,6 +788,7 @@ export class CreateEntityComponent implements OnInit {
       // this.entityListArr.push(this.newSchemaTemplate(key, data))
       // this.entityFieldList[key] = this.newSchemaTemplate(key, data);
       this.usecaseSchema.push(this.newSchemaTemplate(key, data));
+      this.getEntityPropertiesByIndex(this.usecaseSchema.length - 1)
 
 
       setTimeout(() => {
@@ -743,10 +797,16 @@ export class CreateEntityComponent implements OnInit {
       }, 500);
 
     } else {
-      // this.usecaseSchema[this.activeMenuIndex].definitions[this.entityKey].title = this.entityName;
-      // this.usecaseSchema[this.activeMenuIndex].definitions[this.entityKey].description = this.description;
-      this.usecaseSchema[this.activeMenuIndex].title = this.entityName;
-      this.usecaseSchema[this.activeMenuIndex].description = this.description;
+  
+      this.oldTemplateName = this.usecaseSchema[this.activeMenuNo].title;
+      this.usecaseSchema[this.activeMenuNo].description = this.description;
+      let result = JSON.stringify(this.usecaseSchema[this.activeMenuNo]);
+
+      result = this.replaceAll(result, this.oldTemplateName, this.entityName);
+      this.usecaseSchema[this.activeMenuNo] = JSON.parse(result);
+      console.log( this.usecaseSchema[this.activeMenuNo]);
+
+    
 
 
     }
@@ -828,6 +888,8 @@ export class CreateEntityComponent implements OnInit {
 
   jsonSchemaData(formioJson) {
 
+    // this.getEntityPropertiesByIndex(this.activeMenuNo);
+
     if (this.compFieldJson) {
       if (this.editJsonType == 'nasted') {
         this.usecaseSchema[this.activeMenuNo].definitions.data[this.objFieldIndex].data[this.nastedFieldIndex].data.title = formioJson[0].label;
@@ -854,7 +916,7 @@ export class CreateEntityComponent implements OnInit {
           tempFieldObjSec.push(
             {
               propertyName: formioJson[i].label,
-              propertKey: key,
+              propertyKey: key,
               type: "object",
               data: tempjson
             })
@@ -933,7 +995,7 @@ export class CreateEntityComponent implements OnInit {
       ],
       "title": key,
       "description": "This is institute Entity",
-      "definitions": [{
+      "definitions": {
         [key]: {
           "$id": "#/properties/" + key,
           "type": "object",
@@ -942,27 +1004,52 @@ export class CreateEntityComponent implements OnInit {
           "required": [],
           "properties": {}
         }
-      }]
+      }
     }
 
     return entityTemplate;
   }
 
-  saveData(currentTab) {
+   saveData(currentTab) {
     //alert(this.isActive);
     if (this.isActive == 'createSchema') {
-
+      let tempProperty: any;
+      tempProperty = this.usecaseSchema;
       for (let i = 0; i < this.usecaseSchema.length; i++) {
-        this.usecaseSchema[i].definitions = this.convertIntoSBRCSchema(this.usecaseSchema[i].definitions);
+
+        tempProperty[i].definitions =  this.convertIntoSBRCSchema(this.usecaseSchema[i].definitions);
 
       }
+      this.usecaseSchema = tempProperty;
+
       let schemaParams = {
+        'title' : this.usecase,
         'schema': this.usecaseSchema
 
       }
 
       localStorage.setItem('schemaParams', JSON.stringify(schemaParams));
 
+    }
+  }
+
+
+  createSchema(){
+    for (let i = 0; i < this.usecaseSchema.length; i++) {
+
+      let payload = {
+        "name": this.usecaseSchema[i].title,
+        "description": this.usecaseSchema[i].description,
+        "schema": JSON.stringify(this.usecaseSchema[i])
+      }
+
+        this.generalService.postData('/Schema', payload).subscribe((res) => {
+        }, (err) => {
+          console.log('err ----', err);
+          //   this.toastMsg.error('error', err.error.params.errmsg)
+
+        })
+      
 
     }
   }
@@ -979,13 +1066,13 @@ export class CreateEntityComponent implements OnInit {
         self.vcObject = schemaVc[key];
         self.userHtml = self.vcObject.html
 
-      //   self.thumbnailItems.push({
-      //     "thumbnailUrl": "/assets/images/thumbnail.png",
-      //     "title" : self.vcObject.name,
-      //     "description" : self.vcObject.description,
-      //     "html" : self.vcObject.html
-      //   })
-       });
+        //   self.thumbnailItems.push({
+        //     "thumbnailUrl": "/assets/images/thumbnail.png",
+        //     "title" : self.vcObject.name,
+        //     "description" : self.vcObject.description,
+        //     "html" : self.vcObject.html
+        //   })
+      });
     }
 
     // Creating a file object with some content
@@ -1025,7 +1112,7 @@ export class CreateEntityComponent implements OnInit {
           this.router.navigate(['/dashboard']);
         }, (err) => {
           console.log('err ----', err);
-       //   this.toastMsg.error('error', err.error.params.errmsg)
+          //   this.toastMsg.error('error', err.error.params.errmsg)
 
         })
       }

@@ -28,15 +28,15 @@
         </div>
     
         <div class="col-xl-10 col-lg-10 col-sm-12">
-            <div *ngIf="!items.length">
+                <div *ngIf="!items.length">
                 <get-started></get-started>
                 </div>
                 <div *ngIf="items.length"> 
                 <configurations [schemaItems]="items"></configurations>
                 </div>
-                <div *ngIf="activeMenu === 'ownership'">
+                <!-- <div *ngIf="activeMenu === 'ownership'">
                 <ownership></ownership>
-        </div>
+                </div> -->
     </div>
    </div>
 

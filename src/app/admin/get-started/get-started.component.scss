@@ -202,7 +202,7 @@ a.article:hover {
     overflow-x: hidden;
     overflow-y: hidden;
     // height: 1000px;
-    min-height: 284px !important;
+    min-height: 257px !important;
     position: relative;
     width: auto !important;
     flex-wrap: nowrap;
@@ -299,18 +299,36 @@ a.article:hover {
 }
 
 
+@media (max-width:1025px) {
+    .min-ht2{
+        height: 82px;
+    }
+}
+
 @media (max-width: 768px) {
     .row{
     overflow-x: scroll;
-    min-height: 229px;
-    }
-    
+    min-height: 220px;
+    }    
     .card .card-body{
-    min-height: 229px;
+    min-height: 220px;
     text-overflow: hidden;
-    min-width: 170px;
+    min-width: 130px;
+    }
+    .min-ht2{
+        height: 74px;
     }
     }
+@media (max-width: 350px) {
+    .min-ht2{
+        height: 95px;
+    }
+}
+
+    
+   
+
+  
 
 .to-0{
 text-overflow: ellipsis;
@@ -326,11 +344,11 @@ text-overflow: ellipsis;
  }
 
 .min-ht{
-    min-height: 229px;
+    min-height: 220px;
 }
     
 .min-ht2{
-    min-height: 80px;
+    min-height: 84px;
 }
 .card-title {
     margin-bottom: 0.0rem !important;

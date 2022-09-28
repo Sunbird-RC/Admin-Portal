@@ -45,17 +45,12 @@ a:focus {
 ----------------------------------------------------- */
 
 .wrapper {
-    display: flex;
-    width: 100%;
-    align-items: stretch;
+   margin: 0;
 }
 
 #sidebar {
-    min-width: 250px;
-    max-width: 250px;
     background: #ffffff;
     color: rgb(0, 0, 0);
-    transition: all 0.3s;
 }
 
 #sidebar.active {
@@ -144,10 +139,7 @@ a.article:hover {
 ----------------------------------------------------- */
 
 #content {
-    width: 100%;
     padding: 20px;
-    min-height: 100vh;
-    transition: all 0.3s;
 }
 
 /* ---------------------------------------------------

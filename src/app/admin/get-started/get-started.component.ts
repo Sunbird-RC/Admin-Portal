@@ -10,6 +10,7 @@ export class GetStartedComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    localStorage.setItem('schemaParams', "");
   }
 
   status: boolean = false;

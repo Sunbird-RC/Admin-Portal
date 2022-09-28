@@ -1055,7 +1055,7 @@ export class CreateEntityComponent implements OnInit {
   }
 
   saveConfiguration() {
-    alert('save');
+   // alert('save');
 
     let schemaVc = localStorage.getItem('schemaVc');
     if (schemaVc != undefined) {

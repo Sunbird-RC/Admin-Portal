@@ -18,6 +18,8 @@ export class CreateVcTemplateComponent implements OnInit {
   usecase: any;
   vcObject: any;
   schemaName: string;
+  isShow1 :boolean;
+  isShow2: boolean;
   constructor(
     private activeRoute: ActivatedRoute,
     public router: Router
@@ -32,6 +34,26 @@ export class CreateVcTemplateComponent implements OnInit {
       if (this.params.hasOwnProperty('entity')) {
         this.entityName = params.entity;
         this.usecase = params.usecase;
+        if(this.usecase == 'issuance')
+        {
+          this.isShow1 =true;
+          this.isShow2 = true;
+        }
+        else if(this.usecase == 'atstandclaim')
+        {
+          this.isShow1 = false;
+          this.isShow2 = true;
+        }
+        else if(this.usecase == 'divoc')
+        {
+          this.isShow1 = true;
+          this.isShow2 = false;
+        }
+        else if(this.usecase == 'education')
+        {
+          this.isShow1 = true;
+          this.isShow2 = false;
+        }
       }
 
       let schemaVc = localStorage.getItem('schemaVc');

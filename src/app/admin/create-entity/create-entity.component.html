@@ -20,7 +20,7 @@
 
 <div id="schemaEntity" class="container-fluid mt-1 ml-12">
     <div class="row" *ngIf="!isAddFormPg">
-        <div class="col-md-3 mb-3">
+        <div class="col-md-3">
             <div class="wrapper ps-2 -e-2">
                 <!--Top menu -->
                 <div id="sideMenu" class="sidebar">
@@ -458,7 +458,7 @@
     <footer class="footer fixed-bottom">
         <div class="container-fluid">
             <div>
-                <button *ngIf="isActive == 'create-vc' || isActive == 'test-publish'" (click)="backStep()"
+                <button *ngIf="isActive == 'create-vc' || isActive == 'test-publish' || isActive == 'ownership' || isActive == 'configurations'" (click)="backStep()"
                     class="btn btn-sec-bg submit-button px-3 my-2 ml-2 mr-2 ">Back</button> &nbsp;
                 <button (click)="nextStep(); createSchema();" *ngIf="isActive == 'createSchema'" [disabled]="!usecaseSchema[activeMenuNo]?.definitions?.data?.length"
                     class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2">Save and
@@ -468,9 +468,9 @@
                     Next</button>
                     <button *ngIf="isActive == 'test-publish'" data-toggle="modal" data-target="#prewiewProfile"
                     class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2">Save </button>
-                <button *ngIf="isActive == 'configurations'"
+                <button (click)="nextStep()"  *ngIf="isActive == 'configurations' || isActive == 'ownership'"
                     class="btn btn-sec-bg float-end submit-button px-3 my-2 ml-2 mr-2 ">Skip</button> &nbsp;
-                <button *ngIf="isActive == 'create-vc' || isActive == 'ownership'"
+                <button *ngIf="isActive == 'create-vc'"
                     class="btn  float-end btn-primary btn-primary-sm px-3 my-2 ml-2 mr-2">Save as Draft</button>
                 &nbsp;
 

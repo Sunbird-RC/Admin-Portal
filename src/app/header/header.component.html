@@ -1,3 +1,4 @@
+
 <header class="header">
     <!-- <div class="banner">
       
@@ -10,23 +11,21 @@
         </span>
       
     </div>   -->
-  
       
     <nav class="navbar navbar-expand-lg navbar-light bg-header nav-b navbar-inverse">
         <div class="container-fluid custom-header">
-            <!-- <button class="navbar-toggler p-0 m-0 custom-toggler mr-2" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler p-0 m-0 custom-toggler mr-2" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fa fa-bars toggler"></i>
-                <span class="navbar-toggler-icon"></span>
-            </button> -->
+                <!-- <span class="navbar-toggler-icon"></span> -->
+            </button>
             <div class="nav-item active logo-text" style="width: auto;">
                 <a role="link" aria-disabled="true"><img class="logo" src={{logo}} /></a>
             </div>
             <div class="circle-login">
-              <p class="center">A</p>  
+              <!-- <p class="center">A</p>   -->
+              <span class="p12" *ngIf="loggedInUser">{{loggedInUser}}</span> &nbsp;
+              <a *ngIf="loggedInUser" href="/" class="p12"> <img style="width: 25px;" src="assets/images/logout.png" /></a>
             </div>
-            <!-- <div class="ms-auto offset-2">
-                <i class="fa fa-bars toggler icon-drp"></i>
-            </div> -->
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <ng-template [ngIf]="headerSchema?.left">
                     <ul class="navbar-nav nav-tabs-line mb-2 mb-lg-0">

@@ -124,7 +124,8 @@
                 <div class="row">
                     <div class="card">
                         <div class="mt-4">
-                            <input type="checkbox" id="defaultCheck" name="example2">
+                            <input type="checkbox" id="defaultCheck" name="example2" [checked]="checkbox1"  (change)="changeEvent1()">
+                            <!-- {{checkbox1}} -->
                             <label class="card-title fw-bold pb-1 p16 ml-3" for="defaultCheck">Attestation &
                                 Claim</label>
                             <div class="card-text ps-3  lh-lg p14 ml-3">
@@ -135,22 +136,26 @@
 
                         <div>
                             <label>
-                                <input type="checkbox" checked="checked">
+                                <input type="checkbox"  [checked]="checkbox2"   (change)="changeEvent2()"  >
+                                <!-- {{checkbox2}} -->
                                 <span class="card-title fw-bold pb-1 p16 ml-3">Issuance</span>
                             </label>
                             <div class="card-text lh-lg ps-3 p14 ml-3">
                                 Issuer can create template and issue verified credentials</div>
                         </div>
                         <hr class="custHr" />
+                        <!-- {{chooseEntity}} -->
                         <div>
                             <label class="mp-0">
-                                <input type="checkbox" checked="checked">
+                                <input type="checkbox" disabled>
                             </label>
 
-                            <span class="card-text lh-lg p14 ml-3">
+                            <span class="card-text lh-lg p14 ml-3 text-grey">
                                 I want to add ownership and roles, to onboard Issuers and VC Holder, so that
-                                they can login and manage their profile and VC </span>
-                            <a href="/create/new" class="float-end mt-5 mb-4 p14 btn btn-primary">Start</a>
+                                they can login and manage their profile and VC </span> 
+                               
+                            <a href="/create/{{chooseEntity}}" ><button  class="float-end mt-5 p14 btn btn-primary">Start</button></a> 
+                            <!-- <button [disabled]="!(checkbox1 || checkbox2)">Bar</button> -->
                         </div>
                     </div>
                 </div>

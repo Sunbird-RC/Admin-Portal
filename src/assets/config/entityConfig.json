@@ -9,8 +9,16 @@
                     "key" : "createSchema"
                 },
                 {
+                    "title" : "Workflow",
+                    "key" : "configurations"
+                },
+                {
                     "title" : "Create VC template",
                     "key" : "create-vc"
+                },
+                {
+                    "title" : "Ownership",
+                    "key" : "ownership"
                 },
                 {
                     "title" : "Publish",
@@ -79,6 +87,10 @@
                     "key" : "create-vc"
                 },
                 {
+                    "title" : "Configure Roles",
+                    "key" : "configurations"
+                },
+                {
                     "title" : "Publish",
                     "key" : "test-publish"
                 }
@@ -94,15 +106,61 @@
         },
         "new": {
             "name": "",
+            "commonField" : "",
+            "steps" : [
+                {
+                    "title" : "Create Schema",
+                    "key" : "createSchema"
+                },
+               
+                {
+                    "title" : "Publish",
+                    "key" : "test-publish"
+                }
+            ],
+            "entity": []
+        },
+        "atstandclaim": {
+            "name": "attesatation",
+            "commonField" : "",
             "steps" : [
                 {
                     "title" : "Create Schema",
                     "key" : "createSchema"
                 },
                 {
+                    "title" : "Configure Workflow",
+                    "key" : "configurations"
+                },
+                {
                     "title" : "Create VC template",
                     "key" : "create-vc"
                 },
+               
+                {
+                    "title" : "Publish",
+                    "key" : "test-publish"
+                }
+            ],
+            "entity": []
+        },
+        "newCombination": {
+            "name": "newCombination",
+            "commonField" : "",
+            "steps" : [
+                {
+                    "title" : "Create Schema",
+                    "key" : "createSchema"
+                },
+                {
+                    "title" : "Configure Workflow",
+                    "key" : "configurations"
+                },
+                {
+                    "title" : "Create VC template",
+                    "key" : "create-vc"
+                },
+               
                 {
                     "title" : "Publish",
                     "key" : "test-publish"

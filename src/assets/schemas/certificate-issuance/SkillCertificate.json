@@ -35,6 +35,20 @@
         },
         "note": {
           "type": "string"
+        },
+        "skills": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "skill": {
+                "type": "string"
+              },
+              "certifiedOn": {
+                "type": "string"
+              }
+            }
+          }
         }
       
       }

@@ -11,7 +11,7 @@ export class SidemenuComponent implements OnInit {
  // @Output() activeMenu = new EventEmitter<any>();
 
 status: boolean = false;
-//activeMenu: string = 'get-started';
+activeMenu: string = '';
   params: any;
   sideMenu: any;
   menus: any;

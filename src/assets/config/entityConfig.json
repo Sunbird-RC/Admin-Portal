@@ -144,8 +144,8 @@
             ],
             "entity": []
         },
-        "newCombination": {
-            "name": "newCombination",
+        "newcombination": {
+            "name": "newcombination",
             "commonField" : "",
             "steps" : [
                 {

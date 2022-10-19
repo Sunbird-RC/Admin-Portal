@@ -19,7 +19,7 @@ export class GetStartedComponent implements OnInit {
     this.checkbox1 = true;
       this.checkbox2 = true;
       if(this.checkbox1 == true && this.checkbox2 == true){
-        this.chooseEntity = "newCombination";
+        this.checkEntity();
       }
   }
 
@@ -48,7 +48,7 @@ export class GetStartedComponent implements OnInit {
       this.chooseEntity = "new";
     }
     else if(this.checkbox1 == true && this.checkbox2 == true){
-      this.chooseEntity = "newCombination";
+      this.chooseEntity = "newcombination";
     }
   }
    

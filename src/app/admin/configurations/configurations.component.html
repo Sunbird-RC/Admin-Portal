@@ -45,13 +45,30 @@
     <!-- </div> -->
     
     
-    <div class="card p-4">
+    <div class=" p-4">
         <!-- <div>
             <h1 class="float-left">Tenant Configuration Name 1</h1>
             <button class="btn btn-primary float-right">Add New Configuration</button>
         </div> -->
-        <div class="card">
-            <h3 class="pl-3 h2">Schema</h3>
+        <div class=" d-flex align-items-center">
+            <div class="mr-2">
+                <h3 class="pl-3 h2">Schema</h3> 
+            </div>
+            <div class="p14 grey m-2 p-2">
+                Draft
+            </div>
+        </div>
+       
+        <div class="row p-2 m-2">
+           <div class="col-sm-6 ylow d-flex align-items-center">
+            <p class="p-2 m-2">Schema is in draft status. <a href="https://demo-admin-portal.xiv.in/registry/api/docs/swagger.json"
+                 class="text-primary-color">  Review and Publish  </a>to explore API</p>
+
+           </div>
+        </div>
+        <div>
+
+           
             <div class="row p-2 m-2">
                 <div class="card card-bottom col-sm-3 p-2 mr-2 mb-2 " *ngFor="let item of schemaItems">
                     <div class="card-title fw-bold p16"> {{item?.name}}</div>
@@ -63,21 +80,22 @@
             </div>
         </div>
         <div class="card">
-            <h3 class="pl-3">Documents(Verified Credentials)</h3>
             <div class="row p-2 m-2">
-                <div class="card card-bottom col-sm-3 p-2">
-                    <div class="card-title fw-bold">Vaccination Certificate</div>
-                    <div><h2>0</h2>
-                        <div class="card-text">Records</div>
-                        <button class="btn btn-sec-bg submit-button text-secondary-color">View/Add</button>
-                    </div></div>
-                <div class="card card-bottom col-sm-3 p-2">
-                    <div class="card-title fw-bold">Proof of Experience</div>
-                    <div><h2>0</h2>
-                    <div class="card-text">Records</div>
-                    <button class="btn btn-sec-bg submit-button text-secondary-color">View/Add</button>
-                </div></div>
+                <p class="card-title fw-bold">Verifiable Credentials</p>
             </div>
+            <div></div>
+          
+            <div  *ngFor="let item of schemaItems">
+                <div class="card card-bottom col-sm-4 p-2" *ngIf="item?.schema._osConfig?.credentialTemplate">
+                    <div class="card-title fw-bold">{{item?.name}}</div>
+                    <div>
+                       
+                        <div  class="card-text">{{item?.schema?._osConfig?.credentialTemplate}}</div>
+                        <!-- <button class="btn btn-sec-bg submit-button text-secondary-color">View/Add</button> -->
+                    </div></div>
+              
+            </div>
+       
         </div>
     </div>
 </div>

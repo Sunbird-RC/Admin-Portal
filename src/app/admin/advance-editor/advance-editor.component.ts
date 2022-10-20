@@ -465,7 +465,7 @@ export class AdvanceEditorComponent implements OnInit {
 
 
   onDeleteComponent(e) {
-    alert('onDeleteComponent');
+    //alert('onDeleteComponent');
   }
 
   onSubmit(event) { }

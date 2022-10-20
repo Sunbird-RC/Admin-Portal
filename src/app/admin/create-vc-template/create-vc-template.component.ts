@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'create-vc-template',
@@ -22,7 +23,8 @@ export class CreateVcTemplateComponent implements OnInit {
   isShow2: boolean;
   constructor(
     private activeRoute: ActivatedRoute,
-    public router: Router
+    public router: Router,
+    public location: Location
   ) { }
 
   ngOnInit() {
@@ -31,9 +33,9 @@ export class CreateVcTemplateComponent implements OnInit {
       this.params = params;
       console.log({ params });
 
-      if (this.params.hasOwnProperty('entity')) {
-        this.entityName = params.entity;
+      if (this.params.hasOwnProperty('usecase')) {
         this.usecase = params.usecase;
+this.usecase = params.usecase;
         if(this.usecase == 'issuance')
         {
           this.isShow1 =true;
@@ -56,6 +58,13 @@ export class CreateVcTemplateComponent implements OnInit {
         }
       }
 
+      if (this.params.hasOwnProperty('entity')) {
+        this.entityName = params.entity;
+      }else{
+        let temp =  window.location.href.split('/');
+        this.entityName = temp[temp.length - 1]
+      }
+
       let schemaVc = localStorage.getItem('schemaVc');
       if (schemaVc != undefined) {
         schemaVc = JSON.parse(schemaVc);
@@ -76,7 +85,9 @@ export class CreateVcTemplateComponent implements OnInit {
   }
 
 
-
+  openAddVc(){
+    this.location.replaceState('/add-template/' + this.params.usecase + '/' + this.params.entityName);
+  }
 
 
 

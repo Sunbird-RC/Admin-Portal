@@ -43,10 +43,10 @@ constructor(
   {
     for(let i =0; i < res.length; i++)
     {
-      res[i].schema = JSON.parse(res[i].schema);
+     if(typeof(res[i].schema) != 'string'){
       this.items.push(res[i]);
+     }
     }
-//      this.items = res;
 
   }
 

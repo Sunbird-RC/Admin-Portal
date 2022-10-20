@@ -46,6 +46,7 @@ export class EditTemplateComponent implements OnInit {
   params: any;
   entityName: any;
   usecase: any;
+  schemaOsid: string;
 
   constructor(public router: Router, public route: ActivatedRoute, public toastMsg: ToastMessageService,
     public generalService: GeneralService, public schemaService: SchemaService) {
@@ -69,11 +70,21 @@ export class EditTemplateComponent implements OnInit {
       localStorage.setItem('sampleData', JSON.stringify(this.sampleData));
     }
 
-    this.generalService.getData('/Issuer').subscribe((res) => {
+    this.route.params.subscribe(params => {
+      this.params = params;
+      console.log({ params });
 
-      this.issuerOsid = res[0].osid;
+      if (this.params.hasOwnProperty('usecase')) {
+        this.usecase = params.usecase;
+        this.entityName = params.entity;
+      }
+
     });
+    //  this.entityName = params.entity;
+    // this.generalService.getData('/Issuer').subscribe((res) => {
 
+    //   this.issuerOsid = res[0].osid;
+    // });
 
 
 
@@ -84,14 +95,14 @@ export class EditTemplateComponent implements OnInit {
 
     this.route.params.subscribe(params => {
       this.params = params;
-      console.log({params});
+      console.log({ params });
 
       if (this.params.hasOwnProperty('entity')) {
         this.entityName = params.entity;
         this.usecase = params.usecase.toLowerCase();
 
       }
-  });
+    });
 
     await this.readHtmlSchemaContent(this.sampleData);
     console.log(this.userHtml);
@@ -101,8 +112,7 @@ export class EditTemplateComponent implements OnInit {
   }  //onInit();
 
 
-  grapesJSDefine()
-  {
+  grapesJSDefine() {
     this.editor = this.initializeEditor();
     this.editor.on('load', () => {
       var panelManager = this.editor.Panels;
@@ -356,18 +366,49 @@ export class EditTemplateComponent implements OnInit {
   async readHtmlSchemaContent(doc) {
 
     this.userHtml = '';
-    await fetch(doc.schemaUrl)
-      .then(response => response.text())
-      .then(data => {
-        //    this.schemaContent = data;
-        // console.log({ data });
-        data = JSON.parse(data);
-        this.certificateTitle = data['title'];
-        this.userJson = data;
-        this.addCrtTemplateFields();
-        // this.certificateTemplate = this.userJson['_osConfig']['credentialTemplate'];
-        this.getCrtTempFields(this.userJson);
-      });
+    /* await fetch(doc.schemaUrl)
+       .then(response => response.text())
+       .then(data => {
+         //    this.schemaContent = data;
+         // console.log({ data });
+         data = JSON.parse(data);
+         this.certificateTitle = data['title'];
+         this.userJson = data;
+         this.addCrtTemplateFields();
+         // this.certificateTemplate = this.userJson['_osConfig']['credentialTemplate'];
+         this.getCrtTempFields(this.userJson);
+       });*/
+
+    let draftSchemaOsid = JSON.parse(localStorage.getItem('draftSchemaOsid'));
+    console.log({ draftSchemaOsid });
+
+    this.schemaOsid = draftSchemaOsid[0].osid;
+    this.generalService.getData('/Schema/' + draftSchemaOsid[0].osid).subscribe((res) => {
+      console.log({ res });
+      let data = res['schema'];
+      this.certificateTitle = res['name'];
+
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].title == this.entityName) {
+          this.userJson = data[i];
+          let _self = this;
+          let credeFields = data[i]['_osConfig']['credentialTemplate']['credentialSubject'];
+          //  this.propertyArr.push(data[i]['_osConfig']['credentialTemplate']['credentialSubject']);
+          Object.keys(credeFields).forEach(function (key) {
+
+            let propertyName = "{{credentialSubject." + key + "}}";
+            _self.propertyArr.push({ 'propertyTag': propertyName, 'require': '' });
+          });
+          console.log('propertyArr', this.propertyArr);
+          //  this.addCrtTemplateFields();
+          // this.getCrtTempFields(this.userJson)
+        }
+      }
+      ;
+      // this.readSchema(res);
+    });
+
+
 
     await fetch(doc.certificateUrl)
       .then(response => response.text())
@@ -395,33 +436,35 @@ export class EditTemplateComponent implements OnInit {
 
   getCrtTempFields(certificateSchema) {
     this.propertyArr = [];
-    let temp = certificateSchema.definitions[this.certificateTitle].properties;
+    let temp = certificateSchema.definitions[this.certificateTitle].properties.hasOwnProperty('data') ? certificateSchema.definitions[this.certificateTitle].properties.data : certificateSchema.definitions[this.certificateTitle].properties;
+
+
     let required = certificateSchema.definitions[this.certificateTitle].required;
     let _self = this;
     let propertyName;
     Object.keys(temp).forEach(function (key) {
 
-      if(temp[key].type == 'string' || temp[key].type == 'number'){
-       propertyName = "{{credentialSubject." + key + "}}";
-      let isRequire = required.includes(key) ? true : false;
-      console.log(propertyName);
-      _self.propertyArr.push({ 'propertyTag': propertyName, 'require': isRequire });
-
-
-    }else if(temp[key].type == 'object'){
-      let objPro = temp[key].properties;
-      let objProReq = temp[key].required;
-      Object.keys(objPro).forEach(function (key2) {
-
-        propertyName = "{{credentialSubject." + key2 + "}}";
-        let isRequire = objProReq.includes(key2) ? true : false;
+      if (temp[key].type == 'string' || temp[key].type == 'number') {
+        propertyName = "{{credentialSubject." + key + "}}";
+        let isRequire = required.includes(key) ? true : false;
         console.log(propertyName);
         _self.propertyArr.push({ 'propertyTag': propertyName, 'require': isRequire });
-      })
-    }else if(temp[key].type == 'array'){
-      propertyName = "{{#each credentialSubject." + key + "}} {{this}} {{/each}}";
-      _self.propertyArr.push({ 'propertyTag': propertyName, 'require': false });
-    }
+
+
+      } else if (temp[key].type == 'object') {
+        let objPro = temp[key].properties;
+        let objProReq = temp[key].required;
+        Object.keys(objPro).forEach(function (key2) {
+
+          propertyName = "{{credentialSubject." + key2 + "}}";
+          let isRequire = objProReq.includes(key2) ? true : false;
+          console.log(propertyName);
+          _self.propertyArr.push({ 'propertyTag': propertyName, 'require': isRequire });
+        })
+      } else if (temp[key].type == 'array') {
+        propertyName = "{{#each credentialSubject." + key + "}} {{this}} {{/each}}";
+        _self.propertyArr.push({ 'propertyTag': propertyName, 'require': false });
+      }
     });
 
     this.grapesJSDefine();
@@ -443,16 +486,16 @@ export class EditTemplateComponent implements OnInit {
   addCrtTemplateFields() {
     let certTmpJson = (this.schemaContent) ? this.schemaContent : this.userJson;
     certTmpJson = certTmpJson['_osConfig']['credentialTemplate'];
-    if (typeof (certTmpJson) == 'string') { 
+    if (typeof (certTmpJson) == 'string') {
       let jsonUrl = certTmpJson;
 
       fetch(jsonUrl)
-      .then(response => response.text())
-      .then(data => {
-        //    this.schemaContent = data;
-        console.log({ data });
-         // console.log(JSON.parse(data));
-      });
+        .then(response => response.text())
+        .then(data => {
+          //    this.schemaContent = data;
+          console.log({ data });
+          // console.log(JSON.parse(data));
+        });
 
 
     } else {
@@ -467,26 +510,24 @@ export class EditTemplateComponent implements OnInit {
         Object.keys(propertyData).forEach(function (key) {
           console.log({ key });
 
-          if(key != 'name')
-          {
-          if(propertyData[key].type == 'string' || propertyData[key].type == 'number')
-          {
-            certTmpJson[key] = "{{" + key + "}}";
+          if (key != 'name') {
+            if (propertyData[key].type == 'string' || propertyData[key].type == 'number') {
+              certTmpJson[key] = "{{" + key + "}}";
 
-            contextJson[key] = {
-              "@id":"https://github.com/sunbird-specs/vc-specs#" + key,
-              "@context": {
-                "name":"schema:Text"
+              contextJson[key] = {
+                "@id": "https://github.com/sunbird-specs/vc-specs#" + key,
+                "@context": {
+                  "name": "schema:Text"
+                }
               }
-            }
-          }else if(propertyData[key].type == 'object'){
-            let objPro = propertyData[key].properties;
-            Object.keys(objPro).forEach(function (key2) {
-              console.log({ key2 });
+            } else if (propertyData[key].type == 'object') {
+              let objPro = propertyData[key].properties;
+              Object.keys(objPro).forEach(function (key2) {
+                console.log({ key2 });
 
-              certTmpJson[key2] = "{{" + key + "." + key2 + "}}";
-            })
-          }
+                certTmpJson[key2] = "{{" + key + "." + key2 + "}}";
+              })
+            }
           }
         });
 
@@ -497,11 +538,11 @@ export class EditTemplateComponent implements OnInit {
   }
 
   async submit() {
-   // this.addCrtTemplateFields();
-  
+    // this.addCrtTemplateFields();
+
     // this.schemaContent = this.jsonEditor.get();//JSON.stringify(this.userJson);
     this.schemaContent = (this.schemaContent) ? this.schemaContent : this.userJson;
-   // this.schemaContent = await this.addCrtTemplateFields();
+    // this.schemaContent = await this.addCrtTemplateFields();
 
     var htmlWithCss = this.editor.runCommand('gjs-get-inlined-html');
 
@@ -511,30 +552,37 @@ export class EditTemplateComponent implements OnInit {
     this.userHtml = htmlDoc.documentElement.innerHTML;
 
     let vcTrmplate = {
-      [this.entityName] :  {
-        'name' : this.templateName,
-        'description' : this.description,
-        'html' : this.userHtml
+      [this.entityName]: {
+        'name': this.templateName,
+        'description': this.description,
+        'html': this.userHtml
       },
-      'title' : this.usecase
+      'title': this.usecase
     }
 
     localStorage.setItem('schemaVc', JSON.stringify(vcTrmplate));
-    this.router.navigate(['/create/1/' + this.usecase + '/' + this.entityName]);
+    // this.router.navigate(['/create/1/' + this.usecase + '/' + this.entityName]);
 
-/*
+
     // Creating a file object with some content
     var fileObj = new File([this.userHtml], this.templateName.replace(/\s+/g, '') + '.html');
 
 
     let str = this.templateName.replace(/\s+/g, '');
-    this.templateName = str.charAt(0).toUpperCase() + str.slice(1)
+    this.templateName = str.charAt(0).toUpperCase() + str.slice(1);
+
     // Create form data
     const formData = new FormData();
     // Store form name as "file" with file data
     formData.append("files", fileObj, fileObj.name);
-    this.generalService.postData('/Issuer/' + this.issuerOsid + '/schema/documents', formData).subscribe((res) => {
+    this.generalService.postData('/Schema/' + this.schemaOsid + '/certificateTemplate/documents', formData).subscribe((res) => {
 
+      console.log({ res });
+      this.schemaContent._osConfig['certificateTemplates'] = { [this.templateName] : 'minio://' + res.documentLocations[0] }
+
+      this.schemaContent = JSON.stringify(this.schemaContent._osConfig);
+
+      /*
       // this.schemaContent = JSON.parse(this.schemaContent);
       let _self = this;
       Object.keys(this.schemaContent['properties']).forEach(function (key) {
@@ -564,8 +612,20 @@ export class EditTemplateComponent implements OnInit {
 
         })
       }
+      */
     })
-*/
+
+    const formData1 = new FormData();
+    var fileObjJson = new File([this.schemaContent._osConfig], this.templateName.replace(/\s+/g, '') + '.json');
+
+    // Store form name as "file" with file data
+    formData1.append("files", fileObjJson, fileObjJson.name);
+    this.generalService.postData('/Schema/' + this.schemaOsid + '/credentialTemplate/documents', formData1).subscribe((res) => {
+      // alert('success..!!');
+      this.router.navigate(['/create/2/'  + this.usecase + '/' + this.entityName]);
+      
+    });
+
   }
 
 

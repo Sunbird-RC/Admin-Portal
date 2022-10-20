@@ -1,7 +1,7 @@
 {
     "usecase": {
         "education": {
-            "name": "Education",
+            "name": "education",
             "commonField" : "/assets/schemas/education/Common.json",
             "steps" : [
                 {
@@ -15,10 +15,6 @@
                 {
                     "title" : "Create VC template",
                     "key" : "create-vc"
-                },
-                {
-                    "title" : "Ownership",
-                    "key" : "ownership"
                 },
                 {
                     "title" : "Publish",
@@ -48,7 +44,7 @@
             ]
         },
         "issuance": {
-            "name": "Issuance",
+            "name": "issuance",
             "steps" : [
                 {
                     "title" : "Create Schema",

@@ -6,6 +6,9 @@ import { getLocaleDateFormat } from '@angular/common';
 import { Location } from '@angular/common';
 import { GeneralService } from 'src/app/services/general/general.service';
 
+import { ToastMessageService } from '../../services/toast-message/toast-message.service';
+import { exit } from 'process';
+import { ignoreElements } from 'rxjs/operators';
 
 @Component({
   selector: 'create-entity',
@@ -71,11 +74,15 @@ export class CreateEntityComponent implements OnInit {
   userHtml: any;
   issuerOsid: any;
   oldTemplateName: string;
+  schemaContent: any;
+  certificateTitle: any;
+  rawCredentials: any;
   constructor(
     private activeRoute: ActivatedRoute,
     public router: Router,
     public schemaService: SchemaService,
     public generalService: GeneralService,
+    public toastMsg: ToastMessageService,
     public location: Location) {
   }
 
@@ -85,6 +92,7 @@ export class CreateEntityComponent implements OnInit {
     this.editorOptions.mode = 'code';
     this.editorOptions.history = true;
     this.editorOptions.onChange = () => this.jsonEditor.get();
+
 
     this.activeRoute.params.subscribe(params => {
       this.params = params;
@@ -100,11 +108,16 @@ export class CreateEntityComponent implements OnInit {
       }
 
       switch (this.currentTab) {
-        case 0: this.isActive = 'createSchema'
+        case 0: this.isActive = 'createSchema';
+          localStorage.setItem('draftSchemaOsid', "");
           break;
-        case 1: this.isActive = 'create-vc'
+        case 1: this.isActive = 'configurations'
           break;
-        case 2: this.isActive = 'test-publish'
+        case 2: this.isActive = 'create-vc'
+          break;
+        case 3: this.isActive = 'test-publish'
+          break;
+        case 4: this.isActive = 'test-publish'
           break;
       }
 
@@ -168,12 +181,11 @@ export class CreateEntityComponent implements OnInit {
           }
         })
       } else {
-        if (!localStorage.getItem('schemaParams')  || JSON.parse(localStorage.getItem('schemaParams')).title != this.usecase) {
+        if (!localStorage.getItem('schemaParams') || JSON.parse(localStorage.getItem('schemaParams')).title != this.usecase) {
           this.getEntityFields();
         } else {
           this.usecaseSchema = JSON.parse(localStorage.getItem('schemaParams')).schema;
           this.getEntityProperties();
-
         }
       }
 
@@ -297,137 +309,147 @@ export class CreateEntityComponent implements OnInit {
   convertIntoSBRCSchema(sProperties) {
     let tempFieldObj = {};
 
-    if (sProperties.hasOwnProperty('propertyKey')) {
+    if (!sProperties.hasOwnProperty('property')) {
+      if (sProperties.hasOwnProperty('propertyKey')) {
 
-      tempFieldObj[sProperties.propertyKey] = {
-        "$id": sProperties['$id'],
-        "type": sProperties['type'],
-        "title": sProperties['propertyName'],
-        "properties": {}
-      }
+        tempFieldObj[sProperties.propertyKey] = {
+          "$id": sProperties['$id'],
+          "type": sProperties['type'],
+          "title": sProperties['propertyName'],
+          "properties": {}
+        }
 
-      for (let i = 0; i < sProperties.data.length; i++) {
-        if (sProperties.data[i].hasOwnProperty('propertyKey')) {
-          let field = sProperties.data[i];
-          let tempFieldSecObj = {};
+        for (let i = 0; i < sProperties.data.length; i++) {
 
+          if (sProperties.data[i].hasOwnProperty('propertyKey')) {
+            let field = sProperties.data[i];
+            let tempFieldSecObj = {};
+            let nastedKey;
+            if ((sProperties.propertyKey.charAt(0).toLowerCase() + sProperties.propertyKey.slice(1)) == "common") {
+              nastedKey = field.propertyKey;
+            } else {
+              nastedKey = field.propertyKey.charAt(0).toLowerCase() + field.propertyKey.slice(1);
+            }
 
-          if ((field['$ref'] != "" && field.type == 'array') && (sProperties.propertyKey != 'Common' && sProperties.propertyKey != 'common')) {
-            tempFieldSecObj[field.propertyKey] = {
-              "type": "array",
-              "items": {
+            if ((field['$ref'] != "" && field.type == 'array') && (sProperties.propertyKey != 'Common' && sProperties.propertyKey != 'common')) {
+              tempFieldSecObj[nastedKey] = {
+                "type": "array",
+                "items": {
+                  "$ref": field['$ref']
+                }
+              }
+              tempFieldObj[sProperties.propertyKey]['properties'][nastedKey] = tempFieldSecObj[nastedKey]
+
+            } else if ((field['$ref'] != "" && field.type == 'object' && field.hasOwnProperty('$ref')) && (sProperties.propertyKey != 'Common' && sProperties.propertyKey != 'common')) {
+              tempFieldSecObj[nastedKey] = {
                 "$ref": field['$ref']
               }
-            }
-            tempFieldObj[sProperties.propertyKey]['properties'][field.propertyKey] = tempFieldSecObj[field.propertyKey]
 
-          } else if ((field['$ref'] != "" && field.type == 'object' && field.hasOwnProperty('$ref')) && (sProperties.propertyKey != 'Common' && sProperties.propertyKey != 'common')) {
-            tempFieldSecObj[field.propertyKey] = {
-              "$ref": field['$ref']
-            }
+              tempFieldObj[sProperties.propertyKey]['properties'][nastedKey] = tempFieldSecObj[nastedKey]
 
-            tempFieldObj[sProperties.propertyKey]['properties'][field.propertyKey] = tempFieldSecObj[field.propertyKey]
+            } else {
 
-          } else {
+              if (field['type'] == 'array') {
 
-            if (field['type'] == 'array') {
+                tempFieldSecObj[nastedKey] = {
+                  "$id": field['$id'],
+                  "type": field['type'],
+                  "title": field['propertyName'],
+                  "items": {
+                    "type": "object",
+                    "properties": {}
+                  }
+                }
 
-              tempFieldSecObj[field.propertyKey] = {
-                "$id": field['$id'],
-                "type": field['type'],
-                "title": field['propertyName'],
-                "items": {
-                  "type": "object",
+              } else {
+                tempFieldSecObj[nastedKey] = {
+                  "$id": field['$id'],
+                  "type": field['type'],
+                  "title": field['propertyName'],
                   "properties": {}
                 }
               }
 
-            } else {
-              tempFieldSecObj[field.propertyKey] = {
-                "$id": field['$id'],
-                "type": field['type'],
-                "title": field['propertyName'],
-                "properties": {}
-              }
-            }
+              if (field.hasOwnProperty('data')) {
+                for (let j = 0; j < field.data.length; j++) {
+                  let property = field.data[j];
 
-            if (field.hasOwnProperty('data')) {
-              for (let j = 0; j < field.data.length; j++) {
-                let property = field.data[j];
+                  if (field['type'] == 'array') {
+                    tempFieldSecObj[nastedKey]['items']['properties'][property.key] = property.data;
 
-                if (field['type'] == 'array') {
-                  tempFieldSecObj[field.propertyKey]['items']['properties'][property.key] = property.data;
+                  } else {
+                    tempFieldSecObj[nastedKey]['properties'][property.key] = property.data;
 
-                } else {
-                  tempFieldSecObj[field.propertyKey]['properties'][property.key] = property.data;
-
+                  }
                 }
               }
-            }
 
-            tempFieldObj[sProperties.propertyKey]['properties'][field.propertyKey] = tempFieldSecObj[field.propertyKey];
+              tempFieldObj[sProperties.propertyKey]['properties'][nastedKey] = tempFieldSecObj[nastedKey];
+
+            }
+          } else {
+            let property = sProperties.data[i];
+            tempFieldObj[sProperties.propertyKey]['properties'][property.key] = property.data
 
           }
-        } else {
-          let property = sProperties.data[i];
-          tempFieldObj[sProperties.propertyKey]['properties'][property.key] = property.data
 
         }
-
       }
+
+      /* for (let i = 0; i < sProperties.data.length; i++) {
+         if (sProperties.data[i].hasOwnProperty('propertyKey')) {
+   
+   
+           let field = sProperties.data[i];
+   
+           if((field['$ref'] != "" && field.type == 'array') && (sProperties.propertyKey != 'Common' && sProperties.propertyKey != 'common'))
+           {
+             tempFieldObj[field.propertyKey]= { 
+               "type": "array",
+               "items" : {
+                 "$ref" : field['$ref']
+               }
+             }
+           }else if((field['$ref'] != "" && field.type == 'object' ) && (sProperties.propertyKey != 'Common' && sProperties.propertyKey != 'common'))
+           {
+             tempFieldObj[field.propertyKey]= { 
+                 "$ref" : field['$ref']
+               }
+           }else{
+   
+           tempFieldObj[field.propertyKey] = {
+             "$id": field['$id'],
+             "type": field['type'],
+             "title": field['propertyName'],
+             "properties": {}
+           }
+   
+           if (field.hasOwnProperty('data')) {
+             for (let j = 0; j < field.data.length; j++) {
+               let property = field.data[j];
+               tempFieldObj[field.propertyKey]['properties'][property.key] = property.data
+             }
+           }
+   
+         }
+         }else  if (sProperties.hasOwnProperty('propertyKey')) {
+           let field = sProperties.data[i];
+   
+           tempFieldObj[field.propertyKey] = {
+             "$id": field['$id'],
+             "type": field['type'],
+             "title": field['propertyName'],
+             "properties": {}
+           }
+   
+           
+         }
+       }*/
+
+      return tempFieldObj;
+    } else {
+      return false
     }
-
-    /* for (let i = 0; i < sProperties.data.length; i++) {
-       if (sProperties.data[i].hasOwnProperty('propertyKey')) {
- 
- 
-         let field = sProperties.data[i];
- 
-         if((field['$ref'] != "" && field.type == 'array') && (sProperties.propertyKey != 'Common' && sProperties.propertyKey != 'common'))
-         {
-           tempFieldObj[field.propertyKey]= { 
-             "type": "array",
-             "items" : {
-               "$ref" : field['$ref']
-             }
-           }
-         }else if((field['$ref'] != "" && field.type == 'object' ) && (sProperties.propertyKey != 'Common' && sProperties.propertyKey != 'common'))
-         {
-           tempFieldObj[field.propertyKey]= { 
-               "$ref" : field['$ref']
-             }
-         }else{
- 
-         tempFieldObj[field.propertyKey] = {
-           "$id": field['$id'],
-           "type": field['type'],
-           "title": field['propertyName'],
-           "properties": {}
-         }
- 
-         if (field.hasOwnProperty('data')) {
-           for (let j = 0; j < field.data.length; j++) {
-             let property = field.data[j];
-             tempFieldObj[field.propertyKey]['properties'][property.key] = property.data
-           }
-         }
- 
-       }
-       }else  if (sProperties.hasOwnProperty('propertyKey')) {
-         let field = sProperties.data[i];
- 
-         tempFieldObj[field.propertyKey] = {
-           "$id": field['$id'],
-           "type": field['type'],
-           "title": field['propertyName'],
-           "properties": {}
-         }
- 
-         
-       }
-     }*/
-
-    return tempFieldObj;
 
 
   }
@@ -498,13 +520,18 @@ export class CreateEntityComponent implements OnInit {
       if ((data.hasOwnProperty('type') && data.type == 'array')) {
         //  tempFieldObjSec.push(self.readArraySchema(data));
 
+        let dataTemp = self.readArraySchema(data);
+        if (dataTemp.hasOwnProperty('data')) {
+          dataTemp = dataTemp['data'];
+        }
+
         tempFieldObjSec.push({
           "propertyName": (data.hasOwnProperty('title') ? data.title : key),
           "propertyKey": key,
           "type": data.type,
           "$ref": '',
           "$id": (data.hasOwnProperty('$id')) ? data['$id'] : '',
-          "data": self.readArraySchema(data)
+          "data": dataTemp
         });
 
         if (self.usecaseSchema[self.activeMenuNo].title != 'Common' && self.usecaseSchema[self.activeMenuNo].title != 'common') {
@@ -630,7 +657,7 @@ export class CreateEntityComponent implements OnInit {
       // this.schemaService.getJSONData(this.schemaUrl.commonField).subscribe((res) => {
       let arrayObj;
 
-      if (this.commonschemaDefination.definitions.data.length) {
+      if (this.commonschemaDefination.definitions.hasOwnProperty('data') && this.commonschemaDefination.definitions.data.length) {
         for (let j = 0; j < this.commonschemaDefination.definitions.data.length; j++) {
 
           if (this.commonschemaDefination.definitions.data[j].propertyKey == refKey) {
@@ -676,14 +703,22 @@ export class CreateEntityComponent implements OnInit {
 
     let tempProperty: any;
     tempProperty = this.usecaseSchema[this.activeMenuNo];
-    tempProperty.definitions = this.convertIntoSBRCSchema(this.usecaseSchema[this.activeMenuNo].definitions);
+
+    let cJson = this.convertIntoSBRCSchema(this.usecaseSchema[this.activeMenuNo].definitions);
+
+
+    if (cJson) {
+      tempProperty.definitions = cJson;
+
+    }
+
     this.properties = tempProperty;
   }
 
 
 
   nextStep() {
-    this.saveData(this.currentTab);
+    this.saveData();
     if (this.currentTab < 4) {
       this.steps[this.currentTab].classList.remove("activeTab");
       this.currentTab += 1;
@@ -714,7 +749,7 @@ export class CreateEntityComponent implements OnInit {
 
 
       this.location.replaceState('/create/' + this.currentTab + '/' + this.usecase + '/' + this.entityKey);
-      if (localStorage.getItem('schemaParams')  && JSON.parse(localStorage.getItem('schemaParams')).title == this.usecase) {
+      if (localStorage.getItem('schemaParams') && JSON.parse(localStorage.getItem('schemaParams')).title == this.usecase) {
         this.usecaseSchema = JSON.parse(localStorage.getItem('schemaParams')).schema;
         this.getEntityProperties();
       }
@@ -730,9 +765,9 @@ export class CreateEntityComponent implements OnInit {
     if (action == 'add') {
       this.entityName = '';
       this.description = '';
-    }else{
-       this.entityName = this.usecaseSchema[i].title;
-       this.description = this.usecaseSchema[i].description;
+    } else {
+      this.entityName = this.usecaseSchema[i].title;
+      this.description = this.usecaseSchema[i].description;
     }
 
     this.actionIs = action;
@@ -797,17 +832,16 @@ export class CreateEntityComponent implements OnInit {
       }, 500);
 
     } else {
-  
+
       this.oldTemplateName = this.usecaseSchema[this.activeMenuNo].title;
       this.usecaseSchema[this.activeMenuNo].description = this.description;
       let result = JSON.stringify(this.usecaseSchema[this.activeMenuNo]);
 
       result = this.replaceAll(result, this.oldTemplateName, this.entityName);
       this.usecaseSchema[this.activeMenuNo] = JSON.parse(result);
-      console.log( this.usecaseSchema[this.activeMenuNo]);
+      console.log(this.usecaseSchema[this.activeMenuNo]);
 
-    
-
+      this.location.replaceState('/create/' + this.currentTab + '/' + this.usecase + '/' + this.entityName);
 
     }
 
@@ -1004,58 +1038,232 @@ export class CreateEntityComponent implements OnInit {
           "required": [],
           "properties": {}
         }
-      }
+      },
+      "_osConfig": this.getRawCredentials(key)
     }
+
 
     return entityTemplate;
   }
 
-   saveData(currentTab) {
-    //alert(this.isActive);
+  getRawCredentials(key) {
+    this.rawCredentials = {
+      "uniqueIndexFields": [],
+      "ownershipAttributes": [],
+      "roles": [],
+      "inviteRoles": ["anonymous"],
+      "enableLogin": false,
+      "credentialTemplate": {
+        "@context": [
+          "https://www.w3.org/2018/credentials/v1",
+          {
+            "@context": {
+              "@version": 1.1,
+              "@protected": true,
+              key: {
+                "@id": "https://github.com/sunbird-specs/vc-specs#" + key,
+                "@context": {
+                  "id": "@id",
+                  "@version": 1.1,
+                  "@protected": true,
+                }
+              }
+            }
+          }
+        ],
+        "type": [
+          "VerifiableCredential"
+        ],
+        "issuanceDate": "2021-08-27T10:57:57.237Z",
+        "credentialSubject": {
+          "type": "DeathCertificate",
+          "name": "{{name}}",
+        },
+        "issuer": "did:web:sunbirdrc.dev/vc/skill"
+      },
+      "certificateTemplates": {}
+    }
+
+    return this.rawCredentials;
+  }
+
+  saveData() {
     if (this.isActive == 'createSchema') {
       let tempProperty: any;
       tempProperty = this.usecaseSchema;
       for (let i = 0; i < this.usecaseSchema.length; i++) {
 
-        tempProperty[i].definitions =  this.convertIntoSBRCSchema(this.usecaseSchema[i].definitions);
+        // tempProperty[i].definitions = this.convertIntoSBRCSchema(this.usecaseSchema[i].definitions);
+        let cJson = this.convertIntoSBRCSchema(this.usecaseSchema[i].definitions);
+        if (cJson) {
+          tempProperty.definitions = cJson;
 
+        }
+
+
+        if (i == this.usecaseSchema.length) {
+          // this.usecaseSchema = tempProperty;
+          let schemaParams = {
+            'title': this.usecase,
+            'schema': tempProperty
+
+          }
+          console.log({ schemaParams });
+          localStorage.setItem('schemaParams', JSON.stringify(schemaParams));
+
+        }
       }
-      this.usecaseSchema = tempProperty;
-
-      let schemaParams = {
-        'title' : this.usecase,
-        'schema': this.usecaseSchema
-
-      }
-
-      localStorage.setItem('schemaParams', JSON.stringify(schemaParams));
 
     }
   }
 
 
-  createSchema(){
+  async createSchema() {
+    // this.nextStep();
+    // this.postSchema(0);
+    let errArr = [];
+    let tempProperty: any;
+    tempProperty = this.usecaseSchema;
     for (let i = 0; i < this.usecaseSchema.length; i++) {
 
-      let payload = {
-        "name": this.usecaseSchema[i].title,
-        "description": this.usecaseSchema[i].description,
-        "schema": JSON.stringify(this.usecaseSchema[i])
+      if (!this.usecaseSchema[i].hasOwnProperty('key') || this.usecaseSchema[i].key != "refSchema") {
+        await this.addCrtTemplateFields(this.usecaseSchema[i]);
       }
 
+      // for (let j = 0; j < this.usecaseSchema.length; j++) {
+      let cJson = this.convertIntoSBRCSchema(this.usecaseSchema[i].definitions);
+      if (cJson) {
+        tempProperty.definitions = cJson;
+
+      }
+      // }
+
+      console.log({ tempProperty });
+      if (tempProperty.length == this.usecaseSchema.length) {
+        let payload = {
+          "name": this.usecaseSchema[i].title,
+          "description": this.usecaseSchema[i].description,
+          "schema": JSON.stringify(tempProperty)
+        }
+
         this.generalService.postData('/Schema', payload).subscribe((res) => {
+          //  i = i + 1;
+          //this.postSchema(i);
+          if (!this.usecaseSchema[i].hasOwnProperty('key') || this.usecaseSchema[i].key != "refSchema") {
+            if (localStorage.getItem('draftSchemaOsid')) {
+              let draftSchemaOsid = JSON.parse(localStorage.getItem('draftSchemaOsid'));
+              draftSchemaOsid.push({
+                'title': this.usecaseSchema[i].title,
+                'osid': res.result.Schema.osid,
+              })
+              localStorage.setItem('draftSchemaOsid', JSON.stringify(draftSchemaOsid));
+
+            } else {
+              let draftSchemaOsid = [{
+                'title': this.usecaseSchema[i].title,
+                'osid': res.result.Schema.osid,
+              }]
+              localStorage.setItem('draftSchemaOsid', JSON.stringify(draftSchemaOsid));
+            }
+          }
+
+
+          if (i == (this.usecaseSchema.length - 1) && !errArr.length) {
+            /* let schemaParams = {
+              'title': this.usecase,
+              'schema':this.usecaseSchema,
+            }
+            console.log({ schemaParams });
+            localStorage.setItem('schemaParams', JSON.stringify(schemaParams)); */
+            this.saveData();
+            this.nextStep();
+          } else {
+            this.toastMsg.error('error', errArr + " name schema already exists, please rename");
+          }
         }, (err) => {
-          console.log('err ----', err);
-          //   this.toastMsg.error('error', err.error.params.errmsg)
+          errArr.push(this.usecaseSchema[i].title);
+
+          if (errArr.length == 1 && (errArr.includes('Common') || errArr.includes('common'))) {
+            /*  let schemaParams = {
+                'title': this.usecase,
+                'schema':this.usecaseSchema
+    
+              }
+              console.log({ schemaParams });
+              localStorage.setItem('schemaParams', JSON.stringify(schemaParams)); */
+            this.saveData();
+            this.nextStep();
+            console.log('err ----', err);
+          } else {
+            if (i == this.usecaseSchema.length - 1) {
+              this.toastMsg.error('error', errArr + " name schema already exists, please rename");
+            }
+          }
+
+
 
         })
-      
-
+      }
     }
   }
 
+  async saveSchemaConfig() {
+    // this.nextStep();
+    // this.postSchema(0);
+    let errArr = [];
+    let tempProperty: any;
+    tempProperty = this.usecaseSchema;
+    // for (let i = 0; i < this.usecaseSchema.length; i++) {
+
+
+
+    for (let j = 0; j < this.usecaseSchema.length; j++) {
+      if (!this.usecaseSchema[j].hasOwnProperty('key') || this.usecaseSchema[j].key != "refSchema") {
+        await this.addCrtTemplateFields(this.usecaseSchema[j]);
+      }
+      let cJson = this.convertIntoSBRCSchema(this.usecaseSchema[j].definitions);
+      if (cJson) {
+        tempProperty.definitions = cJson;
+
+      }
+    }
+
+    console.log({ tempProperty });
+    if (tempProperty.length == this.usecaseSchema.length) {
+      let payload = {
+        "name": this.templateName,
+        "description": this.configDescription,
+        "schema": JSON.stringify(tempProperty)
+      }
+
+      this.generalService.postData('/Schema', payload).subscribe((res) => {
+        this.nextStep();
+
+        if (localStorage.getItem('draftSchemaOsid')) {
+          let draftSchemaOsid = JSON.parse(localStorage.getItem('draftSchemaOsid'));
+          draftSchemaOsid.push({
+            'title': this.templateName,
+            'osid': res.result.Schema.osid,
+          })
+          localStorage.setItem('draftSchemaOsid', JSON.stringify(draftSchemaOsid));
+
+        } else {
+          let draftSchemaOsid = [{
+            'title': this.templateName,
+            'osid': res.result.Schema.osid,
+          }]
+          localStorage.setItem('draftSchemaOsid', JSON.stringify(draftSchemaOsid));
+        }
+      }, (err) => {
+        // errArr.push(this.usecaseSchema[i].title);
+        this.toastMsg.error('error', this.templateName + " name schema already exists, please rename");
+      })
+    }
+    //  }
+
+  }
   saveConfiguration() {
-   // alert('save');
+    // alert('save');
 
     let schemaVc = localStorage.getItem('schemaVc');
     if (schemaVc != undefined) {
@@ -1122,6 +1330,127 @@ export class CreateEntityComponent implements OnInit {
   replaceAll(str, find, replace) {
     var escapedFind = find.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
     return str.replace(new RegExp(escapedFind, 'g'), replace);
+  }
+
+  addCrtTemplateFields(certTmpJson) {
+    this.schemaContent = certTmpJson;
+    this.certificateTitle = certTmpJson.title;
+    certTmpJson['_osConfig']['credentialTemplate'] = {
+      "@context": [
+        "https://www.w3.org/2018/credentials/v1",
+        {
+          "@context": {
+            "@version": 1.1,
+            "@protected": true,
+            [this.certificateTitle]: {
+              "@id": "https://github.com/sunbird-specs/vc-specs#" + this.certificateTitle,
+              "@context": {
+                "id": "@id",
+                "@version": 1.1,
+                "@protected": true,
+                "name": "schema:Text"
+              }
+            }
+          }
+        }
+      ],
+      "type": [
+        "VerifiableCredential"
+      ],
+      "issuanceDate": "2021-08-27T10:57:57.237Z",
+      "credentialSubject": {
+        "type": this.certificateTitle,
+        "name": "{{name}}",
+      },
+      "issuer": "did:web:sunbirdrc.dev/vc/skill"
+    };
+
+    if (typeof (certTmpJson) == 'string') {
+      let jsonUrl = certTmpJson;
+
+      fetch(jsonUrl)
+        .then(response => response.text())
+        .then(data => {
+          //    this.schemaContent = data;
+          console.log({ data });
+          // console.log(JSON.parse(data));
+        });
+
+
+    } else {
+
+      certTmpJson['_osConfig']['credentialTemplate']['credentialSubject'] = {};
+
+      if (this.schemaContent) {
+        let _self = this;
+        let propertyData = this.schemaContent.definitions.data ? this.schemaContent.definitions.data : this.schemaContent.definitions;
+        // this.schemaContent._osConfig.credentialTemplate["@context"][1]["@context"][this.certificateTitle]["@context"] = {};
+        let contextProperty = this.schemaContent._osConfig.credentialTemplate["@context"][1]["@context"][this.certificateTitle]["@context"];
+
+
+        for (let i = 0; i < propertyData.length; i++) {
+          if (propertyData[i].type != 'object') {
+            contextProperty[propertyData[i].key] = "schema:Text";
+            certTmpJson['_osConfig']['credentialTemplate']['credentialSubject'][contextProperty[propertyData[i].key]] = "{{" + contextProperty[propertyData[i].key] + "}}"
+          } else {
+            let stringKey = propertyData[i].propertyKey;
+            stringKey = stringKey.charAt(0).toLowerCase() + stringKey.slice(1);
+            contextProperty[stringKey] = {
+              "@id": "https://github.com/sunbird-specs/vc-specs#" + propertyData[i].propertyKey,
+              "@context": {
+              }
+            }
+            for (let j = 0; j < propertyData[i].data.length; j++) {
+              if (propertyData[i].data[j].type != 'object') {
+                let keyName = propertyData[i].data[j].key;
+
+                let stringKey = propertyData[i].propertyKey;
+                stringKey = stringKey.charAt(0).toLowerCase() + stringKey.slice(1);
+
+                contextProperty[stringKey]["@context"][keyName] = "schema:Text";
+                certTmpJson['_osConfig']['credentialTemplate']['credentialSubject'][keyName] = "{{" + stringKey + "." + keyName + "}}"
+
+              }
+            }
+
+
+
+          }
+        }
+
+
+
+        /*  Object.keys(propertyData).forEach(function (key) {
+            console.log({ key });
+  
+            if(key != 'name')
+            {
+            if(propertyData[key].type == 'string' || propertyData[key].type == 'number')
+            {
+              certTmpJson[key] = "{{" + key + "}}";
+  
+              contextJson[key] = {
+                "@id":"https://github.com/sunbird-specs/vc-specs#" + key,
+                "@context": {
+                  "name":"schema:Text"
+                }
+              }
+            }else if(propertyData[key].type == 'object'){
+              let objPro = propertyData[key].properties;
+              Object.keys(objPro).forEach(function (key2) {
+                console.log({ key2 });
+  
+                certTmpJson[key2] = "{{" + key + "." + key2 + "}}";
+              })
+            }
+            }
+          });
+
+        this.schemaContent['_osConfig']['credentialTemplate']['credentialSubject'] = certTmpJson;
+        this.schemaContent._osConfig.credentialTemplate["@context"][1]["@context"] = contextJson;
+        */
+      }
+    }
   }
 
 }

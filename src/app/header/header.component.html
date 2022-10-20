@@ -24,7 +24,7 @@
             <div class="circle-login">
               <!-- <p class="center">A</p>   -->
               <span class="p12" *ngIf="loggedInUser">{{loggedInUser}}</span> &nbsp;
-              <a *ngIf="loggedInUser" href="/" class="p12"> <img style="width: 25px;" src="assets/images/logout.png" /></a>
+              <a *ngIf="loggedInUser" href="/logout" class="p12"> <img style="width: 25px;" src="assets/images/logout.png" /></a>
             </div>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <ng-template [ngIf]="headerSchema?.left">

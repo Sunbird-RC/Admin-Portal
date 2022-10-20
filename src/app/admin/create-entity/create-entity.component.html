@@ -29,18 +29,17 @@
                         <ng-template ngFor let-menuItem [ngForOf]="usecaseSchema" let-i="index">
 
                         <li class="menu" 
-                        *ngIf="(menuItem?.title == 'Common' || menuItem?.title == 'common') && menuItem?.title"
+                        *ngIf="menuItem['key'] == 'refSchema'"
                         (click)="openEntity(i, menuItem?.title)">
                             <a class="a-menu"> Common schema
-                                <!-- <i *ngIf="isActive == 'createSchema'" class="fa fa-ellipsis-h text-grey-color float-end mt-1 p14"
-                                    aria-hidden="true"></i> -->
-
+                              
                                 <!-- <div *ngIf="isActive == 'createSchema'" class="dropdown p14 float-end">
                                     <i class="fa fa-ellipsis-h text-grey-color" aria-hidden="true"></i>
-                                    <div class="dropdown-content dropdown-content-margin">
-                                        <a href="#" class="ml-0">Edit</a>
-                                        <a href="#" class="ml-0">Delete</a>
-                                    </div>
+                                        <div class="dropdown-content dropdown-content-margin">
+                                            <a data-toggle="modal" data-target="#addEntity"
+                                                (click)="openEntityModal('edit', i)" class="ml-0">Edit</a>
+                                            <a (click)="deleteEntity(i)" class="ml-0">Delete</a>
+                                        </div>
                                 </div> -->
                             </a>
                         </li>
@@ -51,7 +50,7 @@
                     <ul class="list-unstyled components">
                         <ng-template ngFor let-menuItem [ngForOf]="usecaseSchema" let-i="index">
                             <li class="menu"
-                                *ngIf="(menuItem?.title != 'Common' && menuItem?.title != 'common') && menuItem?.title"
+                                *ngIf="menuItem['key'] != 'refSchema'"
                                 (click)="openEntity(i, menuItem?.title)">
                                 <a class="a-menu"> {{menuItem?.title}}
                                     <div *ngIf="isActive == 'createSchema'" class="dropdown p14 float-end">
@@ -102,7 +101,7 @@
                 </div>
 
                 <div *ngIf="!isShowJson && usecaseSchema[activeMenuNo]?.definitions?.data?.length">
-                    <p class="p16">Fields</p>
+                    <p class="p16">{{usecaseSchema[activeMenuNo]?.definitions?.length}}</p> 
                     <div class="card w-100">
                         <div class="px-3">
                             <table class="table">
@@ -419,8 +418,8 @@
         </div>
     </div>
 
-    <div class="modal right fade" id="prewiewProfile" tabindex="-1" role="dialog"
-    aria-labelledby="prewiewProfile">
+    <div class="modal right fade" id="saveSchemaConfig" tabindex="-1" role="dialog"
+    aria-labelledby="saveSchemaConfig">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header pt-4 border-0">
@@ -445,7 +444,7 @@
 
 
                 <div class="mt-4">
-                    <button (click)="saveConfiguration()" data-dismiss="modal" aria-label="Close"
+                    <button (click)="saveSchemaConfig()" data-dismiss="modal" aria-label="Close"
                         class="btn text-capitalize float-end btn-primary btn-primary-sm p1">Save</button>
                     <button class="close" data-dismiss="modal" aria-label="Close"
                         class="btn text-capitalize float-end btn-primary btn-primary-sm p1 sb-text-primary mr-2 bg-none">Cancel</button>
@@ -458,9 +457,9 @@
     <footer class="footer fixed-bottom">
         <div class="container-fluid">
             <div>
-                <button *ngIf="isActive == 'create-vc' || isActive == 'test-publish' || isActive == 'ownership' || isActive == 'configurations'" (click)="backStep()"
+                <button *ngIf="isActive == 'create-vc' || isActive == 'test-publish'" (click)="backStep()"
                     class="btn btn-sec-bg submit-button px-3 my-2 ml-2 mr-2 ">Back</button> &nbsp;
-                <button (click)="nextStep(); createSchema();" *ngIf="isActive == 'createSchema'" [disabled]="!usecaseSchema[activeMenuNo]?.definitions?.data?.length"
+                <button data-toggle="modal" data-target="#saveSchemaConfig" *ngIf="isActive == 'createSchema'" [disabled]="!usecaseSchema[activeMenuNo]?.definitions?.data?.length"
                     class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2">Save and
                     Next</button>
                     <button (click)="nextStep()" *ngIf="isActive == 'create-vc'" 
@@ -468,9 +467,9 @@
                     Next</button>
                     <button *ngIf="isActive == 'test-publish'" data-toggle="modal" data-target="#prewiewProfile"
                     class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2">Save </button>
-                <button (click)="nextStep()"  *ngIf="isActive == 'configurations' || isActive == 'ownership'"
+                <button *ngIf="isActive == 'configurations'" (click)="nextStep();"
                     class="btn btn-sec-bg float-end submit-button px-3 my-2 ml-2 mr-2 ">Skip</button> &nbsp;
-                <button *ngIf="isActive == 'create-vc'"
+                <button *ngIf="isActive == 'create-vc' || isActive == 'ownership'"
                     class="btn  float-end btn-primary btn-primary-sm px-3 my-2 ml-2 mr-2">Save as Draft</button>
                 &nbsp;
 

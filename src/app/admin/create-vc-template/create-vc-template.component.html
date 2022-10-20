@@ -39,11 +39,12 @@
   </div>
 
 
-  <div class="mt-4">
-    <p class="p16 fw-bold">Verifiable Credential Template for Attestation </p>
-    <!-- <p class="p16 fw-bold">Select the workflow name (thats previous screen) -> template</p> -->
-  </div>
+  
   <div class="card w-100" *ngIf = "isShow2">
+    <div class="mt-4">
+      <p class="p16 fw-bold">Verifiable Credential Template for Attestation </p>
+      <!-- <p class="p16 fw-bold">Select the workflow name (thats previous screen) -> template</p> -->
+    </div>
     <div class="ml-1 p-3 w-100">
       <div class="img-hold">
         <img *ngFor="let item of thumbnailItems" height="190px" width="130px" class="templateThumb img-fluid" src="{{item?.thumbnailUrl}}" />

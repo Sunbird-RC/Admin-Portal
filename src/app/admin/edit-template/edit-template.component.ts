@@ -80,12 +80,7 @@ export class EditTemplateComponent implements OnInit {
       }
 
     });
-    //  this.entityName = params.entity;
-    // this.generalService.getData('/Issuer').subscribe((res) => {
-
-    //   this.issuerOsid = res[0].osid;
-    // });
-
+    
 
 
   }
@@ -339,9 +334,7 @@ export class EditTemplateComponent implements OnInit {
     });
 
     var html = this.editor.getHtml();
-    console.log('html ---> ', html);
-    console.log('---------------------->', this.editor.runCommand('gjs-get-inlined-html'));
-  }
+    }
 
   dataChange() {
     window.location.reload();
@@ -358,7 +351,6 @@ export class EditTemplateComponent implements OnInit {
   }
 
   cancel() {
-    // this.isPreview = false;
     localStorage.setItem('sampleData', '');
     this.router.navigate(['/dashboard']);
   }
@@ -366,56 +358,27 @@ export class EditTemplateComponent implements OnInit {
   async readHtmlSchemaContent(doc) {
 
     this.userHtml = '';
-    /* await fetch(doc.schemaUrl)
-       .then(response => response.text())
-       .then(data => {
-         //    this.schemaContent = data;
-         // console.log({ data });
-         data = JSON.parse(data);
-         this.certificateTitle = data['title'];
-         this.userJson = data;
-         this.addCrtTemplateFields();
-         // this.certificateTemplate = this.userJson['_osConfig']['credentialTemplate'];
-         this.getCrtTempFields(this.userJson);
-       });*/
+   
 
     let draftSchemaOsid = JSON.parse(localStorage.getItem('draftSchemaOsid'));
-    console.log({ draftSchemaOsid });
 
-    this.schemaOsid = draftSchemaOsid[0].osid;
-    this.generalService.getData('/Schema/' + draftSchemaOsid[0].osid).subscribe((res) => {
-      console.log({ res });
-      let data = res['schema'];
-      this.certificateTitle = res['name'];
+    for (let i = 0; i < draftSchemaOsid.length; i++) {
+      if (draftSchemaOsid[i].title == this.entityName) {
+        this.schemaOsid = draftSchemaOsid[i].osid;
 
-      for (let i = 0; i < data.length; i++) {
-        if (data[i].title == this.entityName) {
-          this.userJson = data[i];
-          let _self = this;
-          let credeFields = data[i]['_osConfig']['credentialTemplate']['credentialSubject'];
-          //  this.propertyArr.push(data[i]['_osConfig']['credentialTemplate']['credentialSubject']);
-          Object.keys(credeFields).forEach(function (key) {
+        this.generalService.getData('/Schema/' + this.schemaOsid).subscribe((res) => {
+          let data = JSON.parse(res['schema']);
+          this.certificateTitle = res['name'];
+          this.userJson = data;
+        });
 
-            let propertyName = "{{credentialSubject." + key + "}}";
-            _self.propertyArr.push({ 'propertyTag': propertyName, 'require': '' });
-          });
-          console.log('propertyArr', this.propertyArr);
-          //  this.addCrtTemplateFields();
-          // this.getCrtTempFields(this.userJson)
-        }
       }
-      ;
-      // this.readSchema(res);
-    });
-
-
+    }
 
     await fetch(doc.certificateUrl)
       .then(response => response.text())
       .then(data => {
         this.userHtml = data;
-
-        //   this.injectHTML();
       });
   }
 
@@ -427,9 +390,6 @@ export class EditTemplateComponent implements OnInit {
     fetch(url)
       .then(response => response.text())
       .then(data => {
-        //    this.schemaContent = data;
-        console.log({ data });
-        //  console.log(JSON.parse(data));
       });
 
   }
@@ -492,9 +452,6 @@ export class EditTemplateComponent implements OnInit {
       fetch(jsonUrl)
         .then(response => response.text())
         .then(data => {
-          //    this.schemaContent = data;
-          console.log({ data });
-          // console.log(JSON.parse(data));
         });
 
 
@@ -538,12 +495,13 @@ export class EditTemplateComponent implements OnInit {
   }
 
   async submit() {
-    // this.addCrtTemplateFields();
-
-    // this.schemaContent = this.jsonEditor.get();//JSON.stringify(this.userJson);
-    this.schemaContent = (this.schemaContent) ? this.schemaContent : this.userJson;
-    // this.schemaContent = await this.addCrtTemplateFields();
-
+      this.generalService.getData('/Schema/' + this.schemaOsid).subscribe((res) => {
+      console.log({ res });
+      let data = JSON.parse(res['schema']);
+      this.certificateTitle = res['name'];
+      this.userJson = data;
+      this.schemaContent = data;
+    
     var htmlWithCss = this.editor.runCommand('gjs-get-inlined-html');
 
 
@@ -561,7 +519,6 @@ export class EditTemplateComponent implements OnInit {
     }
 
     localStorage.setItem('schemaVc', JSON.stringify(vcTrmplate));
-    // this.router.navigate(['/create/1/' + this.usecase + '/' + this.entityName]);
 
 
     // Creating a file object with some content
@@ -578,54 +535,22 @@ export class EditTemplateComponent implements OnInit {
     this.generalService.postData('/Schema/' + this.schemaOsid + '/certificateTemplate/documents', formData).subscribe((res) => {
 
       console.log({ res });
-      this.schemaContent._osConfig['certificateTemplates'] = { [this.templateName] : 'minio://' + res.documentLocations[0] }
+      this.schemaContent._osConfig['certificateTemplates'] = { [this.templateName]: 'minio://' + res.documentLocations[0] }
 
-      this.schemaContent = JSON.stringify(this.schemaContent._osConfig);
-
-      /*
-      // this.schemaContent = JSON.parse(this.schemaContent);
-      let _self = this;
-      Object.keys(this.schemaContent['properties']).forEach(function (key) {
-        _self.oldTemplateName = key;
-      });
-
-
-      this.schemaContent._osConfig['certificateTemplates'] = { html: 'minio://' + res.documentLocations[0] }
-
-      let result = JSON.stringify(this.schemaContent);
-
-      result = this.replaceAll(result, this.oldTemplateName, this.templateName);
+       let result = this.schemaContent;
 
       let payload = {
-        "name": this.templateName,
-        "description": this.description,
-        "schema": result
+        "schema": JSON.stringify(result)
       }
+        
+     this.generalService.putData('/Schema/', this.schemaOsid, payload).subscribe((res) => {
+        console.log({res});
 
-      if (res.documentLocations[0]) {
-        this.generalService.postData('/Schema', payload).subscribe((res) => {
-          localStorage.setItem('content', '');
-          this.router.navigate(['/dashboard']);
-        }, (err) => {
-          console.log('err ----', err);
-          this.toastMsg.error('error', err.error.params.errmsg)
+        this.router.navigate(['/create/2/' + this.usecase + '/' + this.entityName]);
 
-        })
-      }
-      */
-    })
-
-    const formData1 = new FormData();
-    var fileObjJson = new File([this.schemaContent._osConfig], this.templateName.replace(/\s+/g, '') + '.json');
-
-    // Store form name as "file" with file data
-    formData1.append("files", fileObjJson, fileObjJson.name);
-    this.generalService.postData('/Schema/' + this.schemaOsid + '/credentialTemplate/documents', formData1).subscribe((res) => {
-      // alert('success..!!');
-      this.router.navigate(['/create/2/'  + this.usecase + '/' + this.entityName]);
-      
+      });
     });
-
+  });
   }
 
 

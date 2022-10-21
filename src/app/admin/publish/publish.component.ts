@@ -21,14 +21,22 @@ export class PublishComponent implements OnInit {
     console.log({ draftSchemaOsid });
 
     this.schemaOsid = draftSchemaOsid[0].osid;
-    this.generalService.getData('/Schema/' + draftSchemaOsid[0].osid).subscribe((res) => {
-      res['status'] = "PUBLISHED";
-      res['schema'] = JSON.stringify(res['schema']);
 
-      this.generalService.putData('/Schema', this.schemaOsid, res).subscribe((res) => {
-        console.log(res);
-        
-      });
+    this.generalService.getData('/Schema').subscribe((res) => {
+
+      for(let i = 0; i < res.length; i++){
+        this.generalService.getData('/Schema/' + res[i].osid).subscribe((res) => {
+          res['status'] = "PUBLISHED";    
+          this.generalService.putData('/Schema', res[i].osid, res).subscribe((res) => {
+            console.log(res);
+            
+          });
+        })
+      }
     })
+
+    
+
+   
   }
 }

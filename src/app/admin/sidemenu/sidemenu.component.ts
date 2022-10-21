@@ -43,17 +43,16 @@ constructor(
   {
     for(let i =0; i < res.length; i++)
     {
-     if(typeof(res[i].schema) != 'string'){
-      this.items.push(res[i]);
-     }
+      if(typeof(res[i].schema)== 'string')
+      {
+        res[i].schema = JSON.parse(res[i].schema);
+        this.items.push(res[i]);
+      }
+     
     }
-
   }
 
   openMenu(menu){
-  //  this.activeMenu = menu;
-   // this.activeMenu.emit(menu);
-
   }
 
   clickEvent() {

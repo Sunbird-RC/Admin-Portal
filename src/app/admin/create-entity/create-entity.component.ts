@@ -92,7 +92,7 @@ export class CreateEntityComponent implements OnInit {
     this.editorOptions.mode = 'code';
     this.editorOptions.history = true;
     this.editorOptions.onChange = () => this.jsonEditor.get();
-
+    localStorage.setItem('draftSchemaOsid', "");
 
     this.activeRoute.params.subscribe(params => {
       this.params = params;
@@ -820,6 +820,7 @@ export class CreateEntityComponent implements OnInit {
         'description': this.description
       }
 
+      this.entityKey = this.entityName;
       // this.entityListArr.push(this.newSchemaTemplate(key, data))
       // this.entityFieldList[key] = this.newSchemaTemplate(key, data);
       this.usecaseSchema.push(this.newSchemaTemplate(key, data));
@@ -840,7 +841,7 @@ export class CreateEntityComponent implements OnInit {
       result = this.replaceAll(result, this.oldTemplateName, this.entityName);
       this.usecaseSchema[this.activeMenuNo] = JSON.parse(result);
       console.log(this.usecaseSchema[this.activeMenuNo]);
-
+      this.entityKey = this.entityName;
       this.location.replaceState('/create/' + this.currentTab + '/' + this.usecase + '/' + this.entityName);
 
     }
@@ -1076,8 +1077,7 @@ export class CreateEntityComponent implements OnInit {
         ],
         "issuanceDate": "2021-08-27T10:57:57.237Z",
         "credentialSubject": {
-          "type": "DeathCertificate",
-          "name": "{{name}}",
+          "type": "DeathCertificate"
         },
         "issuer": "did:web:sunbirdrc.dev/vc/skill"
       },
@@ -1133,7 +1133,8 @@ export class CreateEntityComponent implements OnInit {
       // for (let j = 0; j < this.usecaseSchema.length; j++) {
       let cJson = this.convertIntoSBRCSchema(this.usecaseSchema[i].definitions);
       if (cJson) {
-        tempProperty.definitions = cJson;
+        tempProperty[i].definitions = {};
+        tempProperty[i].definitions = cJson;
 
       }
       // }
@@ -1141,9 +1142,9 @@ export class CreateEntityComponent implements OnInit {
       console.log({ tempProperty });
       if (tempProperty.length == this.usecaseSchema.length) {
         let payload = {
-          "name": this.usecaseSchema[i].title,
-          "description": this.usecaseSchema[i].description,
-          "schema": JSON.stringify(tempProperty)
+          "name": tempProperty[i].title,
+          "description": tempProperty[i].description,
+          "schema": JSON.stringify(tempProperty[i])
         }
 
         this.generalService.postData('/Schema', payload).subscribe((res) => {
@@ -1213,53 +1214,75 @@ export class CreateEntityComponent implements OnInit {
     let errArr = [];
     let tempProperty: any;
     tempProperty = this.usecaseSchema;
-    // for (let i = 0; i < this.usecaseSchema.length; i++) {
+    for (let i = 0; i < this.usecaseSchema.length; i++) {
 
-
-
-    for (let j = 0; j < this.usecaseSchema.length; j++) {
-      if (!this.usecaseSchema[j].hasOwnProperty('key') || this.usecaseSchema[j].key != "refSchema") {
-        await this.addCrtTemplateFields(this.usecaseSchema[j]);
+      if (!this.usecaseSchema[i].hasOwnProperty('key') || this.usecaseSchema[i].key != "refSchema") {
+        await this.addCrtTemplateFields(this.usecaseSchema[i]);
       }
-      let cJson = this.convertIntoSBRCSchema(this.usecaseSchema[j].definitions);
+
+      // for (let j = 0; j < this.usecaseSchema.length; j++) {
+      let cJson = this.convertIntoSBRCSchema(this.usecaseSchema[i].definitions);
       if (cJson) {
         tempProperty.definitions = cJson;
 
       }
-    }
+      // }
 
-    console.log({ tempProperty });
-    if (tempProperty.length == this.usecaseSchema.length) {
-      let payload = {
-        "name": this.templateName,
-        "description": this.configDescription,
-        "schema": JSON.stringify(tempProperty)
-      }
-
-      this.generalService.postData('/Schema', payload).subscribe((res) => {
-        this.nextStep();
-
-        if (localStorage.getItem('draftSchemaOsid')) {
-          let draftSchemaOsid = JSON.parse(localStorage.getItem('draftSchemaOsid'));
-          draftSchemaOsid.push({
-            'title': this.templateName,
-            'osid': res.result.Schema.osid,
-          })
-          localStorage.setItem('draftSchemaOsid', JSON.stringify(draftSchemaOsid));
-
-        } else {
-          let draftSchemaOsid = [{
-            'title': this.templateName,
-            'osid': res.result.Schema.osid,
-          }]
-          localStorage.setItem('draftSchemaOsid', JSON.stringify(draftSchemaOsid));
+      console.log({ tempProperty });
+      if (tempProperty.length == this.usecaseSchema.length) {
+        let payload = {
+          "name": this.templateName,
+          "description": this.configDescription,
+          "schema": JSON.stringify(tempProperty)
         }
-      }, (err) => {
-        // errArr.push(this.usecaseSchema[i].title);
-        this.toastMsg.error('error', this.templateName + " name schema already exists, please rename");
-      })
+
+        this.generalService.postData('/Schema', payload).subscribe((res) => {
+          //  i = i + 1;
+          //this.postSchema(i);
+          if (!this.usecaseSchema[i].hasOwnProperty('key') || this.usecaseSchema[i].key != "refSchema") {
+            if (localStorage.getItem('draftSchemaOsid')) {
+              let draftSchemaOsid = JSON.parse(localStorage.getItem('draftSchemaOsid'));
+              draftSchemaOsid.push({
+                'title': this.usecaseSchema[i].title,
+                'osid': res.result.Schema.osid,
+              })
+              localStorage.setItem('draftSchemaOsid', JSON.stringify(draftSchemaOsid));
+
+            } else {
+              let draftSchemaOsid = [{
+                'title': this.usecaseSchema[i].title,
+                'osid': res.result.Schema.osid,
+              }]
+              localStorage.setItem('draftSchemaOsid', JSON.stringify(draftSchemaOsid));
+            }
+          }
+
+
+          if (i == (this.usecaseSchema.length - 1) && !errArr.length) {
+            this.saveData();
+            this.nextStep();
+          } else {
+            this.toastMsg.error('error', errArr + " name schema already exists, please rename");
+          }
+        }, (err) => {
+          errArr.push(this.usecaseSchema[i].title);
+
+          if (errArr.length == 1 && (errArr.includes('Common') || errArr.includes('common'))) {
+
+            this.saveData();
+            this.nextStep();
+            console.log('err ----', err);
+          } else {
+            if (i == this.usecaseSchema.length - 1) {
+              this.toastMsg.error('error', errArr + " name schema already exists, please rename");
+            }
+          }
+
+
+
+        })
+      }
     }
-    //  }
 
   }
   saveConfiguration() {
@@ -1348,7 +1371,6 @@ export class CreateEntityComponent implements OnInit {
                 "id": "@id",
                 "@version": 1.1,
                 "@protected": true,
-                "name": "schema:Text"
               }
             }
           }
@@ -1360,7 +1382,6 @@ export class CreateEntityComponent implements OnInit {
       "issuanceDate": "2021-08-27T10:57:57.237Z",
       "credentialSubject": {
         "type": this.certificateTitle,
-        "name": "{{name}}",
       },
       "issuer": "did:web:sunbirdrc.dev/vc/skill"
     };
@@ -1389,66 +1410,40 @@ export class CreateEntityComponent implements OnInit {
 
 
         for (let i = 0; i < propertyData.length; i++) {
-          if (propertyData[i].type != 'object') {
-            contextProperty[propertyData[i].key] = "schema:Text";
-            certTmpJson['_osConfig']['credentialTemplate']['credentialSubject'][contextProperty[propertyData[i].key]] = "{{" + contextProperty[propertyData[i].key] + "}}"
+          if (propertyData[i].type != 'object' && propertyData[i].type != 'array') {
+            if (propertyData[i].key != undefined) {
+              contextProperty[propertyData[i].key] = "schema:Text";
+              certTmpJson['_osConfig']['credentialTemplate']['credentialSubject'][contextProperty[propertyData[i].key]] = "{{" + contextProperty[propertyData[i].key] + "}}"
+            }
           } else {
             let stringKey = propertyData[i].propertyKey;
             stringKey = stringKey.charAt(0).toLowerCase() + stringKey.slice(1);
             contextProperty[stringKey] = {
-              "@id": "https://github.com/sunbird-specs/vc-specs#" + propertyData[i].propertyKey,
+              "@id": "https://github.com/sunbird-specs/vc-specs#" + stringKey,
               "@context": {
               }
             }
             for (let j = 0; j < propertyData[i].data.length; j++) {
-              if (propertyData[i].data[j].type != 'object') {
+              if (propertyData[i].data[j].type != 'object' && propertyData[i].data[j].type != 'array') {
                 let keyName = propertyData[i].data[j].key;
 
                 let stringKey = propertyData[i].propertyKey;
                 stringKey = stringKey.charAt(0).toLowerCase() + stringKey.slice(1);
+                if (stringKey != undefined && keyName != undefined) {
 
-                contextProperty[stringKey]["@context"][keyName] = "schema:Text";
-                certTmpJson['_osConfig']['credentialTemplate']['credentialSubject'][keyName] = "{{" + stringKey + "." + keyName + "}}"
-
+                  contextProperty[stringKey]["@context"][keyName] = "schema:Text";
+                  certTmpJson['_osConfig']['credentialTemplate']['credentialSubject'][keyName] = "{{" + stringKey + "." + keyName + "}}"
+                }
               }
             }
-
-
-
           }
         }
 
+        console.log({certTmpJson});
+      let temp =  JSON.stringify(certTmpJson)
+        console.log(temp);
+        console.log(JSON.parse(temp));
 
-
-        /*  Object.keys(propertyData).forEach(function (key) {
-            console.log({ key });
-  
-            if(key != 'name')
-            {
-            if(propertyData[key].type == 'string' || propertyData[key].type == 'number')
-            {
-              certTmpJson[key] = "{{" + key + "}}";
-  
-              contextJson[key] = {
-                "@id":"https://github.com/sunbird-specs/vc-specs#" + key,
-                "@context": {
-                  "name":"schema:Text"
-                }
-              }
-            }else if(propertyData[key].type == 'object'){
-              let objPro = propertyData[key].properties;
-              Object.keys(objPro).forEach(function (key2) {
-                console.log({ key2 });
-  
-                certTmpJson[key2] = "{{" + key + "." + key2 + "}}";
-              })
-            }
-            }
-          });
-
-        this.schemaContent['_osConfig']['credentialTemplate']['credentialSubject'] = certTmpJson;
-        this.schemaContent._osConfig.credentialTemplate["@context"][1]["@context"] = contextJson;
-        */
       }
     }
   }

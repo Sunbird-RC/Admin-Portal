@@ -86,7 +86,7 @@ this.usecase = params.usecase;
 
 
   openAddVc(){
-    this.location.replaceState('/add-template/' + this.params.usecase + '/' + this.params.entityName);
+    this.location.replaceState('/add-template/' + this.usecase + '/' + this.entityName);
   }
 
 

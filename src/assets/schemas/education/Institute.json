@@ -101,57 +101,9 @@
         "affiliation": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Affiliation"
+            "$ref": "Common.json/#/definitions/Affiliation"
           },
           "title": "Affiliation"
-        }
-      }
-    },
-    "Affiliation": {
-      "type": "object",
-      "properties": {
-        "medium": {
-          "type": "string",
-          "enum": ["English", "Hindi", "Gujarati", "Malayalam", "Tamil"],
-          "title": "Medium of Education"
-        },
-        "board": {
-          "type": "string",
-          "title": "Affiliations Board"
-        },
-        "affiliationNumber": {
-          "type": "string",
-          "title": "Affiliation Number"
-        },
-        "grantYear": {
-          "type": "string",
-          "title": "Grant year"
-        },
-        "expiryYear": {
-          "type": "string",
-          "title": "Expiry Year"
-        },
-        "classes": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "Pre-Pri.",
-              "Class I",
-              "Class II",
-              "Class III",
-              "Class IV",
-              "Class V",
-              "Class VI",
-              "Class VII",
-              "Class VIII",
-              "Class IX",
-              "Class X",
-              "Class XI",
-              "Class XII"
-            ]
-          },
-          "title": "Classes / Grades"
         }
       }
     }

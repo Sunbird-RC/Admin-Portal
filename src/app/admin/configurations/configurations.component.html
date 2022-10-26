@@ -36,18 +36,18 @@
                     </div>
             </div>
         </div>
-        <div class="card">
-            <div class="row p-2 m-2">
+        <div class="card p-3" >
+            <div class="row m-2">
                 <p class="card-title fw-bold">Verifiable Credentials</p>
-            </div>
-            <div></div>
-          
+            </div>          
             <div  *ngFor="let item of schemaItems">
-                <div class="card card-bottom col-sm-4 p-2" *ngIf="item?.schema._osConfig?.credentialTemplate">
+                <div class="card card-bottom col-sm-4" *ngIf="item?.schema._osConfig?.certificateTemplates">
                     <div class="card-title fw-bold">{{item?.name}}</div>
-                    <div>
+                    <div class="p-3">
                        
-                        <div  class="card-text">{{item?.schema?._osConfig?.credentialTemplate}}</div>
+                        <div  class="card-text" ng-repeat="key in item?.schema._osConfig?.certificateTemplates"
+                        ><i class="fa fa-sticky-note-o" aria-hidden="true"></i> {{item?.name}} certificate
+                        </div>
                         <!-- <button class="btn btn-sec-bg submit-button text-secondary-color">View/Add</button> -->
                     </div></div>
               

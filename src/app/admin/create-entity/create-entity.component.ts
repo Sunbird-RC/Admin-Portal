@@ -115,7 +115,7 @@ export class CreateEntityComponent implements OnInit {
           break;
         case 2: this.isActive = 'create-vc'
           break;
-        case 3: this.isActive = 'test-publish'
+        case 3: this.isActive = 'ownership'
           break;
         case 4: this.isActive = 'test-publish'
           break;
@@ -1179,7 +1179,9 @@ export class CreateEntityComponent implements OnInit {
             this.saveData();
             this.nextStep();
           } else {
+            if (!errArr.includes('Common') && !errArr.includes('common')) {
             this.toastMsg.error('error', errArr + " name schema already exists, please rename");
+            }
           }
         }, (err) => {
           errArr.push(this.usecaseSchema[i].title);

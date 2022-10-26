@@ -15,28 +15,25 @@ export class PublishComponent implements OnInit {
   }
 
 
-  changeVal(){
+ async  changeVal(){
     this.isShow = !this.isShow;
-    let draftSchemaOsid = JSON.parse(localStorage.getItem('draftSchemaOsid'));
-    console.log({ draftSchemaOsid });
 
-    this.schemaOsid = draftSchemaOsid[0].osid;
-
-    this.generalService.getData('/Schema').subscribe((res) => {
+      this.generalService.getData('/Schema').subscribe((res) => {
 
       for(let i = 0; i < res.length; i++){
-        this.generalService.getData('/Schema/' + res[i].osid).subscribe((res) => {
-          res['status'] = "PUBLISHED";    
-          this.generalService.putData('/Schema', res[i].osid, res).subscribe((res) => {
-            console.log(res);
-            
-          });
-        })
+         this.changeStatus(res[i]);
       }
     })
+  }
 
-    
-
-   
+  async changeStatus(res)
+  {
+    await this.generalService.getData('/Schema/' + res.osid).subscribe((data) => {
+      data['status'] = "PUBLISHED";    
+        this.generalService.putData('/Schema', data.osid, data).subscribe((data1) => {
+        console.log(data1);
+        
+      });
+    })
   }
 }

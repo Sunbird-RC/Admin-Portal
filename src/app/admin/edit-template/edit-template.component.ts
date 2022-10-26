@@ -80,8 +80,6 @@ export class EditTemplateComponent implements OnInit {
       }
 
     });
-    
-
 
   }
 
@@ -495,7 +493,7 @@ export class EditTemplateComponent implements OnInit {
   }
 
   async submit() {
-      this.generalService.getData('/Schema/' + this.schemaOsid).subscribe((res) => {
+   this.generalService.getData('/Schema/' + this.schemaOsid).subscribe((res) => {
       console.log({ res });
       let data = JSON.parse(res['schema']);
       this.certificateTitle = res['name'];
@@ -542,7 +540,7 @@ export class EditTemplateComponent implements OnInit {
       let payload = {
         "schema": JSON.stringify(result)
       }
-        
+
      this.generalService.putData('/Schema/', this.schemaOsid, payload).subscribe((res) => {
         console.log({res});
 

@@ -393,13 +393,7 @@
       "properties": {
         "medium": {
           "type": "string",
-          "enum": [
-            "English",
-            "Hindi",
-            "Gujarati",
-            "Malayalam",
-            "Tamil"
-          ],
+          "enum": ["English", "Hindi", "Gujarati", "Malayalam", "Tamil"],
           "title": "Medium of Education"
         },
         "board": {

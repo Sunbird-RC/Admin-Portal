@@ -75,7 +75,6 @@ services:
       - KEYCLOAK_PASSWORD=admin
       - KEYCLOAK_IMPORT=/opt/jboss/keycloak/imports/realm-export.json
       - PROXY_ADDRESS_FORWARDING=true
-      - KEYCLOAK_LOGO=https://svgshare.com/i/m5t.svg
       - KEYCLOAK_PORTAL_TITLE=Sunbird RC account
       - KEYCLOAK_PORTAL_SUB_TITLE=Create your Registry and Credentialing Platform
       - SHOW_BANNER=false

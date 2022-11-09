@@ -77,6 +77,9 @@ export class CreateEntityComponent implements OnInit {
   schemaContent: any;
   certificateTitle: any;
   rawCredentials: any;
+  allField:any= [];
+  newArr:any =[];
+  newArr2:any =[];
   constructor(
     private activeRoute: ActivatedRoute,
     public router: Router,
@@ -683,8 +686,26 @@ export class CreateEntityComponent implements OnInit {
   }
 
   showAddForm() {
-    this.isAddFormPg = true;
-    this.compFieldJson = '';
+   
+    
+    console.log(this.usecaseSchema[this.activeMenuNo].definitions.data);
+    for(let i = 0; i < this.usecaseSchema[this.activeMenuNo].definitions.data.length; i++)
+    {
+      // if (this.usecaseSchema[this.activeMenuNo].definitions.data[i].type == 'nasted') {
+      //   this.allField[i] = this.usecaseSchema[this.activeMenuNo].definitions.data[i].data[''];
+      // } else {
+      //   this.allField[i] = this.usecaseSchema[this.activeMenuNo].definitions.data[i];
+      // }
+  
+  
+      // this.newArr[i] = this.convertSchemaToFormioJson(this.allField[i]);
+      this.isAddFormPg = true; 
+    }
+    
+    
+  
+    
+    
   }
 
   goBackEvent() {
@@ -851,14 +872,15 @@ export class CreateEntityComponent implements OnInit {
     let viewSchemaField;
 
     if (type == 'nasted') {
-      viewSchemaField = this.usecaseSchema[this.activeMenuNo].definitions.data[objectIndex_i].data[nastedObjIndex_j];
+      viewSchemaField = this.usecaseSchema[this.activeMenuNo].definitions.data;
     } else {
-      viewSchemaField = this.usecaseSchema[this.activeMenuNo].definitions.data[objectIndex_i];
+      viewSchemaField = this.usecaseSchema[this.activeMenuNo].definitions.data;
     }
 
-
+    console.log(viewSchemaField);
     this.compFieldJson = this.convertSchemaToFormioJson(viewSchemaField);
-    this.isAddFormPg = true;
+    console.log(this.compFieldJson);
+    this.isAddFormPg = true;  
   }
 
   deleteField(type, objectIndex_i, nastedObjIndex_j) {
@@ -885,16 +907,23 @@ export class CreateEntityComponent implements OnInit {
 
   convertSchemaToFormioJson(viewSchemaField) {
 
-    let compJson = {
-      "label": viewSchemaField.data.title,
-      "tableView": true,
-      "$id": "#/properties/" + viewSchemaField.key,
-      "key": viewSchemaField.key,
-      "type": (viewSchemaField.type == 'string') ? "textfield" : viewSchemaField.type,
-      "input": true
+    for(let i=0;i< viewSchemaField.length;i++)
+    {
+      let compJson = {
+        "label": viewSchemaField[i].data.title,
+        "tableView": true,
+        "key": viewSchemaField[i].key,
+	"$id": "#/properties/" + viewSchemaField[i].key,
+        "type": (viewSchemaField[i].type == 'string') ? "textfield" : viewSchemaField[i].type,
+        "input": true
+      }
+      this.newArr.push(compJson);
     }
+      
+    
+    console.log(this.newArr)
 
-    return compJson;
+    return this.newArr;
 
   }
 

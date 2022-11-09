@@ -31,13 +31,23 @@ export class AddFieldFormComponent implements OnInit {
    // this.entityFields = this.jsonSchema;
 
     if (this.jsonSchema) {
-      this.myForm['components'].push(this.jsonSchema);
+
+      for(let i=0;i< this.jsonSchema.length;i++)
+      if (this.jsonSchema[i].type == 'container') {
+        this.myForm['components'].push(this.jsonSchema[i].components);
+      } else {
+        this.myForm['components'].push(this.jsonSchema[i]);
+      }
+      
+      //this.myForm['components'] = this.jsonSchema;
+     
+      console.log(this.myForm);
       // delete editorConfig.builder['basic'];
       // this.options = editorConfig;
       //  this.options.builder.basic = false;
     }
 
-    // this.formioJsonBuild(this.jsonSchema);
+     //this.formioJsonBuild(this.jsonSchema);
   }
 
   onSubmit(event) {

@@ -87,6 +87,39 @@
 
 
         <div class="col-md-9 p-2 mb-6">
+                <!-- Button trigger modal -->
+<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    Launch demo modal
+  </button> -->
+  
+  <!-- Modal -->
+  <!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content p-3">
+        <div class="modal-header">
+        
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div> 
+        <div class="modal-body d-flex flex-justify-center">
+          <b>Do you want to save the changes?</b>
+          <br>
+          <br>
+          
+        </div>
+        <div class=" d-flex flex-justify-between">
+          <button type="button" class="p14 btn btn-sec-bg submit-button text-secondary-color float-left" data-dismiss="modal">No, Don't Save</button>
+          <button type="button" class="btn btn-primary">Yes, Save as draft</button>
+        </div>
+
+        <div class=" d-flex flex-justify-between">
+            <b>Schema Saved as 'Draft'</b>
+            <button type="button" class="btn btn-primary">OK</button>
+          </div>
+      </div>
+    </div>
+  </div> -->
             <div class="step" *ngIf="isActive == 'createSchema'">
                 <div class="d-flex flex-justify-between card-body pr-2 py-2">
                     <div class="heading-2">
@@ -403,7 +436,7 @@
                 <div class="p-3 sm-card" *ngIf="usecaseSchema.length &&  !isShowJson">
                     <span class="m-3 p14 mbtn-10 submit-button text-secondary-color" (click)="showAddForm()">
                         <i class="fa fa-plus" aria-hidden="true"></i>
-                        Add Field</span>
+                        Add/View Field</span>
                 </div>
 
                 <div class="p-3" *ngIf="isActive == 'createSchema' && !usecaseSchema.length">
@@ -518,7 +551,7 @@
     <footer class="footer fixed-bottom">
         <div class="container-fluid">
             <div>
-                <button *ngIf="isActive == 'create-vc' || isActive == 'test-publish'" (click)="backStep()"
+                <button *ngIf="isActive == 'create-vc' || isActive == 'test-publish'" data-target="#exampleModal" (click)="backStep();"
                     class="btn btn-sec-bg submit-button px-3 my-2 ml-2 mr-2 ">Back</button> &nbsp;
                 <button (click)="createSchema()" *ngIf="isActive == 'createSchema'" [disabled]="!usecaseSchema[activeMenuNo]?.definitions?.data?.length"
                     class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2">Save and

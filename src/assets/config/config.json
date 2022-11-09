@@ -18,7 +18,7 @@
     ],
     "appType": "attestation",
     "default_theme": {
-        "logoPath": "/assets/images/logo.png",
+        "logoPath": "https://raw.githubusercontent.com/Sunbird-RC/Admin-Portal/main/src/assets/images/admin_portal.svg",
         "primaryColor": "#1987B6",
         "secondaryColor": "#1987B6",
         "bodyBackground": "#F6F8FC",
@@ -35,7 +35,7 @@
 
     },
     "dark_theme": {
-        "logoPath": "/assets/images/logo.png",
+        "logoPath": "https://raw.githubusercontent.com/Sunbird-RC/Admin-Portal/main/src/assets/images/admin_portal.svg",
         "primaryColor": "#1987B6",
         "secondaryColor": "#1987B6",
         "bodyBackground": "#080808",

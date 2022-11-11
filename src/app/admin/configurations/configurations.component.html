@@ -23,6 +23,7 @@
         <div>
 
             <div class="row p-2 m-2">
+                
                 <div class="card card-bottom col-sm-3 p-2 mr-2 mb-2 " *ngFor="let item of schemaItems">
                         <div class="card-title fw-bold p16"> {{item?.name}} 
                             <span *ngIf="item?.status == 'DRAFT'" class="badge badge-secondary ml-2 p12">  {{item?.status}}</span>

@@ -33,8 +33,12 @@ export class AddFieldFormComponent implements OnInit {
     if (this.jsonSchema) {
 
       for(let i=0;i< this.jsonSchema.length;i++)
-      if (this.jsonSchema[i].type == 'container') {
-        this.myForm['components'].push(this.jsonSchema[i].components);
+      if (this.jsonSchema[i].type === 'container') {
+
+        console.log('COMPONEENTSSS' + this.jsonSchema[i].components)
+          this.myForm['components'].push(this.jsonSchema[i].components);
+       
+        
       } else {
         this.myForm['components'].push(this.jsonSchema[i]);
       }
@@ -91,6 +95,13 @@ export class AddFieldFormComponent implements OnInit {
 
   formioJsonToPlainJSONSchema(event, components) {
     console.log({ components });
+    for(let i=0;i< components.length;i++){
+      if(components[i].type === "container")
+      {
+        console.log("hello")
+      }
+
+    }
     return components;
   }
 

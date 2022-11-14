@@ -14,7 +14,7 @@ export class AddFieldFormComponent implements OnInit {
   @Output() backEvent = new EventEmitter<any>();
 
 
-  @Input() jsonSchema;
+  @Input() jsonSchema = '';
 
 
   entityFieldList: any = []
@@ -27,19 +27,19 @@ export class AddFieldFormComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    
+    this.myForm['components'] = [];
    // this.entityFields = this.jsonSchema;
 
     if (this.jsonSchema) {
 
-      for(let i=0;i< this.jsonSchema.length;i++)
-      if (this.jsonSchema[i].type == 'container') {
-        this.myForm['components'].push(this.jsonSchema[i].components);
-      } else {
-        this.myForm['components'].push(this.jsonSchema[i]);
-      }
+      // for(let i=0;i< this.jsonSchema.length;i++)
+      // if (this.jsonSchema[i].type == 'container') {
+      //   this.myForm['components'].push(this.jsonSchema[i].components);
+      // } else {
+      //   this.myForm['components'].push(this.jsonSchema[i]);
+      // }
       
-      //this.myForm['components'] = this.jsonSchema;
+      this.myForm['components'] = this.jsonSchema;
      
       console.log(this.myForm);
       // delete editorConfig.builder['basic'];
@@ -47,7 +47,7 @@ export class AddFieldFormComponent implements OnInit {
       //  this.options.builder.basic = false;
     }
 
-     //this.formioJsonBuild(this.jsonSchema);
+    // this.formioJsonBuild(this.jsonSchema);
   }
 
   onSubmit(event) {
@@ -99,6 +99,7 @@ export class AddFieldFormComponent implements OnInit {
   }
 
   saveAdvance() {
+    this.jsonSchema = '';
     this.newItemEvent.emit(this.entityFields[this.entityFields.length - 1]);
     this.cancel();
   }

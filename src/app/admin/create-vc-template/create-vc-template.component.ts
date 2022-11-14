@@ -9,17 +9,20 @@ import { Location } from '@angular/common';
 })
 export class CreateVcTemplateComponent implements OnInit {
   thumbnailItems: any = [{
-    "thumbnailUrl": "/assets/images/thumbnail.png"
+    "thumbnailUrl": "/assets/images/thumbnail.png",
+    "title":"Volunteering Certificate"
   },
   {
-    "thumbnailUrl": "/assets/images/thumbnail.png"
-  }]
+    "thumbnailUrl": "/assets/images/thumbnail.png",
+    "title":"Proof of Work"
+  }
+ ]
   params: any;
   entityName: any;
   usecase: any;
   vcObject: any;
   schemaName: string;
-  isShow1 :boolean;
+  isShow1: boolean;
   isShow2: boolean;
   constructor(
     private activeRoute: ActivatedRoute,
@@ -35,24 +38,20 @@ export class CreateVcTemplateComponent implements OnInit {
 
       if (this.params.hasOwnProperty('usecase')) {
         this.usecase = params.usecase;
-this.usecase = params.usecase;
-        if(this.usecase == 'issuance')
-        {
-          this.isShow1 =true;
+        this.usecase = params.usecase;
+        if (this.usecase == 'issuance') {
+          this.isShow1 = true;
           this.isShow2 = true;
         }
-        else if(this.usecase == 'atstandclaim')
-        {
+        else if (this.usecase == 'atstandclaim') {
           this.isShow1 = false;
           this.isShow2 = true;
         }
-        else if(this.usecase == 'divoc')
-        {
+        else if (this.usecase == 'divoc') {
           this.isShow1 = true;
           this.isShow2 = false;
         }
-        else if(this.usecase == 'education')
-        {
+        else if (this.usecase == 'education') {
           this.isShow1 = true;
           this.isShow2 = false;
         }
@@ -60,8 +59,8 @@ this.usecase = params.usecase;
 
       if (this.params.hasOwnProperty('entity')) {
         this.entityName = params.entity;
-      }else{
-        let temp =  window.location.href.split('/');
+      } else {
+        let temp = window.location.href.split('/');
         this.entityName = temp[temp.length - 1]
       }
 
@@ -70,22 +69,26 @@ this.usecase = params.usecase;
         schemaVc = JSON.parse(schemaVc);
         let self = this;
         Object.keys(schemaVc).forEach(function (key) {
-          self.schemaName = key;
-          self.vcObject = schemaVc[key];
+          if (key !== 'title') {
 
-          self.thumbnailItems.push({
-            "thumbnailUrl": "/assets/images/thumbnail.png",
-            "title" : self.vcObject.name,
-            "description" : self.vcObject.description,
-            "html" : self.vcObject.html
-          })
+            self.schemaName = key;
+            self.vcObject = schemaVc[key];
+
+            self.thumbnailItems.push({
+              "thumbnailUrl": "/assets/images/thumbnail.png",
+              "title": self.vcObject.name,
+              "description": self.vcObject.description,
+              "html": self.vcObject.html
+            })
+          }
         });
+
       }
     });
   }
 
 
-  openAddVc(){
+  openAddVc() {
     this.location.replaceState('/add-template/' + this.usecase + '/' + this.entityName);
   }
 

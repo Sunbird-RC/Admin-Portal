@@ -10,6 +10,7 @@
     "Teacher"
   ],
   "title": "Teacher",
+  "description":  "This is Teacher Entity",
   "definitions": {
     "Teacher": {
       "$id": "#/properties/Teacher",

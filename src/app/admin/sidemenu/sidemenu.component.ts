@@ -46,7 +46,11 @@ constructor(
       if(typeof(res[i].schema)== 'string')
       {
         res[i].schema = JSON.parse(res[i].schema);
-        this.items.push(res[i]);
+
+        if( !res[i].schema.hasOwnProperty('isRefSchema') &&  !res[i].schema.isRefSchema){
+          this.items.push(res[i]);
+        }
+       
       }
      
     }

@@ -24,23 +24,22 @@
             <div class="wrapper ps-2 -e-2">
                 <!--Top menu -->
                 <div id="sideMenu" class="sidebar">
-                    <ul class="list-unstyled" *ngIf="containCommonField && isActive == 'createSchema'">
-                        <p class="p16 fw-bold pl-3 text-uppercase">Common </p>
+                    <ul class="list-unstyled" *ngIf="isActive == 'createSchema'">
                         <ng-template ngFor let-menuItem [ngForOf]="usecaseSchema" let-i="index">
 
                         <li class="menu" 
-                        *ngIf="menuItem['key'] == 'refSchema'"
+                        *ngIf="menuItem['isRefSchema']"
                         (click)="openEntity(i, menuItem?.title)">
                             <a class="a-menu"> Common Schema
                               
-                                <!-- <div *ngIf="isActive == 'createSchema'" class="dropdown p14 float-end">
+                                <div *ngIf="isActive == 'createSchema'" class="dropdown p14 float-end">
                                     <i class="fa fa-ellipsis-h text-grey-color" aria-hidden="true"></i>
                                         <div class="dropdown-content dropdown-content-margin">
                                             <a data-toggle="modal" data-target="#addEntity"
                                                 (click)="openEntityModal('edit', i)" class="ml-0">Edit</a>
                                             <a (click)="deleteEntity(i)" class="ml-0">Delete</a>
                                         </div>
-                                </div> -->
+                                </div>
                             </a>
                         </li>
                         </ng-template>
@@ -49,8 +48,7 @@
 
                     <ul class="list-unstyled components">
                         <ng-template ngFor let-menuItem [ngForOf]="usecaseSchema" let-i="index">
-                            <li class="menu"
-                                *ngIf="menuItem['key'] != 'refSchema'"
+                            <li class="menu"  *ngIf="!menuItem['isRefSchema']"
                                 (click)="openEntity(i, menuItem?.title)">
                                 <a class="a-menu"> {{menuItem?.title}}
                                     <div *ngIf="isActive == 'createSchema'" class="dropdown p14 float-end">
@@ -87,39 +85,6 @@
 
 
         <div class="col-md-9 p-2 mb-6">
-                <!-- Button trigger modal -->
-<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-    Launch demo modal
-  </button> -->
-  
-  <!-- Modal -->
-  <!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content p-3">
-        <div class="modal-header">
-        
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div> 
-        <div class="modal-body d-flex flex-justify-center">
-          <b>Do you want to save the changes?</b>
-          <br>
-          <br>
-          
-        </div>
-        <div class=" d-flex flex-justify-between">
-          <button type="button" class="p14 btn btn-sec-bg submit-button text-secondary-color float-left" data-dismiss="modal">No, Don't Save</button>
-          <button type="button" class="btn btn-primary">Yes, Save as draft</button>
-        </div>
-
-        <div class=" d-flex flex-justify-between">
-            <b>Schema Saved as 'Draft'</b>
-            <button type="button" class="btn btn-primary">OK</button>
-          </div>
-      </div>
-    </div>
-  </div> -->
             <div class="step" *ngIf="isActive == 'createSchema'">
                 <div class="d-flex flex-justify-between card-body pr-2 py-2">
                     <div class="heading-2">
@@ -223,7 +188,7 @@
                                                                     <i class="fa fa-ellipsis-h  text-grey-color"
                                                                         aria-hidden="true"></i>
                                                                     <div class="dropdown-content">
-                                                                        <a (click)="viewField('nasted', j,k, m)">View</a>
+                                                                        <!-- <a (click)="viewField('nasted', j,k, m)">View</a> -->
                                                                         <a (click)="deleteField('nasted', j,k, m)">Delete</a>
                                                                     </div>
                                                                 </div>
@@ -276,7 +241,7 @@
                                                                 <i class="fa fa-ellipsis-h  text-grey-color"
                                                                     aria-hidden="true"></i>
                                                                 <div class="dropdown-content">
-                                                                    <a (click)="viewField('nasted', j, k)">View</a>
+                                                                    <!-- <a (click)="('nasted', j, k)">View</a> -->
                                                                     <a (click)="deleteField('nasted', j, k)">Delete</a>
                                                                 </div>
                                                             </div>
@@ -326,7 +291,7 @@
                                                             <i class="fa fa-ellipsis-h  text-grey-color"
                                                                 aria-hidden="true"></i>
                                                             <div class="dropdown-content">
-                                                                <a (click)="viewField('string', j, '')">View</a>
+                                                                <!-- <a (click)="viewField('string', j, '')">View</a> -->
                                                                 <a (click)="deleteField('string', j, '')">Delete</a>
                                                             </div>
                                                         </div>
@@ -380,7 +345,7 @@
                                                             <i class="fa fa-ellipsis-h  text-grey-color"
                                                                 aria-hidden="true"></i>
                                                             <div class="dropdown-content">
-                                                                <a (click)="viewField('string', j, '')">View</a>
+                                                                <!-- <a (click)="viewField('string', j, '')">View</a> -->
                                                                 <a (click)="deleteField('string', j, '')">Delete</a>
                                                             </div>
                                                         </div>
@@ -551,8 +516,8 @@
     <footer class="footer fixed-bottom">
         <div class="container-fluid">
             <div>
-                <button *ngIf="isActive == 'create-vc' || isActive == 'test-publish'" data-target="#exampleModal" (click)="backStep();"
-                    class="btn btn-sec-bg submit-button px-3 my-2 ml-2 mr-2 ">Back</button> &nbsp;
+                <!-- <button *ngIf="isActive == 'create-vc' || isActive == 'test-publish'" (click)="backStep()"
+                    class="btn btn-sec-bg submit-button px-3 my-2 ml-2 mr-2 ">Back</button> &nbsp; -->
                 <button (click)="createSchema()" *ngIf="isActive == 'createSchema'" [disabled]="!usecaseSchema[activeMenuNo]?.definitions?.data?.length"
                     class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2">Save and
                     Next</button>
@@ -564,7 +529,7 @@
                 <button *ngIf="isActive == 'configurations'" (click)="nextStep();"
                     class="btn btn-sec-bg float-end submit-button px-3 my-2 ml-2 mr-2 ">Skip</button> &nbsp;
                 <button *ngIf="isActive == 'create-vc' || isActive == 'ownership'"
-                    class="btn  float-end btn-primary btn-primary-sm px-3 my-2 ml-2 mr-2">Save as Draft</button>
+                (click)="nextStep();" class="btn  float-end btn-primary btn-primary-sm px-3 my-2 ml-2 mr-2">Save as Draft</button>
                 &nbsp;
 
             </div>

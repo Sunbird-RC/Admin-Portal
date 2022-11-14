@@ -1,165 +1,223 @@
-<div id="content" >
-    <div class="card">
-        <div class="card-body">
-            <div class="d-flex justify-content-center mt-3">
-                <div></div>
-                <div>
-                    <p class="card-title fw-bold">Welcome to Sunbird RC Builder</p>
-                </div>
-                <div></div>
-            </div>
-
-            <div class="d-flex justify-content-center mb-1 mt-3">
-                <div></div>
-                <div>
-                    <p class="card-text lh-lg p14">
-                        Create your Registry and Credentialing Platform</p>
-                </div>
-                <div></div>
-            </div>
-
-            <div class="d-flex justify-content-center mb-4" style="line-height:32px;">
-                <div></div>
-                <div>
-                    <p class="card-text p14">
-                        Need Help? <a href="https://docs.sunbirdrc.dev/" target=”_blank”
-                            class="text-secondary-color">Watch training
-                            video</a> or <a href="https://docs.sunbirdrc.dev/" target=”_blank”
-                            class="text-secondary-color">read
-                            documentation</a></p>
-                </div>
-                <div></div>
-            </div>
-
-            <hr class="custHr" />
-
-            <div class="d-flex justify-content-center mt-3">
-                <div></div>
-                <div>
-                    <p class="card-title fw-bold ">How do you want to build Registry & Credentialing Platform?</p>
-                </div>
-                <div></div>
-            </div>
-
-            <div class="wrapped" style="margin-left: 16px;margin-right:16px;">
-                <p class="p16 primary-text fw-bold mb-1"> <b> Start with sample use case</b> &nbsp;
-                    <i class="fa fa-question-circle" aria-hidden="true"></i>
-                </p>
-                <p class="p14 primary-text fw-400">
-                    If your scenario is close to one of the sample use case below, you can get started immediately.
-                    Please note you can edit the settings of these usecases as per your requirement.
-                </p>
-                <div class="row">
-                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-3">
-                        <div class="card get-card min-ht">
-                            <div class="card-body">
-                                <p class="card-title fw-bold pb-1 p16">DIVOC</p>
-                                <p class="card-text lh-lg p14 min-ht2">
-                                    Registry and Credentials for Health Care and Vaccination Certificate Issuance
-                                </p>
-                                <div class="mt-4">
-                                    <a href="https://demo-education-registry.xiv.in/" target=”_blank”
-                                        class="p12 text-secondary-color">Experience
-                                        Demo</a>
-
-                                    <a href="/create/divoc" class="float-end p14 btn btn-primary">Start</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-3">
-                        <div class="card min-ht get-card">
-                            <div class="card-body">
-                                <p class="card-title fw-bold pb-1 p16">Issuance</p>
-                                <p class="card-text lh-lg p14 min-ht2">
-                                    Credentialing for issuers to create and issue verified certificate</p>
-                                <div class="mt-4">
-                                    <a href="https://demo-education-registry.xiv.in/" target=”_blank”
-                                        class="p12 text-secondary-color">Experience
-                                        Demo</a>
-
-                                    <a href="/create/issuance" class="float-end p14 btn btn-primary">Start</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-3">
-                        <div class="card get-card min-ht">
-                            <div class="card-body">
-                                <p class="card-title fw-bold pb-1 p16">Education RC</p>
-                                <p class="card-text lh-lg p14 min-ht2">
-                                    Registry and Credentials for Education board, Institute, Teachers and Students
-                                </p>
-                                <div class="mt-4">
-                                    <a href="https://demo-education-registry.xiv.in/" target=”_blank”
-                                        class="p12 text-secondary-color">Experience Demo</a>
-                                    <a href="/create/education" class="float-end p14 btn btn-primary">Start</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-3">
-                        <div class="card get-card min-ht">
-                            <div class="card-body">
-                                <p class="card-title fw-bold pb-1 p16 text-grey">Sunbird eLocker</p>
-                                <p class="card-text lh-lg p14 min-ht2">
-                                    Digital locker platform to store and manage credentials of users </p>
-                                <div class="mt-4 d-flex justify-content-center">
-                                    <a class="p12 btn btn-lg text-grey btn-bg-grey">update coming soon</a>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <hr class="custHr" />
-            <div class="wrapped" style="margin-left: 16px;margin-right:16px;">
-                <p class="p16 primary-text fw-bold">Start from scratch &nbsp;<i class="fa fa-question-circle"
-                        aria-hidden="true"></i></p>
-                <div class="row">
-                    <div class="card">
-                        <div class="mt-4">
-                            <input type="checkbox" id="defaultCheck" name="example2" [checked]="checkbox1"  (change)="changeEvent1()">
-                            <!-- {{checkbox1}} -->
-                            <label class="card-title fw-bold pb-1 p16 ml-3" for="defaultCheck">Attestation &
-                                Claim</label>
-                            <div class="card-text ps-3  lh-lg p14 ml-3">
-                                Issuer can attest a claim including past document and issue Verified credentials
-                            </div>
-                        </div>
-
-
-                        <div>
-                            <label>
-                                <input type="checkbox"  [checked]="checkbox2"   (change)="changeEvent2()"  >
-                                <!-- {{checkbox2}} -->
-                                <span class="card-title fw-bold pb-1 p16 ml-3">Issuance</span>
-                            </label>
-                            <div class="card-text lh-lg ps-3 p14 ml-3">
-                                Issuer can create template and issue verified credentials</div>
-                        </div>
-                        <hr class="custHr" />
-                        <!-- {{chooseEntity}} -->
-                        <div>
-                            <label class="mp-0">
-                                <input type="checkbox" disabled>
-                            </label>
-
-                            <span class="card-text lh-lg p14 ml-3 text-grey">
-                                I want to add ownership and roles, to onboard Issuers and VC Holder, so that
-                                they can login and manage their profile and VC </span> 
-                               
-                            <a href="/create/{{chooseEntity}}" ><button  class="float-end mt-5 p14 btn btn-primary">Start</button></a> 
-                            <!-- <button [disabled]="!(checkbox1 || checkbox2)">Bar</button> -->
-                        </div>
-                    </div>
-                </div>
-            </div>
+<div id="content">
+  <div class="card">
+    <div class="card-body">
+      <div class="d-flex justify-content-center mt-3">
+        <div></div>
+        <div>
+          <p class="card-title fw-bold">Welcome to Sunbird RC Builder</p>
         </div>
+        <div></div>
+      </div>
+
+      <div class="d-flex justify-content-center mb-1 mt-3">
+        <div></div>
+        <div>
+          <p class="card-text lh-lg p14">
+            Create your Registry and Credentialing Platform
+          </p>
+        </div>
+        <div></div>
+      </div>
+
+      <div class="d-flex justify-content-center mb-4" style="line-height: 32px">
+        <div></div>
+        <div>
+          <p class="card-text p14">
+            Need Help?
+            <a
+              href="https://docs.sunbirdrc.dev/"
+              target="”_blank”"
+              class="text-secondary-color"
+              >Watch training video</a
+            >
+            or
+            <a
+              href="https://docs.sunbirdrc.dev/"
+              target="”_blank”"
+              class="text-secondary-color"
+              >read documentation</a
+            >
+          </p>
+        </div>
+        <div></div>
+      </div>
+
+      <hr class="custHr" />
+
+      <div class="d-flex justify-content-center mt-3">
+        <div></div>
+        <div>
+          <p class="card-title fw-bold">
+            How do you want to build Registry & Credentialing Platform?
+          </p>
+        </div>
+        <div></div>
+      </div>
+
+      <div class="wrapped" style="margin-left: 16px; margin-right: 16px">
+        <p class="p16 primary-text fw-bold mb-1">
+          <b> Start with sample use case</b> &nbsp;
+          <i class="fa fa-question-circle" aria-hidden="true"></i>
+        </p>
+        <p class="p14 primary-text fw-400">
+          If your scenario is close to one of the sample use case below, you can
+          get started immediately. Please note you can edit the settings of
+          these usecases as per your requirement.
+        </p>
+        <div class="row">
+          <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-3">
+            <div class="card get-card min-ht">
+              <div class="card-body">
+                <p class="card-title fw-bold pb-1 p16">DIVOC</p>
+                <p class="card-text lh-lg p14 min-ht2">
+                  Registry and Credentials for Health Care and Vaccination
+                  Certificate Issuance
+                </p>
+                <div class="mt-4">
+                  <!-- <a class="p12 text-secondary-color">Experience Demo</a> -->
+
+                  <a href="/create/divoc" class="float-end p14 btn btn-primary"
+                    >Start</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-3">
+            <div class="card min-ht get-card">
+              <div class="card-body">
+                <p class="card-title fw-bold pb-1 p16">Issuance</p>
+                <p class="card-text lh-lg p14 min-ht2">
+                  Credentialing for issuers to create and issue verified
+                  certificate
+                </p>
+                <div class="mt-4">
+                  <a
+                    href="https://sunbird-certificate-demo.xiv.in/"
+                    target="”_blank”"
+                    class="p12 text-secondary-color"
+                    >Experience Demo</a
+                  >
+
+                  <a
+                    href="/create/issuance"
+                    class="float-end p14 btn btn-primary"
+                    >Start</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-3">
+            <div class="card get-card min-ht">
+              <div class="card-body">
+                <p class="card-title fw-bold pb-1 p16">Education RC</p>
+                <p class="card-text lh-lg p14 min-ht2">
+                  Registry and Credentials for Education board, Institute,
+                  Teachers and Students
+                </p>
+                <div class="mt-4">
+                  <a
+                    href="https://demo-education-registry.xiv.in/"
+                    target="”_blank”"
+                    class="p12 text-secondary-color"
+                    >Experience Demo</a
+                  >
+                  <a
+                    href="/create/education"
+                    class="float-end p14 btn btn-primary"
+                    >Start</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-3">
+            <div class="card get-card min-ht">
+              <div class="card-body">
+                <p class="card-title fw-bold pb-1 p16 text-grey">
+                  Sunbird eLocker
+                </p>
+                <p class="card-text lh-lg p14 min-ht2">
+                  Digital locker platform to store and manage credentials of
+                  users
+                </p>
+                <div class="mt-4 d-flex justify-content-center">
+                  <a class="p12 btn btn-lg text-grey btn-bg-grey"
+                    >update coming soon</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="custHr" />
+      <div class="wrapped" style="margin-left: 16px; margin-right: 16px">
+        <p class="p16 primary-text fw-bold">
+          Start from scratch &nbsp;<i
+            class="fa fa-question-circle"
+            aria-hidden="true"
+          ></i>
+        </p>
+        <div class="row">
+          <div class="card">
+            <div class="mt-4">
+              <input
+                type="checkbox"
+                id="defaultCheck"
+                name="example2"
+                [checked]="checkbox1"
+                (change)="changeEvent1()"
+              />
+              <!-- {{checkbox1}} -->
+              <label class="card-title fw-bold pb-1 p16 ml-3" for="defaultCheck"
+                >Attestation & Claim</label
+              >
+              <div class="card-text ps-3 lh-lg p14 ml-3">
+                Issuer can attest a claim including past document and issue
+                Verified credentials
+              </div>
+            </div>
+
+            <div>
+              <label>
+                <input
+                  type="checkbox"
+                  [checked]="checkbox2"
+                  (change)="changeEvent2()"
+                />
+                <!-- {{checkbox2}} -->
+                <span class="card-title fw-bold pb-1 p16 ml-3">Issuance</span>
+              </label>
+              <div class="card-text lh-lg ps-3 p14 ml-3">
+                Issuer can create template and issue verified credentials
+              </div>
+            </div>
+            <hr class="custHr" />
+            <!-- {{chooseEntity}} -->
+            <div>
+              <label class="mp-0">
+                <input type="checkbox" disabled />
+              </label>
+
+              <span class="card-text lh-lg p14 ml-3 text-grey">
+                I want to add ownership and roles, to onboard Issuers and VC
+                Holder, so that they can login and manage their profile and VC
+              </span>
+
+              <a href="/create/{{ chooseEntity }}"
+                ><button class="float-end mt-5 p14 btn btn-primary">
+                  Start
+                </button></a
+              >
+              <!-- <button [disabled]="!(checkbox1 || checkbox2)">Bar</button> -->
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>

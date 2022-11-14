@@ -27,7 +27,7 @@
         <i class="fa fa-bars toggler"></i>
         <!-- <span class="navbar-toggler-icon"></span> -->
       </button>
-      <div class="nav-item active logo-text" style="width: auto">
+      <div class="nav-item active logo-text">
         <a role="link" aria-disabled="true"
           ><img class="logo" src="{{ logo }}"
         /></a>
@@ -36,9 +36,9 @@
         <!-- <p class="center">A</p>   -->
         <span class="p12" *ngIf="loggedInUser">{{ loggedInUser }}</span> &nbsp;
         <!-- <a *ngIf="loggedInUser" href="/logout" class="p12"> <img style="width: 25px;" src="assets/images/logout.png" /></a> -->
-        <span class="dropdown" style="float: right">
+        <span class="dropdown">
           <i class="fa fa-chevron-down"></i>
-          <div class="dropdown-content" style="right: 0">
+          <div class="dropdown-content">
             <a *ngIf="loggedInUser" href="/logout">Logout</a>
           </div></span
         >
@@ -65,18 +65,14 @@
                 class="nav-link"
                 [routerLink]="[header.redirectTo]"
               >
-                <img style="width: 25px" src="{{ header?.image }}" />
+                <img class="header-img" src="{{ header?.image }}" />
               </a>
               <a
                 *ngIf="header?.icon"
                 class="nav-link"
                 [routerLink]="[header.redirectTo]"
               >
-                <i
-                  style="font-size: 25px"
-                  class="{{ header?.icon }}"
-                  aria-hidden="true"
-                ></i>
+                <i class="{{ header?.icon }}" aria-hidden="true"></i>
               </a>
               <ng-template [ngIf]="header?.title && tab === header?.title">
                 <hr />
@@ -103,18 +99,14 @@
                 class="nav-link"
                 [routerLink]="[header.redirectTo]"
               >
-                <img style="width: 25px" src="{{ header?.image }}" />
+                <img class="header-img" src="{{ header?.image }}" />
               </a>
               <a
                 *ngIf="header?.icon"
                 class="nav-link"
                 [routerLink]="[header.redirectTo]"
               >
-                <i
-                  style="font-size: 25px"
-                  class="{{ header?.icon }}"
-                  aria-hidden="true"
-                ></i>
+                <i class="{{ header?.icon }}" aria-hidden="true"></i>
               </a>
               <ng-template [ngIf]="header?.title && tab === header?.title">
                 <hr />

@@ -230,7 +230,7 @@
                             >
                               <tr
                                 [hidden]="!childNastedArrayfield?.data?.title"
-                                style="border: white solid"
+                                class="border-white"
                               >
                                 <td>
                                   <span class="p14">{{
@@ -313,7 +313,7 @@
                           </ng-template>
                           <tr
                             [hidden]="!secArrayfield?.data?.title"
-                            style="border: white solid"
+                            class="border-white"
                           >
                             <td>
                               <span class="p14">{{
@@ -389,10 +389,7 @@
                           </tr>
                         </ng-template>
 
-                        <tr
-                          style="border: white solid"
-                          [hidden]="!field[j]?.title"
-                        >
+                        <tr class="border-white" [hidden]="!field[j]?.title">
                           <td>
                             <span class="p14">{{ field[j]?.title }}</span>
                           </td>

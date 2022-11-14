@@ -1,5 +1,9 @@
 .logo-text {
   font-size: large;
+  width: auto;
+}
+.header-img {
+  width: 25px;
 }
 
 .card-body {
@@ -169,6 +173,7 @@ hr {
 .dropdown {
   position: relative;
   display: inline-block;
+  float: right;
 }
 
 .dropdown-content {

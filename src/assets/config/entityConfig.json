@@ -22,7 +22,10 @@
                 }
             ],
             "entity": [
-                
+                {
+                    "entityName": "Common",
+                    "schemaUrl": "/assets/schemas/education/Common.json" 
+                },
                 {
                     "entityName": "Institute",
                     "schemaUrl": "/assets/schemas/education/Institute.json",

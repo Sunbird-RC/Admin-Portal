@@ -17,6 +17,10 @@
                     "key" : "create-vc"
                 },
                 {
+                    "title" : "Ownership",
+                    "key" : "ownership"
+                },
+                {
                     "title" : "Publish",
                     "key" : "test-publish"
                 }

@@ -376,14 +376,6 @@ export class CreateEntityComponent implements OnInit {
               // if (!sProperties.hasOwnProperty('isRefSchema') && !sProperties.isRefSchema) {
               tempFieldObj[sProperties.propertyKey]['properties'][nastedKey] = tempFieldSecObj[nastedKey];
 
-              // }else{
-              //   tempFieldObj[sProperties.propertyKey]['properties'][nastedKey] = tempFieldSecObj[nastedKey];
-
-              //   //tempFieldObj[sProperties.propertyKey] = tempFieldSecObj[nastedKey];
-
-              // }
-
-
             }
           } else {
             let property = sProperties.data[i];

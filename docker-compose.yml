@@ -142,6 +142,6 @@ services:
       timeout: 10s
       retries: 4
   nginx:
-    image: dockerhub/sunbird-rc-admin-portal:$(ADMIN_RELEASE_VERSION)
+    image: dockerhub/sunbird-rc-admin-portal:${ADMIN_RELEASE_VERSION}
     ports:
       - "81:80"

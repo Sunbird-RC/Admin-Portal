@@ -1220,13 +1220,11 @@ export class CreateEntityComponent implements OnInit {
           if (i == (this.usecaseSchema.length - 1) && !errArr.length) {
             this.saveData();
             this.nextStep();
-            alert('12');
           }
         }, (err) => {
           errArr.push(this.usecaseSchema[i].title);
 
           if (errArr.length == 1 && (errArr.includes('Common') || errArr.includes('common'))) {
-            alert('11');
             this.saveData();
             this.nextStep();
             console.log('err ----', err);
@@ -1292,7 +1290,6 @@ export class CreateEntityComponent implements OnInit {
 
 
           if (i == (this.usecaseSchema.length - 1) && !errArr.length) {
-            alert('1');
             this.saveData();
             this.nextStep();
           } else {
@@ -1302,7 +1299,7 @@ export class CreateEntityComponent implements OnInit {
           errArr.push(this.usecaseSchema[i].title);
 
           if (errArr.length == 1 && (errArr.includes('Common') || errArr.includes('common'))) {
-alert('2');
+
             this.saveData();
             this.nextStep();
             console.log('err ----', err);
@@ -1320,7 +1317,6 @@ alert('2');
 
   }
   saveConfiguration() {
-    // alert('save');
 
     let schemaVc = localStorage.getItem('schemaVc');
     if (schemaVc != undefined) {

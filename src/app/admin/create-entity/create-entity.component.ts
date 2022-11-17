@@ -31,8 +31,6 @@ export class CreateEntityComponent implements OnInit {
   apiEntityName: any = []
   containCommonField: boolean = false;
   entityFieldList: any = []
-  //jsonFields: any = { "products": [{ "name": "car", "product": [{ "name": "honda", "model": [{ "id": "civic", "name": "civic" }, { "id": "accord", "name": "accord" }, { "id": "crv", "name": "crv" }, { "id": "pilot", "name": "pilot" }, { "id": "odyssey", "name": "odyssey" }] }] }] }
-
 
   SchemaUrl: any;
   entityFields: any;
@@ -125,7 +123,7 @@ export class CreateEntityComponent implements OnInit {
           break;
       }
 
-    
+
 
       if (this.params.hasOwnProperty('usecase')) {
         this.usecase = params.usecase.toLowerCase();
@@ -197,7 +195,7 @@ export class CreateEntityComponent implements OnInit {
         }
       })
 
-     
+
     }
 
   }
@@ -206,6 +204,15 @@ export class CreateEntityComponent implements OnInit {
     console.log(this.usecaseSchema);
     for (let j = 0; j < this.usecaseSchema.length; j++) {
       this.getEntityPropertiesByIndex(j);
+
+      if (j == (this.usecaseSchema.length - 1)) {
+        if (this.usecaseSchema[j].hasOwnProperty('isRefSchema') && this.usecaseSchema[j].isRefSchema) {
+
+          let commonSchema = this.convertSchemaToFormioJson(this.usecaseSchema[j].definitions.data);
+          localStorage.setItem('commonSchema', JSON.stringify(commonSchema));
+
+        }
+      }
     }
   }
 
@@ -434,15 +441,6 @@ export class CreateEntityComponent implements OnInit {
           tempFieldObjSec[tempFieldObjSec.length - 1]['$ref'] = data['$ref'];
         }
 
-        // tempFieldObjSec.push({
-        //   "propertyName": (data.hasOwnProperty('title') ? data.title : key),
-        //   "propertyKey": key,
-        //   "type": "object",
-        //   "$id": (data.hasOwnProperty('$id')) ? data['$id'] : '',
-        //   "data": self.readCommonSchema(data)
-
-        // });
-
       } else if ((data.hasOwnProperty('type') && data.type == 'object') && data.hasOwnProperty('properties')) {
         // tempFieldObjSec.push(self.readPropertyObj(data.properties));
 
@@ -501,12 +499,12 @@ export class CreateEntityComponent implements OnInit {
 
         if (!self.usecaseSchema[self.activeMenuNo].hasOwnProperty('isRefSchema') && !self.usecaseSchema[self.activeMenuNo].isRefSchema) {
 
-        if (!required && self.usecaseSchema[self.activeMenuNo].definitions[self.usecaseSchema[self.activeMenuNo].title].hasOwnProperty('required')) {
+          if (!required && self.usecaseSchema[self.activeMenuNo].definitions[self.usecaseSchema[self.activeMenuNo].title].hasOwnProperty('required')) {
 
-          required = self.usecaseSchema[self.activeMenuNo].definitions[self.usecaseSchema[self.activeMenuNo].title].required;
-          required = (required != undefined) ? required.includes(key) : false;
+            required = self.usecaseSchema[self.activeMenuNo].definitions[self.usecaseSchema[self.activeMenuNo].title].required;
+            required = (required != undefined) ? required.includes(key) : false;
+          }
         }
-      }
 
 
         tempFieldObjSec.push(
@@ -769,7 +767,7 @@ export class CreateEntityComponent implements OnInit {
           }
         }
 
-
+        console.log('---------- >', this.usecaseSchema);
 
       } else {
         this.oldTemplateName = this.usecaseSchema[this.activeMenuNo].title;
@@ -787,21 +785,11 @@ export class CreateEntityComponent implements OnInit {
 
   }
 
-  viewField(type, objectIndex_i, nastedObjIndex_j) {
-
-    this.objFieldIndex = objectIndex_i;
-    this.nastedFieldIndex = nastedObjIndex_j;
-    this.editJsonType = type;
-
+  viewField() {
 
     let viewSchemaField;
 
-    if (type == 'nasted') {
-      viewSchemaField = this.usecaseSchema[this.activeMenuNo].definitions.data;
-    } else {
-      viewSchemaField = this.usecaseSchema[this.activeMenuNo].definitions.data;
-    }
-
+    viewSchemaField = this.usecaseSchema[this.activeMenuNo].definitions.data;
 
     this.compFieldJson = this.convertSchemaToFormioJson(viewSchemaField);
     this.isAddFormPg = true;
@@ -810,9 +798,11 @@ export class CreateEntityComponent implements OnInit {
   deleteField(type, objectIndex_i, nastedObjIndex_j) {
     if (confirm("Are you sure to delete ")) {
       if (type == 'nasted') {
+        //  delete this.usecaseSchema[this.activeMenuNo].definitions[objectIndex_i].data[nastedObjIndex_j];
         this.usecaseSchema[this.activeMenuNo].definitions.data[objectIndex_i].data.splice(nastedObjIndex_j, 1);
 
       } else {
+        //delete this.usecaseSchema[this.activeMenuNo].definitions[objectIndex_i];
         this.usecaseSchema[this.activeMenuNo].definitions.data.splice(objectIndex_i, 1);
 
       }
@@ -834,14 +824,29 @@ export class CreateEntityComponent implements OnInit {
         let compJson = {
           "label": viewSchemaField[i].data.title,
           "tableView": true,
+          // "description" : viewSchemaField[i].data.description,
+          //"placeholder" : viewSchemaField[i].data.placeholder,
           "validate": {
             "required": viewSchemaField[i].required
           },
-          "key": viewSchemaField[i].key,
           "$id": "#/properties/" + viewSchemaField[i].key,
           "type": (viewSchemaField[i].type == 'string') ? "textfield" : viewSchemaField[i].type,
           "input": true
         }
+
+
+        compJson['key'] = (viewSchemaField[i].key == 'textfield') ? (viewSchemaField[i].key + i) : viewSchemaField[i].key;
+
+
+        if (viewSchemaField[i].data.description) {
+          compJson['description'] = viewSchemaField[i].data.description;
+        }
+
+        if (viewSchemaField[i].data.placeholder) {
+          compJson['placeholder'] = viewSchemaField[i].data.placeholder;
+        }
+
+
         newArr.push(compJson);
       } else {
 
@@ -849,6 +854,8 @@ export class CreateEntityComponent implements OnInit {
 
         let compJson = {
           "label": fieldData.propertyName,
+          // "description" : fieldData.description,
+          // "placeholder" : fieldData.placeholder,
           "tableView": false,
           "key": fieldData.propertyKey,
           "type": "container",
@@ -857,10 +864,21 @@ export class CreateEntityComponent implements OnInit {
           ]
         }
 
+        if (fieldData.description) {
+          compJson['description'] = fieldData.description;
+        }
+
+        if (fieldData.placeholder) {
+          compJson['placeholder'] = fieldData.placeholder;
+        }
+
+
         for (let i = 0; i < fieldData.data.length; i++) {
           if (fieldData.data[i].type == 'string') {
             let compJsonS = {
               "label": fieldData.data[i].data.title,
+              // "description" : fieldData.data[i].description,
+              // "placeholder" : fieldData.data[i].placeholder,
               "validate": {
                 "required": fieldData.data[i].required
               },
@@ -870,6 +888,15 @@ export class CreateEntityComponent implements OnInit {
               "type": (fieldData.data[i].type == 'string') ? "textfield" : fieldData.data[i].type,
               "input": true
             }
+
+            if (fieldData.data[i].data.description) {
+              compJsonS['description'] = fieldData.data[i].data.description;
+            }
+
+            if (fieldData.data[i].data.placeholder) {
+              compJsonS['placeholder'] = fieldData.data[i].data.placeholder;
+            }
+
             compJson.components.push(compJsonS);
           }
         }
@@ -946,6 +973,15 @@ export class CreateEntityComponent implements OnInit {
         tempjson1['$id'] = data.hasOwnProperty('$id') ? data['$id'] : '#/properties/' + key;
         tempjson1['type'] = data.hasOwnProperty('type') ? 'string' : 'string'
         tempjson1['title'] = data.hasOwnProperty('label') ? data['label'] : data['title'];
+
+        if (data.hasOwnProperty('description') && data.description) {
+          tempjson1['description'] = data['description'];
+        }
+
+        if (data.hasOwnProperty('placeholder') && data.placeholder) {
+          tempjson1['placeholder'] = data['placeholder'];
+        }
+
         data = tempjson1;
 
 
@@ -966,6 +1002,13 @@ export class CreateEntityComponent implements OnInit {
     this.usecaseSchema[this.activeMenuNo].definitions.data = tempFieldObjSec;
     this.usecaseSchema[this.activeMenuNo].definitions.required = requiredFields;
 
+    if (this.usecaseSchema[this.activeMenuNo].hasOwnProperty('isRefSchema') && this.usecaseSchema[this.activeMenuNo].isRefSchema) {
+
+      let commonSchema = this.convertSchemaToFormioJson(this.usecaseSchema[this.activeMenuNo].definitions.data);
+      localStorage.setItem('commonSchema', JSON.stringify(commonSchema));
+
+    }
+
 
   }
 
@@ -985,6 +1028,18 @@ export class CreateEntityComponent implements OnInit {
       tempjson1['$id'] = data.hasOwnProperty('$id') ? data['$id'] : '#/properties/' + key;
       tempjson1['type'] = data.hasOwnProperty('type') ? 'string' : 'string'
       tempjson1['title'] = data.hasOwnProperty('label') ? data['label'] : data['title'];
+      // tempjson1['description'] = data.hasOwnProperty('description') ? data['description'] : "";
+      // tempjson1['placeholder'] = data.hasOwnProperty('placeholder') ? data['placeholder'] : "";
+
+      if (data.hasOwnProperty('description') && data.description) {
+        tempjson1['description'] = data['description'];
+      }
+
+      if (data.hasOwnProperty('placeholder') && data.placeholder) {
+        tempjson1['placeholder'] = data['placeholder'];
+      }
+
+
       data = tempjson1;
 
 
@@ -1019,7 +1074,7 @@ export class CreateEntityComponent implements OnInit {
         key
       ],
       "title": key,
-      "description": "",
+      "description": data.description,
       "definitions": {
         [key]: {
           "$id": "#/properties/" + key,
@@ -1067,7 +1122,6 @@ export class CreateEntityComponent implements OnInit {
         ],
         "issuanceDate": "2021-08-27T10:57:57.237Z",
         "credentialSubject": {
-          "type": "DeathCertificate"
         },
         "issuer": "did:web:sunbirdrc.dev/vc/skill"
       },
@@ -1109,7 +1163,7 @@ export class CreateEntityComponent implements OnInit {
 
 
   async createSchema() {
-   
+
     let errArr = [];
     let tempProperty: any;
     tempProperty = this.usecaseSchema;
@@ -1137,7 +1191,7 @@ export class CreateEntityComponent implements OnInit {
         }
 
         this.generalService.postData('/Schema', payload).subscribe((res) => {
-         
+
           if (!this.usecaseSchema[i].hasOwnProperty('isRefSchema') || !this.usecaseSchema[i].isRefSchema) {
             if (localStorage.getItem('draftSchemaOsid')) {
               let draftSchemaOsid = JSON.parse(localStorage.getItem('draftSchemaOsid'));
@@ -1166,12 +1220,13 @@ export class CreateEntityComponent implements OnInit {
           if (i == (this.usecaseSchema.length - 1) && !errArr.length) {
             this.saveData();
             this.nextStep();
+            alert('12');
           }
         }, (err) => {
           errArr.push(this.usecaseSchema[i].title);
 
           if (errArr.length == 1 && (errArr.includes('Common') || errArr.includes('common'))) {
-          
+            alert('11');
             this.saveData();
             this.nextStep();
             console.log('err ----', err);
@@ -1189,7 +1244,7 @@ export class CreateEntityComponent implements OnInit {
   }
 
   async saveSchemaConfig() {
-  
+
     let errArr = [];
     let tempProperty: any;
     tempProperty = this.usecaseSchema;
@@ -1216,7 +1271,7 @@ export class CreateEntityComponent implements OnInit {
         }
 
         this.generalService.postData('/Schema', payload).subscribe((res) => {
-         
+
           if (!this.usecaseSchema[i].hasOwnProperty('isRefSchema') || this.usecaseSchema[i].isRefSchema) {
             if (localStorage.getItem('draftSchemaOsid')) {
               let draftSchemaOsid = JSON.parse(localStorage.getItem('draftSchemaOsid'));
@@ -1237,6 +1292,7 @@ export class CreateEntityComponent implements OnInit {
 
 
           if (i == (this.usecaseSchema.length - 1) && !errArr.length) {
+            alert('1');
             this.saveData();
             this.nextStep();
           } else {
@@ -1246,7 +1302,7 @@ export class CreateEntityComponent implements OnInit {
           errArr.push(this.usecaseSchema[i].title);
 
           if (errArr.length == 1 && (errArr.includes('Common') || errArr.includes('common'))) {
-
+alert('2');
             this.saveData();
             this.nextStep();
             console.log('err ----', err);

@@ -23,6 +23,7 @@ export class AddFieldFormComponent implements OnInit {
   propertyArr: any;
   jsonFields: any;
   jsonTitle: any;
+  commonSchema: string;
 
   constructor() { }
 
@@ -31,13 +32,6 @@ export class AddFieldFormComponent implements OnInit {
    // this.entityFields = this.jsonSchema;
 
     if (this.jsonSchema) {
-
-      // for(let i=0;i< this.jsonSchema.length;i++)
-      // if (this.jsonSchema[i].type == 'container') {
-      //   this.myForm['components'].push(this.jsonSchema[i].components);
-      // } else {
-      //   this.myForm['components'].push(this.jsonSchema[i]);
-      // }
       
       this.myForm['components'] = this.jsonSchema;
      

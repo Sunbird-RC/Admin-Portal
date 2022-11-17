@@ -1,804 +1,539 @@
 <header>
-  <nav
-    class="navbar navbar-expand-lg navbar-light bg-header nav-b navbar-inverse"
-  >
-    <a class="nav-link pl-3" href="" onClick="history.go(-1); return false;"
-      ><i class="fa fa-angle-left primary-text"></i>
-    </a>
-    <span class="p16">Getting Started</span>
-  </nav>
+    <nav class="navbar navbar-expand-lg navbar-light bg-header nav-b navbar-inverse">
+        <a class="nav-link pl-3" href="" onClick="history.go(-1); return false;"><i
+                class="fa fa-angle-left primary-text"></i> </a>
+        <span class="p16">Getting Started</span>
+    </nav>
 
-  <nav class="card mt-0 p-2 ml-32" [hidden]="isAddFormPg">
-    <!-- <ul id="stepList" *ngFor="let steps of processSteps; let i = index"> -->
-    <ul id="stepList">
-      <li
-        *ngFor="let steps of processSteps; let i = index"
-        class="col-md-2 tab"
-        id="step{{ i }}"
-      >
-        <strong>
-          <i
-            [ngStyle]="{ display: i < 3 ? 'block' : 'none' }"
-            class="float-end fa fas fa-chevron-right text-grey-color mt-3 fs-3 next-arrow"
-          ></i>
-          <span class="l10">STEP {{ i + 1 }}</span> <br />
-          <span class="p14 fw-bold">{{ steps?.title }}</span>
-        </strong>
-      </li>
-    </ul>
-  </nav>
+    <nav class="card mt-0 p-2 ml-32" [hidden]="isAddFormPg">
+
+        <!-- <ul id="stepList" *ngFor="let steps of processSteps; let i = index"> -->
+        <ul id="stepList">
+            <li *ngFor="let steps of processSteps; let i = index" class="col-md-2 tab" id="step{{i}}"><strong>
+                    <i *ngIf="steps?.key != 'test-publish'" class="float-end fa fas fa-chevron-right text-grey-color mt-3 fs-3 next-arrow"></i>
+                    <span class="l10">STEP {{i + 1}}</span> <br />
+                    <span class="p14 fw-bold">{{steps?.title}}</span>
+                </strong></li>
+        </ul>
+    </nav>
 </header>
 
 <div id="schemaEntity" class="container-fluid mt-1 ml-12">
-  <div class="row" *ngIf="!isAddFormPg">
-    <div class="col-md-3">
-      <div class="wrapper ps-2 -e-2">
-        <!--Top menu -->
-        <div id="sideMenu" class="sidebar">
-          <ul class="list-unstyled" *ngIf="isActive == 'createSchema'">
-            <ng-template
-              ngFor
-              let-menuItem
-              [ngForOf]="usecaseSchema"
-              let-i="index"
-            >
-              <li
-                class="menu"
-                *ngIf="menuItem['isRefSchema']"
-                (click)="openEntity(i, menuItem?.title)"
-              >
-                <a class="a-menu">
-                  Common Schema
+    <div class="row" *ngIf="!isAddFormPg">
+        <div class="col-md-3">
+            <div class="wrapper ps-2 -e-2">
+                <!--Top menu -->
+                <div id="sideMenu" class="sidebar">
+                    <ul class="list-unstyled" *ngIf="isActive == 'createSchema'">
+                        <!-- <p class="p16 fw-bold pl-3 text-uppercase">Common </p> -->
+                        <ng-template ngFor let-menuItem [ngForOf]="usecaseSchema" let-i="index">
 
-                  <div
-                    *ngIf="isActive == 'createSchema'"
-                    class="dropdown p14 float-end"
-                  >
-                    <i
-                      class="fa fa-ellipsis-h text-grey-color"
-                      aria-hidden="true"
-                    ></i>
-                    <div class="dropdown-content dropdown-content-margin">
-                      <a
-                        data-toggle="modal"
-                        data-target="#addEntity"
-                        (click)="openEntityModal('edit', i)"
-                        class="ml-0"
-                        >Edit</a
-                      >
-                      <a (click)="deleteEntity(i)" class="ml-0">Delete</a>
-                    </div>
-                  </div>
-                </a>
-              </li>
-            </ng-template>
-          </ul>
-          <p class="p16 fw-bold pl-3 text-uppercase">Schema</p>
+                        <li class="menu" 
+                        *ngIf="menuItem['isRefSchema']"
+                        (click)="openEntity(i, menuItem?.title)">
+                            <a class="a-menu"> Common Schema
+                              
+                                <div *ngIf="isActive == 'createSchema'" class="dropdown p14 float-end">
+                                    <i class="fa fa-ellipsis-h text-grey-color" aria-hidden="true"></i>
+                                        <div class="dropdown-content dropdown-content-margin">
+                                            <a data-toggle="modal" data-target="#addEntity"
+                                                (click)="openEntityModal('edit', i)" class="ml-0">Edit</a>
+                                            <a (click)="deleteEntity(i)" class="ml-0">Delete</a>
+                                        </div>
+                                </div>
+                            </a>
+                        </li>
+                        </ng-template>
+                    </ul>
+                    <p class="p16 fw-bold pl-3 text-uppercase">Schema </p>
 
-          <ul class="list-unstyled components">
-            <ng-template
-              ngFor
-              let-menuItem
-              [ngForOf]="usecaseSchema"
-              let-i="index"
-            >
-              <li
-                class="menu"
-                *ngIf="!menuItem['isRefSchema']"
-                (click)="openEntity(i, menuItem?.title)"
-              >
-                <a class="a-menu">
-                  {{ menuItem?.title }}
-                  <div
-                    *ngIf="isActive == 'createSchema'"
-                    class="dropdown p14 float-end"
-                  >
-                    <i
-                      class="fa fa-ellipsis-h text-grey-color"
-                      aria-hidden="true"
-                    ></i>
-                    <div class="dropdown-content dropdown-content-margin">
-                      <a
-                        data-toggle="modal"
-                        data-target="#addEntity"
-                        (click)="openEntityModal('edit', i)"
-                        class="ml-0"
-                        >Edit</a
-                      >
-                      <a (click)="deleteEntity(i)" class="ml-0">Delete</a>
-                    </div>
-                  </div>
-                </a>
-              </li>
-            </ng-template>
-          </ul>
-          <ul class="list-unstyled" *ngIf="isActive == 'createSchema'">
-            <li>
-              <button
-                class="m-3 p14 btn btn-sec-bg submit-button text-secondary-color"
-                data-toggle="modal"
-                data-target="#addEntity"
-                (click)="openEntityModal('add')"
-              >
-                <i class="fa fa-plus" aria-hidden="true"></i> Add Schema
-              </button>
-            </li>
-            <!-- <li >
+                    <ul class="list-unstyled components">
+                        <ng-template ngFor let-menuItem [ngForOf]="usecaseSchema" let-i="index">
+                            <li class="menu"  *ngIf="!menuItem['isRefSchema']"
+                                (click)="openEntity(i, menuItem?.title)">
+                                <a class="a-menu"> {{menuItem?.title}}
+                                    <div *ngIf="isActive == 'createSchema'" class="dropdown p14 float-end">
+                                        <i class="fa fa-ellipsis-h text-grey-color" aria-hidden="true"></i>
+                                        <div class="dropdown-content dropdown-content-margin">
+                                            <a data-toggle="modal" data-target="#addEntity"
+                                                (click)="openEntityModal('edit', i)" class="ml-0">Edit</a>
+                                            <a (click)="deleteEntity(i)" class="ml-0">Delete</a>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                        </ng-template>
+
+                    </ul>
+                    <ul class="list-unstyled" *ngIf="isActive == 'createSchema'">
+                        <li>
+                            <button class="m-3 p14 btn btn-sec-bg submit-button text-secondary-color"
+                                data-toggle="modal" data-target="#addEntity" (click)="openEntityModal('add')"><i
+                                    class="fa fa-plus" aria-hidden="true"></i> Add Schema</button>
+                        </li>
+                        <!-- <li >
                             <a> Common
                             <i class="fa fa-ellipsis-h text-grey-color float-end mt-1 p14" aria-hidden="true"></i>
                         </a>
                         </li> -->
-          </ul>
-        </div>
-      </div>
-    </div>
+                    </ul>
 
-    <div class="col-md-9 p-2 mb-6">
-      <div class="step" *ngIf="isActive == 'createSchema'">
-        <div class="d-flex flex-justify-between card-body pr-2 py-2">
-          <div class="heading-2">
-            <h3>{{ usecaseSchema[activeMenuNo]?.title }}</h3>
-            <p class="p14 text-grey-color">{{ description }}</p>
-          </div>
-          <div
-            *ngIf="
-              !isShowJson &&
-              usecaseSchema[activeMenuNo]?.definitions?.data?.length
-            "
-          >
-            <button
-              class="float-end p14 btn btn-sec-bg submit-button text-secondary-color"
-              (click)="showJson()"
-            >
-              <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Schema
-            </button>
-          </div>
-        </div>
-
-        <div
-          *ngIf="
-            !isShowJson &&
-            usecaseSchema[activeMenuNo]?.definitions?.data?.length
-          "
-        >
-          <p class="p16">
-            {{ usecaseSchema[activeMenuNo]?.definitions?.length }}
-          </p>
-          <div class="card w-100">
-            <div class="px-3">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th class="p12 text-grey-color" scope="col">Label</th>
-                    <th class="p12 text-grey-color" scope="col">Field Type</th>
-                    <th class="p12 text-grey-color" scope="col">Mandatory</th>
-                    <th class="p12 text-grey-color" scope="col">Description</th>
-                    <th class="p12 text-grey-color" scope="col">Visibility</th>
-                    <th class="p12 text-grey-color" scope="col"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <!-- <ng-template ngFor let-field [ngForOf]="usecaseSchema[activeMenuNo]?.definitions" let-i="index"> -->
-                  <ng-template
-                    [ngIf]="
-                      usecaseSchema[activeMenuNo]?.definitions?.type ==
-                        'array' ||
-                      usecaseSchema[activeMenuNo]?.definitions?.type == 'object'
-                    "
-                    class="p-4"
-                  >
-                    <p class="mt-3 fw-bold">
-                      {{
-                        usecaseSchema[activeMenuNo]?.definitions?.propertyName
-                      }}
-                    </p>
-
-                    <ng-template
-                      ngFor
-                      let-field
-                      [ngForOf]="usecaseSchema[activeMenuNo]?.definitions?.data"
-                      let-j="index"
-                    >
-                      <ng-template
-                        [ngIf]="
-                          field?.type == 'array' || field?.type == 'object'
-                        "
-                      >
-                        <p class="mt-3 fw-bold">
-                          {{ field?.propertyName }}
-                        </p>
-                        <ng-template
-                          ngFor
-                          let-secArrayfield
-                          [ngForOf]="field?.data"
-                          let-k="index"
-                        >
-                          <ng-template
-                            [ngIf]="
-                              secArrayfield?.type == 'array' ||
-                              secArrayfield?.type == 'object'
-                            "
-                          >
-                            <p class="mt-3 fw-bold">
-                              {{ secArrayfield?.propertyName }}
-                            </p>
-                            <ng-template
-                              ngFor
-                              let-childNastedArrayfield
-                              [ngForOf]="secArrayfield?.data"
-                              let-m="index"
-                            >
-                              <tr
-                                [hidden]="!childNastedArrayfield?.data?.title"
-                                class="border-white"
-                              >
-                                <td>
-                                  <span class="p14">{{
-                                    childNastedArrayfield?.data?.title
-                                  }}</span>
-                                </td>
-
-                                <td>
-                                  <span class="p14">{{
-                                    childNastedArrayfield?.data?.type
-                                  }}</span>
-                                </td>
-                                <td>
-                                  <span
-                                    class="p14"
-                                    *ngIf="
-                                      childNastedArrayfield?.data?.required
-                                    "
-                                    >Yes</span
-                                  >
-                                  <span
-                                    class="p14"
-                                    *ngIf="
-                                      !childNastedArrayfield?.data?.required
-                                    "
-                                    >No</span
-                                  >
-                                </td>
-                                <td>
-                                  <span class="p14">{{
-                                    childNastedArrayfield?.description
-                                  }}</span>
-                                </td>
-                                <td>
-                                  <select
-                                    name="visiblity"
-                                    id="visiblity"
-                                    class="fieldInput p14 m-2 py-1 px-3 mr-3"
-                                  >
-                                    <option selected value="public">
-                                      <i
-                                        class="fa fa-ellipsis-h"
-                                        aria-hidden="true"
-                                      ></i>
-                                      Public
-                                    </option>
-                                    <option value="private">
-                                      <i
-                                        class="fa fa-ellipsis-h"
-                                        aria-hidden="true"
-                                      ></i>
-                                      Private
-                                    </option>
-                                    <option value="personal">
-                                      <i
-                                        class="fa fa-ellipsis-h"
-                                        aria-hidden="true"
-                                      ></i>
-                                      Personal
-                                    </option>
-                                  </select>
-                                </td>
-                                <td>
-                                  <div class="dropdown p14">
-                                    <i
-                                      class="fa fa-ellipsis-h text-grey-color"
-                                      aria-hidden="true"
-                                    ></i>
-                                    <div class="dropdown-content">
-                                      <!-- <a (click)="viewField('nasted', j,k, m)">View</a> -->
-                                      <a
-                                        (click)="deleteField('nasted', j, k, m)"
-                                        >Delete</a
-                                      >
-                                    </div>
-                                  </div>
-                                </td>
-                              </tr>
-                            </ng-template>
-                          </ng-template>
-                          <tr
-                            [hidden]="!secArrayfield?.data?.title"
-                            class="border-white"
-                          >
-                            <td>
-                              <span class="p14">{{
-                                secArrayfield?.data?.title
-                              }}</span>
-                            </td>
-
-                            <td>
-                              <span class="p14">{{
-                                secArrayfield?.data?.type
-                              }}</span>
-                            </td>
-                            <td>
-                              <span
-                                class="p14"
-                                *ngIf="secarrayfield?.data?.required"
-                                >Yes</span
-                              >
-                              <span
-                                class="p14"
-                                *ngIf="!secarrayfield?.data?.required"
-                                >No</span
-                              >
-                            </td>
-                            <td>
-                              <span class="p14">{{
-                                secarrayfield?.description
-                              }}</span>
-                            </td>
-                            <td>
-                              <select
-                                name="visiblity"
-                                id="visiblity"
-                                class="fieldInput p14 m-2 py-1 px-3 mr-3"
-                              >
-                                <option selected value="public">
-                                  <i
-                                    class="fa fa-ellipsis-h"
-                                    aria-hidden="true"
-                                  ></i>
-                                  Public
-                                </option>
-                                <option value="private">
-                                  <i
-                                    class="fa fa-ellipsis-h"
-                                    aria-hidden="true"
-                                  ></i>
-                                  Private
-                                </option>
-                                <option value="personal">
-                                  <i
-                                    class="fa fa-ellipsis-h"
-                                    aria-hidden="true"
-                                  ></i>
-                                  Personal
-                                </option>
-                              </select>
-                            </td>
-                            <td>
-                              <div class="dropdown p14">
-                                <i
-                                  class="fa fa-ellipsis-h text-grey-color"
-                                  aria-hidden="true"
-                                ></i>
-                                <div class="dropdown-content">
-                                  <!-- <a (click)="('nasted', j, k)">View</a> -->
-                                  <a (click)="deleteField('nasted', j, k)"
-                                    >Delete</a
-                                  >
-                                </div>
-                              </div>
-                            </td>
-                          </tr>
-                        </ng-template>
-
-                        <tr class="border-white" [hidden]="!field[j]?.title">
-                          <td>
-                            <span class="p14">{{ field[j]?.title }}</span>
-                          </td>
-
-                          <td>
-                            <span class="p14">{{ field?.data?.type }}</span>
-                          </td>
-                          <td>
-                            <span class="p14" *ngIf="field?.data?.required"
-                              >Yes</span
-                            >
-                            <span class="p14" *ngIf="!field?.data?.required"
-                              >No</span
-                            >
-                          </td>
-                          <td>
-                            <span class="p14">{{ field?.description }}</span>
-                          </td>
-                          <td>
-                            <select
-                              name="visiblity"
-                              id="visiblity"
-                              class="fieldInput p14 m-2 py-1 px-3 mr-3"
-                            >
-                              <option selected value="public">
-                                <i
-                                  class="fa fa-ellipsis-h"
-                                  aria-hidden="true"
-                                ></i>
-                                Public
-                              </option>
-                              <option value="private">
-                                <i
-                                  class="fa fa-ellipsis-h"
-                                  aria-hidden="true"
-                                ></i>
-                                Private
-                              </option>
-                              <option value="personal">
-                                <i
-                                  class="fa fa-ellipsis-h"
-                                  aria-hidden="true"
-                                ></i>
-                                Personal
-                              </option>
-                            </select>
-                          </td>
-                          <td>
-                            <div class="dropdown p14">
-                              <i
-                                class="fa fa-ellipsis-h text-grey-color"
-                                aria-hidden="true"
-                              ></i>
-                              <div class="dropdown-content">
-                                <!-- <a (click)="viewField('string', j, '')">View</a> -->
-                                <a (click)="deleteField('string', j, '')"
-                                  >Delete</a
-                                >
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
-                      </ng-template>
-
-                      <ng-template [ngIf]="field?.type == 'string'">
-                        <tr [hidden]="!field?.data?.title">
-                          <td>
-                            <span class="p14">{{ field?.data?.title }}</span>
-                          </td>
-
-                          <td>
-                            <span class="p14">{{ field?.data?.type }}</span>
-                          </td>
-                          <td>
-                            <span class="p14" *ngIf="field?.data?.required"
-                              >Yes</span
-                            >
-                            <span class="p14" *ngIf="!field?.data?.required"
-                              >No</span
-                            >
-                          </td>
-                          <td>
-                            <span class="p14">{{ field?.description }}</span>
-                          </td>
-                          <td>
-                            <select
-                              name="visiblity"
-                              id="visiblity"
-                              class="fieldInput p14 m-2 py-1 px-3 mr-3"
-                            >
-                              <option selected value="public">
-                                <i
-                                  class="fa fa-ellipsis-h"
-                                  aria-hidden="true"
-                                ></i>
-                                Public
-                              </option>
-                              <option value="private">
-                                <i
-                                  class="fa fa-ellipsis-h"
-                                  aria-hidden="true"
-                                ></i>
-                                Private
-                              </option>
-                              <option value="personal">
-                                <i
-                                  class="fa fa-ellipsis-h"
-                                  aria-hidden="true"
-                                ></i>
-                                Personal
-                              </option>
-                            </select>
-                          </td>
-                          <td>
-                            <div class="dropdown p14">
-                              <i
-                                class="fa fa-ellipsis-h text-grey-color"
-                                aria-hidden="true"
-                              ></i>
-                              <div class="dropdown-content">
-                                <!-- <a (click)="viewField('string', j, '')">View</a> -->
-                                <a (click)="deleteField('string', j, '')"
-                                  >Delete</a
-                                >
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
-                      </ng-template>
-                    </ng-template>
-                  </ng-template>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <div *ngIf="isShowJson">
-          <div class="">
-            <!-- <create-vc-template></create-vc-template> -->
-            <json-editor
-              *ngIf="properties"
-              [options]="editorOptions"
-              [data]="properties"
-              [(ngModel)]="properties"
-              (change)="readConvertJsonData($event)"
-            ></json-editor>
-            <footer class="footer fixed-bottom fixed-bottom-json">
-              <div class="container-fluid">
-                <div>
-                  <button
-                    (click)="readConvertJsonData($event)"
-                    class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2"
-                  >
-                    Save
-                  </button>
-                  <button
-                    (click)="hideJSon()"
-                    class="btn btn-sec-bg float-end submit-button px-3 my-2"
-                  >
-                    Cancel
-                  </button>
                 </div>
-              </div>
-            </footer>
 
-            <!-- <json-editor [options]="editorOptions" style="min-height: 700px;" [data]="jsonFields"
-                      [(ngModel)]="jsonFields"></json-editor> -->
-          </div>
+            </div>
+
         </div>
 
-        <!-- <div class="card-body" *ngIf="usecaseSchema.length">
+
+        <div class="col-md-9 p-2 mb-6">
+            <div class="step" *ngIf="isActive == 'createSchema'">
+                <div class="d-flex flex-justify-between card-body pr-2 py-2">
+                    <div class="heading-2">
+                        <h3>{{usecaseSchema[activeMenuNo]?.title}}</h3>
+                        <p class="p14 text-grey-color">{{usecaseSchema[activeMenuNo]?.description}}</p>
+                    </div>
+                    <div *ngIf="!isShowJson && usecaseSchema[activeMenuNo]?.definitions?.data?.length">
+                        <button class="float-end p14 btn btn-sec-bg submit-button text-secondary-color"
+                            (click)="showJson()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> JSON Schema</button>
+                    </div>
+                </div>
+
+                <div *ngIf="!isShowJson && usecaseSchema[activeMenuNo]?.definitions?.data?.length">
+                    <p class="p16">{{usecaseSchema[activeMenuNo]?.definitions?.length}}</p> 
+                    <div class="card w-100">
+                        <div class="px-3">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="p12 text-grey-color" scope="col"> Label </th>
+                                        <th class="p12 text-grey-color" scope="col"> Field Type</th>
+                                        <th class="p12 text-grey-color" scope="col"> Mandatory</th>
+                                        <th class="p12 text-grey-color" scope="col"> Description </th>
+                                        <th class="p12 text-grey-color" scope="col"> Visibility </th>
+                                        <th class="p12 text-grey-color" scope="col"> </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+
+                                    <!-- <ng-template ngFor let-field [ngForOf]="usecaseSchema[activeMenuNo]?.definitions" let-i="index"> -->
+                                    <ng-template
+                                        [ngIf]="usecaseSchema[activeMenuNo]?.definitions?.type == 'array' || usecaseSchema[activeMenuNo]?.definitions?.type == 'object'"
+                                        class="p-4">
+                                        <p class="mt-3 fw-bold">
+                                            {{usecaseSchema[activeMenuNo]?.definitions?.propertyName}}
+                                        </p>
+
+
+                                        <ng-template ngFor let-field
+                                            [ngForOf]="usecaseSchema[activeMenuNo]?.definitions?.data" let-j="index">
+
+                                            <ng-template [ngIf]="field?.type == 'array' || field?.type == 'object'">
+                                                <p class="mt-3 fw-bold">
+                                                    {{field?.propertyName}}
+                                                </p>
+                                                <ng-template ngFor let-secArrayfield [ngForOf]="field?.data"
+                                                    let-k="index">
+
+                                                    <ng-template [ngIf]="secArrayfield?.type == 'array' || secArrayfield?.type == 'object'">
+                                                        <p class="mt-3 fw-bold">
+                                                            {{secArrayfield?.propertyName}}
+        
+                                                        </p>
+                                                        <ng-template ngFor let-childNastedArrayfield [ngForOf]="secArrayfield?.data"
+                                                            let-m="index">
+
+                                                            <tr [hidden]="!childNastedArrayfield?.data?.title"
+                                                            style="border: white solid;">
+    
+                                                            <td>
+                                                                <span class="p14">{{childNastedArrayfield?.data?.title}}</span>
+                                                            </td>
+    
+                                                            <td>
+                                                                <span class="p14">{{childNastedArrayfield?.data?.type}}</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="p14"
+                                                                    *ngIf="childNastedArrayfield?.required">Yes</span>
+                                                                <span class="p14"
+                                                                    *ngIf="!childNastedArrayfield?.required">No </span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="p14">{{childNastedArrayfield?.data?.description}} </span>
+                                                            </td>
+                                                            <td>
+                                                                <select name="visiblity" id="visiblity"
+                                                                    class="fieldInput p14 m-2  py-1 px-3 mr-3">
+                                                                    <option selected
+                                                                        value="public"> <i class="fa fa-ellipsis-h"
+                                                                            aria-hidden="true"></i>
+                                                                        Public
+                                                                    </option>
+                                                                    <option
+                                                                        value="private"> <i class="fa fa-ellipsis-h "
+                                                                            aria-hidden="true"></i>
+                                                                        Private
+                                                                    </option>
+                                                                    <option
+                                                                        value="personal"> <i class="fa fa-ellipsis-h"
+                                                                            aria-hidden="true"></i>
+                                                                        Personal
+                                                                    </option>
+                                                                </select>
+                                                            </td>
+                                                            <td>
+                                                                <div class="dropdown p14">
+                                                                    <i class="fa fa-ellipsis-h  text-grey-color"
+                                                                        aria-hidden="true"></i>
+                                                                    <div class="dropdown-content">
+                                                                        <!-- <a (click)="viewField('nasted', j,k, m)">View</a> -->
+                                                                        <a (click)="deleteField('nasted', j,k, m)">Delete</a>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+    
+                                                        </ng-template>
+                                                    </ng-template>
+
+                                                    <tr [hidden]="!secArrayfield?.data?.title"
+                                                        style="border: white solid;">
+
+                                                        <td>
+                                                            <span class="p14">{{secArrayfield?.data?.title}} </span>
+                                                        </td>
+
+                                                        <td>
+                                                            <span class="p14">{{secArrayfield?.data?.type}}</span>
+                                                        </td>
+                                                        <td>
+                                                            <span class="p14"
+                                                                *ngIf="secArrayfield?.required"> Yes</span>
+                                                            <span class="p14"
+                                                                *ngIf="!secArrayfield?.required"> No </span>
+                                                        </td>
+                                                        <td>
+                                                            <span class="p14">{{secArrayfield?.data?.description}} </span>
+                                                        </td>
+                                                        <td>
+                                                            <select name="visiblity" id="visiblity"
+                                                                class="fieldInput p14 m-2  py-1 px-3 mr-3">
+                                                                <option selected
+                                                                    value="public"> <i class="fa fa-ellipsis-h"
+                                                                        aria-hidden="true"></i>
+                                                                    Public
+                                                                </option>
+                                                                <option
+                                                                    value="private"> <i class="fa fa-ellipsis-h "
+                                                                        aria-hidden="true"></i>
+                                                                    Private
+                                                                </option>
+                                                                <option
+                                                                    value="personal"> <i class="fa fa-ellipsis-h"
+                                                                        aria-hidden="true"></i>
+                                                                    Personal
+                                                                </option>
+                                                            </select>
+                                                        </td>
+                                                        <td>
+                                                            <div class="dropdown p14">
+                                                                <i class="fa fa-ellipsis-h  text-grey-color"
+                                                                    aria-hidden="true"></i>
+                                                                <div class="dropdown-content">
+                                                                    <!-- <a (click)="('nasted', j, k)">View</a> -->
+                                                                    <a (click)="deleteField('nasted', j, k)">Delete</a>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+
+                                                </ng-template>
+
+                                                <tr style="border: white solid;" [hidden]="!field[j]?.title">
+
+                                                    <td> 
+                                                        <span class="p14">{{field[j]?.title}}</span>
+                                                    </td>
+
+                                                    <td>
+                                                        <span class="p14">{{field?.data?.type}}</span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="p14" *ngIf="field?.required">Yes </span>
+                                                        <span class="p14" *ngIf="!field?.required">No </span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="p14">{{field?.data?.description}}</span>
+                                                    </td>
+                                                    <td>
+                                                        <select name="visiblity" id="visiblity"
+                                                            class="fieldInput p14 m-2  py-1 px-3 mr-3">
+                                                            <option selected
+                                                                value="public"> <i class="fa fa-ellipsis-h"
+                                                                    aria-hidden="true"></i>
+                                                                Public
+                                                            </option>
+                                                            <option
+                                                                value="private"> <i class="fa fa-ellipsis-h "
+                                                                    aria-hidden="true"></i>
+                                                                Private
+                                                            </option>
+                                                            <option
+                                                                value="personal"> <i class="fa fa-ellipsis-h"
+                                                                    aria-hidden="true"></i>
+                                                                Personal
+                                                            </option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <div class="dropdown p14">
+                                                            <i class="fa fa-ellipsis-h  text-grey-color"
+                                                                aria-hidden="true"></i>
+                                                            <div class="dropdown-content">
+                                                                <!-- <a (click)="viewField('string', j, '')">View</a> -->
+                                                                <a (click)="deleteField('string', j, '')">Delete</a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </ng-template>
+
+
+
+
+                                            <ng-template [ngIf]="field?.type == 'string'">
+                                                <tr [hidden]="!field?.data?.title">
+
+
+                                                    <td> 
+                                                        <span class="p14">{{field?.data?.title}}</span>
+                                                    </td>
+
+                                                    <td>
+                                                        <span class="p14">{{field?.data?.type}}</span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="p14" *ngIf="field?.required">Yes </span>
+                                                        <span class="p14" *ngIf="!field?.required">No </span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="p14">{{field?.data?.description}} </span>
+                                                    </td>
+                                                    <td>
+                                                        <select name="visiblity" id="visiblity"
+                                                            class="fieldInput p14 m-2  py-1 px-3 mr-3">
+                                                            <option selected
+                                                                value="public"> <i class="fa fa-ellipsis-h"
+                                                                    aria-hidden="true"></i>
+                                                                Public
+                                                            </option>
+                                                            <option
+                                                                value="private"> <i class="fa fa-ellipsis-h "
+                                                                    aria-hidden="true"></i>
+                                                                Private
+                                                            </option>
+                                                            <option
+                                                                value="personal"> <i class="fa fa-ellipsis-h"
+                                                                    aria-hidden="true"></i>
+                                                                Personal
+                                                            </option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <div class="dropdown p14">
+                                                            <i class="fa fa-ellipsis-h  text-grey-color"
+                                                                aria-hidden="true"></i>
+                                                            <div class="dropdown-content">
+                                                                <!-- <a (click)="viewField('string', j, '')">View</a> -->
+                                                                <a (click)="deleteField('string', j, '')">Delete</a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </ng-template>
+                                        </ng-template>
+                                    </ng-template>
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+
+
+                <div *ngIf="isShowJson">
+                    <div class="">
+                        <!-- <create-vc-template></create-vc-template> -->
+                        <json-editor *ngIf="properties" [options]="editorOptions" [data]="properties"
+                            [(ngModel)]="properties" (change)="readConvertJsonData($event)"></json-editor>
+                        <footer class="footer fixed-bottom fixed-bottom-json">
+                            <div class="container-fluid">
+                                <div>
+                                    <button (click)="readConvertJsonData($event)"
+                                        class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2">Save</button>
+                                    <button (click)="hideJSon()"
+                                        class="btn btn-sec-bg float-end submit-button px-3 my-2">Cancel</button>
+
+                                </div>
+                            </div>
+                        </footer>
+
+                        <!-- <json-editor [options]="editorOptions" style="min-height: 700px;" [data]="jsonFields"
+                      [(ngModel)]="jsonFields"></json-editor> -->
+                    </div>
+                </div>
+
+                <!-- <div class="card-body" *ngIf="usecaseSchema.length">
                     <span class="m-3 p14 mbtn-10 submit-button text-secondary-color" (click)="showAddForm()">
                         <i class="fa fa-plus" aria-hidden="true"></i>
                         Add Field</span>
                 </div> -->
 
-        <p
-          *ngIf="
-            !isShowJson &&
-            !usecaseSchema[activeMenuNo]?.definitions?.data?.length
-          "
-          class="p16"
-        >
-          Fields
-        </p>
+                <p *ngIf="!isShowJson && !usecaseSchema[activeMenuNo]?.definitions?.data?.length" class="p16">Fields</p>
 
-        <div class="p-3 sm-card" *ngIf="usecaseSchema.length && !isShowJson">
-          <span
-            class="m-3 p14 mbtn-10 submit-button text-secondary-color"
-            (click)="showAddForm()"
-          >
-            <i class="fa fa-plus" aria-hidden="true"></i>
-            Add/View Field</span
-          >
+                <div class="p-3 sm-card" *ngIf="usecaseSchema.length &&  !isShowJson">
+                    <span class="m-3 p14 mbtn-10 submit-button text-secondary-color" (click)="showAddForm()">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                        Add Field</span>
+                </div>
+
+                <div class="p-3" *ngIf="isActive == 'createSchema' && !usecaseSchema.length">
+                    <p class="p16 fw-bold"> No schema added yet.</p>
+                    <p class="p14">Please add entity level schema. You can also add common schema example address, field
+                        name and field name which can be used or references in other schemas.</p>
+
+                </div>
+            </div>
+            <div *ngIf="isActive == 'configurations'">
+                <config-workflow></config-workflow>
+            </div>
+
+
+
+            <div *ngIf="isActive =='create-vc'">
+                <create-vc-template></create-vc-template>
+            </div>
+
+            <div *ngIf="isActive == 'ownership'">
+                <ownership></ownership>
+            </div>
+            <div *ngIf="isActive == 'test-publish'">
+                <publish></publish>
+            </div>
+
+
+
+
         </div>
-
-        <div
-          class="p-3"
-          *ngIf="isActive == 'createSchema' && !usecaseSchema.length"
-        >
-          <p class="p16 fw-bold">No schema added yet.</p>
-          <p class="p14">
-            Please add entity level schema. You can also add common schema
-            example address, field name and field name which can be used or
-            references in other schemas.
-          </p>
-        </div>
-      </div>
-      <div *ngIf="isActive == 'configurations'">
-        <config-workflow></config-workflow>
-      </div>
-
-      <div *ngIf="isActive == 'create-vc'">
-        <create-vc-template></create-vc-template>
-      </div>
-
-      <div *ngIf="isActive == 'ownership'">
-        <ownership></ownership>
-      </div>
-      <div *ngIf="isActive == 'test-publish'">
-        <publish></publish>
-      </div>
     </div>
-  </div>
 
-  <div *ngIf="isAddFormPg" class="p-5">
-    <add-field-form
-      [jsonSchema]="compFieldJson"
-      (newItemEvent)="jsonSchemaData($event)"
-      (backEvent)="goBackEvent($event)"
-    ></add-field-form>
-  </div>
+    <div *ngIf="isAddFormPg" class="p-5">
+        <add-field-form [jsonSchema]="compFieldJson" (newItemEvent)="jsonSchemaData($event)"
+            (backEvent)="goBackEvent($event)"></add-field-form>
+    </div>
 
-  <!-- Modal Start : Save Entity Name -->
-  <div
-    class="modal right fade"
-    id="addEntity"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="addEntity"
-  >
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header pt-4 border-0">
-          <h3 class="heading-5">Add Schema</h3>
-          <button
-            type="button"
-            class="close"
-            data-dismiss="modal"
-            aria-label="Close"
-          >
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="container mt-1">
-          <div class="mb-3">
-            <span class="l12 fw-bold">Enter Schema Name</span>
-            <input
-              [(ngModel)]="entityName"
-              class="w-100 input-field modal-input-field p14 p-2 inputField"
-              placeholder="Enter schema name"
-              type="text"
-            />
-          </div>
 
-          <div class="mt-2">
-            <span class="l12 fw-bold"
-              >Enter Description<span class="text-muted">
-                (optional)</span
-              ></span
-            >
-            <textarea
-              [(ngModel)]="description"
-              class="w-100 desc input-field modal-input-field p14 pl-3 inputField"
-            ></textarea>
-            <span class="l12 text-grey-color"
-              >Description about the entity</span
-            >
-          </div>
+    <!-- Modal Start : Save Entity Name -->
+    <div class="modal right fade" id="addEntity" tabindex="-1" role="dialog" aria-labelledby="addEntity">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header pt-4 border-0">
+                    <h3 class="heading-5">Add Schema</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="container mt-1">
+                    <div class="mb-3">
+                        <span class="l12 fw-bold">Enter Schema Name</span>
+                        <input [(ngModel)]="entityName" class="w-100 input-field modal-input-field p14 p-2 inputField"
+                            placeholder="Enter Schema name" type="text" />
+                    </div>
 
-          <div class="mt-4">
-            <button
-              data-dismiss="modal"
-              aria-label="Close"
-              class="btn text-capitalize float-end btn-primary btn-primary-sm p1"
-              (click)="createEntity($event)"
-            >
-              Save
-            </button>
-            <!-- <button class="close" data-dismiss="modal" aria-label="Close"
+                    <div class="mt-2">
+                        <span class="l12 fw-bold">Enter Description<span class="text-muted">
+                                (optional)</span></span>
+                        <textarea [(ngModel)]="description"
+                            class="w-100 desc input-field modal-input-field p14 pl-3 inputField"></textarea>
+                        <span class="l12 text-grey-color">Description about the schema</span>
+                    </div>
+
+
+                    <div class="mt-4">
+                        <button data-dismiss="modal" aria-label="Close"
+                            class="btn text-capitalize float-end btn-primary btn-primary-sm p1"
+                            (click)="createEntity($event)">Save</button>
+                        <!-- <button class="close" data-dismiss="modal" aria-label="Close"
                         class="btn text-capitalize float-end btn-primary btn-primary-sm p1 sb-text-primary mr-2 bg-none">Cancel</button> -->
-          </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 
-  <div
-    class="modal right fade"
-    id="saveSchemaConfig"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="saveSchemaConfig"
-  >
+    <div class="modal right fade" id="saveSchemaConfig" tabindex="-1" role="dialog"
+    aria-labelledby="saveSchemaConfig">
     <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header pt-4 border-0">
-          <h3 class="heading-5">Save Configuration</h3>
-          <button
-            type="button"
-            class="close"
-            data-dismiss="modal"
-            aria-label="Close"
-          >
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="container mt-4">
-          <div class="mb-4">
-            <p class="heading-4 font-700 mb-05">Enter Configuration Name</p>
-            <input
-              [(ngModel)]="templateName"
-              class="w-100 input-field p14 p-3 inputField"
-              placeholder="Enter Document name"
-              type="text"
-            />
-          </div>
+        <div class="modal-content">
+            <div class="modal-header pt-4 border-0">
+                <h3 class="heading-5">Save Configuration</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="container mt-4">
+                <div class="mb-4">
+                    <p class="heading-4 font-700 mb-05">Enter Configuration Name</p>
+                    <input [(ngModel)]="templateName" class="w-100 input-field p14 p-3 inputField"
+                        placeholder="Enter Document name" type="text" />
+                </div>
 
-          <div class="mt-2">
-            <p class="heading-4 font-700 mb-05">
-              Enter Description<span class="text-muted">(optional)</span>
-            </p>
-            <textarea
-              [(ngModel)]="configDescription"
-              class="w-100 desc py-2 input-field p14 pl-3 inputField"
-              placeholder="Enter description"
-            ></textarea>
-          </div>
+                <div class="mt-2">
+                    <p class="heading-4 font-700 mb-05">Enter Description<span
+                            class="text-muted">(optional)</span></p>
+                    <textarea [(ngModel)]="configDescription"
+                        class="w-100 desc py-2 input-field p14 pl-3 inputField"
+                        placeholder="Enter description"></textarea>
+                </div>
 
-          <div class="mt-4">
-            <button
-              (click)="saveConfiguration()"
-              data-dismiss="modal"
-              aria-label="Close"
-              class="btn text-capitalize float-end btn-primary btn-primary-sm p1"
-            >
-              Save
-            </button>
-            <button
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-              class="btn text-capitalize float-end btn-primary btn-primary-sm p1 sb-text-primary mr-2 bg-none"
-            >
-              Cancel
-            </button>
-          </div>
+
+                <div class="mt-4">
+                    <button (click)="saveConfiguration()" data-dismiss="modal" aria-label="Close"
+                        class="btn text-capitalize float-end btn-primary btn-primary-sm p1">Save</button>
+                    <button class="close" data-dismiss="modal" aria-label="Close"
+                        class="btn text-capitalize float-end btn-primary btn-primary-sm p1 sb-text-primary mr-2 bg-none">Cancel</button>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
+</div>
 
-  <footer class="footer fixed-bottom">
-    <div class="container-fluid">
-      <div>
-        <!-- <button *ngIf="isActive == 'create-vc' || isActive == 'test-publish'" (click)="backStep()"
+    <footer class="footer fixed-bottom">
+        <div class="container-fluid">
+            <div>
+                <!-- <button *ngIf="isActive == 'create-vc' || isActive == 'test-publish'" (click)="backStep()"
                     class="btn btn-sec-bg submit-button px-3 my-2 ml-2 mr-2 ">Back</button> &nbsp; -->
-        <button
-          (click)="createSchema()"
-          *ngIf="isActive == 'createSchema'"
-          [disabled]="!usecaseSchema[activeMenuNo]?.definitions?.data?.length"
-          class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2"
-        >
-          Save and Next
-        </button>
-        <button
-          (click)="nextStep()"
-          *ngIf="isActive == 'create-vc'"
-          class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2"
-        >
-          Save and Next
-        </button>
-        <button
-          *ngIf="isActive == 'test-publish'"
-          data-toggle="modal"
-          data-target="#prewiewProfile"
-          class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2"
-        >
-          Save
-        </button>
-        <button
-          *ngIf="isActive == 'configurations'"
-          (click)="nextStep()"
-          class="btn btn-sec-bg float-end submit-button px-3 my-2 ml-2 mr-2"
-        >
-          Skip
-        </button>
-        &nbsp;
-        <button
-          *ngIf="isActive == 'create-vc' || isActive == 'ownership'"
-          (click)="nextStep()"
-          class="btn float-end btn-primary btn-primary-sm px-3 my-2 ml-2 mr-2"
-        >
-          Save as Draft
-        </button>
-        &nbsp;
-      </div>
-    </div>
-  </footer>
+                <button (click)="createSchema()" *ngIf="isActive == 'createSchema'" [disabled]="!usecaseSchema[activeMenuNo]?.definitions?.data?.length"
+                    class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2">Save and
+                    Next</button>
+                    <button (click)="nextStep()" *ngIf="isActive == 'create-vc'" 
+                    class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2">Save and
+                    Next</button>
+                    <button *ngIf="isActive == 'test-publish'" data-toggle="modal" data-target="#prewiewProfile"
+                    class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2">Save </button>
+                <button *ngIf="isActive == 'configurations'" (click)="nextStep();"
+                    class="btn btn-sec-bg float-end submit-button px-3 my-2 ml-2 mr-2 ">Skip</button> &nbsp;
+                <button *ngIf="isActive == 'create-vc' || isActive == 'ownership'"
+                (click)="nextStep();" class="btn  float-end btn-primary btn-primary-sm px-3 my-2 ml-2 mr-2">Save as Draft</button>
+                &nbsp;
+
+            </div>
+        </div>
+    </footer>
 </div>
 <!-- Modal End : Save Entity Name -->

@@ -19,6 +19,48 @@ p {
   margin-right: 16px;
 }
 
+.agree-container {
+  width: 83%;
+  background-color: white;
+  margin-top: 2%;
+  margin-left: 8.5%;
+}
+.white-background {
+  background-color: #fff;
+}
+.top-margin-container {
+  margin-bottom: 20px !important;
+}
+.form-check {
+  padding-left: 1.5rem;
+}
+.border1 {
+  border: 3px solid #0098ab !important;
+}
+.border2 {
+  border: 1px solid #fff !important;
+}
+.bottom-padding-container {
+  padding-bottom: 55px !important;
+}
+.container .form-check-input {
+  // position: relative;
+  width: 1.125rem;
+  height: 1.125rem;
+  opacity: 1;
+  border-color: rgb(212, 210, 210);
+  background-color: none;
+}
+.form-check-input:checked {
+  background-color: none;
+}
+.top-padding-title {
+  padding-top: 15px;
+}
+.bottom-padding-btn {
+  margin-bottom: 20px;
+}
+
 a,
 a:hover,
 a:focus {

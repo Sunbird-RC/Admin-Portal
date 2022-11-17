@@ -44,16 +44,15 @@
               "./node_modules/grapesjs/dist/css/grapes.min.css",
               "./node_modules/grapesjs-preset-webpage/dist/grapesjs-preset-webpage.min.css",
               "./node_modules/grapesjs-component-code-editor/dist/grapesjs-component-code-editor.min.css",
-              "./node_modules/grapesjs-preset-newsletter/dist/grapesjs-preset-newsletter.css"
-
+              "./node_modules/grapesjs-preset-newsletter/dist/grapesjs-preset-newsletter.css",
+              "./node_modules/swagger-ui/dist/swagger-ui.css"
             ],
             "scripts": [
               "./node_modules/bootstrap/dist/js/bootstrap.min.js",
               "./node_modules/grapesjs/dist/grapes.min.js",
               "./node_modules/grapesjs-preset-webpage/dist/grapesjs-preset-webpage.min.js",
-             "./node_modules/grapesjs-component-code-editor/dist/grapesjs-component-code-editor.min.js",
-             "./node_modules/grapesjs-preset-newsletter/dist/grapesjs-preset-newsletter.min.js"
-
+              "./node_modules/grapesjs-component-code-editor/dist/grapesjs-component-code-editor.min.js",
+              "./node_modules/grapesjs-preset-newsletter/dist/grapesjs-preset-newsletter.min.js"
             ]
           },
           "configurations": {
@@ -117,9 +116,7 @@
               "src/assets",
               "src/manifest.webmanifest"
             ],
-            "styles": [
-              "src/styles.scss"
-            ],
+            "styles": ["src/styles.scss"],
             "scripts": []
           }
         },
@@ -131,9 +128,7 @@
               "tsconfig.spec.json",
               "e2e/tsconfig.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         },
         "e2e": {

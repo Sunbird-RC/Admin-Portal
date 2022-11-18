@@ -140,6 +140,7 @@ import { EditTemplateComponent } from './admin/edit-template/edit-template.compo
 import { DloginComponent } from './admin/dlogin/dlogin.component';
 import { AdvanceEditorComponent } from './admin/advance-editor/advance-editor.component';
 import { PublishComponent } from './admin/publish/publish.component';
+import { SwaggeruiComponent } from './admin/publish/swaggerui/swaggerui.component';
 
 @NgModule({
   declarations: [
@@ -186,7 +187,8 @@ import { PublishComponent } from './admin/publish/publish.component';
     EditTemplateComponent,
     DloginComponent,
     AdvanceEditorComponent,
-    PublishComponent
+    PublishComponent,
+    SwaggeruiComponent
   ],
   imports: [
     BrowserModule,

@@ -23,10 +23,35 @@
     <div class="card w-100" *ngIf = "isShow1">
       <div class="ml-1 p-3 w-100">
         <div class="img-hold">
-          <div class="thmbCol" *ngFor="let item of thumbnailItems" >
-            <img height="190px" width="130px" class="templateThumb img-fluid" src="{{item?.thumbnailUrl}}" />
-            <div class="l12 fw-bold">{{item?.title}}</div>
-          </div>
+          
+            <div class="btn img-ht">
+            <div class="thmbCol">
+                  <div class="pt-c">
+                    <a href="/add-template/{{usecase}}/{{entityName}}" class="btn submit-button pt-c">
+                     <i class="fa fa-plus text-secondary-color pt-c" aria-hidden="true"></i>
+                    </a>
+                  </div>
+                  <div class="ft-12">
+                    <b>Add Template</b>
+                  </div>
+                  <div class="ft-10 thmbCol2">
+                     <div>
+                      Any edit in QR code 
+                     </div>
+                     <div>
+                      will refelect in all VCs 
+                     </div>
+                     <div>
+                      of this schema
+                     </div>
+                  </div>
+            </div>
+            </div>
+            <div class="thmbCol" *ngFor="let item of thumbnailItems" > 
+              <img height="190px" width="130px" class="templateThumb img-fluid" src="{{item?.thumbnailUrl}}" /> 
+               <div class="l12 fw-bold">{{item?.title}}</div> 
+             
+          </div> 
         </div>
    
       </div>
@@ -39,7 +64,7 @@
   </div>
 
 
-  <div class="mt-4">
+  <div class="mt-4" *ngIf = "isShow2">
     <p class="p16 fw-bold">Verifiable Credential Template for Attestation </p>
     <!-- <p class="p16 fw-bold">Select the workflow name (thats previous screen) -> template</p> -->
   </div>

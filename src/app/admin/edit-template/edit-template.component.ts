@@ -355,7 +355,7 @@ export class EditTemplateComponent implements OnInit {
 
   async readHtmlSchemaContent(doc) {
 
-    this.userHtml = '';
+    this.userHtml = doc;
    
 
     let draftSchemaOsid = JSON.parse(localStorage.getItem('draftSchemaOsid'));
@@ -373,11 +373,11 @@ export class EditTemplateComponent implements OnInit {
       }
     }
 
-    await fetch(doc.certificateUrl)
-      .then(response => response.text())
-      .then(data => {
-        this.userHtml = data;
-      });
+    // await fetch(doc.certificateUrl)
+    //   .then(response => response.text())
+    //   .then(data => {
+    //     this.userHtml = data;
+    //   });
   }
 
 

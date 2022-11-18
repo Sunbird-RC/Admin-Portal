@@ -8,15 +8,7 @@ import { Location } from '@angular/common';
   styleUrls: ['./create-vc-template.component.scss']
 })
 export class CreateVcTemplateComponent implements OnInit {
-  thumbnailItems: any = [{
-    "thumbnailUrl": "/assets/images/thumbnail.png",
-    "title":"Volunteering Certificate"
-  },
-  {
-    "thumbnailUrl": "/assets/images/thumbnail.png",
-    "title":"Proof of Work"
-  }
- ]
+  thumbnailItems: any = []
   params: any;
   entityName: any;
   usecase: any;
@@ -75,7 +67,7 @@ export class CreateVcTemplateComponent implements OnInit {
             self.vcObject = schemaVc[key];
 
             self.thumbnailItems.push({
-              "thumbnailUrl": "/assets/images/thumbnail.png",
+              "thumbnailUrl": "/assets/images/thumbnail2.png",
               "title": self.vcObject.name,
               "description": self.vcObject.description,
               "html": self.vcObject.html

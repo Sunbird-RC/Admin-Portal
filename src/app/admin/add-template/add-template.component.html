@@ -22,20 +22,20 @@
                         </form> -->
                         <div class="container mt-4">
                         <ul class="nav nav-tabs ui-tabs font-600">
-                            <li class="active heading-2"><a href="#tab3" data-toggle="tab">General Templates</a></li>
-                            <!-- <li class="heading-2"><a href="#tab4" data-toggle="tab">My Template</a></li> -->
+                            <li class=" heading-2"><a href="#tab3" data-toggle="tab">General Templates</a></li>
+                           <!-- <li class="heading-2"><a href="#tab4" data-toggle="tab">QR Code Only</a></li>  -->
                           </ul>
                         
                           <div class="tab-content">
                             
                             <div class="tab-pane active" id="tab3">
                                 <div>
-                                    <label class="heading-4">Select Document Type</label> <br />
-                                    <select id="select-type-basic" [(ngModel)]="template" (change)="onChange($event.target.value)">
+                                    <!-- <label class="heading-4">Select Document Type</label> <br /> -->
+                                    <!-- <select id="select-type-basic" [(ngModel)]="template" (change)="onChange($event.target.value)">
                                         <option value="{{i}}" *ngFor="let item of documentTypeList; let i = index">
                                             {{item?.name}}
                                         </option>
-                                    </select>
+                                    </select> -->
                                 </div>
                                 <!-- <label class="font-600 fs-14 mt-3">Proof of work</label>
                                 <div class="form-check pl-4">
@@ -58,13 +58,13 @@
                 
                            
                                 <div class="wrapper">
-                                    <div class="mb-2" *ngFor="let doctype of selectedDecType">
+                                    <div class="mb-2">
                                         <br />
-                                        <p class="heading-3 mb-1"> {{doctype?.name}} </p>
-                                        <div class="mb-2" *ngFor="let doc of doctype.samples; let index = index">
+                                        <p class="heading-3 mb-1"> A4 </p>
+                                        <div class="mb-2">
                                         <div class="box" >
-                                            <img *ngIf="doc?.thumbnailUrl" (click)="previewScreen(doc)" class="templateThumb" src="{{doc?.thumbnailUrl}}" />
-                                            <img *ngIf="!doc?.thumbnailUrl" (click)="previewScreen(doc)" class="templateThumb" src="/assets/images/thumbnail.png" />
+                                            <img  (click)="previewScreen()" class="templateThumb" src="/assets/images/thumbnail2.png" />
+                                            <!-- <img *ngIf="!doc?.thumbnailUrl" (click)="previewScreen(doc)" class="templateThumb" src="/assets/images/thumbnail.png" /> -->
 
                                             <!-- <iframe src="/assets/template/sec.html" allowfullscreen="" width="100%"
                                                 height="200px"></iframe> -->

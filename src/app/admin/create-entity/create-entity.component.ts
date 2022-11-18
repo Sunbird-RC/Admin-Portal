@@ -1226,7 +1226,7 @@ export class CreateEntityComponent implements OnInit {
           errArr.push(this.usecaseSchema[i].title);
 
           if (errArr.length == 1 && (errArr.includes('Common') || errArr.includes('common'))) {
-            alert('11');
+          //  alert('11');
             this.saveData();
             this.nextStep();
             console.log('err ----', err);

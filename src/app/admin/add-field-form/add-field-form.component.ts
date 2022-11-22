@@ -29,19 +29,32 @@ export class AddFieldFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.myForm['components'] = [];
-   // this.entityFields = this.jsonSchema;
+    this.options = editorConfig;
 
-    if (this.jsonSchema) {
-      
-      this.myForm['components'] = this.jsonSchema;
-     
-      console.log(this.myForm);
-      // delete editorConfig.builder['basic'];
-      // this.options = editorConfig;
-      //  this.options.builder.basic = false;
+    this.commonSchema = localStorage.getItem('commonSchema');
+
+    if (this.commonSchema) {
+      this.commonSchema = JSON.parse(this.commonSchema);
+      this.options['builder']['custom'] = {
+        title: 'Common Schema',
+        weight: 10,
+        components: {}
+      }
+
+      for (let i = 0; i < this.commonSchema.length; i++) {
+        this.options['builder']['custom']['components'][this.commonSchema[i]['key']] = {
+          title: this.commonSchema[i]['label'],
+          key: this.commonSchema[i]['key'],
+          schema:this.commonSchema[i]
+        }
+      }
+
     }
 
-    // this.formioJsonBuild(this.jsonSchema);
+    if (this.jsonSchema) {
+
+      this.myForm['components'] = this.jsonSchema;
+    }
   }
 
   onSubmit(event) {
@@ -59,27 +72,13 @@ export class AddFieldFormComponent implements OnInit {
     console.log({ event });
 
     if (event.type == 'saveComponent' || event.type == "addComponent" || event.type == 'deleteComponent') {
-      if(event.isNew){
-      let data = this.formioJsonToPlainJSONSchema(event, event.form.components);
-      this.entityFields.push(data);
-      }else{
+      if (event.isNew) {
+        let data = this.formioJsonToPlainJSONSchema(event, event.form.components);
+        this.entityFields.push(data);
+      } else {
         this.entityFields[event.index] = this.formioJsonToPlainJSONSchema(event, event.form.components);
       }
-    
 
-     // let _self = this;
-      // Object.keys(this.entityFields).forEach(function (key) {
-      //   console.log({ key });
-      //   _self.entityFieldList.push({
-      //     'key': key,
-      //     'title': _self.entityFields[key].title,
-      //     'type': _self.entityFields[key].type,
-      //     'required': _self.entityFields[key].required,
-
-      //   })
-      // })
-
-     // console.log(this.entityFieldList);
     }
   }
 
@@ -88,9 +87,6 @@ export class AddFieldFormComponent implements OnInit {
     return components;
   }
 
-  viewField() {
-    //alert('view');
-  }
 
   saveAdvance() {
     this.jsonSchema = '';

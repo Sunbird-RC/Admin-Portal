@@ -422,7 +422,7 @@ export const editorConfig = {
     builder: {
         basic: {
             title: '',
-            //noNewEdit: true,
+            noNewEdit: true,
             components: {
                 password: false,
                 button: false,

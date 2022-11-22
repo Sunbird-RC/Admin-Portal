@@ -206,12 +206,14 @@ export class CreateEntityComponent implements OnInit {
       this.getEntityPropertiesByIndex(j);
 
       if (j == (this.usecaseSchema.length - 1)) {
-        if (this.usecaseSchema[j].hasOwnProperty('isRefSchema') && this.usecaseSchema[j].isRefSchema) {
+        for (let k = 0; k < this.usecaseSchema.length; k++) {
+        if (this.usecaseSchema[k].hasOwnProperty('isRefSchema') && this.usecaseSchema[k].isRefSchema) {
 
-          let commonSchema = this.convertSchemaToFormioJson(this.usecaseSchema[j].definitions.data);
+          let commonSchema = this.convertSchemaToFormioJson(this.usecaseSchema[k].definitions.data);
           localStorage.setItem('commonSchema', JSON.stringify(commonSchema));
 
         }
+      }
       }
     }
   }
@@ -1217,10 +1219,9 @@ export class CreateEntityComponent implements OnInit {
           console.log({ schemaParams });
           localStorage.setItem('schemaParams', JSON.stringify(schemaParams));
 
-          if (i == (this.usecaseSchema.length - 1) && !errArr.length) {
+          if (i == this.usecaseSchema.length - 1 && !errArr.length) {
             this.saveData();
             this.nextStep();
-            // alert('12');
           }
         }, (err) => {
           errArr.push(this.usecaseSchema[i].title);
@@ -1314,8 +1315,8 @@ export class CreateEntityComponent implements OnInit {
     }
 
   }
+
   saveConfiguration() {
-    // alert('save');
 
     let schemaVc = localStorage.getItem('schemaVc');
     if (schemaVc != undefined) {

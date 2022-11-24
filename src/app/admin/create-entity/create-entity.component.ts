@@ -8,8 +8,9 @@ import { GeneralService } from 'src/app/services/general/general.service';
 
 import { ToastMessageService } from '../../services/toast-message/toast-message.service';
 import { exit } from 'process';
-import { ignoreElements } from 'rxjs/operators';
+import { ignoreElements, single } from 'rxjs/operators';
 import { MinLengthValidator } from '@angular/forms';
+import { join } from 'path';
 
 @Component({
   selector: 'create-entity',
@@ -78,6 +79,23 @@ export class CreateEntityComponent implements OnInit {
   rawCredentials: any;
   allField: any = [];
   required: any;
+
+  visiblityOpt = [{
+    "name": "Private",
+    "key": "private"
+  },
+  {
+    "name": "Public",
+    "key": "public"
+  },
+  {
+    "name": "Personal",
+    "key": "personal"
+  }];
+
+  privateFields: any = [];
+  internalFields: any = [];
+  privateFieldsName: string = '';
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -205,15 +223,15 @@ export class CreateEntityComponent implements OnInit {
     for (let j = 0; j < this.usecaseSchema.length; j++) {
       this.getEntityPropertiesByIndex(j);
 
-      if (j == (this.usecaseSchema.length - 1)) {
+      if (j == (this.usecaseSchema.length)) {
         for (let k = 0; k < this.usecaseSchema.length; k++) {
-        if (this.usecaseSchema[k].hasOwnProperty('isRefSchema') && this.usecaseSchema[k].isRefSchema) {
+          if (this.usecaseSchema[k].hasOwnProperty('isRefSchema') && this.usecaseSchema[k].isRefSchema) {
 
-          let commonSchema = this.convertSchemaToFormioJson(this.usecaseSchema[k].definitions.data);
-          localStorage.setItem('commonSchema', JSON.stringify(commonSchema));
+            let commonSchema = this.convertSchemaToFormioJson(this.usecaseSchema[k].definitions.data);
+            localStorage.setItem('commonSchema', JSON.stringify(commonSchema));
 
+          }
         }
-      }
       }
     }
   }
@@ -227,12 +245,13 @@ export class CreateEntityComponent implements OnInit {
     this.description = (res.description) ? res.description : '';
     this.entityKey = res.title;
     // this.properties = res.definitions;
-
-
+    this.activeMenuNo = j;
+    this.privateFieldsName = '';
     if (res.hasOwnProperty('isRefSchema') && res.isRefSchema) {
       this.properties = res.definitions;
       let self = this;
       let tempObj = [];
+
       Object.keys(this.properties).forEach(function (key) {
         self.entityKey = key;
         self.required = (res.definitions[self.entityKey].hasOwnProperty('required') && res.definitions[self.entityKey].required.length) ? res.definitions[self.entityKey].required : self.required;
@@ -264,8 +283,20 @@ export class CreateEntityComponent implements OnInit {
 
     } else {
       this.properties = res.definitions[this.entityKey].properties;
-
+      this.activeMenuNo = j;
       this.processEntity = j;
+      if (res.hasOwnProperty('_osConfig') && res._osConfig.hasOwnProperty('privateFields')) {
+        this.privateFields[j] = res._osConfig.privateFields;
+      }else{
+        this.privateFields[j] = [];
+      }
+
+      if (res.hasOwnProperty('_osConfig') && res._osConfig.hasOwnProperty('internalFields')) {
+        this.internalFields[j] = res._osConfig.internalFields;
+      }else{
+        this.internalFields[j] = [];
+      }
+
       this.required = (res.definitions[this.entityKey].hasOwnProperty('required') && res.definitions[this.entityKey].required.length) ? res.definitions[this.entityKey].required : this.required;
 
       this.usecaseSchema[j].definitions = {
@@ -410,120 +441,235 @@ export class CreateEntityComponent implements OnInit {
     let data;
     Object.keys(propertyObj).forEach(function (key) {
       data = propertyObj[key];
+      if (data != undefined) {
 
+        if ((data.hasOwnProperty('type') && data.type == 'array')) {
+          //  tempFieldObjSec.push(self.readArraySchema(data));
 
-      if ((data.hasOwnProperty('type') && data.type == 'array')) {
-        //  tempFieldObjSec.push(self.readArraySchema(data));
-
-        let dataTemp = self.readArraySchema(data);
-        if (dataTemp.hasOwnProperty('data')) {
-          dataTemp = dataTemp['data'];
-        }
-
-        self.required = (data.hasOwnProperty('required') && data.required.length) ? data.required : self.required;
-
-        tempFieldObjSec.push({
-          "propertyName": (data.hasOwnProperty('title') ? data.title : key),
-          "propertyKey": key,
-          "type": data.type,
-          "$ref": '',
-          "required": (data.hasOwnProperty('required') && data.required.length) ? data.required : '',
-          "$id": (data.hasOwnProperty('$id')) ? data['$id'] : '',
-          "data": dataTemp
-        });
-
-        if (!self.usecaseSchema[self.activeMenuNo].hasOwnProperty('isRefSchema') && !self.usecaseSchema[self.activeMenuNo].isRefSchema) {
-          tempFieldObjSec[tempFieldObjSec.length - 1]['$ref'] = ((data.hasOwnProperty('$ref')) ? data['$ref'] : ((data.hasOwnProperty('items') && data.items.hasOwnProperty('$ref') ? data.items['$ref'] : '')));
-        }
-
-      } else if ((data.hasOwnProperty('$ref'))) {
-        tempFieldObjSec.push(self.readCommonSchema(data));
-
-        if (!self.usecaseSchema[self.activeMenuNo].hasOwnProperty('isRefSchema') && !self.usecaseSchema[self.activeMenuNo].isRefSchema) {
-          tempFieldObjSec[tempFieldObjSec.length - 1]['$ref'] = data['$ref'];
-        }
-
-      } else if ((data.hasOwnProperty('type') && data.type == 'object') && data.hasOwnProperty('properties')) {
-        // tempFieldObjSec.push(self.readPropertyObj(data.properties));
-
-        self.required = (data.hasOwnProperty('required') && data.required.length) ? data.required : self.required;
-
-        tempFieldObjSec.push({
-          "propertyName": (data.hasOwnProperty('title') ? data.title : key),
-          "propertyKey": key,
-          "type": data.type,
-          "$ref": '',
-          "required": (data.hasOwnProperty('required') && data.required.length) ? data.required : '',
-          "$id": (data.hasOwnProperty('$id')) ? data['$id'] : '',
-          "data": self.readPropertyObj(data.properties)
-
-        });
-
-        if (!self.usecaseSchema[self.activeMenuNo].hasOwnProperty('isRefSchema') && !self.usecaseSchema[self.activeMenuNo].isRefSchema) {
-          tempFieldObjSec[tempFieldObjSec.length - 1]['$ref'] = data['$ref'];
-        }
-
-      } else if (!data.hasOwnProperty('properties')) {
-
-        let title = (propertyObj[key].hasOwnProperty('title') && propertyObj[key].title) ? propertyObj[key].title : key;
-        if (typeof (data) == 'object') {
-          data['title'] = title;
-        }
-
-
-        let required: any = [];
-        required = (self.required != undefined) ? self.required.includes(key) : false;
-
-        if (!self.usecaseSchema[self.activeMenuNo].hasOwnProperty('isRefSchema') && !self.usecaseSchema[self.activeMenuNo].isRefSchema) {
-          if (!required && self.usecaseSchema[self.activeMenuNo].definitions[self.usecaseSchema[self.activeMenuNo].title].hasOwnProperty('required')) {
-            required = self.usecaseSchema[self.activeMenuNo].definitions[self.usecaseSchema[self.activeMenuNo].title].required;
-            required = (required) ? required.includes(key) : false;
+          let dataTemp = self.readArraySchema(data);
+          if (dataTemp.hasOwnProperty('data')) {
+            dataTemp = dataTemp['data'];
           }
-        }
 
+          self.required = (data.hasOwnProperty('required') && data.required.length) ? data.required : self.required;
 
-        tempFieldObjSec.push(
-          {
-            "key": key,
-            "type": (propertyObj[key].type == "string") ? 'string' : propertyObj[key].type,
-            "visiblity": ['private'],
-            "required": required,
-            data
-          })
-      } else if (data.type != 'array' && data.type != 'object') {
-        let title = (propertyObj[key].hasOwnProperty('title') && propertyObj[key].title) ? propertyObj[key].title : key;
-        if (typeof (data) == 'object') {
-          data['title'] = title;
-        }
-
-        let required: any = [];
-        required = (self.required != undefined) ? self.required.includes(key) : false;
-
-        if (!self.usecaseSchema[self.activeMenuNo].hasOwnProperty('isRefSchema') && !self.usecaseSchema[self.activeMenuNo].isRefSchema) {
-
-          if (!required && self.usecaseSchema[self.activeMenuNo].definitions[self.usecaseSchema[self.activeMenuNo].title].hasOwnProperty('required')) {
-
-            required = self.usecaseSchema[self.activeMenuNo].definitions[self.usecaseSchema[self.activeMenuNo].title].required;
-            required = (required != undefined) ? required.includes(key) : false;
+          if (self.privateFieldsName == '') {
+            self.privateFieldsName = "$." + key;
+          } else {
+            self.privateFieldsName = self.privateFieldsName.concat("." + key);
           }
+
+          tempFieldObjSec.push({
+            "propertyName": (data.hasOwnProperty('title') ? data.title : key),
+            "propertyKey": key,
+            "type": data.type,
+            "$ref": '',
+            "required": (data.hasOwnProperty('required') && data.required.length) ? data.required : '',
+            "$id": (data.hasOwnProperty('$id')) ? data['$id'] : '',
+            "data": dataTemp
+          });
+
+          if (!self.usecaseSchema[self.activeMenuNo].hasOwnProperty('isRefSchema') && !self.usecaseSchema[self.activeMenuNo].isRefSchema) {
+            tempFieldObjSec[tempFieldObjSec.length - 1]['$ref'] = ((data.hasOwnProperty('$ref')) ? data['$ref'] : ((data.hasOwnProperty('items') && data.items.hasOwnProperty('$ref') ? data.items['$ref'] : '')));
+          }
+
+        } else if ((data.hasOwnProperty('$ref'))) {
+          tempFieldObjSec.push(self.readCommonSchema(data));
+
+          if (self.privateFieldsName == '') {
+            self.privateFieldsName = "$." + key;
+          } else {
+            self.privateFieldsName = self.privateFieldsName.concat("." + key);
+          }
+
+
+          if (!self.usecaseSchema[self.activeMenuNo].hasOwnProperty('isRefSchema') && !self.usecaseSchema[self.activeMenuNo].isRefSchema) {
+            tempFieldObjSec[tempFieldObjSec.length - 1]['$ref'] = data['$ref'];
+          }
+
+        } else if ((data.hasOwnProperty('type') && data.type == 'object') && data.hasOwnProperty('properties')) {
+
+          self.required = (data.hasOwnProperty('required') && data.required.length) ? data.required : self.required;
+
+          if (self.privateFieldsName == '') {
+            self.privateFieldsName = "$." + key;
+          } else {
+            self.privateFieldsName = self.privateFieldsName.concat("." + key);
+          }
+
+          tempFieldObjSec.push({
+            "propertyName": (data.hasOwnProperty('title') ? data.title : key),
+            "propertyKey": key,
+            "type": data.type,
+            "$ref": '',
+            "required": (data.hasOwnProperty('required') && data.required.length) ? data.required : '',
+            "$id": (data.hasOwnProperty('$id')) ? data['$id'] : '',
+            "data": self.readPropertyObj(data.properties)
+
+          });
+
+          if (!self.usecaseSchema[self.activeMenuNo].hasOwnProperty('isRefSchema') && !self.usecaseSchema[self.activeMenuNo].isRefSchema) {
+            tempFieldObjSec[tempFieldObjSec.length - 1]['$ref'] = data['$ref'];
+          }
+
+        } else if (!data.hasOwnProperty('properties')) {
+
+          let title = (propertyObj[key].hasOwnProperty('title') && propertyObj[key].title) ? propertyObj[key].title : key;
+          if (typeof (data) == 'object') {
+            data['title'] = title;
+          }
+
+
+          let required: any = [];
+          required = (self.required != undefined) ? self.required.includes(key) : false;
+
+          if (!self.usecaseSchema[self.activeMenuNo].hasOwnProperty('isRefSchema') && !self.usecaseSchema[self.activeMenuNo].isRefSchema) {
+            if (!required && self.usecaseSchema[self.activeMenuNo].definitions[self.usecaseSchema[self.activeMenuNo].title].hasOwnProperty('required')) {
+              required = self.usecaseSchema[self.activeMenuNo].definitions[self.usecaseSchema[self.activeMenuNo].title].required;
+              required = (required) ? required.includes(key) : false;
+            }
+          }
+
+
+
+          if (self.privateFieldsName == '') {
+            self.privateFieldsName = "$." + key;
+          } else {
+            self.privateFieldsName = self.privateFieldsName.concat("." + key);
+          }
+
+          let visiblityIs = 'public';
+
+          if (!self.usecaseSchema[self.activeMenuNo].hasOwnProperty('isRefSchema') && !self.usecaseSchema[self.activeMenuNo].isRefSchema) {
+
+            visiblityIs = (!(self.privateFields[self.activeMenuNo]).length && !(self.internalFields[self.activeMenuNo]).length) ? self.setPVisibility() : self.checkVisibility();
+          }
+
+          tempFieldObjSec.push(
+            {
+              "key": key,
+              "type": (propertyObj[key].type == "string") ? 'string' : propertyObj[key].type,
+              "visiblity": visiblityIs,
+              "required": required,
+              data
+            });
+
+          self.setPVisibility();
+          //self.privateFieldsName = '';
+        } else if (data.type != 'array' && data.type != 'object') {
+          let title = (propertyObj[key].hasOwnProperty('title') && propertyObj[key].title) ? propertyObj[key].title : key;
+          if (typeof (data) == 'object') {
+            data['title'] = title;
+          }
+
+          let required: any = [];
+          required = (self.required != undefined) ? self.required.includes(key) : false;
+
+          if (!self.usecaseSchema[self.activeMenuNo].hasOwnProperty('isRefSchema') && !self.usecaseSchema[self.activeMenuNo].isRefSchema) {
+
+            if (!required && self.usecaseSchema[self.activeMenuNo].definitions[self.usecaseSchema[self.activeMenuNo].title].hasOwnProperty('required')) {
+
+              required = self.usecaseSchema[self.activeMenuNo].definitions[self.usecaseSchema[self.activeMenuNo].title].required;
+              required = (required != undefined) ? required.includes(key) : false;
+            }
+          }
+
+
+          if (self.privateFieldsName == '') {
+            self.privateFieldsName = "$." + key;
+          } else {
+            self.privateFieldsName = self.privateFieldsName.concat("." + key);
+          }
+
+          let visiblityIs = (!(self.privateFields[self.activeMenuNo]).length && !(self.internalFields[self.activeMenuNo]).length) ? self.setPVisibility() : self.checkVisibility();
+
+
+          tempFieldObjSec.push(
+            {
+              "key": key,
+              "type": (propertyObj[key].type == "string") ? 'string' : propertyObj[key].type,
+              "visiblity": visiblityIs,
+              "required": required,
+              data
+            });
+
+          self.setPVisibility();
+
+          // self.privateFieldsName = '';
         }
-
-
-        tempFieldObjSec.push(
-          {
-            "key": key,
-            "type": (propertyObj[key].type == "string") ? 'string' : propertyObj[key].type,
-            "visiblity": ['private'],
-            "required": required,
-            data
-          })
       }
-
 
     });
 
     return tempFieldObjSec;
 
+  }
+
+  checkVisibility() {
+
+    let privateArr = (this.privateFields[this.activeMenuNo]);
+    let internalArr = (this.internalFields[this.activeMenuNo]);
+
+console.log(this.privateFieldsName);
+    if(privateArr){
+
+    let  isPrivate = privateArr.some(x => x.toLowerCase() == this.privateFieldsName.toLowerCase());
+    let isInternal = internalArr.some(x => x.toLowerCase() == this.privateFieldsName.toLowerCase());
+    for (let i = 0; i < privateArr.length; i++) {
+      if(isPrivate) {
+        this.privateFieldsName = '';
+
+        return 'private';
+      } else if (isInternal) {
+        this.privateFieldsName = '';
+
+        return 'personal';
+      } else if(!isPrivate && !isInternal){
+        this.privateFieldsName = '';
+        return 'public';
+      }
+
+    }
+  }
+
+ if(internalArr){
+
+  let  isPrivate = privateArr.some(x => x.toLowerCase() == this.privateFieldsName.toLowerCase());
+  let isInternal = internalArr.some(x => x.toLowerCase() == this.privateFieldsName.toLowerCase());
+
+    for (let i = 0; i < internalArr.length; i++) {
+      if(isPrivate) {
+        this.privateFieldsName = '';
+
+        return 'private';
+      } else if (isInternal) {
+        this.privateFieldsName = '';
+
+        return 'personal';
+      } else if(!isPrivate && !isInternal){
+        this.privateFieldsName = '';
+        return 'public';
+      }
+
+    }
+  }
+
+
+  }
+
+  setPVisibility() {
+
+    let privateArr = (this.privateFields[this.activeMenuNo]) ? this.privateFields[this.activeMenuNo] : [];
+    let internalArr =   (this.internalFields[this.activeMenuNo]) ? this.internalFields[this.activeMenuNo] : [];
+
+    if ((!privateArr.length && !internalArr.length)) {
+      this.privateFieldsName = '';
+      return 'public';
+    }
+    // else{
+    //  return this.checkVisibility();
+
+    // }
   }
 
 
@@ -548,6 +694,7 @@ export class CreateEntityComponent implements OnInit {
     let refUrl, refKey;
     let tempFieldObjSec = [];
     let tempFieldObj = [];
+    this.privateFieldsName = '';
 
     if (commonSchema.type != 'array' && commonSchema.hasOwnProperty('$ref')) {
       refUrl = commonSchema['$ref'];
@@ -558,6 +705,32 @@ export class CreateEntityComponent implements OnInit {
     } else if (commonSchema.hasOwnProperty('$ref')) {
       refUrl = commonSchema['$ref'];
     }
+
+    if (commonSchema.hasOwnProperty('$id')) {
+      let splitArr = commonSchema.$id.split('/');
+
+      for (let j = 2; j < splitArr.length; j++) {
+        if (this.privateFieldsName == '') {
+          this.privateFieldsName = "$." + splitArr[j];
+        } else {
+          this.privateFieldsName = this.privateFieldsName.concat("." + splitArr[j]);
+        }
+
+      }
+    } else {
+
+      refKey = (refUrl) ? refUrl.split("definitions/").pop() : '';
+      if (refKey) {
+        if (this.privateFieldsName == '') {
+          this.privateFieldsName = "$." + refKey;
+        } else {
+          this.privateFieldsName = this.privateFieldsName.concat("." + refKey);
+        }
+      }
+
+    }
+
+
 
     let objInCommon = refUrl.includes("Common.json");
     refKey = (refUrl) ? refUrl.split("definitions/").pop() : refUrl;
@@ -570,6 +743,17 @@ export class CreateEntityComponent implements OnInit {
 
           if (this.commonschemaDefination.definitions.data[j].propertyKey == refKey) {
             arrayObj = this.commonschemaDefination.definitions.data[j];
+
+            for (let k = 0; k < arrayObj.data.length; k++) {
+              if (this.privateFieldsName == '') {
+                this.privateFieldsName = "$." + refKey + '.' + arrayObj.data[k].key;
+              } else {
+                this.privateFieldsName = this.privateFieldsName.concat("." + arrayObj.data[k].key);
+              }
+
+              arrayObj.data[k].visiblity = (!(this.privateFields[this.activeMenuNo]).length) ? this.setPVisibility() : this.checkVisibility();
+            }
+
           }
         }
 
@@ -580,8 +764,6 @@ export class CreateEntityComponent implements OnInit {
       } else {
 
         // arrayObj = this.commonschemaDefination.definitions[refKey].properties;
-        // tempFieldObjSec = this.readPropertyObj(arrayObj);
-
         for (let j = 0; j < this.commonschemaDefination.definitions.data.length; j++) {
 
           if (this.commonschemaDefination.definitions.data[j].propertyKey == refKey) {
@@ -806,7 +988,6 @@ export class CreateEntityComponent implements OnInit {
       } else {
         //delete this.usecaseSchema[this.activeMenuNo].definitions[objectIndex_i];
         this.usecaseSchema[this.activeMenuNo].definitions.data.splice(objectIndex_i, 1);
-
       }
     }
   }
@@ -913,6 +1094,198 @@ export class CreateEntityComponent implements OnInit {
 
   }
 
+
+  convertSchemaToFormioJson1(viewSchemaField) {
+    let newArr: any = [];
+    for (let i = 0; i < viewSchemaField.length; i++) {
+      if (viewSchemaField[i].type == 'string') {
+        // let compJson = {
+        //   "label": viewSchemaField[i].data.title,
+        //   "tableView": true,
+        //   "validate": {
+        //     "required": viewSchemaField[i].required
+        //   },
+        //   "$id": "#/properties/" + viewSchemaField[i].key,
+
+        //   "input": true
+        // }
+
+        let compJson = this.singleField(viewSchemaField[i]);
+
+        compJson['type'] = (viewSchemaField[i].type == 'string') ? "textfield" : viewSchemaField[i].type,
+
+          compJson['key'] = (viewSchemaField[i].key == 'textfield') ? (viewSchemaField[i].key + i) : viewSchemaField[i].key;
+
+
+        if (viewSchemaField[i].data.hasOwnProperty('description') && viewSchemaField[i].data.description) {
+          compJson['description'] = viewSchemaField[i].data.description;
+        }
+
+        if (viewSchemaField[i].data.hasOwnProperty('placeholder') && viewSchemaField[i].data.placeholder) {
+          compJson['placeholder'] = viewSchemaField[i].data.placeholder;
+        }
+
+
+        newArr.push(compJson);
+      } else {
+
+        // let fieldData = viewSchemaField[i];
+
+        let compJson = this.containerFields(viewSchemaField[i]);
+        newArr.push(compJson);
+
+        /* let compJson = {
+           "label": fieldData.propertyName,
+           "tableView": false,
+           "key": fieldData.propertyKey,
+           "type": "container",
+           "input": true,
+           "components": [
+           ]
+         }
+ 
+         if (viewSchemaField[i].type == 'array') {
+           compJson['multiple'] = true
+         }
+ 
+         if (fieldData.hasOwnProperty('description') && fieldData.description) {
+           compJson['description'] = fieldData.description;
+         }
+ 
+         if (fieldData.hasOwnProperty('placeholder') && fieldData.placeholder) {
+           compJson['placeholder'] = fieldData.placeholder;
+         }
+ 
+ 
+         for (let k = 0; k < fieldData.data.length; k++) 
+         {
+           let compJson;
+           let compJsonS;
+           if (fieldData.data[k].type == 'string') {
+             let compJsonS = this.singleField(fieldData.data[k]);
+ 
+             compJson.components.push(compJsonS);
+           } else {
+ 
+             for (let j = 0; j < fieldData.data[k].data.length; j++) {
+ 
+               let compJsonSnode = {
+                 "label": fieldData.data[k].data[j].data.title,
+                 "tableView": false,
+                 "key": fieldData.data[k].data[j].key,
+                 "type": "container",
+                 "input": true,
+                 "components": [
+                 ]
+               }
+ 
+               if (fieldData.data[k].data[j].data.description) {
+                 compJsonSnode['description'] = fieldData.data[k].data[j].data.description;
+               }
+ 
+               if (fieldData.data[k].data[j].data.placeholder) {
+                 compJsonSnode['placeholder'] = fieldData.data[k].data[j].data.placeholder;
+               }
+ 
+               compJsonS.components.push(compJsonSnode);
+             }
+ 
+             compJson.components.push(compJsonS);
+ 
+           }
+         }*/
+
+        // newArr.push(compJson);
+
+      }
+
+    }
+
+    return newArr;
+
+  }
+
+  containerFields(fieldData) {
+    let compJson = {
+      "label": fieldData.propertyName,
+      "tableView": false,
+      "key": fieldData.propertyKey,
+      "type": "container",
+      "input": true,
+      "components": [
+      ]
+    }
+
+    if (fieldData.description) {
+      compJson['description'] = fieldData.description;
+    }
+
+    if (fieldData.placeholder) {
+      compJson['placeholder'] = fieldData.placeholder;
+    }
+
+
+    for (let i = 0; i < fieldData.data.length; i++) {
+      if (fieldData.data[i].type == 'string') {
+
+        let compJsonS = this.singleField(fieldData.data[i]);
+        /* let compJsonS = {
+           "label": fieldData.data[i].data.title,
+           "validate": {
+             "required": fieldData.data[i].required
+           },
+           "tableView": true,
+           "key": fieldData.data[i].key,
+           "$id": "#/properties/" + fieldData.data[i].key,
+           "type": (fieldData.data[i].type == 'string') ? "textfield" : fieldData.data[i].type,
+           "input": true
+         }
+ 
+         if (fieldData.data[i].data.description) {
+           compJsonS['description'] = fieldData.data[i].data.description;
+         }
+ 
+         if (fieldData.data[i].data.placeholder) {
+           compJsonS['placeholder'] = fieldData.data[i].data.placeholder;
+         }*/
+
+        compJson.components.push(compJsonS);
+      } else {
+        let compJson1 = this.containerFields(fieldData.data[i]);
+        compJson.components.push(compJson1);
+
+      }
+    }
+
+    return compJson;
+
+  }
+
+
+  singleField(fieldData) {
+    let compJsonS = {
+      "label": fieldData.data.title,
+      "validate": {
+        "required": fieldData.required
+      },
+      "tableView": true,
+      "key": fieldData.key,
+      "$id": "#/properties/" + fieldData.key,
+      "type": (fieldData.type == 'string') ? "textfield" : fieldData.type,
+      "input": true
+    }
+
+    if (fieldData.data.hasOwnProperty('description') && fieldData.data.description) {
+      compJsonS['description'] = fieldData.data.description;
+    }
+
+    if (fieldData.data.hasOwnProperty('placeholder') && fieldData.data.placeholder) {
+      compJsonS['placeholder'] = fieldData.data.placeholder;
+    }
+
+    return compJsonS
+  }
+
   readConvertJsonData(event) {
     let value = this.jsonEditor.get();
     this.usecaseSchema[this.activeMenuNo] = value;
@@ -937,12 +1310,28 @@ export class CreateEntityComponent implements OnInit {
     for (let i = 0; i < formioJson.length; i++) {
 
       if (formioJson[i].type == "container") {
+        let key
+
+        if(formioJson[i].key)
+        {
+          key = formioJson[i].key;
+        }else{
+           key = formioJson[i].label.replaceAll(/\s/g, '');
+          key = key.charAt(0).toLowerCase() + key.slice(1);
+        }
+
+     
+
+
+        if (this.privateFieldsName == '') {
+          this.privateFieldsName = "$." + key;
+        } else {
+          this.privateFieldsName = this.privateFieldsName.concat("." + key);
+        }
 
         let tempjson = this.readNastedFormioJson(formioJson[i].components);
 
 
-        let key = formioJson[i].label.replaceAll(/\s/g, '');
-        key = key.charAt(0).toLowerCase() + key.slice(1);
         let requiredSecFields = [];
         for (let j = 0; j < formioJson[i].components.length; j++) {
           if (formioJson[i].components[j].validate.required) {
@@ -950,6 +1339,7 @@ export class CreateEntityComponent implements OnInit {
           }
         }
 
+    
 
         tempFieldObjSec.push(
           {
@@ -962,8 +1352,16 @@ export class CreateEntityComponent implements OnInit {
 
       } else {
 
-        let key = formioJson[i].label.replaceAll(/\s/g, '');
-        key = key.charAt(0).toLowerCase() + key.slice(1);
+       
+        let key;
+        if(formioJson[i].key)
+        {
+          key = formioJson[i].key;
+        }else{
+           key = formioJson[i].label.replaceAll(/\s/g, '');
+          key = key.charAt(0).toLowerCase() + key.slice(1);
+        }
+
 
         if (formioJson[i].validate.required) {
           requiredFields.push(formioJson[i].key);
@@ -984,7 +1382,14 @@ export class CreateEntityComponent implements OnInit {
           tempjson1['placeholder'] = data['placeholder'];
         }
 
+        if (this.privateFieldsName == '') {
+          this.privateFieldsName = "$." + key;
+        } else {
+          this.privateFieldsName = this.privateFieldsName.concat("." + key);
+        }
+
         data = tempjson1;
+        let visiblityIs = (!(this.privateFields[this.activeMenuNo]).length && !(this.internalFields[this.activeMenuNo]).length) ? this.setPVisibility() : this.checkVisibility();
 
 
         tempFieldObjSec.push(
@@ -992,10 +1397,14 @@ export class CreateEntityComponent implements OnInit {
             "key": key,
             "$id": "#/properties/" + key,
             "type": (formioJson[i].type == 'textfield') ? "string" : formioJson[i].type,
-            "visiblity": ['private'],
+            "visiblity": visiblityIs,
             "required": formioJson[i].validate.required,
             data
-          })
+          });
+          
+          this.setPVisibility();
+
+
 
       }
 
@@ -1017,14 +1426,26 @@ export class CreateEntityComponent implements OnInit {
   readNastedFormioJson(arrayObj) {
     let tempFieldObjSec = [];
 
+    let commonKey = ( this.privateFieldsName) ?  this.privateFieldsName : '';
+
     for (let i = 0; i < arrayObj.length; i++) {
 
 
       arrayObj[i]['title'] = arrayObj[i].label;
       arrayObj[i]['type'] = (arrayObj[i].type == 'textfield') ? "string" : arrayObj[i].type;
       let data = arrayObj[i]
-      let key = arrayObj[i].label.replaceAll(/\s/g, '');
-      key = key.charAt(0).toLowerCase() + key.slice(1);
+
+
+      let key;
+      if(arrayObj[i].key)
+      {
+        key = arrayObj[i].key;
+      }else{
+         key = arrayObj[i].label.replaceAll(/\s/g, '');
+        key = key.charAt(0).toLowerCase() + key.slice(1);
+      }
+
+    
 
       let tempjson1 = {};
       tempjson1['$id'] = data.hasOwnProperty('$id') ? data['$id'] : '#/properties/' + key;
@@ -1041,9 +1462,14 @@ export class CreateEntityComponent implements OnInit {
         tempjson1['placeholder'] = data['placeholder'];
       }
 
+      if (this.privateFieldsName == '') {
+        this.privateFieldsName = commonKey + '.' + key;
+      } else {
+        this.privateFieldsName = this.privateFieldsName.concat("." + key);
+      }
 
       data = tempjson1;
-
+      let visiblityIs = (!(this.privateFields[this.activeMenuNo]).length && !(this.internalFields[this.activeMenuNo]).length) ? this.setPVisibility() : this.checkVisibility();
 
       tempFieldObjSec.push(
         {
@@ -1051,11 +1477,13 @@ export class CreateEntityComponent implements OnInit {
           "$id": "#/properties/" + key,
           "type": arrayObj[i].type,
           "multiple": data.hasOwnProperty('multiple') ? data['multiple'] : false,
-          "visiblity": ['public'],
+          "visiblity": visiblityIs,
           "required": arrayObj[i].validate.required,
           data
         })
     };
+
+    this.setPVisibility();
 
     return tempFieldObjSec;
 
@@ -1226,12 +1654,17 @@ export class CreateEntityComponent implements OnInit {
         }, (err) => {
           errArr.push(this.usecaseSchema[i].title);
 
-         
+          if (errArr.length == 1 && (errArr.includes('Common') || errArr.includes('common'))) {
+            // this.saveData();
+            // this.nextStep();
+            console.log('err ----', err);
+          } else {
             if (i == this.usecaseSchema.length - 1) {
               this.getEntityProperties();
-              this.toastMsg.error('error', errArr + " name schema already exists, please rename");
+
+              this.toastMsg.error('error', errArr + " name schema already exists, please rename ");
             }
-          
+          }
 
 
 
@@ -1292,6 +1725,7 @@ export class CreateEntityComponent implements OnInit {
             this.saveData();
             this.nextStep();
           } else {
+            this.getEntityProperties();
             this.toastMsg.error('error', errArr + " name schema already exists, please rename");
           }
         }, (err) => {
@@ -1303,6 +1737,8 @@ export class CreateEntityComponent implements OnInit {
             this.nextStep();
             console.log('err ----', err);
           } else {
+            this.getEntityProperties();
+
             if (i == this.usecaseSchema.length - 1) {
               this.toastMsg.error('error', errArr + " name schema already exists, please rename");
             }
@@ -1466,5 +1902,56 @@ export class CreateEntityComponent implements OnInit {
         }
       }
     }
+  }
+
+  onVisibilityChange(event, type, j, k, m) {
+    let res = this.usecaseSchema[this.activeMenuNo].definitions;
+    let fieldName = '';
+    let key = '';
+    let key1 = '';
+    let key2 = '';
+
+    if (type == 'string') {
+      res.data[j].visiblity = event.target.value;
+
+
+      let key = res.data[j].key.charAt(0).toLowerCase() + res.data[j].key.slice(1);
+      fieldName = '$.' + key;
+
+    } else if (type == 'nasted') {
+      res.data[j].data[k].visiblity = event.target.value;
+
+
+      key = res.data[j].propertyKey.charAt(0).toLowerCase() + res.data[j].propertyKey.slice(1);
+      key1 = res.data[j].data[k].key.charAt(0).toLowerCase() + res.data[j].data[k].key.slice(1);
+
+      fieldName = '$.' + key + '.' + key1;
+
+    } else if (type == 'childNased') {
+      res.data[j].data[k].data[m].visiblity = event.target.value;
+
+
+      key = res.data[j].propertyKey.charAt(0).toLowerCase() + res.data[j].propertyKey.slice(1);
+      key1 = res.data[j].data[k].key.charAt(0).toLowerCase() + res.data[j].data[k].key.slice(1);
+      key2 = res.data[j].data[k].data[m].key.charAt(0).toLowerCase() + res.data[j].data[k].data[m].key.slice(1);
+
+      fieldName = '$.' + key + '.' + key1  + '.' + key2;
+
+    }
+
+    if (event.target.value != 'private') {
+      delete this.privateFields[this.activeMenuNo][fieldName];
+    } else {
+      this.privateFields[this.activeMenuNo].push(fieldName);
+
+    }
+    if (event.target.value != 'personal') {
+      delete this.internalFields[this.activeMenuNo][fieldName];
+    } else {
+      this.internalFields[this.activeMenuNo].push(fieldName);
+
+    }
+
+
   }
 }

@@ -52,6 +52,10 @@ export class GetStartedComponent implements OnInit {
     this.checkEntity();
   }
 
+  checkthebox(){
+    console.log("checked")
+  }
+
   checkEntity() {
     if (this.checkbox1 == true && this.checkbox2 == false) {
       this.chooseEntity = "atstandclaim";

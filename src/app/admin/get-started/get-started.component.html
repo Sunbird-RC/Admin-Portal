@@ -1,26 +1,26 @@
 <div id="content">
   <div class="">
     <div class="card-body">
-      <div class="d-flex justify-content-center mt-3">
-        <div></div>
+      <div class="d-flex justify-content-center mt-3" >
+        
         <div>
           <p class="card-title fw-bold">Getting Started with Sunbird RC</p>
         </div>
-        <div></div>
+        
       </div>
 
       <div class="d-flex justify-content-center mb-1 mt-3">
-        <div></div>
+        
         <div>
           <p class="card-text lh-lg p14">
             Create your Registry and Credentialing Platform
           </p>
         </div>
-        <div></div>
+      
       </div>
 
-      <div class="d-flex justify-content-center mb-4">
-        <div></div>
+      <div class="d-flex justify-content-center mb-1">
+        
         <div>
           <p class="card-text p14">
             Need Help?<a
@@ -44,25 +44,23 @@
             > -->
           </p>
         </div>
-        <div></div>
+        
       </div>
-
-      <!-- <hr class="custHr" /> -->
-
-      <!--  -->
+      
+     
       <div
-        class="container white-background top-margin-container bottom-padding-container"
+        class="container white-background top-margin-container bottom-padding-container" 
       >
         <p class="primary-text fw-bold mb-1 mt-5 top-padding-title">
           <b> Build Registry</b>
         </p>
-        <p class="p14 primary-text fw-400">
+        <p class="p14 primary-text fw-100">
           Get started with building registry. You can add the following
           additional modules to include with the registry.
         </p>
 
         <div
-          class="row justify-content-center align-items-center check-container"
+          class="row justify-content-center align-items-center check-container" 
         >
           <div class="col-sm-6 col-md-4">
             <div class="card {{ colorBorder }}">
@@ -70,12 +68,13 @@
                 <input
                   class="form-check-input"
                   type="checkbox"
-                  id="flexCheckDefault"
+                  id="flexCheckDefault1"
                   name="example2"
                   [checked]="checkbox1"
                   (change)="changeEvent1()"
                 />
               </div>
+              <label for="flexCheckDefault1">
               <div class="card-body align-items-center">
                 <p class="card-title">Attestation & Claim</p>
 
@@ -84,6 +83,7 @@
                   credentials
                 </p>
               </div>
+            </label>
             </div>
           </div>
 
@@ -93,11 +93,12 @@
                 <input
                   class="form-check-input"
                   type="checkbox"
-                  id="flexCheckDefault"
+                  id="flexCheckDefault2"
                   [checked]="checkbox2"
                   (change)="changeEvent2()"
                 />
               </div>
+              <label for="flexCheckDefault2">
               <div class="card-body">
                 <p class="card-title">Verifiable Credential</p>
 
@@ -105,6 +106,7 @@
                   Create and test Verifiable Credential template
                 </p>
               </div>
+            </label>
             </div>
           </div>
 
@@ -115,9 +117,10 @@
                   class="form-check-input"
                   type="checkbox"
                   value=""
-                  id="flexCheckDefault"
+                  id="flexCheckDefault3"
                 />
               </div>
+              <label for="flexCheckDefault3">
               <div class="card-body">
                 <p class="card-title">Ownership</p>
 
@@ -126,6 +129,7 @@
                   profile and VC
                 </p>
               </div>
+            </label>
             </div>
           </div>
         </div>
@@ -187,7 +191,7 @@
 
                   <a
                     href="/create/issuance"
-                    class="float-end p14 btn btn-primary"
+                    class="float-end p14 btn btn-primary" 
                     >Start</a
                   >
                 </div>
@@ -229,4 +233,4 @@
       <!--  -->
     </div>
   </div>
-</div>
+

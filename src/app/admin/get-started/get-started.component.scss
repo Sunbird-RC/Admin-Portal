@@ -6,7 +6,9 @@
 
 body {
   background: #ffffff;
+  
 }
+
 
 p {
   font-size: 1.1em;
@@ -22,14 +24,14 @@ p {
 .agree-container {
   width: 83%;
   background-color: white;
-  margin-top: 2%;
+  margin-top: 0%;
   margin-left: 8.5%;
 }
 .white-background {
   background-color: #fff;
 }
 .top-margin-container {
-  margin-bottom: 20px !important;
+  margin-bottom: 1em !important;
 }
 .form-check {
   padding-left: 1.5rem;
@@ -41,7 +43,7 @@ p {
   border: 1px solid #fff !important;
 }
 .bottom-padding-container {
-  padding-bottom: 55px !important;
+  padding-bottom:35px !important;
 }
 .container .form-check-input {
   // position: relative;
@@ -55,10 +57,10 @@ p {
   background-color: none;
 }
 .top-padding-title {
-  padding-top: 15px;
+  padding-top: 0px;
 }
 .bottom-padding-btn {
-  margin-bottom: 20px;
+  margin-bottom:0px;
 }
 
 a,
@@ -70,7 +72,7 @@ a:focus {
 }
 
 .navbar {
-  padding: 15px 10px;
+  padding: 0px 10px;
   background: #fff;
   border: none;
   border-radius: 0;
@@ -90,6 +92,8 @@ a:focus {
   border-bottom: 1px dashed #ddd;
   margin: 40px 0;
 }
+
+
 
 /* ---------------------------------------------------
     SIDEBAR STYLE
@@ -195,7 +199,7 @@ a.article:hover {
 
 #content {
   width: 100%;
-  padding: 20px;
+  padding: 5px;
   min-height: 100vh;
   transition: all 0.3s;
 }
@@ -247,7 +251,7 @@ a.article:hover {
   overflow-x: hidden;
   overflow-y: hidden;
   // height: 1000px;
-  min-height: 257px !important;
+  min-height: 215px !important;
   position: relative;
   width: auto !important;
   flex-wrap: nowrap;
@@ -344,7 +348,7 @@ a.article:hover {
 
 @media (max-width: 1025px) {
   .min-ht2 {
-    height: 82px;
+    height: 70px;
   }
 }
 

@@ -992,12 +992,9 @@ console.log(this.privateFieldsName);
     }
   }
 
-  deleteEntity(index) {
-    if (confirm("Are you sure to delete ")) {
-      //delete this.usecaseSchema[index];
-      this.usecaseSchema.splice(index, 1);
-      this.openEntity(0, this.entityKey);
-    }
+  deleteEntity(action) {
+    console.log("delete")
+       
   }
 
   convertSchemaToFormioJson(viewSchemaField) {

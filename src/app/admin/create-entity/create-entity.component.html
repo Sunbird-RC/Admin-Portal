@@ -37,7 +37,8 @@
                                         <div class="dropdown-content dropdown-content-margin">
                                             <a data-toggle="modal" data-target="#addEntity"
                                                 (click)="openEntityModal('edit', i)" class="ml-0">Edit</a>
-                                            <a (click)="deleteEntity(i)" class="ml-0">Delete</a>
+                                            <a data-toggle="modal" data-target="#deleteEntity"
+                                                 class="ml-0">Delete</a>
                                         </div>
                                     </div>
                                 </a>
@@ -55,7 +56,8 @@
                                         <div class="dropdown-content dropdown-content-margin">
                                             <a data-toggle="modal" data-target="#addEntity"
                                                 (click)="openEntityModal('edit', i)" class="ml-0">Edit</a>
-                                            <a (click)="deleteEntity(i)" class="ml-0">Delete</a>
+                                            <a data-toggle="modal" data-target="#deleteEntity"
+                                                 class="ml-0">Delete</a>
                                         </div>
                                     </div>
                                 </a>
@@ -69,6 +71,7 @@
                                 data-toggle="modal" data-target="#addEntity" (click)="openEntityModal('add')"><i
                                     class="fa fa-plus" aria-hidden="true"></i> Add Schema</button>
                         </li>
+
                         <!-- <li >
                             <a> Common
                             <i class="fa fa-ellipsis-h text-grey-color float-end mt-1 p14" aria-hidden="true"></i>
@@ -167,9 +170,13 @@
                                                                         class="p14">{{childNastedArrayfield?.data?.description}}
                                                                     </span>
                                                                 </td>
-                                                                <td> 
-                                                                    <select (change)="onVisibilityChange($event,'childNased', j, k , m)"  class="fieldInput p14 m-2  py-1 px-3 mr-3">
-                                                                        <option *ngFor="let opt of visiblityOpt" value={{opt.key}} [selected]="opt?.key == childNastedArrayfield?.data?.visiblity">
+                                                                <td>
+                                                                    <select
+                                                                        (change)="onVisibilityChange($event,'childNased', j, k , m)"
+                                                                        class="fieldInput p14 m-2  py-1 px-3 mr-3">
+                                                                        <option *ngFor="let opt of visiblityOpt"
+                                                                            value={{opt.key}}
+                                                                            [selected]="opt?.key == childNastedArrayfield?.data?.visiblity">
                                                                             {{opt.name}}
                                                                         </option>
                                                                     </select>
@@ -229,8 +236,12 @@
                                                             </span>
                                                         </td>
                                                         <td>
-                                                            <select (change)="onVisibilityChange($event, 'nasted', j , k)"  class="fieldInput p14 m-2  py-1 px-3 mr-3">
-                                                                <option *ngFor="let opt of visiblityOpt" value={{opt.key}} [selected]="opt.key== secArrayfield?.visiblity">
+                                                            <select
+                                                                (change)="onVisibilityChange($event, 'nasted', j , k)"
+                                                                class="fieldInput p14 m-2  py-1 px-3 mr-3">
+                                                                <option *ngFor="let opt of visiblityOpt"
+                                                                    value={{opt.key}}
+                                                                    [selected]="opt.key== secArrayfield?.visiblity">
                                                                     {{opt.name}}
                                                                 </option>
                                                             </select>
@@ -281,8 +292,10 @@
                                                         <span class="p14">{{field?.data?.description}}</span>
                                                     </td>
                                                     <td>
-                                                        <select (change)="onVisibilityChange($event, j, k)"  class="fieldInput p14 m-2  py-1 px-3 mr-3">
-                                                            <option *ngFor="let opt of visiblityOpt" value={{opt.key}} [selected]="opt.key== field?.data?.visiblity">
+                                                        <select (change)="onVisibilityChange($event, j, k)"
+                                                            class="fieldInput p14 m-2  py-1 px-3 mr-3">
+                                                            <option *ngFor="let opt of visiblityOpt" value={{opt.key}}
+                                                                [selected]="opt.key== field?.data?.visiblity">
                                                                 {{opt.name}}
                                                             </option>
                                                         </select>
@@ -335,8 +348,10 @@
                                                     </td>
 
                                                     <td>
-                                                        <select (change)="onVisibilityChange($event, 'string', j, k )"  class="fieldInput p14 m-2  py-1 px-3 mr-3">
-                                                            <option *ngFor="let opt of visiblityOpt" value={{opt.key}} [selected]="opt?.key == field?.visiblity">
+                                                        <select (change)="onVisibilityChange($event, 'string', j, k )"
+                                                            class="fieldInput p14 m-2  py-1 px-3 mr-3">
+                                                            <option *ngFor="let opt of visiblityOpt" value={{opt.key}}
+                                                                [selected]="opt?.key == field?.visiblity">
                                                                 {{opt.name}}
                                                             </option>
                                                         </select>
@@ -532,8 +547,8 @@
     <footer class="footer fixed-bottom">
         <div class="container-fluid">
             <div>
-                <!-- <button *ngIf="isActive == 'create-vc' || isActive == 'test-publish'" (click)="backStep()"
-                    class="btn btn-sec-bg submit-button px-3 my-2 ml-2 mr-2 ">Back</button> &nbsp; -->
+                <button *ngIf="isActive != 'createSchema'" (click)="backStep()"
+                    class="btn btn-sec-bg submit-button px-3 my-2 ml-2 mr-2 ">Back</button> &nbsp;
                 <button (click)="createSchema()" *ngIf="isActive == 'createSchema'"
                     [disabled]="!usecaseSchema[activeMenuNo]?.definitions?.data?.length"
                     class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2">Save and
@@ -554,3 +569,21 @@
     </footer>
 </div>
 <!-- Modal End : Save Entity Name -->
+
+<!-- Modal Start : Delete Entity -->
+<div class="modal right fade" id="deleteEntity" tabindex="-1" role="dialog" aria-labelledby="deleteEntity">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="container mt-4">
+                <div class="dialog-box">
+                    <h3 class="heading-del">Do you want to delete</h3>
+                    <h3 class="heading-del">"Education Board" schema?</h3>
+                    <br>
+                    <button type="button" class="cancelbtn" data-dismiss="modal">No, Cancel</button>&nbsp;
+                    <button type="button" class="delbtn" (click)="deleteEntity($event)" data-dismiss="modal">Yes, Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal End : Delete Entity -->

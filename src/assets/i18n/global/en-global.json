@@ -183,7 +183,14 @@
     "ANYONE" : "Anyone",
     "SOMETHING_WENT_WRONG": "Something went wrong while uploading files, please try again",
     "DEMO":"This is a demo of the Education Portal. Check documentation",
-    "HERE" : "here"
+    "HERE" : "here",
+    "EDIT_TEMPLATE":"Edit Template",
+    "ADVANCE_EDITOR":"Advance Editor",
+    "SAVE_DOCUMENT": "Save document",
+    "HTML":"HTML",
+    "JSON_SCHEMA":"JSON Schema",
+    "DESCRIPTION":"Description"
+
 
     
 }

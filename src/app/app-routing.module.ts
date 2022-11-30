@@ -190,6 +190,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: "schema",
+    component: CreateEntityComponent,
+    canActivate: [AuthGuard],
+  },
+  {
     path: "config-workflow",
     component: ConfigWorkflowComponent,
     canActivate: [AuthGuard],

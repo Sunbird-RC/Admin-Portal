@@ -9,8 +9,8 @@
             <li class="menu" class="active-link" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">
                 <a class="a-menu" routerLink="/#"><b>Dashboard</b></a>
             </li>
-            <li class="menu" routerLinkActive="active-link">
-                <a class="a-menu" routerLink="/a"><b>Schema</b></a>
+            <li class="menu" routerLinkActive="active-link"  *ngIf="items.length">
+                <a class="a-menu" routerLink="/schema"><b>Schema</b></a>
             </li>
             <li class="menu" routerLinkActive="active-link">
                 <a class="a-menu" routerLink="/a"><b>Attestation Workflow</b></a>

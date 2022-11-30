@@ -32,18 +32,20 @@
                             <li class="menu" *ngIf="menuItem['isRefSchema']" (click)="openEntity(i, menuItem?.title)">
                                 <a class="a-menu"> Common Schema
 
-                                    <div *ngIf="isActive == 'createSchema'" class="dropdown p14 float-end">
+                                    <div *ngIf="isActive == 'createSchema' && menuItem['status'] != 'PUBLISHED'"
+                                        class="dropdown p14 float-end">
                                         <i class="fa fa-ellipsis-h text-grey-color" aria-hidden="true"></i>
                                         <div class="dropdown-content dropdown-content-margin">
                                             <a data-toggle="modal" data-target="#addEntity"
                                                 (click)="openEntityModal('edit', i)" class="ml-0">Edit</a>
-                                            <a data-toggle="modal" data-target="#deleteEntity"
-                                                 class="ml-0">Delete</a>
+                                            <a data-toggle="modal" data-target="#deleteEntity" class="ml-0">Delete</a>
                                         </div>
                                     </div>
                                 </a>
                             </li>
+
                         </ng-template>
+
                     </ul>
                     <p class="p16 fw-bold pl-3 text-uppercase">Schema </p>
 
@@ -51,13 +53,13 @@
                         <ng-template ngFor let-menuItem [ngForOf]="usecaseSchema" let-i="index">
                             <li class="menu" *ngIf="!menuItem['isRefSchema']" (click)="openEntity(i, menuItem?.title)">
                                 <a class="a-menu"> {{menuItem?.title}}
-                                    <div *ngIf="isActive == 'createSchema'" class="dropdown p14 float-end">
+                                    <div *ngIf="isActive == 'createSchema' && menuItem['status'] != 'PUBLISHED'"
+                                        class="dropdown p14 float-end">
                                         <i class="fa fa-ellipsis-h text-grey-color" aria-hidden="true"></i>
                                         <div class="dropdown-content dropdown-content-margin">
                                             <a data-toggle="modal" data-target="#addEntity"
                                                 (click)="openEntityModal('edit', i)" class="ml-0">Edit</a>
-                                            <a data-toggle="modal" data-target="#deleteEntity"
-                                                 class="ml-0">Delete</a>
+                                            <a data-toggle="modal" data-target="#deleteEntity" class="ml-0">Delete</a>
                                         </div>
                                     </div>
                                 </a>
@@ -71,7 +73,6 @@
                                 data-toggle="modal" data-target="#addEntity" (click)="openEntityModal('add')"><i
                                     class="fa fa-plus" aria-hidden="true"></i> Add Schema</button>
                         </li>
-
                         <!-- <li >
                             <a> Common
                             <i class="fa fa-ellipsis-h text-grey-color float-end mt-1 p14" aria-hidden="true"></i>
@@ -95,7 +96,8 @@
                     </div>
                     <div *ngIf="!isShowJson && usecaseSchema[activeMenuNo]?.definitions?.data?.length">
                         <button class="float-end p14 btn btn-sec-bg submit-button text-secondary-color"
-                            (click)="showJson()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> JSON
+                            (click)="showJson()" [disabled]="usecaseSchema[activeMenuNo]['status'] == 'PUBLISHED'">
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i> JSON
                             Schema</button>
                     </div>
                 </div>
@@ -180,24 +182,6 @@
                                                                             {{opt.name}}
                                                                         </option>
                                                                     </select>
-                                                                    <!-- <select name="visiblity" id="visiblity"
-                                                                        class="fieldInput p14 m-2  py-1 px-3 mr-3">
-                                                                        <option selected value="public"> <i
-                                                                                class="fa fa-ellipsis-h"
-                                                                                aria-hidden="true"></i>
-                                                                            Public
-                                                                        </option>
-                                                                        <option value="private"> <i
-                                                                                class="fa fa-ellipsis-h "
-                                                                                aria-hidden="true"></i>
-                                                                            Private
-                                                                        </option>
-                                                                        <option value="personal"> <i
-                                                                                class="fa fa-ellipsis-h"
-                                                                                aria-hidden="true"></i>
-                                                                            Personal
-                                                                        </option>
-                                                                    </select> -->
                                                                 </td>
                                                                 <td>
                                                                     <div class="dropdown p14">
@@ -245,21 +229,7 @@
                                                                     {{opt.name}}
                                                                 </option>
                                                             </select>
-                                                            <!-- <select name="visiblity" id="visiblity"
-                                                                class="fieldInput p14 m-2  py-1 px-3 mr-3">
-                                                                <option selected value="public"> <i
-                                                                        class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                                                                    Public
-                                                                </option>
-                                                                <option value="private"> <i class="fa fa-ellipsis-h "
-                                                                        aria-hidden="true"></i>
-                                                                    Private
-                                                                </option>
-                                                                <option value="personal"> <i class="fa fa-ellipsis-h"
-                                                                        aria-hidden="true"></i>
-                                                                    Personal
-                                                                </option>
-                                                            </select> -->
+                                                           
                                                         </td>
                                                         <td>
                                                             <div class="dropdown p14">
@@ -299,21 +269,7 @@
                                                                 {{opt.name}}
                                                             </option>
                                                         </select>
-                                                        <!-- <select name="visiblity" id="visiblity"
-                                                            class="fieldInput p14 m-2  py-1 px-3 mr-3">
-                                                            <option selected value="public"> <i class="fa fa-ellipsis-h"
-                                                                    aria-hidden="true"></i>
-                                                                Public
-                                                            </option>
-                                                            <option value="private"> <i class="fa fa-ellipsis-h "
-                                                                    aria-hidden="true"></i>
-                                                                Private
-                                                            </option>
-                                                            <option value="personal"> <i class="fa fa-ellipsis-h"
-                                                                    aria-hidden="true"></i>
-                                                                Personal
-                                                            </option>
-                                                        </select> -->
+                                                      
                                                     </td>
                                                     <td>
                                                         <div class="dropdown p14">
@@ -355,21 +311,7 @@
                                                                 {{opt.name}}
                                                             </option>
                                                         </select>
-                                                        <!-- <select name="visiblity" id="visiblity"
-                                                            class="fieldInput p14 m-2  py-1 px-3 mr-3">
-                                                            <option value="public" > <i class="fa fa-ellipsis-h"
-                                                                    aria-hidden="true"></i>
-                                                                Public
-                                                            </option>
-                                                            <option value="private"> <i class="fa fa-ellipsis-h "
-                                                                    aria-hidden="true"></i>
-                                                                Private
-                                                            </option>
-                                                            <option value="personal"> <i class="fa fa-ellipsis-h"
-                                                                    aria-hidden="true"></i>
-                                                                Personal
-                                                            </option>
-                                                        </select> -->
+                                                      
                                                     </td>
                                                     <td>
                                                         <div class="dropdown p14">
@@ -390,13 +332,8 @@
                             </table>
 
                         </div>
-
                     </div>
-
                 </div>
-
-
-
 
 
                 <div *ngIf="isShowJson">
@@ -430,7 +367,8 @@
 
                 <p *ngIf="!isShowJson && !usecaseSchema[activeMenuNo]?.definitions?.data?.length" class="p16">Fields</p>
 
-                <div class="p-3 sm-card" *ngIf="usecaseSchema.length &&  !isShowJson">
+                <div class="p-3 sm-card"
+                    *ngIf="usecaseSchema.length &&  !isShowJson && usecaseSchema[activeMenuNo]['status'] != 'PUBLISHED'">
                     <span class="m-3 p14 mbtn-10 submit-button text-secondary-color" (click)="showAddForm()">
                         <i class="fa fa-plus" aria-hidden="true"></i>
                         Add Field </span>
@@ -461,14 +399,12 @@
             </div>
 
 
-
-
         </div>
     </div>
 
     <div *ngIf="isAddFormPg" class="p-5">
-        <add-field-form [jsonSchema]="compFieldJson" (newItemEvent)="jsonSchemaData($event)"
-            (backEvent)="goBackEvent($event)"></add-field-form>
+        <add-field-form [jsonSchema]="compFieldJson" [commonSchema]="commonSchemaField"
+            (newItemEvent)="jsonSchemaData($event)" (backEvent)="goBackEvent($event)"></add-field-form>
     </div>
 
 
@@ -580,7 +516,8 @@
                     <h3 class="heading-del">"Education Board" schema?</h3>
                     <br>
                     <button type="button" class="cancelbtn" data-dismiss="modal">No, Cancel</button>&nbsp;
-                    <button type="button" class="delbtn" (click)="deleteEntity($event)" data-dismiss="modal">Yes, Delete</button>
+                    <button type="button" class="delbtn" (click)="deleteEntity($event)" data-dismiss="modal">Yes,
+                        Delete</button>
                 </div>
             </div>
         </div>

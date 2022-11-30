@@ -421,7 +421,7 @@ export const editorConfig = {
     noDefaultSubmitButton: true,
     builder: {
         basic: {
-            title: '',
+            title: 'BASIC COMPONENT',
             noNewEdit: true,
             components: {
                 password: false,

@@ -13,9 +13,8 @@ export class AddFieldFormComponent implements OnInit {
   @Output() newItemEvent = new EventEmitter<any>();
   @Output() backEvent = new EventEmitter<any>();
 
-
   @Input() jsonSchema = '';
-
+  @Input() commonSchema;
 
   entityFieldList: any = []
 
@@ -23,7 +22,6 @@ export class AddFieldFormComponent implements OnInit {
   propertyArr: any;
   jsonFields: any;
   jsonTitle: any;
-  commonSchema: string;
 
   constructor() { }
 
@@ -31,12 +29,13 @@ export class AddFieldFormComponent implements OnInit {
     this.myForm['components'] = [];
     this.options = editorConfig;
 
-    this.commonSchema = localStorage.getItem('commonSchema');
+    if (!this.commonSchema) {
+      this.commonSchema = JSON.parse(localStorage.getItem('commonSchema'));
+    }
 
     if (this.commonSchema) {
-      this.commonSchema = JSON.parse(this.commonSchema);
       this.options['builder']['custom'] = {
-        title: 'Common Schema',
+        title: 'COMMON SCHEMA',
         weight: 10,
         components: {}
       }
@@ -45,14 +44,13 @@ export class AddFieldFormComponent implements OnInit {
         this.options['builder']['custom']['components'][this.commonSchema[i]['key']] = {
           title: this.commonSchema[i]['label'],
           key: this.commonSchema[i]['key'],
-          schema:this.commonSchema[i]
+          schema: this.commonSchema[i]
         }
       }
 
     }
 
     if (this.jsonSchema) {
-
       this.myForm['components'] = this.jsonSchema;
     }
   }
@@ -61,15 +59,7 @@ export class AddFieldFormComponent implements OnInit {
     console.log(event);
   }
 
-
-
-
-
-
-
   onChange(event) {
-
-    console.log({ event });
 
     if (event.type == 'saveComponent' || event.type == "addComponent" || event.type == 'deleteComponent') {
       if (event.isNew) {
@@ -96,8 +86,6 @@ export class AddFieldFormComponent implements OnInit {
 
   cancel() {
     this.backEvent.emit();
-
   }
-
 
 }

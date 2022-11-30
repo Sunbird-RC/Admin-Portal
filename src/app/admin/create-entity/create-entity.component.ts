@@ -96,7 +96,11 @@ export class CreateEntityComponent implements OnInit {
   privateFields: any = [];
   internalFields: any = [];
   privateFieldsName: string = '';
-
+  items: any = [];
+  isNew: boolean = true;
+  secFieldObj: any = {};
+  isStatus: any;
+  commonSchemaField: any;
   constructor(
     private activeRoute: ActivatedRoute,
     public router: Router,
@@ -141,32 +145,78 @@ export class CreateEntityComponent implements OnInit {
           break;
       }
 
-
-
       if (this.params.hasOwnProperty('usecase')) {
         this.usecase = params.usecase.toLowerCase();
       }
 
-      this.getSchemaJSON();
-
-      setTimeout(() => {
-        this.stepList = document.querySelector('#stepList');
-        this.steps = this.stepList.querySelectorAll(".tab");
-        this.steps[this.currentTab].classList.add("activeTab");
-
-        this.sideMenu = document.querySelector('#sideMenu');
-        this.menus = this.sideMenu.querySelectorAll(".menu");
-
-        if (this.menus.length) {
-          this.an_menus = this.menus[this.activeMenuNo].querySelectorAll(".a-menu");
-          this.an_menus[0].classList.add("activeMenu");
-        }
-      }, 500);
-
+      this.getSchema();
 
     })
 
   }
+
+  readSchema(res) {
+    for (let i = 0; i < res.length; i++) {
+      if (typeof (res[i].schema) == 'string') {
+        res[i].schema = JSON.parse(res[i].schema);
+        res[i].schema['osid'] = res[i].osid;
+        res[i].schema['status'] = res[i].status;
+
+        this.usecase = res[i].referedSchema;
+
+        this.isNew = false;
+
+        if (res[i].schema.hasOwnProperty('isRefSchema') && res[i].schema.isRefSchema) {
+          this.usecaseSchema.unshift(res[i].schema);
+          this.commonschemaDefination = res[i].schema;
+          this.containCommonField = true;
+        } else {
+          this.usecaseSchema.push(res[i].schema);
+
+        }
+
+        if (i == (res.length - 1)) {
+          this.getEntityProperties();
+        }
+      }
+
+    }
+  }
+
+  async getSchema() {
+    await this.generalService.getData('/Schema').subscribe((res) => {
+      if (res) {
+        this.schemaService.getEntitySchemaJSON().subscribe((data) => {
+          this.processSteps = data['usecase']['education']['steps'];
+        });
+
+        this.readSchema(res);
+
+      } else {
+        this.getSchemaJSON();
+      }
+
+    }, (err) => {
+      this.getSchemaJSON();
+
+    });
+
+    setTimeout(() => {
+      this.stepList = document.querySelector('#stepList');
+      this.steps = this.stepList.querySelectorAll(".tab");
+      this.steps[this.currentTab].classList.add("activeTab");
+
+      this.sideMenu = document.querySelector('#sideMenu');
+      this.menus = this.sideMenu.querySelectorAll(".menu");
+
+      if (this.menus.length) {
+        this.an_menus = this.menus[this.activeMenuNo].querySelectorAll(".a-menu");
+        this.an_menus[0].classList.add("activeMenu");
+      }
+    }, 1000);
+  }
+
+
 
 
 
@@ -176,7 +226,6 @@ export class CreateEntityComponent implements OnInit {
 
       if (data['usecase'][this.usecase]['entity'].length) {
         this.entityList = data['usecase'][this.usecase]['entity'];
-        // this.entityKey = data['usecase'][this.usecase]['entity'][0].entityName;
       }
 
       this.processSteps = data['usecase'][this.usecase]['steps'];
@@ -193,27 +242,40 @@ export class CreateEntityComponent implements OnInit {
 
   getEntityFields() {
 
-    for (let j = 0; j < this.entityList.length; j++) {
+    if (this.entityList.length) {
 
-      this.schemaService.getJSONData(this.entityList[j].schemaUrl).subscribe((res) => {
-        this.usecaseSchema.push(res);
-        this.defination.push(res);
-        //  this.activeMenuNo = j;
+      for (let j = 0; j < this.entityList.length; j++) {
 
-        if (res.hasOwnProperty('isRefSchema' && res.isRefSchema)) {
-          this.commonschemaDefination = res;
-          this.containCommonField = true;
-        }
+        this.schemaService.getJSONData(this.entityList[j].schemaUrl).subscribe((res) => {
+          this.defination.push(res);
+          res['status'] = 'DRAFT';
 
-        // this.entityKey = res.title;
-        if (j == (this.entityList.length - 1)) {
-          this.getEntityProperties();
-          this.location.replaceState('/create/' + this.currentTab + '/' + this.usecase + '/' + this.usecaseSchema[1].title);
-          this.activeMenuNo = 1;
-        }
-      })
+          if (res.hasOwnProperty('isRefSchema') && res.isRefSchema) {
+            this.usecaseSchema.unshift(res);
+            this.commonschemaDefination = res;
+            this.containCommonField = true;
+          } else {
+            this.usecaseSchema.push(res);
+          }
+
+          if (j == (this.entityList.length - 1)) {
 
 
+            if (!this.containCommonField) {
+              this.usecaseSchema.unshift(this.commonSchemaBody());
+            }
+
+            this.getEntityProperties();
+            this.location.replaceState('/create/' + this.currentTab + '/' + this.usecase + '/' + this.usecaseSchema[1].title);
+            this.activeMenuNo = 1;
+          }
+        })
+
+
+      }
+    } else {
+      this.usecaseSchema.push(this.commonSchemaBody());
+      this.activeMenuNo = 0;
     }
 
   }
@@ -223,12 +285,12 @@ export class CreateEntityComponent implements OnInit {
     for (let j = 0; j < this.usecaseSchema.length; j++) {
       this.getEntityPropertiesByIndex(j);
 
-      if (j == (this.usecaseSchema.length)) {
+      if (j == (this.usecaseSchema.length - 1)) {
         for (let k = 0; k < this.usecaseSchema.length; k++) {
           if (this.usecaseSchema[k].hasOwnProperty('isRefSchema') && this.usecaseSchema[k].isRefSchema) {
 
-            let commonSchema = this.convertSchemaToFormioJson(this.usecaseSchema[k].definitions.data);
-            localStorage.setItem('commonSchema', JSON.stringify(commonSchema));
+            this.commonSchemaField = this.convertSchemaToFormioJson(this.usecaseSchema[k].definitions.data);
+            localStorage.setItem('commonSchema', JSON.stringify(this.commonSchemaField));
 
           }
         }
@@ -244,7 +306,6 @@ export class CreateEntityComponent implements OnInit {
     this.entityName = res.title;
     this.description = (res.description) ? res.description : '';
     this.entityKey = res.title;
-    // this.properties = res.definitions;
     this.activeMenuNo = j;
     this.privateFieldsName = '';
     if (res.hasOwnProperty('isRefSchema') && res.isRefSchema) {
@@ -266,14 +327,10 @@ export class CreateEntityComponent implements OnInit {
         });
       });
 
-      // self.usecaseSchema[j].definitions['data'] = tempObj;
-
       let cKey = res.title.replaceAll(/\s/g, '');
       cKey = cKey.charAt(0).toLowerCase() + cKey.slice(1);
 
       this.usecaseSchema[j].definitions = {
-        "propertyName": res.title,
-        "propertyKey": cKey,
         "type": 'object',
         "data": tempObj,
         "isRefSchema": true
@@ -281,19 +338,19 @@ export class CreateEntityComponent implements OnInit {
 
       this.commonschemaDefination = this.usecaseSchema[j];
 
-    } else {
+    } else if (res.definitions.hasOwnProperty(this.entityKey)) {
       this.properties = res.definitions[this.entityKey].properties;
       this.activeMenuNo = j;
       this.processEntity = j;
       if (res.hasOwnProperty('_osConfig') && res._osConfig.hasOwnProperty('privateFields')) {
         this.privateFields[j] = res._osConfig.privateFields;
-      }else{
+      } else {
         this.privateFields[j] = [];
       }
 
       if (res.hasOwnProperty('_osConfig') && res._osConfig.hasOwnProperty('internalFields')) {
         this.internalFields[j] = res._osConfig.internalFields;
-      }else{
+      } else {
         this.internalFields[j] = [];
       }
 
@@ -318,7 +375,6 @@ export class CreateEntityComponent implements OnInit {
     if (!sProperties.hasOwnProperty('property')) {
       if (sProperties.hasOwnProperty('propertyKey')) {
 
-        // if (!sProperties.hasOwnProperty('isRefSchema') && !sProperties.isRefSchema) {
         tempFieldObj[sProperties.propertyKey] = {
           "$id": sProperties['$id'],
           "type": sProperties['type'],
@@ -326,8 +382,6 @@ export class CreateEntityComponent implements OnInit {
           "required": (sProperties.hasOwnProperty('required')) ? sProperties.required : [],
           "properties": {}
         }
-        // }
-
 
         for (let i = 0; i < sProperties.data.length; i++) {
 
@@ -413,7 +467,6 @@ export class CreateEntityComponent implements OnInit {
                 }
               }
 
-              // if (!sProperties.hasOwnProperty('isRefSchema') && !sProperties.isRefSchema) {
               tempFieldObj[sProperties.propertyKey]['properties'][nastedKey] = tempFieldSecObj[nastedKey];
 
             }
@@ -424,6 +477,20 @@ export class CreateEntityComponent implements OnInit {
           }
 
         }
+      } else if (sProperties.hasOwnProperty('isRefSchema')) {
+
+        for (let i = 0; i < sProperties.data.length; i++) {
+
+          if (sProperties.data[i].hasOwnProperty('propertyKey')) {
+            let dataObj = this.convertIntoSBRCSchema(sProperties.data[i]);
+            this.secFieldObj[sProperties.data[i].propertyKey] = dataObj[sProperties.data[i].propertyKey]
+          }
+        }
+
+        tempFieldObj = this.secFieldObj;
+        this.secFieldObj = {};
+        return tempFieldObj;
+
       }
 
 
@@ -444,7 +511,6 @@ export class CreateEntityComponent implements OnInit {
       if (data != undefined) {
 
         if ((data.hasOwnProperty('type') && data.type == 'array')) {
-          //  tempFieldObjSec.push(self.readArraySchema(data));
 
           let dataTemp = self.readArraySchema(data);
           if (dataTemp.hasOwnProperty('data')) {
@@ -555,7 +621,6 @@ export class CreateEntityComponent implements OnInit {
             });
 
           self.setPVisibility();
-          //self.privateFieldsName = '';
         } else if (data.type != 'array' && data.type != 'object') {
           let title = (propertyObj[key].hasOwnProperty('title') && propertyObj[key].title) ? propertyObj[key].title : key;
           if (typeof (data) == 'object') {
@@ -594,8 +659,6 @@ export class CreateEntityComponent implements OnInit {
             });
 
           self.setPVisibility();
-
-          // self.privateFieldsName = '';
         }
       }
 
@@ -610,66 +673,60 @@ export class CreateEntityComponent implements OnInit {
     let privateArr = (this.privateFields[this.activeMenuNo]);
     let internalArr = (this.internalFields[this.activeMenuNo]);
 
-console.log(this.privateFieldsName);
-    if(privateArr){
+    if (privateArr) {
 
-    let  isPrivate = privateArr.some(x => x.toLowerCase() == this.privateFieldsName.toLowerCase());
-    let isInternal = internalArr.some(x => x.toLowerCase() == this.privateFieldsName.toLowerCase());
-    for (let i = 0; i < privateArr.length; i++) {
-      if(isPrivate) {
-        this.privateFieldsName = '';
+      let isPrivate = privateArr.some(x => x.toLowerCase() == this.privateFieldsName.toLowerCase());
+      let isInternal = internalArr.some(x => x.toLowerCase() == this.privateFieldsName.toLowerCase());
+      for (let i = 0; i < privateArr.length; i++) {
+        if (isPrivate) {
+          this.privateFieldsName = '';
 
-        return 'private';
-      } else if (isInternal) {
-        this.privateFieldsName = '';
+          return 'private';
+        } else if (isInternal) {
+          this.privateFieldsName = '';
 
-        return 'personal';
-      } else if(!isPrivate && !isInternal){
-        this.privateFieldsName = '';
-        return 'public';
+          return 'personal';
+        } else if (!isPrivate && !isInternal) {
+          this.privateFieldsName = '';
+          return 'public';
+        }
+
       }
-
     }
-  }
 
- if(internalArr){
+    if (internalArr) {
 
-  let  isPrivate = privateArr.some(x => x.toLowerCase() == this.privateFieldsName.toLowerCase());
-  let isInternal = internalArr.some(x => x.toLowerCase() == this.privateFieldsName.toLowerCase());
+      let isPrivate = privateArr.some(x => x.toLowerCase() == this.privateFieldsName.toLowerCase());
+      let isInternal = internalArr.some(x => x.toLowerCase() == this.privateFieldsName.toLowerCase());
 
-    for (let i = 0; i < internalArr.length; i++) {
-      if(isPrivate) {
-        this.privateFieldsName = '';
+      for (let i = 0; i < internalArr.length; i++) {
+        if (isPrivate) {
+          this.privateFieldsName = '';
 
-        return 'private';
-      } else if (isInternal) {
-        this.privateFieldsName = '';
+          return 'private';
+        } else if (isInternal) {
+          this.privateFieldsName = '';
 
-        return 'personal';
-      } else if(!isPrivate && !isInternal){
-        this.privateFieldsName = '';
-        return 'public';
+          return 'personal';
+        } else if (!isPrivate && !isInternal) {
+          this.privateFieldsName = '';
+          return 'public';
+        }
+
       }
-
     }
-  }
-
 
   }
 
   setPVisibility() {
 
     let privateArr = (this.privateFields[this.activeMenuNo]) ? this.privateFields[this.activeMenuNo] : [];
-    let internalArr =   (this.internalFields[this.activeMenuNo]) ? this.internalFields[this.activeMenuNo] : [];
+    let internalArr = (this.internalFields[this.activeMenuNo]) ? this.internalFields[this.activeMenuNo] : [];
 
     if ((!privateArr.length && !internalArr.length)) {
       this.privateFieldsName = '';
       return 'public';
     }
-    // else{
-    //  return this.checkVisibility();
-
-    // }
   }
 
 
@@ -732,10 +789,10 @@ console.log(this.privateFieldsName);
 
 
 
-    let objInCommon = refUrl.includes("Common.json");
+    let objInCommon = refUrl.includes(".json");
     refKey = (refUrl) ? refUrl.split("definitions/").pop() : refUrl;
     if (objInCommon) {
-      // this.schemaService.getJSONData(this.schemaUrl.commonField).subscribe((res) => {
+
       let arrayObj;
 
       if (this.commonschemaDefination.definitions.hasOwnProperty('data') && this.commonschemaDefination.definitions.data.length) {
@@ -763,7 +820,6 @@ console.log(this.privateFieldsName);
 
       } else {
 
-        // arrayObj = this.commonschemaDefination.definitions[refKey].properties;
         for (let j = 0; j < this.commonschemaDefination.definitions.data.length; j++) {
 
           if (this.commonschemaDefination.definitions.data[j].propertyKey == refKey) {
@@ -773,22 +829,21 @@ console.log(this.privateFieldsName);
         }
 
         this.required = (arrayObj.hasOwnProperty('required') && arrayObj.required.length) ? arrayObj.required : this.required;
-
         tempFieldObjSec = arrayObj;
 
       }
 
     } else {
-      let arrayObj = this.usecaseSchema[this.processEntity].definitions[refKey].properties;
+      let sdata = this.usecaseSchema[this.processEntity].definitions;
+      let refSecKey = refKey.charAt(0).toLowerCase() + refKey.slice(1);
+      let arrayObj = (sdata.hasOwnProperty(refKey)) ? sdata[refKey].properties : (sdata.hasOwnProperty(refSecKey) ? sdata[refSecKey].properties : {});
+      this.required = (sdata[refKey].hasOwnProperty('required') && sdata[refKey].required.length) ? sdata[refKey].required : this.required;
 
-      this.required = (this.usecaseSchema[this.processEntity].definitions[refKey].hasOwnProperty('required') && this.usecaseSchema[this.processEntity].definitions[refKey].required.length) ? this.usecaseSchema[this.processEntity].definitions[refKey].required : this.required;
 
       tempFieldObjSec = this.readPropertyObj(arrayObj);
     }
 
     return tempFieldObjSec;
-
-    // })
 
   }
 
@@ -893,7 +948,6 @@ console.log(this.privateFieldsName);
     this.sideMenu = document.querySelector('#sideMenu');
     this.menus = this.sideMenu.querySelectorAll(".menu");
     this.an_menus[0].classList.remove("activeMenu");
-    //    this.currentMenu = index;
     this.activeMenuNo = index;
 
     this.an_menus = this.menus[this.activeMenuNo].querySelectorAll(".a-menu");
@@ -915,7 +969,6 @@ console.log(this.privateFieldsName);
     this.entityName = key;
 
     if (this.actionIs == 'add') {
-      // this.description = '';
       let data = {
         'title': this.entityName,
         'description': this.description
@@ -951,8 +1004,6 @@ console.log(this.privateFieldsName);
           }
         }
 
-        console.log('---------- >', this.usecaseSchema);
-
       } else {
         this.oldTemplateName = this.usecaseSchema[this.activeMenuNo].title;
         this.usecaseSchema[this.activeMenuNo].description = this.description;
@@ -982,19 +1033,19 @@ console.log(this.privateFieldsName);
   deleteField(type, objectIndex_i, nastedObjIndex_j) {
     if (confirm("Are you sure to delete ")) {
       if (type == 'nasted') {
-        //  delete this.usecaseSchema[this.activeMenuNo].definitions[objectIndex_i].data[nastedObjIndex_j];
         this.usecaseSchema[this.activeMenuNo].definitions.data[objectIndex_i].data.splice(nastedObjIndex_j, 1);
 
       } else {
-        //delete this.usecaseSchema[this.activeMenuNo].definitions[objectIndex_i];
         this.usecaseSchema[this.activeMenuNo].definitions.data.splice(objectIndex_i, 1);
       }
     }
   }
 
   deleteEntity(action) {
-    console.log("delete")
-       
+    console.log("delete");
+    //this.usecaseSchema.splice(index, 1);
+    // this.openEntity(0, this.entityKey);
+
   }
 
   convertSchemaToFormioJson(viewSchemaField) {
@@ -1004,9 +1055,7 @@ console.log(this.privateFieldsName);
         let compJson = {
           "label": viewSchemaField[i].data.title,
           "tableView": true,
-          // "description" : viewSchemaField[i].data.description,
-          //"placeholder" : viewSchemaField[i].data.placeholder,
-          "validate": {
+         "validate": {
             "required": viewSchemaField[i].required
           },
           "$id": "#/properties/" + viewSchemaField[i].key,
@@ -1034,8 +1083,6 @@ console.log(this.privateFieldsName);
 
         let compJson = {
           "label": fieldData.propertyName,
-          // "description" : fieldData.description,
-          // "placeholder" : fieldData.placeholder,
           "tableView": false,
           "key": fieldData.propertyKey,
           "type": "container",
@@ -1057,8 +1104,6 @@ console.log(this.privateFieldsName);
           if (fieldData.data[i].type == 'string') {
             let compJsonS = {
               "label": fieldData.data[i].data.title,
-              // "description" : fieldData.data[i].description,
-              // "placeholder" : fieldData.data[i].placeholder,
               "validate": {
                 "required": fieldData.data[i].required
               },
@@ -1096,17 +1141,7 @@ console.log(this.privateFieldsName);
     let newArr: any = [];
     for (let i = 0; i < viewSchemaField.length; i++) {
       if (viewSchemaField[i].type == 'string') {
-        // let compJson = {
-        //   "label": viewSchemaField[i].data.title,
-        //   "tableView": true,
-        //   "validate": {
-        //     "required": viewSchemaField[i].required
-        //   },
-        //   "$id": "#/properties/" + viewSchemaField[i].key,
-
-        //   "input": true
-        // }
-
+       
         let compJson = this.singleField(viewSchemaField[i]);
 
         compJson['type'] = (viewSchemaField[i].type == 'string') ? "textfield" : viewSchemaField[i].type,
@@ -1125,81 +1160,13 @@ console.log(this.privateFieldsName);
 
         newArr.push(compJson);
       } else {
-
-        // let fieldData = viewSchemaField[i];
-
         let compJson = this.containerFields(viewSchemaField[i]);
         newArr.push(compJson);
-
-        /* let compJson = {
-           "label": fieldData.propertyName,
-           "tableView": false,
-           "key": fieldData.propertyKey,
-           "type": "container",
-           "input": true,
-           "components": [
-           ]
-         }
- 
-         if (viewSchemaField[i].type == 'array') {
-           compJson['multiple'] = true
-         }
- 
-         if (fieldData.hasOwnProperty('description') && fieldData.description) {
-           compJson['description'] = fieldData.description;
-         }
- 
-         if (fieldData.hasOwnProperty('placeholder') && fieldData.placeholder) {
-           compJson['placeholder'] = fieldData.placeholder;
-         }
- 
- 
-         for (let k = 0; k < fieldData.data.length; k++) 
-         {
-           let compJson;
-           let compJsonS;
-           if (fieldData.data[k].type == 'string') {
-             let compJsonS = this.singleField(fieldData.data[k]);
- 
-             compJson.components.push(compJsonS);
-           } else {
- 
-             for (let j = 0; j < fieldData.data[k].data.length; j++) {
- 
-               let compJsonSnode = {
-                 "label": fieldData.data[k].data[j].data.title,
-                 "tableView": false,
-                 "key": fieldData.data[k].data[j].key,
-                 "type": "container",
-                 "input": true,
-                 "components": [
-                 ]
-               }
- 
-               if (fieldData.data[k].data[j].data.description) {
-                 compJsonSnode['description'] = fieldData.data[k].data[j].data.description;
-               }
- 
-               if (fieldData.data[k].data[j].data.placeholder) {
-                 compJsonSnode['placeholder'] = fieldData.data[k].data[j].data.placeholder;
-               }
- 
-               compJsonS.components.push(compJsonSnode);
-             }
- 
-             compJson.components.push(compJsonS);
- 
-           }
-         }*/
-
-        // newArr.push(compJson);
-
       }
 
     }
 
     return newArr;
-
   }
 
   containerFields(fieldData) {
@@ -1226,26 +1193,6 @@ console.log(this.privateFieldsName);
       if (fieldData.data[i].type == 'string') {
 
         let compJsonS = this.singleField(fieldData.data[i]);
-        /* let compJsonS = {
-           "label": fieldData.data[i].data.title,
-           "validate": {
-             "required": fieldData.data[i].required
-           },
-           "tableView": true,
-           "key": fieldData.data[i].key,
-           "$id": "#/properties/" + fieldData.data[i].key,
-           "type": (fieldData.data[i].type == 'string') ? "textfield" : fieldData.data[i].type,
-           "input": true
-         }
- 
-         if (fieldData.data[i].data.description) {
-           compJsonS['description'] = fieldData.data[i].data.description;
-         }
- 
-         if (fieldData.data[i].data.placeholder) {
-           compJsonS['placeholder'] = fieldData.data[i].data.placeholder;
-         }*/
-
         compJson.components.push(compJsonS);
       } else {
         let compJson1 = this.containerFields(fieldData.data[i]);
@@ -1309,15 +1256,14 @@ console.log(this.privateFieldsName);
       if (formioJson[i].type == "container") {
         let key
 
-        if(formioJson[i].key)
-        {
+        if (formioJson[i].key) {
           key = formioJson[i].key;
-        }else{
-           key = formioJson[i].label.replaceAll(/\s/g, '');
+        } else {
+          key = formioJson[i].label.replaceAll(/\s/g, '');
           key = key.charAt(0).toLowerCase() + key.slice(1);
         }
 
-     
+
 
 
         if (this.privateFieldsName == '') {
@@ -1336,7 +1282,7 @@ console.log(this.privateFieldsName);
           }
         }
 
-    
+
 
         tempFieldObjSec.push(
           {
@@ -1349,13 +1295,12 @@ console.log(this.privateFieldsName);
 
       } else {
 
-       
+
         let key;
-        if(formioJson[i].key)
-        {
+        if (formioJson[i].key) {
           key = formioJson[i].key;
-        }else{
-           key = formioJson[i].label.replaceAll(/\s/g, '');
+        } else {
+          key = formioJson[i].label.replaceAll(/\s/g, '');
           key = key.charAt(0).toLowerCase() + key.slice(1);
         }
 
@@ -1398,11 +1343,8 @@ console.log(this.privateFieldsName);
             "required": formioJson[i].validate.required,
             data
           });
-          
-          this.setPVisibility();
 
-
-
+        this.setPVisibility();
       }
 
     }
@@ -1412,8 +1354,8 @@ console.log(this.privateFieldsName);
 
     if (this.usecaseSchema[this.activeMenuNo].hasOwnProperty('isRefSchema') && this.usecaseSchema[this.activeMenuNo].isRefSchema) {
 
-      let commonSchema = this.convertSchemaToFormioJson(this.usecaseSchema[this.activeMenuNo].definitions.data);
-      localStorage.setItem('commonSchema', JSON.stringify(commonSchema));
+      this.commonSchemaField = this.convertSchemaToFormioJson(this.usecaseSchema[this.activeMenuNo].definitions.data);
+      localStorage.setItem('commonSchema', JSON.stringify(this.commonSchemaField));
 
     }
 
@@ -1423,7 +1365,7 @@ console.log(this.privateFieldsName);
   readNastedFormioJson(arrayObj) {
     let tempFieldObjSec = [];
 
-    let commonKey = ( this.privateFieldsName) ?  this.privateFieldsName : '';
+    let commonKey = (this.privateFieldsName) ? this.privateFieldsName : '';
 
     for (let i = 0; i < arrayObj.length; i++) {
 
@@ -1434,23 +1376,20 @@ console.log(this.privateFieldsName);
 
 
       let key;
-      if(arrayObj[i].key)
-      {
+      if (arrayObj[i].key) {
         key = arrayObj[i].key;
-      }else{
-         key = arrayObj[i].label.replaceAll(/\s/g, '');
+      } else {
+        key = arrayObj[i].label.replaceAll(/\s/g, '');
         key = key.charAt(0).toLowerCase() + key.slice(1);
       }
 
-    
+
 
       let tempjson1 = {};
       tempjson1['$id'] = data.hasOwnProperty('$id') ? data['$id'] : '#/properties/' + key;
       tempjson1['type'] = data.hasOwnProperty('type') ? 'string' : 'string'
       tempjson1['title'] = data.hasOwnProperty('label') ? data['label'] : data['title'];
-      // tempjson1['description'] = data.hasOwnProperty('description') ? data['description'] : "";
-      // tempjson1['placeholder'] = data.hasOwnProperty('placeholder') ? data['placeholder'] : "";
-
+     
       if (data.hasOwnProperty('description') && data.description) {
         tempjson1['description'] = data['description'];
       }
@@ -1466,7 +1405,13 @@ console.log(this.privateFieldsName);
       }
 
       data = tempjson1;
-      let visiblityIs = (!(this.privateFields[this.activeMenuNo]).length && !(this.internalFields[this.activeMenuNo]).length) ? this.setPVisibility() : this.checkVisibility();
+      let visiblityIs;
+      if (!this.usecaseSchema[this.activeMenuNo].hasOwnProperty('isRefSchema') && !this.usecaseSchema[this.activeMenuNo].isRefSchema) {
+        visiblityIs = (!(this.privateFields[this.activeMenuNo]).length && !(this.internalFields[this.activeMenuNo]).length) ? this.setPVisibility() : this.checkVisibility();
+      } else {
+        visiblityIs = 'public';
+
+      }
 
       tempFieldObjSec.push(
         {
@@ -1579,7 +1524,6 @@ console.log(this.privateFieldsName);
             'schema': tempProperty
 
           }
-          console.log({ schemaParams });
           localStorage.setItem('schemaParams', JSON.stringify(schemaParams));
 
         }
@@ -1593,6 +1537,7 @@ console.log(this.privateFieldsName);
 
     let errArr = [];
     let tempProperty: any;
+    let osid;
     tempProperty = this.usecaseSchema;
     for (let i = 0; i < this.usecaseSchema.length; i++) {
 
@@ -1600,72 +1545,95 @@ console.log(this.privateFieldsName);
         await this.addCrtTemplateFields(this.usecaseSchema[i]);
       }
 
-      // for (let j = 0; j < this.usecaseSchema.length; j++) {
       let cJson = this.convertIntoSBRCSchema(this.usecaseSchema[i].definitions);
       if (cJson) {
         tempProperty[i].definitions = {};
         tempProperty[i].definitions = cJson;
 
       }
-      // }
+     
+      this.isNew = (tempProperty[i].hasOwnProperty('osid') ? false : true);
+      this.isStatus = (tempProperty[i].hasOwnProperty('status') ? tempProperty[i].status : '');
+
+      if (!this.isNew) {
+        osid = tempProperty[i].osid;
+        delete tempProperty[i].osid;
+        delete tempProperty[i].status;
+      }
 
       console.log({ tempProperty });
       if (tempProperty.length == this.usecaseSchema.length) {
         let payload = {
           "name": tempProperty[i].title,
           "description": tempProperty[i].description,
-          "schema": JSON.stringify(tempProperty[i])
+          "schema": JSON.stringify(tempProperty[i]),
+          "referedSchema": this.usecase
         }
 
-        this.generalService.postData('/Schema', payload).subscribe((res) => {
+        if (this.isNew) {
+          this.generalService.postData('/Schema', payload).subscribe((res) => {
 
-          if (!this.usecaseSchema[i].hasOwnProperty('isRefSchema') || !this.usecaseSchema[i].isRefSchema) {
-            if (localStorage.getItem('draftSchemaOsid')) {
-              let draftSchemaOsid = JSON.parse(localStorage.getItem('draftSchemaOsid'));
-              draftSchemaOsid.push({
-                'title': this.usecaseSchema[i].title,
-                'osid': res.result.Schema.osid,
-              })
-              localStorage.setItem('draftSchemaOsid', JSON.stringify(draftSchemaOsid));
+          
 
+            let schemaParams = {
+              'title': this.usecase,
+              'schema': this.usecaseSchema,
+            }
+            console.log({ schemaParams });
+            localStorage.setItem('schemaParams', JSON.stringify(schemaParams));
+
+            if (i == this.usecaseSchema.length - 1 && !errArr.length) {
+              this.saveData();
+              this.nextStep();
+            }
+          }, (err) => {
+            errArr.push(this.usecaseSchema[i].title);
+
+            if (errArr.length == 1 && (errArr.includes('Common') || errArr.includes('common'))) {
+             
+              console.log('err ----', err);
             } else {
-              let draftSchemaOsid = [{
-                'title': this.usecaseSchema[i].title,
-                'osid': res.result.Schema.osid,
-              }]
-              localStorage.setItem('draftSchemaOsid', JSON.stringify(draftSchemaOsid));
+              if (i == this.usecaseSchema.length - 1) {
+                this.getEntityProperties();
+                this.toastMsg.error('error', errArr + " name schema already exists, please rename ");
+              }
             }
-          }
 
-          let schemaParams = {
-            'title': this.usecase,
-            'schema': this.usecaseSchema,
-          }
-          console.log({ schemaParams });
-          localStorage.setItem('schemaParams', JSON.stringify(schemaParams));
 
-          if (i == this.usecaseSchema.length - 1 && !errArr.length) {
-            this.saveData();
-            this.nextStep();
-          }
-        }, (err) => {
-          errArr.push(this.usecaseSchema[i].title);
 
-          if (errArr.length == 1 && (errArr.includes('Common') || errArr.includes('common'))) {
-            // this.saveData();
-            // this.nextStep();
-            console.log('err ----', err);
-          } else {
-            if (i == this.usecaseSchema.length - 1) {
-              this.getEntityProperties();
+          })
+        } else if (this.isStatus != 'PUBLISHED') {
+          this.generalService.putData('/Schema', osid, payload).subscribe((res) => {
 
-              this.toastMsg.error('error', errArr + " name schema already exists, please rename ");
+            let schemaParams = {
+              'title': this.usecase,
+              'schema': this.usecaseSchema,
             }
-          }
+            console.log({ schemaParams });
+            localStorage.setItem('schemaParams', JSON.stringify(schemaParams));
+
+            if (i == this.usecaseSchema.length - 1 && !errArr.length) {
+              this.saveData();
+              this.nextStep();
+            }
+          }, (err) => {
+            errArr.push(this.usecaseSchema[i].title);
+
+            if (errArr.length == 1 && (errArr.includes('Common') || errArr.includes('common'))) {
+              
+              console.log('err ----', err);
+            } else {
+              if (i == this.usecaseSchema.length - 1) {
+                this.getEntityProperties();
+
+                this.toastMsg.error('error', errArr + " name schema already exists, please rename ");
+              }
+            }
 
 
 
-        })
+          })
+        }
       }
     }
   }
@@ -1681,15 +1649,12 @@ console.log(this.privateFieldsName);
         await this.addCrtTemplateFields(this.usecaseSchema[i]);
       }
 
-      // for (let j = 0; j < this.usecaseSchema.length; j++) {
       let cJson = this.convertIntoSBRCSchema(this.usecaseSchema[i].definitions);
       if (cJson) {
         tempProperty.definitions = cJson;
 
       }
-      // }
 
-      console.log({ tempProperty });
       if (tempProperty.length == this.usecaseSchema.length) {
         let payload = {
           "name": this.templateName,
@@ -1740,9 +1705,6 @@ console.log(this.privateFieldsName);
               this.toastMsg.error('error', errArr + " name schema already exists, please rename");
             }
           }
-
-
-
         })
       }
     }
@@ -1932,7 +1894,7 @@ console.log(this.privateFieldsName);
       key1 = res.data[j].data[k].key.charAt(0).toLowerCase() + res.data[j].data[k].key.slice(1);
       key2 = res.data[j].data[k].data[m].key.charAt(0).toLowerCase() + res.data[j].data[k].data[m].key.slice(1);
 
-      fieldName = '$.' + key + '.' + key1  + '.' + key2;
+      fieldName = '$.' + key + '.' + key1 + '.' + key2;
 
     }
 
@@ -1948,7 +1910,20 @@ console.log(this.privateFieldsName);
       this.internalFields[this.activeMenuNo].push(fieldName);
 
     }
-
-
   }
+
+
+  commonSchemaBody() {
+    let commonBody = {
+      "$schema": "http://json-schema.org/draft-07/schema",
+      "title": "Common",
+      "isRefSchema": true,
+      "status": "DRAFT",
+      "definitions": {}
+    }
+
+    return commonBody;
+  }
+
 }
+

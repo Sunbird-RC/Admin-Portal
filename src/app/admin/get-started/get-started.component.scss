@@ -6,9 +6,7 @@
 
 body {
   background: #ffffff;
-  
 }
-
 
 p {
   font-size: 1.1em;
@@ -57,10 +55,10 @@ p {
   background-color: none;
 }
 .top-padding-title {
-  padding-top: 0px;
+  padding-top: 0;
 }
 .bottom-padding-btn {
-  margin-bottom:0px;
+  margin-bottom:0;
 }
 
 a,
@@ -72,7 +70,7 @@ a:focus {
 }
 
 .navbar {
-  padding: 0px 10px;
+  padding: 0 10px;
   background: #fff;
   border: none;
   border-radius: 0;
@@ -92,8 +90,6 @@ a:focus {
   border-bottom: 1px dashed #ddd;
   margin: 40px 0;
 }
-
-
 
 /* ---------------------------------------------------
     SIDEBAR STYLE

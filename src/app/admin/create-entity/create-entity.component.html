@@ -483,7 +483,7 @@
     <footer class="footer fixed-bottom">
         <div class="container-fluid">
             <div>
-                <button *ngIf="isActive != 'createSchema'" (click)="backStep()"
+                <button (click)="backStep()"
                     class="btn btn-sec-bg submit-button px-3 my-2 ml-2 mr-2 ">Back</button> &nbsp;
                 <button (click)="createSchema()" *ngIf="isActive == 'createSchema'"
                     [disabled]="!usecaseSchema[activeMenuNo]?.definitions?.data?.length"

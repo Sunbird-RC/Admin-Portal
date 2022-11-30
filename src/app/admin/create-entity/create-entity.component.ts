@@ -11,6 +11,7 @@ import { exit } from 'process';
 import { ignoreElements, single } from 'rxjs/operators';
 import { MinLengthValidator } from '@angular/forms';
 import { join } from 'path';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'create-entity',
@@ -101,12 +102,15 @@ export class CreateEntityComponent implements OnInit {
   secFieldObj: any = {};
   isStatus: any;
   commonSchemaField: any;
+  deleteingOsid: any;
+  index: any;
   constructor(
     private activeRoute: ActivatedRoute,
     public router: Router,
     public schemaService: SchemaService,
     public generalService: GeneralService,
     public toastMsg: ToastMessageService,
+    public translate: TranslateService,
     public location: Location) {
   }
 
@@ -1043,14 +1047,31 @@ export class CreateEntityComponent implements OnInit {
     }
   }
 
-  deleteEntity(action) {
-    console.log("delete");
-    //this.usecaseSchema.splice(index, 1);
-    // this.openEntity(0, this.entityKey);
 
+  deleteEntity(i, action) {
+    if (i) {
+      this.deleteingOsid = (this.usecaseSchema[i].osid) ? this.usecaseSchema[i].osid : '';
+      this.index = i;
+    }
+
+    if (action == 'delete') {
+      if (this.deleteingOsid) {
+        this.generalService.deleteData('/Schema', this.deleteingOsid).subscribe((res) => {
+          console.log({ res });
+          this.usecaseSchema.splice(this.index, 1);
+        }, (err) => {
+          console.log({ err });
+        })
+      } else {
+        this.usecaseSchema.splice(this.index, 1);
+      }
+
+    }
+    console.log(this.usecaseSchema[i]);
   }
 
   convertSchemaToFormioJson(viewSchemaField) {
+ if (viewSchemaField) {
     let newArr: any = [];
     for (let i = 0; i < viewSchemaField.length; i++) {
       if (viewSchemaField[i].type == 'string') {
@@ -1135,6 +1156,7 @@ export class CreateEntityComponent implements OnInit {
     }
 
     return newArr;
+   }
 
   }
 
@@ -1333,8 +1355,12 @@ export class CreateEntityComponent implements OnInit {
         }
 
         data = tempjson1;
-        let visiblityIs = (!(this.privateFields[this.activeMenuNo]).length && !(this.internalFields[this.activeMenuNo]).length) ? this.setPVisibility() : this.checkVisibility();
-
+        let visiblityIs;
+        if (!this.usecaseSchema[this.activeMenuNo].hasOwnProperty('isRefSchema') && !this.usecaseSchema[this.activeMenuNo].isRefSchema) {
+         visiblityIs = (!(this.privateFields[this.activeMenuNo]).length && !(this.internalFields[this.activeMenuNo]).length) ? this.setPVisibility() : this.checkVisibility();
+        }else{
+           visiblityIs = 'public';
+        }
 
         tempFieldObjSec.push(
           {
@@ -1439,6 +1465,7 @@ export class CreateEntityComponent implements OnInit {
     let entityTemplate = {
       "$schema": "http://json-schema.org/draft-07/schema",
       "type": "object",
+      "status": "DRAFT",
       "properties": {
         [key]: {
           "$ref": "#/definitions/" + key

@@ -59,7 +59,7 @@
                                         <div class="dropdown-content dropdown-content-margin">
                                             <a data-toggle="modal" data-target="#addEntity"
                                                 (click)="openEntityModal('edit', i)" class="ml-0">Edit</a>
-                                            <a data-toggle="modal" data-target="#deleteEntity" class="ml-0">Delete</a>
+                                            <a data-toggle="modal" data-target="#deleteEntity" class="ml-0" (click)="deleteEntity(i, '')">Delete</a>
                                         </div>
                                     </div>
                                 </a>
@@ -516,7 +516,7 @@
                     <h3 class="heading-del">"Education Board" schema?</h3>
                     <br>
                     <button type="button" class="cancelbtn" data-dismiss="modal">No, Cancel</button>&nbsp;
-                    <button type="button" class="delbtn" (click)="deleteEntity($event)" data-dismiss="modal">Yes,
+                    <button type="button" class="delbtn" (click)="deleteEntity('', 'delete')" data-dismiss="modal">Yes,
                         Delete</button>
                 </div>
             </div>

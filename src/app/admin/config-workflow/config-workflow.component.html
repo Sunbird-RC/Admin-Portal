@@ -1,93 +1,133 @@
 <div id="content">
-    <div class="p-4">
-        <h4>Coming Soon</h4>
-        <!-- <p class="mt-3"><b>Attestation Workflow</b></p>
-        <p class="mt-3"><b>Coming Soon</b></p> -->
+  <div class="p-4">
+    <h4>{{ entityName }}</h4>
+    <p class="mt-3"><b>Attestation Workflow</b></p>
+    <!-- <p class="mt-3"><b>Coming Soon</b></p> -->
 
-        <div class="card p-4">
+    <div class="card p-4">
+      <div class="form-group">
+        <label for="workflowname" class="form-label">Workflow Name</label>
+        <input
+          type="workflowname"
+          class="form-control"
+          id="exampleFormControlInput1"
+          value="Transfer Certificate"
+        />
+      </div>
 
-            <!-- <select class="custom-dropdown">
-                <option value="volvo" class="clr-grey">Student</option>
-                <option value="audi" class="clr-grey">Student</option>
-            </select>
-            <p><b>Select Issuance System</b></p>
-            <label>
-                <input type="radio" name="radio" checked /> &nbsp;
-                Sunbird RC Issuance system
-            </label> -->
+      <div class="form-group">
+        <label for="issuancesystem" class="form-label"
+          >Select Issuance System</label
+        >
+        <div class="row">
+          <select class="custom-dropdown" id="issuancesystem">
+            <option selected>Sunbird RC Issuance system</option>
+          </select>
+        </div>
+      </div>
 
-            <!-- <label>
-                <input type="radio" name="radio" />&nbsp;
-                External System &nbsp; -->
-                <!--  Already Commented <select class="custom-dropdown ml-240">
-                    <option value="volvo" class="clr-grey">Select URI Supported Plugin</option>
-                    <option value="audi" class="clr-grey">Select URI Supported Plugin</option>
-                </select> Till here -->
-                <!-- <input class="custom-dropdown ml-240" type="url" placeholder="Select URI or supported plugins">
-            </label> -->
+      <div class="d-flex">
+        <label>
+          <input type="radio" name="radio" checked />
+          Auto attestation
 
-            <!-- <hr class="custom-hr">
+          <input type="radio" name="radio" class="ml-40" />
+          Manual attestation
+        </label>
+      </div>
 
-            <div class="d-flex">
+      <div>
+        <p class="mt-2 mb-0">
+          <b>Attestor Details</b>
+        </p>
+        <div class="container custom-container-attester">
+          <p class="mt-2 mb-0">
+            <b>Attestor</b>
+            <b class="ml-240">Conditions for attestor</b>
+          </p>
 
-
-                <label>
-                    <input type="radio" name="radio" />
-                    Auto attestation
-
-                    <input type="radio" name="radio" class="ml-40" />
-                    Manual attestation
-                </label>
+          <div class="row">
+            <div class="col-sm-3">
+              <select
+                #mySelect
+                class="custom-dropdown-attester"
+                (change)="onSelect(mySelect.value)"
+              >
+                <option *ngFor="let item of entityList" [value]="item">
+                  {{ item }}
+                </option>
+              </select>
             </div>
-
-            <p class="mt-2 mb-0">
-                <b>Entity</b>
-                <b class="ml-240">Attestor</b>
-            </p>
-
-            <div class="mt-0 mb-3">
-                <select class="custom-dropdown">
-                    <option value="volvo" class="clr-grey">Student</option>
-                    <option value="audi" class="clr-grey">Student</option>
+            <div class="col-sm-9">
+              <select class="custom-dropdown-attester-details">
+                <option>Any</option>
+                <option>All</option>
+              </select>
+              <label class="ml-2">of the conditions below</label>
+              <div class="mt-3">
+                <select class="custom-dropdown-attester">
+                  <option *ngFor="let val of studentFieldList[0]" [value]="val">
+                    {{ val }}
+                  </option>
                 </select>
-                <label class="ml-13">Attested By</label>
-                <select class="custom-dropdown ml-40">
-                    <option value="volvo" class="clr-grey">Teacher</option>
-                    <option value="audi" class="clr-grey">Student</option>
+
+                <select class="custom-dropdown-attester ml-4">
+                  <option>equal to</option>
                 </select>
-            </div>
-            <div class="card p-3 clr-grey2">
-                <p><b>Conditions for attestation</b></p>
-                <div class="mt-0 mb-3">
-                    <select class="custom-dropdown">
-                        <option value="volvo" class="clr-grey">Student</option>
-                        <option value="audi" class="clr-grey">Student</option>
-                    </select>
-                    <label class="ml-13">Attested By</label>
-                    <select class="custom-dropdown ml-40">
-                        <option value="volvo" class="clr-grey">Teacher</option>
-                        <option value="audi" class="clr-grey">Student</option>
-                    </select>
-                </div>
-                <span class="m-3 p14 submit-button clr-blue">
-                    <i class="fa fa-plus" aria-hidden="true"></i>
-                    Add Condition
+
+                <select
+                  class="custom-dropdown-attester ml-4 mr-4"
+                  #studentSelect
+                  (change)="onChangeSelect(studentSelect.value)"
+                >
+                  <option *ngFor="let val of feildNameList[0]" [value]="val">
+                    {{ val }}
+                  </option>
+                </select>
+                <span class="close-icon">
+                  <i class="fa fa-close" aria-hidden="true"></i>
                 </span>
 
+                <div class="mt-3">
+                  <span class="p14 submit-button clr-blue">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    Add Condition
+                  </span>
+                </div>
+              </div>
             </div>
-            <span class="m-3 p14 submit-button clr-blue">
-                <i class="fa fa-plus" aria-hidden="true"></i>
-                Add Next Attestor
-            </span>
-
-            <button class="m-3 p14 plus-btn btn btn-sec-bg submit-button text-secondary-color"><i class="fa fa-plus"
-                    aria-hidden="true"></i> Add Workflow
-            </button> -->
-
-            <!-- <div class="newDiv">
-
-            </div> -->
-
+          </div>
         </div>
+      </div>
+
+      <div class="mt-3">
+        <span class="p14 submit-button clr-blue btn-add-attester">
+          <i class="fa fa-plus" aria-hidden="true"></i>
+          Add next Attestor
+        </span>
+      </div>
+
+      <div>
+        <p class="mt-5 mb-0">
+          <b>Attributes required for attestation</b>
+          <span class="p14 submit-button clr-blue btn-edit-attester">
+            Edit
+          </span>
+        </p>
+        <div class="custom-container-edit">
+          <p>Certificate Name, Record Name, Date, Issuer Name</p>
+        </div>
+      </div>
+
+      <div class="mt-3">
+        <span class="p14 submit-button delete-btn text-color"> Delete </span>
+      </div>
     </div>
+    <div class="mt-3">
+      <span class="p14 submit-button clr-blue btn-add-attester">
+        <i class="fa fa-plus" aria-hidden="true"></i>
+        Add Workflow
+      </span>
+    </div>
+  </div>
 </div>

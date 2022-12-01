@@ -6,19 +6,20 @@
         </div> -->
     <div class="d-flex align-items-center">
       <div class="mr-2">
-        <h3 class="pl-3 h2">Schema</h3>
+        <h3 class="pl-3 h2">{{'Schema' | translate}}</h3>
       </div>
     </div>
 
     <div class="row p-2 m-2">
       <div class="col-sm-6 ylow d-flex align-items-center">
         <p class="p-2 m-2">
-          Schema is in draft status.
-          <a target="__blank" href="/explore-api"
+          {{'SCHEMA_IN_DRAFT_STATUS' | translate}}
+          <a
+            href="https://demo-admin-portal.xiv.in/registry/api/docs/swagger.json"
             class="text-primary-color"
           >
-            Review and Publish </a
-          >to explore API
+          {{'REVIEW_AND_PUBLISH' | translate}} </a
+          >{{'TO_EXPLORE_API' | translate}}
         </p>
       </div>
     </div>
@@ -45,7 +46,7 @@
 
           <div class="mt-4">
             <button class="btn btn-sec-bg submit-button text-secondary-color">
-              View/Add
+              {{'VIEW_ADD' | translate}}
             </button>
           </div>
         </div>
@@ -55,11 +56,11 @@
     <div class="container white-background">
       <div class="row gy-3 gx-3">
         <div class="col-10">
-          <p class="card-title fw-bold">Verifiable Credentials</p>
+          <p class="card-title fw-bold"> {{'VERIFIABLE_CREDENTIAL' | translate}}</p>
         </div>
         <div class="col-2">
           <button class="btn btn-sec-bg submit-button text-secondary-color">
-            +Add
+            +{{'ADD' | translate}}
           </button>
         </div>
       </div>
@@ -75,7 +76,7 @@
           >
             <div class="card p-3 mb-3">
               <h5 class="card-title">{{ item?.name }}</h5>
-              <p class="card-text">{{ item?.name }} certificate</p>
+              <p class="card-text">{{ item?.name }} {{'CERTIFICATE' | translate}}</p>
             </div>
           </div>
         </div>

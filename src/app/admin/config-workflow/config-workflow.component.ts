@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { GeneralService } from "src/app/services/general/general.service";
 import { SchemaService } from "src/app/services/data/schema.service";
 import CommonData from "src/assets/schemas/education/Common.json";
+import { TranslateService } from '@ngx-translate/core'; 
 @Component({
   selector: "config-workflow",
   templateUrl: "./config-workflow.component.html",
@@ -26,6 +27,7 @@ export class ConfigWorkflowComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    public translate: TranslateService,
     public generalService: GeneralService
   ) {
     this.entityName = this.route.snapshot.params.entity;

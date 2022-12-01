@@ -12,7 +12,7 @@
               <pre id="json"><code class="language-json" #json></code></pre>
             </div> -->
             <div>
-              <button type="button" class="collapsible" (click)="showLessJson()">JSON Schema 
+              <button type="button" class="collapsible" (click)="showLessJson()">{{'JSON_SCHEMA' | translate}}
                 <i [hidden]="isShowLessJson" class="fa fa-plus float-end arrIcon"></i>
                 <i [hidden]="!isShowLessJson" class="fa fa-minus float-end arrIcon"></i>
               </button>
@@ -23,7 +23,7 @@
             </div>
       
             <div>
-              <button type="button" class="collapsible" (click)="showLessVc()">Credential Template
+              <button type="button" class="collapsible" (click)="showLessVc()">{{'CREDENTIAL_TEMPLATE' | translate}}
                 <i [hidden]="isShowLessVc" class="fa fa-plus float-end arrIcon"></i>
                 <i [hidden]="!isShowLessVc" class="fa fa-minus float-end arrIcon"></i>
               </button>
@@ -47,7 +47,7 @@
       
         <div class="preview-footer">
           <button data-toggle="modal" (click)="saveAdvance()"
-            class="btn text-capitalize float-end btn-primary btn-primary-sm p1">Save</button>
+            class="btn text-capitalize float-end btn-primary btn-primary-sm p1">{{'SAVE' | translate}}</button>
         </div>
       
       </div>

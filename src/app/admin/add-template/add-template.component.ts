@@ -8,6 +8,7 @@ import { GeneralService } from 'src/app/services/general/general.service';
 import { ToastMessageService } from 'src/app/services/toast-message/toast-message.service';
 import { SchemaService } from '../../services/data/schema.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { TranslateService } from '@ngx-translate/core'; 
 
 @Component({
   selector: 'app-add-template',
@@ -63,6 +64,7 @@ export class AddTemplateComponent implements OnInit {
     public generalService: GeneralService,
     public http: HttpClient,
     private activeRoute: ActivatedRoute,
+    public translate: TranslateService,
     public router: Router) { }
 
   ngOnInit(): void {

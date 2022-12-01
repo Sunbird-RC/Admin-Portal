@@ -2,8 +2,8 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-header nav-b navbar-inverse">
         <a class="nav-link pl-4" href="" onClick="history.go(-1); return false;"><i
                 class="fa fa-angle-left primary-text"></i> </a>
-        <span class="heading-2" [hidden]="isPreview">Add Document</span>
-        <span class="p16" [hidden]="!isPreview"><b>Edit Template</b></span>
+        <span class="heading-2" [hidden]="isPreview">{{'ADD_DOCUMENT' | translate}}</span>
+        <span class="p16" [hidden]="!isPreview"><b>{{'EDIT_TEMPLATE' | translate}}</b></span>
     </nav>
 
 
@@ -22,7 +22,7 @@
                         </form> -->
                         <div class="container mt-4">
                         <ul class="nav nav-tabs ui-tabs font-600">
-                            <li class=" heading-2"><a href="#tab3" data-toggle="tab">General Templates</a></li>
+                            <li class=" heading-2"><a href="#tab3" data-toggle="tab">{{'GENERAL_TEMPLATE' | translate}}</a></li>
                            <!-- <li class="heading-2"><a href="#tab4" data-toggle="tab">QR Code Only</a></li>  -->
                           </ul>
                         
@@ -60,7 +60,7 @@
                                 <div class="wrapper">
                                     <div class="mb-2">
                                         <br />
-                                        <p class="heading-3 mb-1"> A4 </p>
+                                        <p class="heading-3 mb-1"> {{'A4' | translate}} </p>
                                         <div class="mb-2">
                                         <div class="box" >
                                             <img  (click)="previewScreen()" class="templateThumb" src="/assets/images/thumbnail2.png" />
@@ -79,9 +79,9 @@
                                 </div>                            
                             </div>
                             <div class="tab-pane" id="tab4">
-                              <div class="fs-14 mt-2">You don't have any templates. You can upload SVG or HTML code</div>
+                              <div class="fs-14 mt-2">{{'DONT_HAVE_TEMPLATES_UPLOAD_SVG_CODE' | translate}}</div>
                                 <button class="fs-14 btn btn-sec-bg submit-button mt-2">
-                                    <i aria-hidden="true" class="fa fa-upload"></i> Upload Template 
+                                    <i aria-hidden="true" class="fa fa-upload"></i>{{'UPLOAD_TEMPLATE' | translate}}
                                 </button>
                             </div>
                           </div>
@@ -93,11 +93,11 @@
             <div class=" col-12 col-sm-8 p-sm-0" *ngIf="userHtml">
                 <div class="card">
                     <div class="d-flex flex-justify-between card-body px-4 py-2">
-                        <div class="heading-2">Preview</div>
+                        <div class="heading-2">{{'PREVIEW' | translate}}</div>
                         <div>
                             <button (click)="editTemplate()"
                                 class="float-end heading-3 btn btn-sec-bg submit-button"><i
-                                    class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit Template</button>
+                                    class="fa fa-pencil-square-o" aria-hidden="true"></i> {{'EDIT_TEMPLATE' | translate}}</button>
                         </div>
                     </div>
 

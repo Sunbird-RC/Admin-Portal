@@ -5,13 +5,13 @@ import { JsonEditorComponent, JsonEditorOptions } from 'ang-jsoneditor';
 import { getLocaleDateFormat } from '@angular/common';
 import { Location } from '@angular/common';
 import { GeneralService } from 'src/app/services/general/general.service';
-
+import { TranslateService } from '@ngx-translate/core'; 
 import { ToastMessageService } from '../../services/toast-message/toast-message.service';
 import { exit } from 'process';
 import { ignoreElements, single } from 'rxjs/operators';
 import { MinLengthValidator } from '@angular/forms';
 import { join } from 'path';
-import { TranslateService } from '@ngx-translate/core';
+
 
 @Component({
   selector: 'create-entity',

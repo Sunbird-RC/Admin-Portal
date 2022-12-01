@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ElementRef, ViewChild } from '@angular/core';
 import { Formio } from 'formiojs';
-
+import { TranslateService } from '@ngx-translate/core'; 
 import { editorConfig } from './advance-editor-config';
 import { JsonEditorComponent, JsonEditorOptions } from 'ang-jsoneditor';
 
@@ -33,7 +33,8 @@ export class AdvanceEditorComponent implements OnInit {
   isShowLessJson = false;
   isShowLessVc = false;
   isVcString = false;
-  constructor() {
+  constructor(public translate: TranslateService) {
+    
     this.editorOptions = new JsonEditorOptions();
     this.editorOptions.mode = 'code';
     this.editorOptions.history = true;

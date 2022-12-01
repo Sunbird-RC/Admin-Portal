@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { editorConfig } from './form-editor-config';
 import { Output, EventEmitter } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core'; 
 
 @Component({
   selector: 'add-field-form',
@@ -23,7 +24,7 @@ export class AddFieldFormComponent implements OnInit {
   jsonFields: any;
   jsonTitle: any;
 
-  constructor() { }
+  constructor(public translate: TranslateService) { }
 
   ngOnInit(): void {
     this.myForm['components'] = [];

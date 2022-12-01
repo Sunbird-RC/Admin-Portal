@@ -1,12 +1,12 @@
 <div id="content">
   <div class="p-4">
     <h4>{{ entityName }}</h4>
-    <p class="mt-3"><b>Attestation Workflow</b></p>
+    <p class="mt-3"><b>{{'ATTESTATION_WORKFLOW' | translate}}</b></p>
     <!-- <p class="mt-3"><b>Coming Soon</b></p> -->
 
     <div class="card p-4">
       <div class="form-group">
-        <label for="workflowname" class="form-label">Workflow Name</label>
+        <label for="workflowname" class="form-label">{{'WORKFLOW_NAME' | translate}}</label>
         <input
           type="workflowname"
           class="form-control"
@@ -17,11 +17,11 @@
 
       <div class="form-group">
         <label for="issuancesystem" class="form-label"
-          >Select Issuance System</label
+          >{{'SELECT_ISSUANCE_SYSTEM' | translate}}</label
         >
         <div class="row">
           <select class="custom-dropdown" id="issuancesystem">
-            <option selected>Sunbird RC Issuance system</option>
+            <option selected>{{'SUNBIRD_RC_ISSUANCE_SYSTEM' | translate}}</option>
           </select>
         </div>
       </div>
@@ -29,21 +29,22 @@
       <div class="d-flex">
         <label>
           <input type="radio" name="radio" checked />
-          Auto attestation
+          {{'AUTO_ATTESTATION' | translate}}
 
           <input type="radio" name="radio" class="ml-40" />
-          Manual attestation
+          {{'MANUAL_ATTESTATION' | translate}}
+
         </label>
       </div>
 
       <div>
         <p class="mt-2 mb-0">
-          <b>Attestor Details</b>
+          <b> {{'ATTESTOR_DETAILS' | translate}}</b>
         </p>
         <div class="container custom-container-attester">
           <p class="mt-2 mb-0">
-            <b>Attestor</b>
-            <b class="ml-240">Conditions for attestor</b>
+            <b>{{'ATTESTOR' | translate}}</b>
+            <b class="ml-240">{{'CONDITIONS_FOR_ATTESTOR' | translate}}</b>
           </p>
 
           <div class="row">
@@ -60,10 +61,10 @@
             </div>
             <div class="col-sm-9">
               <select class="custom-dropdown-attester-details">
-                <option>Any</option>
-                <option>All</option>
+                <option>{{'ANY' | translate}}</option>
+                <option>{{'ALL' | translate}}</option>
               </select>
-              <label class="ml-2">of the conditions below</label>
+              <label class="ml-2">{{'OF_THE_CONDITIONS_BELOW' | translate}}</label>
               <div class="mt-3">
                 <select class="custom-dropdown-attester">
                   <option *ngFor="let val of studentFieldList[0]" [value]="val">
@@ -72,7 +73,7 @@
                 </select>
 
                 <select class="custom-dropdown-attester ml-4">
-                  <option>equal to</option>
+                  <option> {{'EQUAL_TO' | translate}}</option>
                 </select>
 
                 <select
@@ -91,7 +92,7 @@
                 <div class="mt-3">
                   <span class="p14 submit-button clr-blue">
                     <i class="fa fa-plus" aria-hidden="true"></i>
-                    Add Condition
+                    {{'ADD_CONDITION' | translate}}
                   </span>
                 </div>
               </div>
@@ -103,30 +104,30 @@
       <div class="mt-3">
         <span class="p14 submit-button clr-blue btn-add-attester">
           <i class="fa fa-plus" aria-hidden="true"></i>
-          Add next Attestor
+          {{'ADD_NEXT_ATTESTOR' | translate}}
         </span>
       </div>
 
       <div>
         <p class="mt-5 mb-0">
-          <b>Attributes required for attestation</b>
+          <b> {{'ATTRIBUTES_REQUIRED_FOR_ATTESTATION' | translate}}</b>
           <span class="p14 submit-button clr-blue btn-edit-attester">
-            Edit
+            {{'EDIT' | translate}}
           </span>
         </p>
         <div class="custom-container-edit">
-          <p>Certificate Name, Record Name, Date, Issuer Name</p>
+          <p>{{'CERTIFICATE_RECORD_DATE_ISSUER_NAME' | translate}}</p>
         </div>
       </div>
 
       <div class="mt-3">
-        <span class="p14 submit-button delete-btn text-color"> Delete </span>
+        <span class="p14 submit-button delete-btn text-color">  {{'DELETE' | translate}} </span>
       </div>
     </div>
     <div class="mt-3">
       <span class="p14 submit-button clr-blue btn-add-attester">
         <i class="fa fa-plus" aria-hidden="true"></i>
-        Add Workflow
+        {{'ADD_WORKFLOW' | translate}}
       </span>
     </div>
   </div>

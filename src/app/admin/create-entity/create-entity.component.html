@@ -2,7 +2,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-header nav-b navbar-inverse">
         <a class="nav-link pl-3" href="" onClick="history.go(-1); return false;"><i
                 class="fa fa-angle-left primary-text"></i> </a>
-        <span class="p16">Getting Started</span>
+        <span class="p16">{{'GETING_STARTED' | translate}}</span>
     </nav>
 
     <nav class="card mt-0 p-2 ml-32" [hidden]="isAddFormPg">
@@ -37,8 +37,8 @@
                                         <i class="fa fa-ellipsis-h text-grey-color" aria-hidden="true"></i>
                                         <div class="dropdown-content dropdown-content-margin">
                                             <a data-toggle="modal" data-target="#addEntity"
-                                                (click)="openEntityModal('edit', i)" class="ml-0">Edit</a>
-                                            <a data-toggle="modal" data-target="#deleteEntity" class="ml-0">Delete</a>
+                                                (click)="openEntityModal('edit', i)" class="ml-0">{{'EDIT' | translate}}</a>
+                                            <a data-toggle="modal" data-target="#deleteEntity" class="ml-0">{{'DELETE' | translate}}</a>
                                         </div>
                                     </div>
                                 </a>
@@ -47,7 +47,7 @@
                         </ng-template>
 
                     </ul>
-                    <p class="p16 fw-bold pl-3 text-uppercase">Schema </p>
+                    <p class="p16 fw-bold pl-3 text-uppercase">{{'SCHEMA' | translate}} </p>
 
                     <ul class="list-unstyled components">
                         <ng-template ngFor let-menuItem [ngForOf]="usecaseSchema" let-i="index">
@@ -58,8 +58,8 @@
                                         <i class="fa fa-ellipsis-h text-grey-color" aria-hidden="true"></i>
                                         <div class="dropdown-content dropdown-content-margin">
                                             <a data-toggle="modal" data-target="#addEntity"
-                                                (click)="openEntityModal('edit', i)" class="ml-0">Edit</a>
-                                            <a data-toggle="modal" data-target="#deleteEntity" class="ml-0" (click)="deleteEntity(i, '')">Delete</a>
+                                                (click)="openEntityModal('edit', i)" class="ml-0">{{'EDIT' | translate}}</a>
+                                            <a data-toggle="modal" data-target="#deleteEntity" class="ml-0">{{'DELETE' | translate}}</a>
                                         </div>
                                     </div>
                                 </a>
@@ -71,7 +71,7 @@
                         <li>
                             <button class="m-3 p14 btn btn-sec-bg submit-button text-secondary-color"
                                 data-toggle="modal" data-target="#addEntity" (click)="openEntityModal('add')"><i
-                                    class="fa fa-plus" aria-hidden="true"></i> Add Schema</button>
+                                    class="fa fa-plus" aria-hidden="true"></i>  {{'ADD_SCHEMA' | translate}}</button>
                         </li>
                         <!-- <li >
                             <a> Common
@@ -97,8 +97,8 @@
                     <div *ngIf="!isShowJson && usecaseSchema[activeMenuNo]?.definitions?.data?.length">
                         <button class="float-end p14 btn btn-sec-bg submit-button text-secondary-color"
                             (click)="showJson()" [disabled]="usecaseSchema[activeMenuNo]['status'] == 'PUBLISHED'">
-                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i> JSON
-                            Schema</button>
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i> {{'JSON_SCHEMA' | translate}}
+                            </button>
                     </div>
                 </div>
 
@@ -109,11 +109,11 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th class="p12 text-grey-color" scope="col"> Label </th>
-                                        <th class="p12 text-grey-color" scope="col"> Field Type</th>
-                                        <th class="p12 text-grey-color" scope="col"> Mandatory</th>
-                                        <th class="p12 text-grey-color" scope="col"> Description </th>
-                                        <th class="p12 text-grey-color" scope="col"> Visibility </th>
+                                        <th class="p12 text-grey-color" scope="col">  {{'LABEL' | translate}} </th>
+                                        <th class="p12 text-grey-color" scope="col"> {{'FIELD_TYPE' | translate}}</th>
+                                        <th class="p12 text-grey-color" scope="col"> {{'MANDATORY' | translate}}</th>
+                                        <th class="p12 text-grey-color" scope="col"> {{'DESCRIPTION' | translate}} </th>
+                                        <th class="p12 text-grey-color" scope="col"> {{'VISIBILITY' | translate}} </th>
                                         <th class="p12 text-grey-color" scope="col"> </th>
                                     </tr>
                                 </thead>
@@ -162,9 +162,9 @@
                                                                 </td>
                                                                 <td>
                                                                     <span class="p14"
-                                                                        *ngIf="childNastedArrayfield?.required">Yes</span>
+                                                                        *ngIf="childNastedArrayfield?.required">{{'yes' | translate}}</span>
                                                                     <span class="p14"
-                                                                        *ngIf="!childNastedArrayfield?.required">No
+                                                                        *ngIf="!childNastedArrayfield?.required">{{'No' | translate}}
                                                                     </span>
                                                                 </td>
                                                                 <td>
@@ -190,7 +190,7 @@
                                                                         <div class="dropdown-content">
                                                                             <!-- <a (click)="viewField('nasted', j,k, m)">View</a> -->
                                                                             <a
-                                                                                (click)="deleteField('nasted', j,k, m)">Delete</a>
+                                                                                (click)="deleteField('nasted', j,k, m)">{{'DELETE' | translate}}</a>
                                                                         </div>
                                                                     </div>
                                                                 </td>
@@ -211,8 +211,8 @@
                                                         </td>
                                                         <td>
                                                             <span class="p14" *ngIf="secArrayfield?.required">
-                                                                Yes</span>
-                                                            <span class="p14" *ngIf="!secArrayfield?.required"> No
+                                                                {{'yes' | translate}}</span>
+                                                            <span class="p14" *ngIf="!secArrayfield?.required"> {{'No' | translate}}
                                                             </span>
                                                         </td>
                                                         <td>
@@ -237,7 +237,7 @@
                                                                     aria-hidden="true"></i>
                                                                 <div class="dropdown-content">
                                                                     <!-- <a (click)="('nasted', j, k)">View</a> -->
-                                                                    <a (click)="deleteField('nasted', j, k)">Delete</a>
+                                                                    <a (click)="deleteField('nasted', j, k)">{{'DELETE' | translate}}</a>
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -255,8 +255,8 @@
                                                         <span class="p14">{{field?.data?.type}}</span>
                                                     </td>
                                                     <td>
-                                                        <span class="p14" *ngIf="field?.required">Yes </span>
-                                                        <span class="p14" *ngIf="!field?.required">No </span>
+                                                        <span class="p14" *ngIf="field?.required">{{'yes' | translate}} </span>
+                                                        <span class="p14" *ngIf="!field?.required">{{'No' | translate}} </span>
                                                     </td>
                                                     <td>
                                                         <span class="p14">{{field?.data?.description}}</span>
@@ -277,7 +277,7 @@
                                                                 aria-hidden="true"></i>
                                                             <div class="dropdown-content">
                                                                 <!-- <a (click)="viewField('string', j, '')">View</a> -->
-                                                                <a (click)="deleteField('string', j, '')">Delete</a>
+                                                                <a (click)="deleteField('string', j, '')">{{'DELETE' | translate}}</a>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -296,8 +296,8 @@
                                                         <span class="p14">{{field?.data?.type}}</span>
                                                     </td>
                                                     <td>
-                                                        <span class="p14" *ngIf="field?.required">Yes </span>
-                                                        <span class="p14" *ngIf="!field?.required">No </span>
+                                                        <span class="p14" *ngIf="field?.required">{{'yes' | translate}} </span>
+                                                        <span class="p14" *ngIf="!field?.required">{{'No' | translate}} </span>
                                                     </td>
                                                     <td>
                                                         <span class="p14">{{field?.data?.description}} </span>
@@ -319,7 +319,7 @@
                                                                 aria-hidden="true"></i>
                                                             <div class="dropdown-content">
                                                                 <!-- <a (click)="viewField('string', j, '')">View</a> -->
-                                                                <a (click)="deleteField('string', j, '')">Delete</a>
+                                                                <a (click)="deleteField('string', j, '')">{{'DELETE' | translate}}</a>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -345,9 +345,9 @@
                             <div class="container-fluid">
                                 <div>
                                     <button (click)="readConvertJsonData($event)"
-                                        class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2">Save</button>
+                                        class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2">{{'SAVE' | translate}}</button>
                                     <button (click)="hideJSon()"
-                                        class="btn btn-sec-bg float-end submit-button px-3 my-2">Cancel</button>
+                                        class="btn btn-sec-bg float-end submit-button px-3 my-2">{{'CANCEL' | translate}}</button>
 
                                 </div>
                             </div>
@@ -365,19 +365,18 @@
                 </div> -->
 
 
-                <p *ngIf="!isShowJson && !usecaseSchema[activeMenuNo]?.definitions?.data?.length" class="p16">Fields</p>
+                <p *ngIf="!isShowJson && !usecaseSchema[activeMenuNo]?.definitions?.data?.length" class="p16">{{'FIELDS' | translate}}</p>
 
                 <div class="p-3 sm-card"
                     *ngIf="usecaseSchema.length &&  !isShowJson && usecaseSchema[activeMenuNo]['status'] != 'PUBLISHED'">
                     <span class="m-3 p14 mbtn-10 submit-button text-secondary-color" (click)="showAddForm()">
                         <i class="fa fa-plus" aria-hidden="true"></i>
-                        Add Field </span>
+                        {{'ADD_FIELDS' | translate}}   </span>
                 </div>
 
                 <div class="p-3" *ngIf="isActive == 'createSchema' && !usecaseSchema.length">
-                    <p class="p16 fw-bold"> No schema added yet.</p>
-                    <p class="p14">Please add entity level schema. You can also add common schema example address, field
-                        name and field name which can be used or references in other schemas.</p>
+                    <p class="p16 fw-bold">  {{'NO_SCHEMA_ADDED' | translate}} </p>
+                    <p class="p14"> {{'ADD_ENTITY_LEVEL_SCHEMA' | translate}}</p>
 
                 </div>
             </div>
@@ -413,30 +412,30 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header pt-4 border-0">
-                    <h3 class="heading-5">Add Schema</h3>
+                    <h3 class="heading-5">{{'ADD_SCHEMA' | translate}}</h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="container mt-1">
                     <div class="mb-3">
-                        <span class="l12 fw-bold">Enter Schema Name</span>
+                        <span class="l12 fw-bold">{{'ENTER_SCHEMA_NAME' | translate}}</span>
                         <input [(ngModel)]="entityName" class="w-100 input-field modal-input-field p14 p-2 inputField"
                             placeholder="Enter Schema name" type="text" />
                     </div>
 
                     <div class="mt-2">
-                        <span class="l12 fw-bold">Enter Description<span class="text-muted">
+                        <span class="l12 fw-bold">{{'ENTER_DESCRIPTION' | translate}}<span class="text-muted">
                                 (optional)</span></span>
                         <textarea [(ngModel)]="description"
                             class="w-100 desc input-field modal-input-field p14 pl-3 inputField"></textarea>
-                        <span class="l12 text-grey-color">Description about the schema</span>
+                        <span class="l12 text-grey-color">{{'DESCRIPTION_ABOUT_SCHEMA' | translate}}</span>
                     </div>
 
 
                     <div class="mt-4">
                         <button data-dismiss="modal" aria-label="Close"
                             class="btn text-capitalize float-end btn-primary btn-primary-sm p1"
-                            (click)="createEntity($event)">Save</button>
+                            (click)="createEntity($event)">{{'SAVE' | translate}}</button>
                         <!-- <button class="close" data-dismiss="modal" aria-label="Close"
                         class="btn text-capitalize float-end btn-primary btn-primary-sm p1 sb-text-primary mr-2 bg-none">Cancel</button> -->
                     </div>
@@ -449,19 +448,19 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header pt-4 border-0">
-                    <h3 class="heading-5">Save Configuration</h3>
+                    <h3 class="heading-5">{{'SAVE_CONFIGURATION' | translate}}</h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="container mt-4">
                     <div class="mb-4">
-                        <p class="heading-4 font-700 mb-05">Enter Configuration Name</p>
+                        <p class="heading-4 font-700 mb-05">{{'ENTER_CONFIGURATION_NAME' | translate}}</p>
                         <input [(ngModel)]="templateName" class="w-100 input-field p14 p-3 inputField"
                             placeholder="Enter Document name" type="text" />
                     </div>
 
                     <div class="mt-2">
-                        <p class="heading-4 font-700 mb-05">Enter Description<span class="text-muted">(optional)</span>
+                        <p class="heading-4 font-700 mb-05">{{'ENTER_DESCRIPTION' | translate}}<span class="text-muted">(optional)</span>
                         </p>
                         <textarea [(ngModel)]="configDescription"
                             class="w-100 desc py-2 input-field p14 pl-3 inputField"
@@ -471,9 +470,9 @@
 
                     <div class="mt-4">
                         <button (click)="saveConfiguration()" data-dismiss="modal" aria-label="Close"
-                            class="btn text-capitalize float-end btn-primary btn-primary-sm p1">Save</button>
+                            class="btn text-capitalize float-end btn-primary btn-primary-sm p1">{{'SAVE' | translate}}</button>
                         <button class="close" data-dismiss="modal" aria-label="Close"
-                            class="btn text-capitalize float-end btn-primary btn-primary-sm p1 sb-text-primary mr-2 bg-none">Cancel</button>
+                            class="btn text-capitalize float-end btn-primary btn-primary-sm p1 sb-text-primary mr-2 bg-none">{{'CANCEL' | translate}}</button>
                     </div>
                 </div>
             </div>
@@ -484,20 +483,20 @@
         <div class="container-fluid">
             <div>
                 <button (click)="backStep()"
-                    class="btn btn-sec-bg submit-button px-3 my-2 ml-2 mr-2 ">Back</button> &nbsp;
+                    class="btn btn-sec-bg submit-button px-3 my-2 ml-2 mr-2 ">{{'BACK' | translate}}</button> &nbsp;
                 <button (click)="createSchema()" *ngIf="isActive == 'createSchema'"
                     [disabled]="!usecaseSchema[activeMenuNo]?.definitions?.data?.length"
-                    class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2">Save and
-                    Next</button>
+                    class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2">{{'SAVE_AND_NEXT' | translate}}
+                    </button>
                 <button (click)="nextStep()" *ngIf="isActive == 'create-vc'"
-                    class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2">Save and
-                    Next</button>
+                    class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2">{{'SAVE_AND_NEXT' | translate}}
+                    </button>
                 <button *ngIf="isActive == 'test-publish'" data-toggle="modal" data-target="#prewiewProfile"
-                    class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2">Save </button>
+                    class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2">{{'SAVE' | translate}} </button>
                 <button *ngIf="isActive == 'configurations'" (click)="nextStep();"
-                    class="btn btn-sec-bg float-end submit-button px-3 my-2 ml-2 mr-2 ">Skip</button> &nbsp;
+                    class="btn btn-sec-bg float-end submit-button px-3 my-2 ml-2 mr-2 ">{{'SKIP' | translate}}</button> &nbsp;
                 <button *ngIf="isActive == 'create-vc' || isActive == 'ownership'" (click)="nextStep();"
-                    class="btn  float-end btn-primary btn-primary-sm px-3 my-2 ml-2 mr-2">Save as Draft</button>
+                    class="btn  float-end btn-primary btn-primary-sm px-3 my-2 ml-2 mr-2">{{'SAVE_AS_DRAFT' | translate}}</button>
                 &nbsp;
 
             </div>
@@ -512,12 +511,11 @@
         <div class="modal-content">
             <div class="container mt-4">
                 <div class="dialog-box">
-                    <h3 class="heading-del">Do you want to delete</h3>
-                    <h3 class="heading-del">"Education Board" schema?</h3>
+                    <h3 class="heading-del">{{'WANT_TO_DELETE' | translate}}</h3>
+                    <h3 class="heading-del">{{'EDUCATION_BOARD_SCHEMA' | translate}}</h3>
                     <br>
-                    <button type="button" class="cancelbtn" data-dismiss="modal">No, Cancel</button>&nbsp;
-                    <button type="button" class="delbtn" (click)="deleteEntity('', 'delete')" data-dismiss="modal">Yes,
-                        Delete</button>
+                    <button type="button" class="cancelbtn" data-dismiss="modal">{{'NO_CANCEL' | translate}}</button>&nbsp;
+                    <button type="button" class="delbtn" (click)="deleteEntity($event)" data-dismiss="modal">{{'YES_DELETE' | translate}}</button>
                 </div>
             </div>
         </div>

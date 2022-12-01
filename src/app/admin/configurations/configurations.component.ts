@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core'; 
 
 @Component({
   selector: 'configurations',
@@ -8,7 +9,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class ConfigurationsComponent implements OnInit {
   tenantConfigList:  Array<String>;
   @Input() schemaItems;
-  constructor() { 
+  constructor(public translate: TranslateService) { 
     this.tenantConfigList = ['Schema','Workflow','VC Template','Ownership','Roles','Theme']
   }
 

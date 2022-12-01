@@ -194,7 +194,105 @@
   "ANY_EDIT_IN_QR_CODE":"क्यूआर कोड में कोई भी संपादन",
   "WILL_REFLECT_ALL_VC":"सभी कुलपतियों में परिलक्षित होगा",
   "OF_THIS_SCHEMA":"इस स्कीमा का",
-  "VERIFIABLE_CREDENTIAL_TEMPLATE_FOR_ATTESTATION":"सत्यापन के लिए सत्यापन योग्य क्रेडेंशियल टेम्प्लेट"
+  "VERIFIABLE_CREDENTIAL_TEMPLATE_FOR_ATTESTATION":"सत्यापन के लिए सत्यापन योग्य क्रेडेंशियल टेम्प्लेट",
+  "ADD_DOCUMENT":"दस्तावेज़ जोड़ें",
+  "GENERAL_TEMPLATE":"सामान्य टेम्पलेट्स",
+  "A4":"ए4",
+  "DONT_HAVE_TEMPLATES_UPLOAD_SVG_CODE":"आपके पास कोई टेम्प्लेट नहीं है। आप SVG या HTML कोड अपलोड कर सकते हैं",
+  "UPLOAD_TEMPLATE": "टेम्प्लेट अपलोड करें",
+  "PREVIEW":"पूर्वावलोकन",
+  "CREDENTIAL_TEMPLATE":"क्रेडेंशियल टेम्प्लेट",
+  "SCHEMA":"स्कीमा",
+  "SCHEMA_IN_DRAFT_STATUS":"स्कीमा ड्राफ़्ट स्थिति में है",
+  "REVIEW_AND_PUBLISH":"समीक्षा करें और प्रकाशित करें",
+  "TO_EXPLORE_API":"एपीआई एक्सप्लोर करने के लिए",
+  "VIEW_ADD":"देखें/जोड़ें",
+  "VERIFIABLE_CREDENTIAL":"सत्यापन योग्य क्रेडेंशियल",
+  "CERTIFICATE":"प्रमाणपत्र",
+  "GETING_STARTED":"आरंभ करना",
+  "DELETE":"हटाएं",
+  "ADD_SCHEMA":"स्कीमा जोड़ें",
+  "LABEL":"लेबल",
+  "FIELD_TYPE":"फ़ील्ड प्रकार",
+  "MANDATORY":"अनिवार्य",
+  "FIELDS":"फ़ील्ड",
+  "ADD_FIELDS":"फ़ील्ड जोड़ें",
+  "NO_SCHEMA_ADDED":"अभी तक कोई स्कीमा नहीं जोड़ा गया",
+  "ADD_ENTITY_LEVEL_SCHEMA":"कृपया इकाई स्तर स्कीमा जोड़ें। आप सामान्य स्कीमा उदाहरण पता, फ़ील्ड नाम और फ़ील्ड नाम भी जोड़ सकते हैं जिसका उपयोग या अन्य स्कीमा में संदर्भ किया जा सकता है।",
+  "ENTER_SCHEMA_NAME":"स्कीमा नाम दर्ज करें",
+  "ENTER_DESCRIPTION":"विवरण दर्ज करें",
+  "DESCRIPTION_ABOUT_SCHEMA":"स्कीमा के बारे में विवरण",
+  "SAVE_CONFIGURATION":"कॉन्फ़िगरेशन सहेजें",
+  "ENTER_CONFIGURATION_NAME":"कॉन्फ़िगरेशन नाम दर्ज करें",
+  "SAVE_AND_NEXT":"सहेजें और अगला",
+  "SKIP":"छोड़ें",
+  "BACK":"पीछे",
+  "SAVE_AS_DRAFT":"ड्राफ़्ट के रूप में सहेजें",
+  "WANT_TO_DELETE":"क्या आप हटाना चाहते हैं",
+  "EDUCATION_BOARD_SCHEMA":"''शिक्षा बोर्ड' स्कीमा?",
+  "NO_CANCEL":"नहीं, रद्द करें",
+  "YES_DELETE":"हां, हटाएं",
+  "ATTESTATION_WORKFLOW":"सत्यापन कार्यप्रवाह",
+  "WORKFLOW_NAME":"वर्कफ़्लो नाम",
+  "SELECT_ISSUANCE_SYSTEM":"निर्गम प्रणाली का चयन करें",
+  "SUNBIRD_RC_ISSUANCE_SYSTEM":"सनबर्ड आरसी निर्गम प्रणाली",
+  "AUTO_ATTESTATION":"ऑटो अटेस्टेशन",
+  "MANUAL_ATTESTATION":"मैन्युअल अनुप्रमाणन",
+  "ATTESTOR_DETAILS":"प्रमाणक विवरण",
+  "CONDITIONS_FOR_ATTESTOR":"अनुप्रमाणक के लिए शर्तें",
+  "ANY":"कोई भी",
+  "OF_THE_CONDITIONS_BELOW":"नीचे दी गई शर्तों में से",
+  "EQUAL_TO":"इसके बराबर",
+  "ADD_CONDITION":"स्थिति जोड़ें",
+  "ADD_NEXT_ATTESTOR":"अगला अनुप्रमाणक जोड़ें",
+  "ATTRIBUTES_REQUIRED_FOR_ATTESTATION":"सत्यापन के लिए आवश्यक विशेषताएं",
+  "CERTIFICATE_RECORD_DATE_ISSUER_NAME":"प्रमाणपत्र का नाम, रिकॉर्ड का नाम, दिनांक, जारीकर्ता का नाम",
+  "ADD_WORKFLOW":"कार्यप्रवाह जोड़ें",
+  "ATTESTOR":"प्रमाणक"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

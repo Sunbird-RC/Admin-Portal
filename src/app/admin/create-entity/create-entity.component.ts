@@ -55,7 +55,7 @@ export class CreateEntityComponent implements OnInit {
   entityListArr: any = [];
   schemaDefination: any;
   schemaUrl: any;
-  compFieldJson: any;
+  compFieldJson: any = [];
   properties: any;
   json_properties: any;
   actionIs: string;
@@ -1329,7 +1329,7 @@ export class CreateEntityComponent implements OnInit {
         }
 
 
-        if (formioJson[i].validate.required) {
+        if (formioJson[i].hasOwnProperty('validate') && formioJson[i].validate.required) {
           requiredFields.push(formioJson[i].key);
         }
 
@@ -1368,7 +1368,7 @@ export class CreateEntityComponent implements OnInit {
             "$id": "#/properties/" + key,
             "type": (formioJson[i].type == 'textfield') ? "string" : formioJson[i].type,
             "visiblity": visiblityIs,
-            "required": formioJson[i].validate.required,
+            "required": (formioJson[i].hasOwnProperty('validate')) ? formioJson[i].validate.required : false,
             data
           });
 
@@ -1377,8 +1377,8 @@ export class CreateEntityComponent implements OnInit {
 
     }
 
-    this.usecaseSchema[this.activeMenuNo].definitions.data = tempFieldObjSec;
-    this.usecaseSchema[this.activeMenuNo].definitions.required = requiredFields;
+    this.usecaseSchema[this.activeMenuNo].definitions['data'] = tempFieldObjSec;
+    this.usecaseSchema[this.activeMenuNo].definitions['required'] = requiredFields;
 
     if (this.usecaseSchema[this.activeMenuNo].hasOwnProperty('isRefSchema') && this.usecaseSchema[this.activeMenuNo].isRefSchema) {
 
@@ -1448,7 +1448,7 @@ export class CreateEntityComponent implements OnInit {
           "type": arrayObj[i].type,
           "multiple": data.hasOwnProperty('multiple') ? data['multiple'] : false,
           "visiblity": visiblityIs,
-          "required": arrayObj[i].validate.required,
+          "required": (arrayObj[i].hasOwnProperty('validate')) ? arrayObj[i].validate.required : false,
           data
         })
     };

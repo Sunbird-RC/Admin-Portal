@@ -154,6 +154,17 @@ export class GeneralService {
     })).subscribe((result: any) => {
     });
   }
+
+
+  deleteData(url, id)
+  {
+    url = `${this.baseUrl}${url}/${id}`
+    const req = {
+      url: url
+    };
+
+    return this.dataService.delete(req);
+  }
   
 }
 

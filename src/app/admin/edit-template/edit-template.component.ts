@@ -4,6 +4,7 @@ import { AnyARecord } from 'dns';
 import { map } from 'rxjs/operators';
 import { GeneralService } from 'src/app/services/general/general.service';
 declare var grapesjs: any;
+import { TranslateService } from '@ngx-translate/core'; 
 
 
 import 'grapesjs-preset-webpage';
@@ -30,11 +31,9 @@ export class EditTemplateComponent implements OnInit {
   issuerOsid: string;
   oldTemplateName: string;
   description: any;
-  items: any;
   private editor: any = '';
   schemaDiv = false;
   htmlDiv = true;
-  data1;
   demoBaseConfig: {
     width: number; height: number; resize: boolean; autosave_ask_before_unload: boolean; codesample_dialog_width: number; codesample_dialog_height: number; template_popup_width: number; template_popup_height: number; powerpaste_allow_local_images: boolean; plugins: string[]; //removed:  charmap insertdatetime print
     external_plugins: { mentions: string; }; templates: { title: string; description: string; content: string; }[]; toolbar: string; content_css: string[];
@@ -48,7 +47,7 @@ export class EditTemplateComponent implements OnInit {
   usecase: any;
   schemaOsid: string;
 
-  constructor(public router: Router, public route: ActivatedRoute, public toastMsg: ToastMessageService,
+  constructor(public router: Router, public route: ActivatedRoute, public toastMsg: ToastMessageService,public translate: TranslateService,
     public generalService: GeneralService, public schemaService: SchemaService) {
 
     this.editorOptions = new JsonEditorOptions()

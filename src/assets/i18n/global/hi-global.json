@@ -191,8 +191,8 @@
   "DESCRIPTION":"विवरण",
   "VERIFIABLE_CREDENTIAL_TEMPLATE":"सत्यापन योग्य क्रेडेंशियल टेम्प्लेट",
   "ADD_TEMPLATE":"टेम्प्लेट जोड़ें",
-  "ANY_EDIT":"क्यूआर कोड में कोई भी संपादन",
-  "WILL_REFLECT":"सभी कुलपतियों में परिलक्षित होगा",
+  "ANY_EDIT_IN_QR_CODE":"क्यूआर कोड में कोई भी संपादन",
+  "WILL_REFLECT_ALL_VC":"सभी कुलपतियों में परिलक्षित होगा",
   "OF_THIS_SCHEMA":"इस स्कीमा का",
   "VERIFIABLE_CREDENTIAL_TEMPLATE_FOR_ATTESTATION":"सत्यापन के लिए सत्यापन योग्य क्रेडेंशियल टेम्प्लेट"
 

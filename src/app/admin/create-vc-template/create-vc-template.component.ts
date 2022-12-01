@@ -3,7 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { SchemaService } from '../../services/data/schema.service';
 import { GeneralService } from 'src/app/services/general/general.service';
-
+import { TranslateService } from '@ngx-translate/core'; 
+import { AppConfig } from 'src/app/app.config';
 @Component({
   selector: 'create-vc-template',
   templateUrl: './create-vc-template.component.html',
@@ -22,26 +23,30 @@ export class CreateVcTemplateComponent implements OnInit {
   items:any = []
   userHtml1;
   credTemp : any = []
+  baseUrl = this.config.getEnv('baseUrl');
+
   constructor(
     private activeRoute: ActivatedRoute,
     public router: Router,
     public location: Location,
     public schemaService: SchemaService,
-    public generalService: GeneralService
+    public generalService: GeneralService,
+    public translate: TranslateService,
+    private config: AppConfig
   ) { }
 
   ngOnInit() {
 
     this.generalService.getData('/Schema').subscribe((res) => {
       this.readSchema(res);
-      console.log(this.items);
+     
       this.getCredTemplate();
       
       this.injectHTML();
      });
     this.activeRoute.params.subscribe(params => {
       this.params = params;
-      console.log({ params });
+   
 
       if (this.params.hasOwnProperty('usecase')) {
         this.usecase = params.usecase;
@@ -82,7 +87,7 @@ export class CreateVcTemplateComponent implements OnInit {
             self.schemaName = key;
             self.vcObject = schemaVc[key];         
             self.thumbnailItems.push({
-              "thumbnailUrl": "/assets/images/thumbnail2.png",
+              "thumbnailUrl": "/assets/images/thumbnail.png",
               "title": self.vcObject.name,
               "description": self.vcObject.description,
               "html": self.vcObject.html,
@@ -113,9 +118,6 @@ export class CreateVcTemplateComponent implements OnInit {
 
   getCredTemplate(){
    
-    console.log(this.entityName);
-
-   
     for(let i =0; i < this.items.length; i++)
     {
       if(this.items[i]["name"] == this.entityName)
@@ -125,8 +127,7 @@ export class CreateVcTemplateComponent implements OnInit {
         let c = b.toString();
         let d = c.split("Schema/");
 
-        let nUrl =  "http://localhost:4200/registry/api/v1/Schema/"+ d[1];
-         fetch(nUrl)
+         fetch(this.baseUrl+ '/Schema/' + d[1])
          .then(response => response.text())
          .then(data => {
           this.userHtml1 = data; 

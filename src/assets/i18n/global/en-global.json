@@ -192,8 +192,8 @@
     "DESCRIPTION":"Description",
     "VERIFIABLE_CREDENTIAL_TEMPLATE":"Verifiable Credential Template",
     "ADD_TEMPLATE":"Add Template",
-    "ANY_EDIT":"Any edit in QR code",
-    "WILL_REFLECT":"will refelect in all VCs",
+    "ANY_EDIT_IN_QR_CODE":"Any edit in QR code",
+    "WILL_REFLECT_ALL_VC":"will refelect in all VCs",
     "OF_THIS_SCHEMA":"of this schema",
     "VERIFIABLE_CREDENTIAL_TEMPLATE_FOR_ATTESTATION":"Verifiable Credential Template for Attestation"
 

@@ -4,6 +4,7 @@ import { AnyARecord } from 'dns';
 import { map } from 'rxjs/operators';
 import { GeneralService } from 'src/app/services/general/general.service';
 declare var grapesjs: any;
+import { TranslateService } from '@ngx-translate/core'; 
 
 
 import 'grapesjs-preset-webpage';
@@ -30,11 +31,9 @@ export class EditTemplateComponent implements OnInit {
   issuerOsid: string;
   oldTemplateName: string;
   description: any;
-
   private editor: any = '';
   schemaDiv = false;
   htmlDiv = true;
-
   demoBaseConfig: {
     width: number; height: number; resize: boolean; autosave_ask_before_unload: boolean; codesample_dialog_width: number; codesample_dialog_height: number; template_popup_width: number; template_popup_height: number; powerpaste_allow_local_images: boolean; plugins: string[]; //removed:  charmap insertdatetime print
     external_plugins: { mentions: string; }; templates: { title: string; description: string; content: string; }[]; toolbar: string; content_css: string[];
@@ -48,15 +47,13 @@ export class EditTemplateComponent implements OnInit {
   usecase: any;
   schemaOsid: string;
 
-  constructor(public router: Router, public route: ActivatedRoute, public toastMsg: ToastMessageService,
+  constructor(public router: Router, public route: ActivatedRoute, public toastMsg: ToastMessageService,public translate: TranslateService,
     public generalService: GeneralService, public schemaService: SchemaService) {
 
     this.editorOptions = new JsonEditorOptions()
-    // this.editorOptions.modes = ['code']; // set all allowed modes
-
+  
     this.editorOptions.mode = 'code';
     this.editorOptions.history = true;
-    // this.editorOptions.onChange = () => console.log(this.jsonEditor.get());
     this.editorOptions.onChange = () => this.jsonEditor.get();
 
     this.userHtml = '';
@@ -72,8 +69,7 @@ export class EditTemplateComponent implements OnInit {
 
     this.route.params.subscribe(params => {
       this.params = params;
-      console.log({ params });
-
+  
       if (this.params.hasOwnProperty('usecase')) {
         this.usecase = params.usecase;
         this.entityName = params.entity;
@@ -88,8 +84,6 @@ export class EditTemplateComponent implements OnInit {
 
     this.route.params.subscribe(params => {
       this.params = params;
-      console.log({ params });
-
       if (this.params.hasOwnProperty('entity')) {
         this.entityName = params.entity;
         this.usecase = params.usecase.toLowerCase();
@@ -98,7 +92,6 @@ export class EditTemplateComponent implements OnInit {
     });
 
     await this.readHtmlSchemaContent(this.sampleData);
-    console.log(this.userHtml);
     this.grapesJSDefine();
     /* ------END-------------------------Advance Editor ----------------------- */
 
@@ -114,13 +107,6 @@ export class EditTemplateComponent implements OnInit {
       panelManager.removeButton('options', 'gjs-toggle-images');
       panelManager.removeButton('options', 'gjs-open-import-webpage');
       panelManager.removeButton('options', 'undo');
-
-
-      // panelManager.removeButton("views", "open-layers");
-      // panelManager.removeButton("views", "settings");
-      //sw-visibility
-
-
       const um = this.editor.UndoManager;
       um.clear();
     })
@@ -354,32 +340,27 @@ export class EditTemplateComponent implements OnInit {
   }
 
   async readHtmlSchemaContent(doc) {
+   this.userHtml = doc;
+   await this.generalService.getData('/Schema').subscribe((res) => {
+          for(let i =0; i < res.length; i++)
+          {
+            if(res[i]["name"] == this.entityName)
+            {
 
-    this.userHtml = doc;
-   
-
-    let draftSchemaOsid = JSON.parse(localStorage.getItem('draftSchemaOsid'));
-
-    for (let i = 0; i < draftSchemaOsid.length; i++) {
-      if (draftSchemaOsid[i].title == this.entityName) {
-        this.schemaOsid = draftSchemaOsid[i].osid;
-
-        this.generalService.getData('/Schema/' + this.schemaOsid).subscribe((res) => {
-          let data = JSON.parse(res['schema']);
-          this.certificateTitle = res['name'];
-          this.userJson = data;
+              this.schemaOsid = res[i].osid;
+              this.generalService.getData('/Schema/' + this.schemaOsid).subscribe((response) => {
+                let data = JSON.parse(response['schema']);
+                this.certificateTitle = response['name'];
+                this.userJson = data;
+              });
+            
+            }
+      
+          }
+         
         });
-
-      }
-    }
-
-    // await fetch(doc.certificateUrl)
-    //   .then(response => response.text())
-    //   .then(data => {
-    //     this.userHtml = data;
-    //   });
+      
   }
-
 
   addCrtTemplateFields111(userJson) {
     let url = this.userJson['_osConfig']['credentialTemplate'];
@@ -405,7 +386,7 @@ export class EditTemplateComponent implements OnInit {
       if (temp[key].type == 'string' || temp[key].type == 'number') {
         propertyName = "{{credentialSubject." + key + "}}";
         let isRequire = required.includes(key) ? true : false;
-        console.log(propertyName);
+      
         _self.propertyArr.push({ 'propertyTag': propertyName, 'require': isRequire });
 
 
@@ -416,7 +397,7 @@ export class EditTemplateComponent implements OnInit {
 
           propertyName = "{{credentialSubject." + key2 + "}}";
           let isRequire = objProReq.includes(key2) ? true : false;
-          console.log(propertyName);
+         
           _self.propertyArr.push({ 'propertyTag': propertyName, 'require': isRequire });
         })
       } else if (temp[key].type == 'array') {
@@ -456,15 +437,13 @@ export class EditTemplateComponent implements OnInit {
     } else {
 
       certTmpJson = certTmpJson['credentialSubject'];
-      console.log(certTmpJson['credentialSubject']);
-
+   
       if (this.schemaContent) {
         let _self = this;
         let propertyData = this.schemaContent.definitions[this.certificateTitle].properties;
         let contextJson = this.schemaContent._osConfig.credentialTemplate["@context"][1]["@context"];
         Object.keys(propertyData).forEach(function (key) {
-          console.log({ key });
-
+       
           if (key != 'name') {
             if (propertyData[key].type == 'string' || propertyData[key].type == 'number') {
               certTmpJson[key] = "{{" + key + "}}";
@@ -478,8 +457,7 @@ export class EditTemplateComponent implements OnInit {
             } else if (propertyData[key].type == 'object') {
               let objPro = propertyData[key].properties;
               Object.keys(objPro).forEach(function (key2) {
-                console.log({ key2 });
-
+              
                 certTmpJson[key2] = "{{" + key + "." + key2 + "}}";
               })
             }
@@ -494,7 +472,6 @@ export class EditTemplateComponent implements OnInit {
 
   async submit() {
    this.generalService.getData('/Schema/' + this.schemaOsid).subscribe((res) => {
-      console.log({ res });
       let data = JSON.parse(res['schema']);
       this.certificateTitle = res['name'];
       this.userJson = data;
@@ -531,21 +508,14 @@ export class EditTemplateComponent implements OnInit {
     // Store form name as "file" with file data
     formData.append("files", fileObj, fileObj.name);
     this.generalService.postData('/Schema/' + this.schemaOsid + '/certificateTemplate/documents', formData).subscribe((res) => {
-
-      console.log({ res });
       this.schemaContent._osConfig['certificateTemplates'] = { [this.templateName]: 'minio://' + res.documentLocations[0] }
-
-       let result = this.schemaContent;
-
+      let result = this.schemaContent;
       let payload = {
         "schema": JSON.stringify(result)
       }
 
      this.generalService.putData('/Schema/', this.schemaOsid, payload).subscribe((res) => {
-        console.log({res});
-
         this.router.navigate(['/create/2/' + this.usecase + '/' + this.entityName]);
-
       });
     });
   });

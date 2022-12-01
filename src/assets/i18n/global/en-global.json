@@ -183,7 +183,21 @@
     "ANYONE" : "Anyone",
     "SOMETHING_WENT_WRONG": "Something went wrong while uploading files, please try again",
     "DEMO":"This is a demo of the Education Portal. Check documentation",
-    "HERE" : "here"
+    "HERE" : "here",
+    "EDIT_TEMPLATE":"Edit Template",
+    "ADVANCE_EDITOR":"Advance Editor",
+    "SAVE_DOCUMENT": "Save document",
+    "HTML":"HTML",
+    "JSON_SCHEMA":"JSON Schema",
+    "DESCRIPTION":"Description",
+    "VERIFIABLE_CREDENTIAL_TEMPLATE":"Verifiable Credential Template",
+    "ADD_TEMPLATE":"Add Template",
+    "ANY_EDIT_IN_QR_CODE":"Any edit in QR code",
+    "WILL_REFLECT_ALL_VC":"will refelect in all VCs",
+    "OF_THIS_SCHEMA":"of this schema",
+    "VERIFIABLE_CREDENTIAL_TEMPLATE_FOR_ATTESTATION":"Verifiable Credential Template for Attestation"
+
+
 
     
 }

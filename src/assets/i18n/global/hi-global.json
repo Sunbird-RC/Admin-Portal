@@ -182,7 +182,26 @@
   "ANYONE" : "कोई भी",
   "SOMETHING_WENT_WRONG": "फ़ाइल अपलोड करते समय कुछ गलत हुआ, कृपया पुनः प्रयास करें",
   "DEMO":"यह एजुकेशन पोर्टल का डेमो है। दस्तावेज़ीकरण की जाँच करें",
-  "HERE" : "यहां"
+  "HERE" : "यहां",
+  "EDIT_TEMPLATE":"टेम्पलेट संपादित करें",
+  "ADVANCE_EDITOR":"अग्रिम संपादक",
+  "SAVE_DOCUMENT": "दस्तावेज़ सहेजें",
+  "HTML":"एचटीएमएल",
+  "JSON_SCHEMA":"JSON स्कीमा",
+  "DESCRIPTION":"विवरण",
+  "VERIFIABLE_CREDENTIAL_TEMPLATE":"सत्यापन योग्य क्रेडेंशियल टेम्प्लेट",
+  "ADD_TEMPLATE":"टेम्प्लेट जोड़ें",
+  "ANY_EDIT_IN_QR_CODE":"क्यूआर कोड में कोई भी संपादन",
+  "WILL_REFLECT_ALL_VC":"सभी कुलपतियों में परिलक्षित होगा",
+  "OF_THIS_SCHEMA":"इस स्कीमा का",
+  "VERIFIABLE_CREDENTIAL_TEMPLATE_FOR_ATTESTATION":"सत्यापन के लिए सत्यापन योग्य क्रेडेंशियल टेम्प्लेट"
+
+
+
+
+
+
+
 
 
 }

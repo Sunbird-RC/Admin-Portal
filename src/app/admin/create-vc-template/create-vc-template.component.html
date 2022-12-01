@@ -4,68 +4,55 @@
   <div>
    
     <div class="mb-3 mt-1">
-      <span class="p16 fw-bold">Verifiable Credential Template</span>
-      <!-- <a href="/add-template/{{usecase}}/{{entityName}}" class="p14 btn btn-sec-bg submit-button text-secondary-color float-end"><i class="fa fa-plus" aria-hidden="true"></i> &nbsp; Add Template</a>  -->
-     
+      <span class="p16 fw-bold">{{'VERIFIABLE_CREDENTIAL_TEMPLATE' | translate}}</span>
     </div>
       
-    <!-- <div class="dropdown">
-      <a href="/add-template/{{usecase}}/{{entityName}}" class="p14 dropbtn btn btn-sec-bg submit-button text-secondary-color float-end"><i class="fa fa-plus" aria-hidden="true"></i> &nbsp; Add Template</a> 
-   
-      <div class="dropdown-content">
-        <a href="#">Add Verifiable Presentation</a>
-        <a href="#">Add Credential JSON Editor</a>
-        <a href="#">Add Credential (URL)</a>
-      </div>
-    </div> -->
    
    
     <div class="card w-100" *ngIf = "isShow1">
       <div class="ml-1 p-3 w-100">
         <div class="img-hold">
-          
-            <div class="btn img-ht">
-            <div class="thmbCol">
-                  <div class="pt-c">
-                    <a href="/add-template/{{usecase}}/{{entityName}}" class="btn submit-button pt-c">
-                     <i class="fa fa-plus text-secondary-color pt-c" aria-hidden="true"></i>
-                    </a>
-                  </div>
-                  <div class="ft-12">
-                    <b>Add Template</b>
-                  </div>
-                  <div class="ft-10 thmbCol2">
-                     <div>
-                      Any edit in QR code 
-                     </div>
-                     <div>
-                      will refelect in all VCs 
-                     </div>
-                     <div>
-                      of this schema
-                     </div>
-                  </div>
+          <div class="thmbCol" *ngFor="let item of credTemp" > 
+            <div class="wrap">
+              <iframe id="iframe1"   class="iframe-container embed-responsive-item"></iframe>
             </div>
-            </div>
-            <div class="thmbCol" *ngFor="let item of thumbnailItems" > 
-              <img height="190px" width="130px" class="templateThumb img-fluid" src="{{item?.thumbnailUrl}}" /> 
-               <div class="l12 fw-bold">{{item?.title}}</div> 
-             
+            <div class="l12 fw-bold">{{item?.title}}</div>  
           </div> 
+        
+          <div class="btn img-ht">
+            <div class="thmbCol">
+                <div class="pt-c">
+                  <a href="/add-template/{{usecase}}/{{entityName}}" class="btn submit-button pt-c">
+                     <i class="fa fa-plus text-secondary-color pt-c" aria-hidden="true"></i>
+                  </a>
+                </div>
+                <div class="ft-12">
+                  <b>{{'ADD_TEMPLATE' | translate}}</b>
+                </div>
+                <div class="ft-10 thmbCol2">
+                  <div>
+                    {{'ANY_EDIT_IN_QR_CODE' | translate}}
+                  </div>
+                  <div>
+                    {{'WILL_REFLECT_ALL_VC' | translate}}
+                  </div>
+                  <div>
+                    {{'OF_THIS_SCHEMA' | translate}}
+                   </div>
+              </div>
+            </div>
+          </div>
         </div>
    
       </div>
-      <div class="pt-2 ms-3 mb-3">
-       
-
-      </div>
+     <div class="pt-2 ms-3 mb-3"></div>
     </div>
     
   </div>
 
 
   <div class="mt-4" *ngIf = "isShow2">
-    <p class="p16 fw-bold">Verifiable Credential Template for Attestation </p>
+    <p class="p16 fw-bold">{{'VERIFIABLE_CREDENTIAL_TEMPLATE_FOR_ATTESTATION' | translate}}</p>
     <!-- <p class="p16 fw-bold">Select the workflow name (thats previous screen) -> template</p> -->
   </div>
   <div class="card w-100" *ngIf = "isShow2">
@@ -74,7 +61,7 @@
         <img *ngFor="let item of thumbnailItems" height="190px" width="130px" class="templateThumb img-fluid" src="{{item?.thumbnailUrl}}" />
       </div>
       <!-- <div class="l12 fw-bold" *ngIf="item?.title">{{item?.title}}</div> -->
-      <div class="l12 fw-bold">Volunteering Certificate</div>
+      <!-- <div class="l12 fw-bold">Volunteering Certificate</div> -->
     </div>
     <div class="pt-2 ms-3 mb-3">
       <!-- <button class=" p14 btn btn-sec-bg submit-button text-secondary-color" href="/add-template"><i class="fa fa-plus"

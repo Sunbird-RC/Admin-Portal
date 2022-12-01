@@ -57,3 +57,19 @@ font-size: 10px;
 .pt-c{
     cursor: pointer;
 }
+
+
+.wrap{
+    width: 130px !important;
+    height: 190px !important;
+    overflow: hidden;
+
+}
+
+#iframe1{
+   height: 430%;
+   width: 325%;
+   overflow: hidden;
+   transform: scale(0.32,0.3); 
+    transform-origin: 0 0;
+}

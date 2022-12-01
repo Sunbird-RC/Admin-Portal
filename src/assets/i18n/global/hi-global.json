@@ -247,7 +247,9 @@
   "ADD_NEXT_ATTESTOR":"अगला अनुप्रमाणक जोड़ें",
   "ATTRIBUTES_REQUIRED_FOR_ATTESTATION":"सत्यापन के लिए आवश्यक विशेषताएं",
   "CERTIFICATE_RECORD_DATE_ISSUER_NAME":"प्रमाणपत्र का नाम, रिकॉर्ड का नाम, दिनांक, जारीकर्ता का नाम",
-  "ADD_WORKFLOW":"कार्यप्रवाह जोड़ें"
+  "ADD_WORKFLOW":"कार्यप्रवाह जोड़ें",
+  "ATTESTOR":"प्रमाणक"
+
 
 
 

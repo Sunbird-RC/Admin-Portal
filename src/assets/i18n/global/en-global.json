@@ -248,7 +248,8 @@
     "ADD_NEXT_ATTESTOR":"Add next attestor",
     "ATTRIBUTES_REQUIRED_FOR_ATTESTATION":"Attributes required for attestation",
     "CERTIFICATE_RECORD_DATE_ISSUER_NAME":"Certificate Name, Record Name, Date, Issuer Name",
-    "ADD_WORKFLOW":"Add Workflow"
+    "ADD_WORKFLOW":"Add Workflow",
+    "ATTESTOR":"Attestor"
 
 
 

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'ownership',
@@ -11,7 +12,8 @@ export class OwnershipComponent implements OnInit {
   isSettingMenu: boolean = false;
 
   constructor(
-    private activeRoute: ActivatedRoute
+    private activeRoute: ActivatedRoute,
+    public translate: TranslateService
   ) { }
 
   ngOnInit(): void {

@@ -2,17 +2,17 @@
   <div class="wrapped mp-0" *ngIf="!isShow">
     <div class="card" style="width: 450px; height: 299px">
       <div class="card-body" style="margin: 10%; padding: 5%">
-        <p class="wrapped bTitle">Publish to Explore APIs</p>
+        <p class="wrapped bTitle">{{PUBLISH_TO_EXPLORE_APIS | translate}}</p>
         <div class="card-text lh-lg p14 wrapped">
-          If you have completed the schema configuration,
+          {{'HAVE_COMPLETED_SCHEMA_CONFIGURATION' | translate}}
         </div>
         <div class="card-text lh-lg p14 wrapped">
-          click publish to explore API.
+          {{'CLICK_PUBLISH_TO_EXPLORE_API' | translate}}
         </div>
 
         <div class="mt-4 wrapped">
           <a class="float-end p14 btn btn-primary" (click)="changeVal()"
-            >Publish</a
+            >{{'PUBLISH' | translate}}</a
           >
         </div>
       </div>
@@ -22,13 +22,13 @@
   <div class="wrapped mt-2" *ngIf="!isShow">
     <div class="card" style="width: 450px; height: 299px">
       <div class="card-body" style="margin: 10%; padding: 5%">
-        <p class="wrapped bTitle">Save to Publish Later</p>
+        <p class="wrapped bTitle">{{'SAVE_TO_PUBLISH_LATER' | translate}}</p>
         <div class="card-text lh-lg p14 wrapped">
-          You can save schema configuration as draft
+          {{'SAVE_SCHEMA_CONFIGURATION_AS_DRAFT' | translate}}
         </div>
-        <div class="card-text lh-lg p14 wrapped">and publish it later.</div>
+        <div class="card-text lh-lg p14 wrapped">{{'AND_PUBLISH_IT_LATER' | translate}}</div>
         <div class="mt-4 wrapped">
-          <a href="/home" class="float-end p14 btn btn-primary">Save Draft</a>
+          <a href="/home" class="float-end p14 btn btn-primary">{{'SAVE_DRAFT' | translate}}</a>
         </div>
       </div>
     </div>
@@ -37,13 +37,13 @@
   <div class="wrapped mt-2" *ngIf="isShow">
     <div class="card" style="width: 450px; height: 299px">
       <div class="card-body" style="margin: 10%; padding: 5%">
-        <p class="wrapped bTitle">Schema is Published</p>
+        <p class="wrapped bTitle">{{'SCHEMA_IS_PUBLISHED' | translate}}</p>
         <div class="card-text lh-lg p14 wrapped">
-          <a routerLink="/explore-api" target="_blank">Explore API here</a>
+          <a routerLink="/explore-api" target="_blank">{{'EXPLORE_API_HERE' | translate}}</a>
         </div>
         <div class="mt-4 wrapped">
           <a href="/home" class="float-end p14 btn btn-primary"
-            >Go to Dashboard</a
+            >{{'GO_TO_DASHBOARD' | translate}}</a
           >
         </div>
       </div>
@@ -53,21 +53,21 @@
 
 <!-- -----------Publish Table------------------- -->
 <br>
-<div class="publishHeading">Publish</div>
+<div class="publishHeading">{{'PUBLISH' | translate}}</div>
 <br>
 <table class="table">
   <tr>
-    <th><b>Schema</b></th>
-    <th><b>Last Updated</b></th>
+    <th><b>{{'SCHEMA' | translate}}</b></th>
+    <th><b>{{'LAST_UPDATE' | translate}}</b></th>
   </tr>
 
   <tr *ngFor="let item of publishData; let i=index" >
     <td scope="col">{{item.name}}</td>
     <td>{{item.osUpdatedAt | date}}</td>
     <td>
-      <button type="button" class="publishedbtn" *ngIf="item.status== 'PUBLISHED'">Published</button>
-      <button type="button" class="draftbtn" *ngIf="item.status== 'DRAFT'">Draft</button>
-      <button type="button" class="publishbtn" *ngIf="item.status== 'DRAFT'" (click)="changeStatus(item.osid, i)">Publish</button>
+      <button type="button" class="publishedbtn" *ngIf="item.status== 'PUBLISHED'">{{'PUBLISHED' | translate}}</button>
+      <button type="button" class="draftbtn" *ngIf="item.status== 'DRAFT'">{{'DRAFT' | translate}}</button>
+      <button type="button" class="publishbtn" *ngIf="item.status== 'DRAFT'" (click)="changeStatus(item.osid, i)">{{'PUBLISH' | translate}}</button>
     </td>
   </tr>
 </table>

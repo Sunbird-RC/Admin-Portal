@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-dlogin',
@@ -17,7 +18,9 @@ export class DloginComponent implements OnInit {
     menus: any;
     an_menus: any;
     currentMenu: number = 0;
-  constructor(private activeRoute: ActivatedRoute) {  }
+  constructor(
+    private activeRoute: ActivatedRoute,
+    public translate: TranslateService) {  }
 
   ngOnInit(): void {
   

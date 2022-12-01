@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'test-and-launch',
@@ -12,7 +13,7 @@ export class TestAndLaunchComponent implements OnInit {
   schemaName: string;
   vcObject: any;
   thumbnailItems: any = []
-  constructor(private router: Router) { }
+  constructor(private router: Router, public translate: TranslateService) { }
 
   ngOnInit(): void {
 

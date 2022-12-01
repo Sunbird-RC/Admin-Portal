@@ -200,14 +200,11 @@
   "A4":"ए4",
   "DONT_HAVE_TEMPLATES_UPLOAD_SVG_CODE":"आपके पास कोई टेम्प्लेट नहीं है। आप SVG या HTML कोड अपलोड कर सकते हैं",
   "UPLOAD_TEMPLATE": "टेम्प्लेट अपलोड करें",
-  "PREVIEW":"पूर्वावलोकन",
   "CREDENTIAL_TEMPLATE":"क्रेडेंशियल टेम्प्लेट",
-  "SCHEMA":"स्कीमा",
   "SCHEMA_IN_DRAFT_STATUS":"स्कीमा ड्राफ़्ट स्थिति में है",
   "REVIEW_AND_PUBLISH":"समीक्षा करें और प्रकाशित करें",
   "TO_EXPLORE_API":"एपीआई एक्सप्लोर करने के लिए",
   "VIEW_ADD":"देखें/जोड़ें",
-  "VERIFIABLE_CREDENTIAL":"सत्यापन योग्य क्रेडेंशियल",
   "CERTIFICATE":"प्रमाणपत्र",
   "GETING_STARTED":"आरंभ करना",
   "DELETE":"हटाएं",
@@ -232,7 +229,6 @@
   "EDUCATION_BOARD_SCHEMA":"''शिक्षा बोर्ड' स्कीमा?",
   "NO_CANCEL":"नहीं, रद्द करें",
   "YES_DELETE":"हां, हटाएं",
-  "ATTESTATION_WORKFLOW":"सत्यापन कार्यप्रवाह",
   "WORKFLOW_NAME":"वर्कफ़्लो नाम",
   "SELECT_ISSUANCE_SYSTEM":"निर्गम प्रणाली का चयन करें",
   "SUNBIRD_RC_ISSUANCE_SYSTEM":"सनबर्ड आरसी निर्गम प्रणाली",
@@ -248,58 +244,100 @@
   "ATTRIBUTES_REQUIRED_FOR_ATTESTATION":"सत्यापन के लिए आवश्यक विशेषताएं",
   "CERTIFICATE_RECORD_DATE_ISSUER_NAME":"प्रमाणपत्र का नाम, रिकॉर्ड का नाम, दिनांक, जारीकर्ता का नाम",
   "ADD_WORKFLOW":"कार्यप्रवाह जोड़ें",
-  "ATTESTOR":"प्रमाणक"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-}
+  "ATTESTOR":"प्रमाणक",
+  "PUBLISH_TO_EXPLORE_APIS": "एपीआई एक्सप्लोर करने के लिए प्रकाशित करें",
+  "HAVE_COMPLETED_SCHEMA_CONFIGURATION": "यदि आपने स्कीमा कॉन्फ़िगरेशन पूरा कर लिया है,",
+  "CLICK_PUBLISH_TO_EXPLORE_API": "API एक्सप्लोर करने के लिए प्रकाशित करें पर क्लिक करें।",
+  "PUBLISH": "प्रकाशित करें",
+  "SAVE_TO_PUBLISH_LATER": "बाद में प्रकाशित करने के लिए सहेजें",
+  "SAVE_SCHEMA_CONFIGURATION_AS_DRAFT": "आप स्कीमा कॉन्फ़िगरेशन को ड्राफ़्ट के रूप में सहेज सकते हैं",
+  "AND_PUBLISH_IT_LATER": "और इसे बाद में प्रकाशित करें।",
+  "SAVE_DRAFT": "ड्राफ़्ट सहेजें",
+  "SCHEMA_IS_PUBLISHED": "स्कीमा प्रकाशित हो चुकी है",
+  "EXPLORE_API_HERE": "एपीआई को यहां एक्सप्लोर करें",
+  "GO_TO_DASHBOARD": "डैशबोर्ड पर जाएँ",
+  "SCHEMA": "स्कीमा",
+  "LAST_UPDATE": "आखिरी बार अपडेट किया गया",
+  "DASHBOARD": "डैशबोर्ड",
+  "ATTESTATION_WORKFLOW": "प्रमाणन कार्यप्रवाह",
+  "VERIFIABLE_CREDENTIALS": "सत्यापन योग्य क्रेडेंशियल्स",
+  "OWNERSHIP": "स्वामित्व",
+  "ROLES": "भूमिकाएँ",
+  "THEME": "थीम",
+  "HELP": "बचाओ",
+  "ACCOUNT": "खाता",
+  "GET_STARTED": "आरंभ करें",
+  "SETTINGS": "सेटिंग्स",
+  "WORKFLOW": "वर्कफ़्लो",
+  "VC_TEMPLATE": "वीसी टेम्पलेट",
+  "GETTING_STARTED_WITH_SUNBIRD_RC": "सनबर्ड RC के साथ आरंभ करना",
+  "CREATE_YOUR_REGISTRY_CREDENTIALING_PLATFORM": "अपनी रजिस्ट्री और क्रेडेंशियल प्लेटफ़ॉर्म बनाएँ",
+  "NEED_HELP": "मदद चाहिए?",
+  "LEARN_MORE": "और जानें",
+  "WATCH_TRAINING_VIDEO": "प्रशिक्षण वीडियो देखें",
+  "READ_DOCUMENTATION": "दस्तावेज़ पढ़ें",
+  "BUILD_REGISTRY": "बिल्ड रजिस्ट्री",
+  "GET_STARTED_WITH_BUILDING_REGISTRY_ADDITIONAL_MODULES": "रजिस्ट्री बनाने के साथ आरंभ करें। आप रजिस्ट्री में शामिल करने के लिए निम्नलिखित अतिरिक्त मॉड्यूल जोड़ सकते हैं।",
+  "ATTESTATION_CLAIM": "सत्यापन और दावा",
+  "ALLOW_ATTESTATION_CLAIM_AND_ISSUE_VC": "दावे के सत्यापन की अनुमति देने और सत्यापन योग्य क्रेडेंशियल जारी करने के लिए",
+  "VERIFIABLE_CREDENTIAL": "सत्यापन योग्य क्रेडेंशियल",
+  "CREATE_AND_TEST_VC_TEMPLATE": "सत्यापन योग्य क्रेडेंशियल टेम्पलेट बनाएं और उसका परीक्षण करें",
+  "ONBOARD_END_USER_TO_LOGIN_AND_MANAGE_PROFILE_VC": "ऑनबोर्ड अंतिम उपयोगकर्ता के लिए, ताकि वे लॉगिन कर सकें और अपनी प्रोफ़ाइल और VC प्रबंधित कर सकें",
+  "START": "प्रारंभ",
+  "NOT_SURE_HOW_TO_BUILD_REGISTRY_USE_SAMPLE_USE_CASE": "सुनिश्चित नहीं है कि रजिस्ट्री कैसे बनाई जाए? हमारे नमूना उपयोग मामलों का उपयोग करें",
+  "YOUR_SCERNARIO_IS_CLOSE_GET_STARTED_IMMEDIATELY": "यदि आपका परिदृश्य नीचे दिए गए नमूना उपयोग मामलों में से एक के करीब है, तो आप तुरंत आरंभ कर सकते हैं। कृपया ध्यान दें कि आप बाद में अपनी आवश्यकता के अनुसार इन उपयोग मामलों की सेटिंग संपादित कर सकते हैं।",
+  "DIVOC": "डिवोक",
+  "REGISTRY_CREDENTIALS_FOR_HEALTH_CARE" : "स्वास्थ्य देखभाल और टीकाकरण प्रमाणपत्र जारी करने के लिए रजिस्ट्री और क्रेडेंशियल",
+  "ISSUANCE" : "जारी",
+  "CREDENTIALING_FOR_ISSUERS_TO_CREATE_AND_ISSUE_CERTIFICATE" : "सत्यापित प्रमाणपत्र बनाने और जारी करने के लिए जारीकर्ताओं के लिए साख",
+  "EXPERIANCE_DEMO" : "डेमो का अनुभव करें",
+  "GO_BACK" : "वापस जाओ",
+  "ADD_SAMPLE_DATA_TO_TEST_TEMPLATE" : "टेम्प्लेट का परीक्षण करने के लिए नमूना डेटा जोड़ें",
+  "NOTE_SAMPLE_DATA_FOR_TESTING_WILL_NOT_SAVED" : "ध्यान दें कि यह नमूना डेटा परीक्षण के लिए सहेजा नहीं जाएगा",
+  "ISSUER_NAME" : "जारीकर्ता का नाम",
+  "BENEFICIARY_NAME" : "लाभार्थी का नाम",
+  "VACCINATION_DATE" : "टीकाकरण तिथि",
+  "FULLY_VACCINATED" : "पूरी तरह से टीकाकृत",
+  "PARTIALLY_VACCINATED": "आंशिक रूप से टीकाकरण",
+  "NOT_VACCINATED" : "टीकाकृत नहीं",
+  "TEST":"परीक्षण",
+  "VACCINATION_STATUS" : "टीकाकरण स्थिति",
+  "PREVIEW": "पूर्वावलोकन",
+  "PRINT": "प्रिंट",
+  "VERIFY_CERTIFICATE" : "प्रमाणपत्र सत्यापित करें",
+"EDUCATION_RC" : "शिक्षा आरसी",
+  "WELCOME_TO_SUNBIRD_RC_BUILDER" : "सनबर्ड आरसी बिल्डर में आपका स्वागत है",
+  "CREATE_YOUR_REGISTRY_CREDENIALLING_PLATFORM" : "अपनी रजिस्ट्री और क्रेडेंशियल प्लेटफॉर्म बनाएं।",
+  "NEED_HELP_WATCH_TRAINING_READ_DOCUMENTATION" : "सहायता चाहिए? प्रशिक्षण देखें या दस्तावेज़ीकरण पढ़ें",
+  "ENTITY" : "एंटिटी",
+  "FACILITY_CENTER" : "सुविधा केंद्र",
+  "RECORD" : "रिकॉर्ड",
+  "DOCTORS" : "डॉक्टर",
+  "BENEFICIARY" : "लाभार्थी",
+  "STAFF" : "कर्मचारी",
+  "DOCUMENTS_VC" : "दस्तावेज़ (सत्यापित क्रेडेंशियल्स)",
+  "VACCINATION_CERTIFICATE" : "टीकाकरण प्रमाणपत्र",
+  "PROOF_OF_EXPERIANCE" : "अनुभव का प्रमाण",
+  "COMING_SOON" : "जल्द आ रहा है",
+  "WHO_IS_AUTHORISED_FOR_ISSUANCE" : "जारी करने के लिए कौन अधिकृत है?",
+  "ANONYMOUS" : "बेनामी",
+  "ROLE" : "भूमिका",
+  "ADD_ROLE" : "भूमिका जोड़ें",
+  "HOW_CAN_ENTITIES_LOGIN" : "इकाइयां कैसे लॉगिन कर सकती हैं?",
+  "ENTITY_NAME" : "इकाई का नाम:",
+  "EDUCATION_BOARD" : "शिक्षा बोर्ड",
+  "UNIQUE_FIELD" : "अद्वितीय क्षेत्र",
+  "PUBLIC" : "सार्वजनिक",
+  "AUTHENTICATION_TYPE" : "प्रमाणीकरण प्रकार",
+  "OTP" : "ओटीपी",
+  "EMAIL" : "ईमेल",
+  "SELECT_FIELD" : "फ़ील्ड चुनें",
+  "MOBILE_NUMBER" : "मोबाइल नंबर",
+  "EDUCATIONBOARD_EMAIL" : "शिक्षा.ईमेल",
+  "ALTERNATE_LOGIN" : "वैकल्पिक लॉगिन (माता-पिता/गौर्डियन/व्यवस्थापक)",
+  "SELECT_TYPE" : "फ़ील्ड चुनें",
+  "YOU_ARE_READY_AND_CAN_TEST_VERIFIED_CERTIFICATE" : "अब, आप तैयार हैं और सत्यापित प्रमाणपत्र का परीक्षण कर सकते हैं",
+  "SAVED_VC_TEMPLATE" : "सहेजे गए वीसी टेम्पलेट",
+  "EXPLORE_APIS" : "एपीआई एक्सप्लोर करें",
+  "LINKS_TO_INSERTED_EXPLORE_APIS" : "***एपीआई एक्सप्लोर करने के लिए यहां डालने के लिए लिंक***"
+  }

@@ -13,7 +13,7 @@ import { ElementRef, ViewChild } from '@angular/core';
 import { Formio } from 'formiojs';
 import { JsonEditorComponent, JsonEditorOptions } from 'ang-jsoneditor';
 import { Output, EventEmitter } from '@angular/core';
-
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'test-and-verify',
@@ -90,7 +90,7 @@ export class TestAndVerifyComponent implements OnInit {
   usecase: any;
  
 
-  constructor(public router: Router, public route: ActivatedRoute,) { 
+  constructor(public router: Router, public route: ActivatedRoute, public translate: TranslateService) { 
     this.vaccinationStatus = [ "Fully vaccinated", "Partially Vaccinated", "Not Vaccinated" ]
     this.editorOptions = new JsonEditorOptions();
     this.editorOptions.mode = 'code';

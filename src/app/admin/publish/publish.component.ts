@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Console, timeStamp } from "console";
 import { GeneralService } from "src/app/services/general/general.service";
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: "publish",
@@ -11,7 +12,8 @@ export class PublishComponent implements OnInit {
   isShow = false;
   schemaOsid: any;
   publishData: any;
-  constructor(private generalService: GeneralService) { }
+  constructor(private generalService: GeneralService, 
+    public translate: TranslateService) { }
 
   ngOnInit(): void {
     this.generalService.getData("/Schema").subscribe((res) => {

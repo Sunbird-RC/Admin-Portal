@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { WithProperties } from "@angular/elements";
 import { Route } from "@angular/router";
+import { TranslateService } from '@ngx-translate/core';
+
 @Component({
   selector: "get-started",
   templateUrl: "./get-started.component.html",
@@ -13,7 +15,7 @@ export class GetStartedComponent implements OnInit {
   colorBorder: string;
   colorBorder2: string;
 
-  constructor() {}
+  constructor(public translate: TranslateService) {}
 
   ngOnInit(): void {
     localStorage.setItem("schemaParams", "");

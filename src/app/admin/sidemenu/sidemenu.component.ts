@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GeneralService } from 'src/app/services/general/general.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'sidemenu',
@@ -20,7 +21,8 @@ activeMenu: string = '';
   items = []
 constructor(
   private activeRoute: ActivatedRoute,
-  private generalService: GeneralService
+  private generalService: GeneralService,
+  public translate: TranslateService
 ) { }
 
   ngOnInit(): void {

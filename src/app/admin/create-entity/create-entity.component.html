@@ -38,7 +38,7 @@
                                         <div class="dropdown-content dropdown-content-margin">
                                             <a data-toggle="modal" data-target="#addEntity"
                                                 (click)="openEntityModal('edit', i)" class="ml-0">{{'EDIT' | translate}}</a>
-                                            <a data-toggle="modal" data-target="#deleteEntity" class="ml-0">{{'DELETE' | translate}}</a>
+                                            <a data-toggle="modal" data-target="#deleteEntity" (click)="deleteEntity(i, '')" class="ml-0">{{'DELETE' | translate}}</a>
                                         </div>
                                     </div>
                                 </a>
@@ -59,7 +59,7 @@
                                         <div class="dropdown-content dropdown-content-margin">
                                             <a data-toggle="modal" data-target="#addEntity"
                                                 (click)="openEntityModal('edit', i)" class="ml-0">{{'EDIT' | translate}}</a>
-                                            <a data-toggle="modal" data-target="#deleteEntity" class="ml-0">{{'DELETE' | translate}}</a>
+                                            <a data-toggle="modal" data-target="#deleteEntity" (click)="deleteEntity(i, '')" class="ml-0">{{'DELETE' | translate}}</a>
                                         </div>
                                     </div>
                                 </a>
@@ -491,8 +491,8 @@
                 <button (click)="nextStep()" *ngIf="isActive == 'create-vc'"
                     class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2">{{'SAVE_AND_NEXT' | translate}}
                     </button>
-                <button *ngIf="isActive == 'test-publish'" data-toggle="modal" data-target="#prewiewProfile"
-                    class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2">{{'SAVE' | translate}} </button>
+                    <a  href="/home"> <button *ngIf="isActive == 'test-publish'"
+                    class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2">{{'GO_TO_DASHBOARD' | translate}} </button></a>
                 <button *ngIf="isActive == 'configurations'" (click)="nextStep();"
                     class="btn btn-sec-bg float-end submit-button px-3 my-2 ml-2 mr-2 ">{{'SKIP' | translate}}</button> &nbsp;
                 <button *ngIf="isActive == 'create-vc' || isActive == 'ownership'" (click)="nextStep();"

@@ -5,7 +5,7 @@ import { JsonEditorComponent, JsonEditorOptions } from 'ang-jsoneditor';
 import { getLocaleDateFormat } from '@angular/common';
 import { Location } from '@angular/common';
 import { GeneralService } from 'src/app/services/general/general.service';
-import { TranslateService } from '@ngx-translate/core'; 
+import { TranslateService } from '@ngx-translate/core';
 import { ToastMessageService } from '../../services/toast-message/toast-message.service';
 import { exit } from 'process';
 import { ignoreElements, single } from 'rxjs/operators';
@@ -115,6 +115,7 @@ export class CreateEntityComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.usecaseSchema = [];
 
     this.editorOptions = new JsonEditorOptions();
     this.editorOptions.mode = 'code';
@@ -213,8 +214,11 @@ export class CreateEntityComponent implements OnInit {
       this.sideMenu = document.querySelector('#sideMenu');
       this.menus = this.sideMenu.querySelectorAll(".menu");
 
+      this.activeMenuNo = (this.activeMenuNo >= this.menus.length) ? this.activeMenuNo - 1 : this.activeMenuNo;
+
+
       if (this.menus.length) {
-        this.an_menus = this.menus[this.activeMenuNo].querySelectorAll(".a-menu");
+        this.an_menus = this.menus[this.activeMenuNo]?.querySelectorAll(".a-menu");
         this.an_menus[0].classList.add("activeMenu");
       }
     }, 1000);
@@ -233,13 +237,8 @@ export class CreateEntityComponent implements OnInit {
       }
 
       this.processSteps = data['usecase'][this.usecase]['steps'];
+      this.getEntityFields();
 
-      if (!localStorage.getItem('schemaParams') || JSON.parse(localStorage.getItem('schemaParams')).title != this.usecase) {
-        this.getEntityFields();
-      } else {
-        this.usecaseSchema = JSON.parse(localStorage.getItem('schemaParams')).schema;
-        this.getEntityProperties();
-      }
 
     })
   }
@@ -488,6 +487,17 @@ export class CreateEntityComponent implements OnInit {
           if (sProperties.data[i].hasOwnProperty('propertyKey')) {
             let dataObj = this.convertIntoSBRCSchema(sProperties.data[i]);
             this.secFieldObj[sProperties.data[i].propertyKey] = dataObj[sProperties.data[i].propertyKey]
+          }else{
+            let dataObj = sProperties.data[i];
+            this.secFieldObj[dataObj.key] = {
+              "$id": "#/properties/" + dataObj.key,
+              "type": dataObj.type,
+              "title": dataObj.data.title,
+              "required": (dataObj.hasOwnProperty('required')) ? dataObj.required : [],
+            }
+            
+            dataObj[sProperties.data[i].key]
+
           }
         }
 
@@ -897,12 +907,10 @@ export class CreateEntityComponent implements OnInit {
       this['active' + this.currentTab] = true;
       this['active' + (this.currentTab - 1)] = false;
 
-
+      this.location.replaceState('/create/' + this.currentTab + '/' + this.usecase + '/' + this.entityKey);
+    } else {
       this.location.replaceState('/create/' + this.currentTab + '/' + this.usecase + '/' + this.entityKey);
     }
-
-    this.location.replaceState('/create/' + this.currentTab + '/' + this.usecase + '/' + this.entityKey);
-
 
   }
 
@@ -918,12 +926,12 @@ export class CreateEntityComponent implements OnInit {
 
 
       this.location.replaceState('/create/' + this.currentTab + '/' + this.usecase + '/' + this.entityKey);
-      if (localStorage.getItem('schemaParams') && JSON.parse(localStorage.getItem('schemaParams')).title == this.usecase) {
-        this.usecaseSchema = JSON.parse(localStorage.getItem('schemaParams')).schema;
-        this.getEntityProperties();
+    
+      if (this.currentTab == 0) {
+        this.ngOnInit();
       }
 
-    }else{
+    } else {
       this.router.navigateByUrl('/home');
     }
 
@@ -960,8 +968,7 @@ export class CreateEntityComponent implements OnInit {
     this.an_menus[0].classList.add("activeMenu");
     this.entityKey = entitykey;
 
-    this.location.replaceState('/create/' + this.currentTab + '/' + this.usecase + '/' + this.entityKey);
-
+   this.location.replaceState('/create/' + this.currentTab + '/' + this.usecase + '/' + this.entityKey);
     if (this.isShowJson) {
       this.getEntityJson();
     }
@@ -1071,85 +1078,85 @@ export class CreateEntityComponent implements OnInit {
   }
 
   convertSchemaToFormioJson(viewSchemaField) {
- if (viewSchemaField) {
-    let newArr: any = [];
-    for (let i = 0; i < viewSchemaField.length; i++) {
-      if (viewSchemaField[i].type == 'string') {
-        let compJson = {
-          "label": viewSchemaField[i].data.title,
-          "tableView": true,
-         "validate": {
-            "required": viewSchemaField[i].required
-          },
-          "$id": "#/properties/" + viewSchemaField[i].key,
-          "type": (viewSchemaField[i].type == 'string') ? "textfield" : viewSchemaField[i].type,
-          "input": true
-        }
-
-
-        compJson['key'] = (viewSchemaField[i].key == 'textfield') ? (viewSchemaField[i].key + i) : viewSchemaField[i].key;
-
-
-        if (viewSchemaField[i].data.description) {
-          compJson['description'] = viewSchemaField[i].data.description;
-        }
-
-        if (viewSchemaField[i].data.placeholder) {
-          compJson['placeholder'] = viewSchemaField[i].data.placeholder;
-        }
-
-
-        newArr.push(compJson);
-      } else {
-
-        let fieldData = viewSchemaField[i];
-
-        let compJson = {
-          "label": fieldData.propertyName,
-          "tableView": false,
-          "key": fieldData.propertyKey,
-          "type": "container",
-          "input": true,
-          "components": [
-          ]
-        }
-
-        if (fieldData.description) {
-          compJson['description'] = fieldData.description;
-        }
-
-        if (fieldData.placeholder) {
-          compJson['placeholder'] = fieldData.placeholder;
-        }
-
-
-        for (let i = 0; i < fieldData.data.length; i++) {
-          if (fieldData.data[i].type == 'string') {
-            let compJsonS = {
-              "label": fieldData.data[i].data.title,
-              "validate": {
-                "required": fieldData.data[i].required
-              },
-              "tableView": true,
-              "key": fieldData.data[i].key,
-              "$id": "#/properties/" + fieldData.data[i].key,
-              "type": (fieldData.data[i].type == 'string') ? "textfield" : fieldData.data[i].type,
-              "input": true
-            }
-
-            if (fieldData.data[i].data.description) {
-              compJsonS['description'] = fieldData.data[i].data.description;
-            }
-
-            if (fieldData.data[i].data.placeholder) {
-              compJsonS['placeholder'] = fieldData.data[i].data.placeholder;
-            }
-
-            compJson.components.push(compJsonS);
+    if (viewSchemaField) {
+      let newArr: any = [];
+      for (let i = 0; i < viewSchemaField.length; i++) {
+        if (viewSchemaField[i].type == 'string') {
+          let compJson = {
+            "label": viewSchemaField[i].data.title,
+            "tableView": true,
+            "validate": {
+              "required": viewSchemaField[i].required
+            },
+            "$id": "#/properties/" + viewSchemaField[i].key,
+            "type": (viewSchemaField[i].type == 'string') ? "textfield" : viewSchemaField[i].type,
+            "input": true
           }
-        }
 
-        newArr.push(compJson);
+
+          compJson['key'] = (viewSchemaField[i].key == 'textfield') ? (viewSchemaField[i].key + i) : viewSchemaField[i].key;
+
+
+          if (viewSchemaField[i].data.description) {
+            compJson['description'] = viewSchemaField[i].data.description;
+          }
+
+          if (viewSchemaField[i].data.placeholder) {
+            compJson['placeholder'] = viewSchemaField[i].data.placeholder;
+          }
+
+
+          newArr.push(compJson);
+        } else {
+
+          let fieldData = viewSchemaField[i];
+
+          let compJson = {
+            "label": fieldData.propertyName,
+            "tableView": false,
+            "key": fieldData.propertyKey,
+            "type": "container",
+            "input": true,
+            "components": [
+            ]
+          }
+
+          if (fieldData.description) {
+            compJson['description'] = fieldData.description;
+          }
+
+          if (fieldData.placeholder) {
+            compJson['placeholder'] = fieldData.placeholder;
+          }
+
+
+          for (let i = 0; i < fieldData.data.length; i++) {
+            if (fieldData.data[i].type == 'string') {
+              let compJsonS = {
+                "label": fieldData.data[i].data.title,
+                "validate": {
+                  "required": fieldData.data[i].required
+                },
+                "tableView": true,
+                "key": fieldData.data[i].key,
+                "$id": "#/properties/" + fieldData.data[i].key,
+                "type": (fieldData.data[i].type == 'string') ? "textfield" : fieldData.data[i].type,
+                "input": true
+              }
+
+              if (fieldData.data[i].data.description) {
+                compJsonS['description'] = fieldData.data[i].data.description;
+              }
+
+              if (fieldData.data[i].data.placeholder) {
+                compJsonS['placeholder'] = fieldData.data[i].data.placeholder;
+              }
+
+              compJson.components.push(compJsonS);
+            }
+          }
+
+          newArr.push(compJson);
 
       }
 
@@ -1165,7 +1172,7 @@ export class CreateEntityComponent implements OnInit {
     let newArr: any = [];
     for (let i = 0; i < viewSchemaField.length; i++) {
       if (viewSchemaField[i].type == 'string') {
-       
+
         let compJson = this.singleField(viewSchemaField[i]);
 
         compJson['type'] = (viewSchemaField[i].type == 'string') ? "textfield" : viewSchemaField[i].type,
@@ -1270,7 +1277,10 @@ export class CreateEntityComponent implements OnInit {
 
   jsonSchemaData(formioJson) {
 
-    formioJson = this.compFieldJson
+    if (this.compFieldJson) {
+      formioJson = this.compFieldJson;
+    }
+
     let tempFieldObjSec = [];
     let requiredFields = [];
 
@@ -1357,9 +1367,9 @@ export class CreateEntityComponent implements OnInit {
         data = tempjson1;
         let visiblityIs;
         if (!this.usecaseSchema[this.activeMenuNo].hasOwnProperty('isRefSchema') && !this.usecaseSchema[this.activeMenuNo].isRefSchema) {
-         visiblityIs = (!(this.privateFields[this.activeMenuNo]).length && !(this.internalFields[this.activeMenuNo]).length) ? this.setPVisibility() : this.checkVisibility();
-        }else{
-           visiblityIs = 'public';
+          visiblityIs = (!(this.privateFields[this.activeMenuNo]).length && !(this.internalFields[this.activeMenuNo]).length) ? this.setPVisibility() : this.checkVisibility();
+        } else {
+          visiblityIs = 'public';
         }
 
         tempFieldObjSec.push(
@@ -1417,7 +1427,7 @@ export class CreateEntityComponent implements OnInit {
       tempjson1['$id'] = data.hasOwnProperty('$id') ? data['$id'] : '#/properties/' + key;
       tempjson1['type'] = data.hasOwnProperty('type') ? 'string' : 'string'
       tempjson1['title'] = data.hasOwnProperty('label') ? data['label'] : data['title'];
-     
+
       if (data.hasOwnProperty('description') && data.description) {
         tempjson1['description'] = data['description'];
       }
@@ -1544,18 +1554,6 @@ export class CreateEntityComponent implements OnInit {
           tempProperty.definitions = cJson;
 
         }
-
-
-        if (i == this.usecaseSchema.length) {
-
-          let schemaParams = {
-            'title': this.usecase,
-            'schema': tempProperty
-
-          }
-          localStorage.setItem('schemaParams', JSON.stringify(schemaParams));
-
-        }
       }
 
     }
@@ -1580,7 +1578,7 @@ export class CreateEntityComponent implements OnInit {
         tempProperty[i].definitions = cJson;
 
       }
-     
+
       this.isNew = (tempProperty[i].hasOwnProperty('osid') ? false : true);
       this.isStatus = (tempProperty[i].hasOwnProperty('status') ? tempProperty[i].status : '');
 
@@ -1604,12 +1602,13 @@ export class CreateEntityComponent implements OnInit {
 
           
 
-            let schemaParams = {
-              'title': this.usecase,
-              'schema': this.usecaseSchema,
-            }
-            console.log({ schemaParams });
-            localStorage.setItem('schemaParams', JSON.stringify(schemaParams));
+
+            // let schemaParams = {
+            //   'title': this.usecase,
+            //   'schema': this.usecaseSchema,
+            // }
+            // console.log({ schemaParams });
+            // localStorage.setItem('schemaParams', JSON.stringify(schemaParams));
 
             if (i == this.usecaseSchema.length - 1 && !errArr.length) {
               this.saveData();
@@ -1619,7 +1618,7 @@ export class CreateEntityComponent implements OnInit {
             errArr.push(this.usecaseSchema[i].title);
 
             if (errArr.length == 1 && (errArr.includes('Common') || errArr.includes('common'))) {
-             
+
               console.log('err ----', err);
             } else {
               if (i == this.usecaseSchema.length - 1) {
@@ -1634,13 +1633,6 @@ export class CreateEntityComponent implements OnInit {
         } else if (this.isStatus != 'PUBLISHED') {
           this.generalService.putData('/Schema', osid, payload).subscribe((res) => {
 
-            let schemaParams = {
-              'title': this.usecase,
-              'schema': this.usecaseSchema,
-            }
-            console.log({ schemaParams });
-            localStorage.setItem('schemaParams', JSON.stringify(schemaParams));
-
             if (i == this.usecaseSchema.length - 1 && !errArr.length) {
               this.saveData();
               this.nextStep();
@@ -1649,7 +1641,7 @@ export class CreateEntityComponent implements OnInit {
             errArr.push(this.usecaseSchema[i].title);
 
             if (errArr.length == 1 && (errArr.includes('Common') || errArr.includes('common'))) {
-              
+
               console.log('err ----', err);
             } else {
               if (i == this.usecaseSchema.length - 1) {
@@ -1662,6 +1654,11 @@ export class CreateEntityComponent implements OnInit {
 
 
           })
+        } else {
+          if (i == (this.usecaseSchema.length - 1)) {
+            this.nextStep();
+          }
+
         }
       }
     }

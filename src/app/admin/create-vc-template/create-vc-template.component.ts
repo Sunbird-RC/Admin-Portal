@@ -5,6 +5,12 @@ import { SchemaService } from '../../services/data/schema.service';
 import { GeneralService } from 'src/app/services/general/general.service';
 import { TranslateService } from '@ngx-translate/core'; 
 import { AppConfig } from 'src/app/app.config';
+import { KeycloakService } from 'keycloak-angular';
+
+import { Params } from '@angular/router';
+import { NavigationEnd , NavigationStart } from '@angular/router';
+
+
 @Component({
   selector: 'create-vc-template',
   templateUrl: './create-vc-template.component.html',
@@ -21,9 +27,11 @@ export class CreateVcTemplateComponent implements OnInit {
   isShow2: boolean;
   res2: any;
   items:any = []
-  userHtml1;
+  userHtml1 = '';
   credTemp : any = []
   baseUrl = this.config.getEnv('baseUrl');
+  token: any;
+  paramFromRoute: any;
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -32,18 +40,25 @@ export class CreateVcTemplateComponent implements OnInit {
     public schemaService: SchemaService,
     public generalService: GeneralService,
     public translate: TranslateService,
-    private config: AppConfig
-  ) { }
+    private config: AppConfig,
+    public keycloakService: KeycloakService
+  ) { 
+       
+  }
 
   ngOnInit() {
+  
+      this.keycloakService.getToken().then((res)=>{
+        this.token = res;
+    });
 
     this.generalService.getData('/Schema').subscribe((res) => {
       this.readSchema(res);
      
       this.getCredTemplate();
-      
       this.injectHTML();
      });
+
     this.activeRoute.params.subscribe(params => {
       this.params = params;
    
@@ -126,19 +141,23 @@ export class CreateVcTemplateComponent implements OnInit {
         let b = Object.values(a);
         let c = b.toString();
         let d = c.split("Schema/");
+        console.log('this.token -> ', this.token);
 
-         fetch(this.baseUrl+ '/Schema/' + d[1])
-         .then(response => response.text())
-         .then(data => {
-          this.userHtml1 = data; 
-         });
-
-         this.credTemp.push({
+         this.generalService.getText( '/Schema/' + d[1]).subscribe((res)=>{
+          this.userHtml1 = res; 
+          this.credTemp.push({
          
-          "title":Object.keys(a),    
-          "html": this.userHtml1,
-        })
-       
+            "title":Object.keys(a),    
+            "html": res,
+          }, (err)=>{
+            console.log(err);
+          });
+
+         }, (err)=>{
+           console.log({err});
+         })
+
+        
       }
 
     }
@@ -150,16 +169,13 @@ export class CreateVcTemplateComponent implements OnInit {
 
     setTimeout(() => {
       const iframe: HTMLIFrameElement = document.getElementById('iframe1') as HTMLIFrameElement;
+
       var iframedoc;
-     
-      if (iframe.contentDocument) {
+      if (iframe.contentDocument)
         iframedoc = iframe.contentDocument;
-        
-      }
-      else if (iframe.contentWindow) {
+      else if (iframe.contentWindow)
         iframedoc = iframe.contentWindow.document;
   
-      }
 
       if (iframedoc) {
         // Put the content in the iframe

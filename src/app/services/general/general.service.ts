@@ -59,6 +59,22 @@ export class GeneralService {
     return this.dataService.get(req);
   }
 
+  getText(apiUrl, outside: boolean = false) {
+    var url;
+   
+    if (outside) {
+      url = apiUrl;
+    }
+    else {
+      url = `${this.baseUrl}/${apiUrl}`;
+    }
+    url.replace('//', '/');
+    const req = {
+      url: url
+    };
+    return this.dataService.getText(req);
+  }
+
   getPrefillData(apiUrl) {
     var url = apiUrl;
     let headers = new HttpHeaders();

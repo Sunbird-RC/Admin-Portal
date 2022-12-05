@@ -149,8 +149,7 @@ export class CreateVcTemplateComponent implements OnInit {
          
             "title":Object.keys(a),    
             "html": res,
-          }, (err)=>{
-            console.log(err);
+         
           });
 
          }, (err)=>{

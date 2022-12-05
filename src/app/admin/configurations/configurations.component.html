@@ -53,7 +53,7 @@
       </div>
     </div>
 
-    <div class="container white-background">
+    <div class="pl-3 white-background">
       <div class="row gy-3 gx-3">
         <div class="col-10">
           <p class="card-title fw-bold"> {{'VERIFIABLE_CREDENTIAL' | translate}}</p>
@@ -67,16 +67,20 @@
 
       <!-- -->
       <div class="row mt-2">
-        <div class="col-sm-6" *ngFor="let item of schemaItems">
+        <div class="col-sm-5" *ngFor="let item of schemaItems">
           <div
-            *ngIf="
-              item?.schema._osConfig?.certificateTemplates !== undefined ||
-              item?.schema._osConfig?.certificateTemplates !== {}
-            "
-          >
+            *ngIf="(item.schema._osConfig.certificateTemplates | keyvalue)?.length" >
             <div class="card p-3 mb-3">
-              <h5 class="card-title">{{ item?.name }}</h5>
-              <p class="card-text">{{ item?.name }} {{'CERTIFICATE' | translate}}</p>
+            
+              <p class="p16 fw-bold">{{ item?.name }}</p>
+              <div class="d-flex align-items-center">
+               
+                <img src="{{imgUrl}}" class="float-left mr-2  img16" alt="">
+                <span class="fs-14 fw-bold" *ngFor="let certName of item.schema._osConfig.certificateTemplates | keyvalue">
+                  {{certName.key}}
+                </span>
+              
+            </div>
             </div>
           </div>
         </div>

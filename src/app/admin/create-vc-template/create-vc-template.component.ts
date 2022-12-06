@@ -60,7 +60,7 @@ export class CreateVcTemplateComponent implements OnInit, OnChanges {
 
     this.generalService.getData('/Schema').subscribe((res) => {
       this.readSchema(res);
-     
+
       this.getCredTemplate();
       this.injectHTML();
     });
@@ -149,22 +149,26 @@ export class CreateVcTemplateComponent implements OnInit, OnChanges {
     setTimeout(() => {
       let iframe: HTMLIFrameElement = document.getElementById('iframe1') as HTMLIFrameElement;
 
+      if (iframe) {
+        var iframedoc;
+        if (iframe['contentDocument'])
+          iframedoc = iframe.contentDocument;
+        else if (iframe['contentWindow'])
+          iframedoc = iframe.contentWindow.document;
 
-      var iframedoc;
-      if (iframe['contentDocument'])
-        iframedoc = iframe.contentDocument;
-      else if (iframe['contentWindow'])
-        iframedoc = iframe.contentWindow.document;
-
-      if (iframedoc) {
-        // Put the content in the iframe
-        iframedoc.open();
-        iframedoc.writeln(this.userHtml1);
-        iframedoc.close();
+        if (iframedoc) {
+          // Put the content in the iframe
+          iframedoc.open();
+          iframedoc.writeln(this.userHtml1);
+          iframedoc.close();
+        } else {
+          alert('Cannot inject dynamic contents into iframe.');
+        }
       } else {
-        alert('Cannot inject dynamic contents into iframe.');
+        this.injectHTML();
       }
     }, 1000)
+
 
   }
 

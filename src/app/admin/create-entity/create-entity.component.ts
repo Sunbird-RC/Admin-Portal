@@ -183,9 +183,10 @@ export class CreateEntityComponent implements OnInit {
 
         if (i == (res.length - 1)) {
           this.getEntityProperties();
+          this.router.navigateByUrl('/create/' + this.currentTab + '/' + this.usecase + '/' + this.usecaseSchema[i].title);
         }
-      }
 
+      }
     }
   }
 
@@ -488,7 +489,7 @@ export class CreateEntityComponent implements OnInit {
           if (sProperties.data[i].hasOwnProperty('propertyKey')) {
             let dataObj = this.convertIntoSBRCSchema(sProperties.data[i]);
             this.secFieldObj[sProperties.data[i].propertyKey] = dataObj[sProperties.data[i].propertyKey]
-          }else{
+          } else {
             let dataObj = sProperties.data[i];
             this.secFieldObj[dataObj.key] = {
               "$id": "#/properties/" + dataObj.key,
@@ -496,7 +497,7 @@ export class CreateEntityComponent implements OnInit {
               "title": dataObj.data.title,
               "required": (dataObj.hasOwnProperty('required')) ? dataObj.required : [],
             }
-            
+
             dataObj[sProperties.data[i].key]
 
           }
@@ -909,10 +910,10 @@ export class CreateEntityComponent implements OnInit {
       this['active' + (this.currentTab - 1)] = false;
 
       this.location.replaceState('/create/' + this.currentTab + '/' + this.usecase + '/' + this.entityKey);
-    
+
     } else {
       this.location.replaceState('/create/' + this.currentTab + '/' + this.usecase + '/' + this.entityKey);
-    
+
     }
 
   }
@@ -934,7 +935,7 @@ export class CreateEntityComponent implements OnInit {
 
 
       this.location.replaceState('/create/' + this.currentTab + '/' + this.usecase + '/' + this.entityKey);
-    
+
       if (this.currentTab == 0) {
         this.ngOnInit();
       }
@@ -976,7 +977,7 @@ export class CreateEntityComponent implements OnInit {
     this.an_menus[0].classList.add("activeMenu");
     this.entityKey = entitykey;
 
-   this.location.replaceState('/create/' + this.currentTab + '/' + this.usecase + '/' + this.entityKey);
+    this.location.replaceState('/create/' + this.currentTab + '/' + this.usecase + '/' + this.entityKey);
     if (this.isShowJson) {
       this.getEntityJson();
     }
@@ -1166,12 +1167,12 @@ export class CreateEntityComponent implements OnInit {
 
           newArr.push(compJson);
 
+        }
+
       }
 
+      return newArr;
     }
-
-    return newArr;
-   }
 
   }
 
@@ -1515,6 +1516,8 @@ export class CreateEntityComponent implements OnInit {
     this.rawCredentials = {
       "uniqueIndexFields": [],
       "ownershipAttributes": [],
+      "privateFields": [],
+      "internalFields": [],
       "roles": [],
       "inviteRoles": ["anonymous"],
       "enableLogin": false,
@@ -1894,7 +1897,7 @@ export class CreateEntityComponent implements OnInit {
     }
   }
 
-  onVisibilityChange(event, type, j, k, m) {
+  onVisibilityChange(event, oldVisibility, type, j, k, m) {
     let res = this.usecaseSchema[this.activeMenuNo].definitions;
     let fieldName = '';
     let key = '';
@@ -1929,18 +1932,30 @@ export class CreateEntityComponent implements OnInit {
 
     }
 
-    if (event.target.value != 'private') {
-      delete this.privateFields[this.activeMenuNo][fieldName];
-    } else {
-      this.privateFields[this.activeMenuNo].push(fieldName);
-
+    if (oldVisibility == 'private') {
+      let arr = this.privateFields[this.activeMenuNo];
+      this.privateFields[this.activeMenuNo] = arr.filter(item => item !== fieldName);
     }
-    if (event.target.value != 'personal') {
-      delete this.internalFields[this.activeMenuNo][fieldName];
-    } else {
-      this.internalFields[this.activeMenuNo].push(fieldName);
 
+    if (oldVisibility == 'personal') {
+      let arr = this.internalFields[this.activeMenuNo];
+      this.internalFields[this.activeMenuNo] = arr.filter(item => item !== fieldName);
     }
+
+    if (event.target.value == 'private') {
+      if (!this.privateFields[this.activeMenuNo].includes(fieldName)) {
+        this.privateFields[this.activeMenuNo].push(fieldName);
+      }
+    }
+
+    if (event.target.value == 'personal') {
+      if (!this.internalFields[this.activeMenuNo].includes(fieldName)) {
+        this.internalFields[this.activeMenuNo].push(fieldName);
+      }
+    }
+
+    this.usecaseSchema[this.activeMenuNo]['_osConfig']['privateFields'] = this.privateFields[this.activeMenuNo];
+    this.usecaseSchema[this.activeMenuNo]['_osConfig']['internalFields'] = this.internalFields[this.activeMenuNo];
   }
 
 

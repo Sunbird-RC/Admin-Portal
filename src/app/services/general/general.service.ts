@@ -52,6 +52,7 @@ export class GeneralService {
     else {
       url = `${this.baseUrl}/${apiUrl}`;
     }
+    
     url.replace('//', '/');
     const req = {
       url: url

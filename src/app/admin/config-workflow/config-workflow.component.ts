@@ -26,15 +26,16 @@ export class ConfigWorkflowComponent implements OnInit {
   global_tempName_student = "";
 
   constructor(
-    private route: ActivatedRoute,
+    private activeRoute: ActivatedRoute,
     private router: Router,
     public translate: TranslateService,
     public generalService: GeneralService
   ) {
-    this.entityName = this.route.snapshot.params.entity;
   }
 
   ngOnInit(): void {
+
+    this.entityName = this.activeRoute.snapshot.params.entity;
 
     let selectedMenuList: any;
     this.generalService.getData("/Schema").subscribe((res) => {

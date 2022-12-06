@@ -81,6 +81,7 @@
     "random-words": "^1.1.0",
     "redux": "4.0.1",
     "rxjs": "^6.5.4",
+    "spinners-angular": "^0.0.5",
     "swagger-ui": "^3.18.3",
     "swagger-ui-dist": "^3.48.0",
     "tslib": "^2.0.0",

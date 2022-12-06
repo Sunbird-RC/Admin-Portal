@@ -18,7 +18,8 @@ activeMenu: string = '';
   menus: any;
   an_menus: any;
   currentMenu: number = 0;
-  items = []
+  items = [];
+  isLoading : boolean = true;
 constructor(
   private activeRoute: ActivatedRoute,
   private generalService: GeneralService,
@@ -52,6 +53,8 @@ constructor(
         if( !res[i].schema.hasOwnProperty('isRefSchema') &&  !res[i].schema.isRefSchema){
           this.items.push(res[i]);
         }
+
+        this.isLoading = false;
        
       }
      

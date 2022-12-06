@@ -64,7 +64,7 @@
   "MANDATORY":"अनिवार्य",
   "DESCRIPTION":"विवरण",
   "VISIBILITY": "दृश्यता",
-  "yes" : "हाँ",
+  "Yes" : "हाँ",
   "No" : "नहीं", 
   "ADD_FIELDS":"फ़ील्ड जोड़ें",
   "NO_SCHEMA_ADDED":"अभी तक कोई स्कीमा नहीं जोड़ा गया",

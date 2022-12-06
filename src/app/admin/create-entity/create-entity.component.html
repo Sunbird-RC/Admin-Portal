@@ -52,13 +52,13 @@
                     <ul class="list-unstyled components">
                         <ng-template ngFor let-menuItem [ngForOf]="usecaseSchema" let-i="index">
                             <li class="menu" *ngIf="!menuItem['isRefSchema']" (click)="openEntity(i, menuItem?.title)">
-                                <a class="a-menu"> {{menuItem?.title}}
+                                <a class="a-menu" [class.selected]=" menuItem?.title === usecaseSchema[i].title" (click)="onSelect(menuItem?.title);"> {{menuItem?.title}} 
                                     <div *ngIf="isActive == 'createSchema' && menuItem['status'] != 'PUBLISHED'"
                                         class="dropdown p14 float-end">
                                         <i class="fa fa-ellipsis-h text-grey-color" aria-hidden="true"></i>
                                         <div class="dropdown-content dropdown-content-margin">
                                             <a data-toggle="modal" data-target="#addEntity"
-                                                (click)="openEntityModal('edit', i)" class="ml-0">{{'EDIT' | translate}}</a>
+                                           (click)="openEntityModal('edit', i)" class="ml-0">{{'EDIT' | translate}}</a>
                                             <a data-toggle="modal" data-target="#deleteEntity" (click)="deleteEntity(i, '')" class="ml-0">{{'DELETE' | translate}}</a>
                                         </div>
                                     </div>
@@ -381,13 +381,13 @@
                 </div>
             </div>
             <div *ngIf="isActive == 'configurations'">
-                <config-workflow></config-workflow>
+                <config-workflow [usecaseSchema]="usecaseSchemaData"></config-workflow>
             </div>
 
 
 
             <div *ngIf="isActive =='create-vc'">
-                <create-vc-template></create-vc-template>
+                <create-vc-template [usecaseSchema]="usecaseSchemaData"></create-vc-template>
             </div>
 
             <div *ngIf="isActive == 'ownership'">

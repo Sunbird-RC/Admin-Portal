@@ -1,15 +1,15 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, SimpleChanges } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { GeneralService } from "src/app/services/general/general.service";
-import { SchemaService } from "src/app/services/data/schema.service";
-import CommonData from "src/assets/schemas/education/Common.json";
 import { TranslateService } from '@ngx-translate/core'; 
+
 @Component({
   selector: "config-workflow",
   templateUrl: "./config-workflow.component.html",
   styleUrls: ["./config-workflow.component.scss"],
 })
 export class ConfigWorkflowComponent implements OnInit {
+  @Input() usecaseSchema;
   entityName: any;
   schemaName = [];
   schemaName_data = [];
@@ -27,6 +27,7 @@ export class ConfigWorkflowComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     public translate: TranslateService,
     public generalService: GeneralService
   ) {
@@ -34,17 +35,34 @@ export class ConfigWorkflowComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     let selectedMenuList: any;
     this.generalService.getData("/Schema").subscribe((res) => {
       for (let i = 0; i < res.length; i++) {
         this.schemaName.push(JSON.parse(res[i]["schema"]));
-        this.entityList.push(this.schemaName[i]["title"]);
+
+        if(!this.schemaName[i].hasOwnProperty('isRefSchema') && !this.schemaName[i]['isRefSchema'])
+        {
+          this.entityList.push(this.schemaName[i]["title"]);
+        }
+      
         this.fieldList.push(this.schemaName[i]["definitions"]);
         selectedMenuList = this.fieldList.find((e) => e[this.entityName]);
       }
 
       this.onChangeSelect(this.entityName);
     });
+  }
+
+  
+  ngOnChanges(changes: SimpleChanges): void {
+    const latestRequest = changes['usecaseSchema'];
+    if (latestRequest.currentValue) {
+      this.entityName = latestRequest.currentValue;
+       this.global_properties_student = [];
+
+      this.onChangeSelect(this.entityName);
+    }
   }
 
   onChangeSelect(item: any) {
@@ -60,6 +78,7 @@ export class ConfigWorkflowComponent implements OnInit {
     this.getPropertiesNameStudent(item, "", Object.keys(main_item), 0);
     return this.global_properties_student;
   }
+
   getPropertiesNameStudent(
     item: any,
     key_name: any,
@@ -95,6 +114,7 @@ export class ConfigWorkflowComponent implements OnInit {
   onSelect(item: any) {
     let arr = [];
     this.feildNameList = [];
+    this.global_properties = [];
     const attest = this.fieldList.find((e) => e[item]);
     arr = this.getProperties(attest?.[item], attest);
 

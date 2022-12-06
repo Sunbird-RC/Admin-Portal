@@ -104,6 +104,7 @@ export class CreateEntityComponent implements OnInit {
   commonSchemaField: any;
   deleteingOsid: any;
   index: any;
+  usecaseSchemaData: any;
   constructor(
     private activeRoute: ActivatedRoute,
     public router: Router,
@@ -898,7 +899,7 @@ export class CreateEntityComponent implements OnInit {
 
   nextStep() {
     this.saveData();
-    if (this.currentTab < 4) {
+    if (this.currentTab < this.steps.length) {
       this.steps[this.currentTab].classList.remove("activeTab");
       this.currentTab += 1;
       this.steps[this.currentTab].classList.add("activeTab")
@@ -908,14 +909,21 @@ export class CreateEntityComponent implements OnInit {
       this['active' + (this.currentTab - 1)] = false;
 
       this.location.replaceState('/create/' + this.currentTab + '/' + this.usecase + '/' + this.entityKey);
+    
     } else {
       this.location.replaceState('/create/' + this.currentTab + '/' + this.usecase + '/' + this.entityKey);
+    
     }
 
   }
 
+
+  onSelect(userSchema) {
+    this.usecaseSchemaData = userSchema;
+  }
+
   backStep() {
-    if (this.currentTab >= 1 && this.currentTab < 4) {
+    if (this.currentTab >= 1 && this.currentTab < this.steps.length) {
       this.steps[this.currentTab].classList.remove("activeTab");
       this.currentTab -= 1;
       this.steps[this.currentTab].classList.add("activeTab")
@@ -1599,9 +1607,6 @@ export class CreateEntityComponent implements OnInit {
 
         if (this.isNew) {
           this.generalService.postData('/Schema', payload).subscribe((res) => {
-
-          
-
 
             // let schemaParams = {
             //   'title': this.usecase,

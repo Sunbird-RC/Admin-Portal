@@ -12,14 +12,6 @@
   padding: 5px 9px;
   border: 1px solid #666;
 }
-
-.custom-container {
-  background-color: #f6f8fc;
-  margin-top: 25px !important;
-  margin-left: 0px !important;
-
-  height: 186px;
-}
 .custom-container-edit {
   background-color: #f6f8fc;
   margin-top: 0px !important;
@@ -27,46 +19,25 @@
   height: auto;
   padding: 10px;
 }
-
-.delete-btn {
-  background-color: hsl(0, 81%, 86%);
-  border-radius: 20px;
-  width: 120px;
-  height: 40px;
-  padding: 10px;
-  float: right;
-  // opacity: 0.1;
-  text-align: center;
-}
-.text-color {
-  color: #c31212;
-  font-weight: 700;
-}
-
 .custom-container-attester {
   background-color: #f6f8fc;
   margin-top: 0px !important;
   margin-left: 0px !important;
   height: 186px;
 }
-
-.btn-add-attester {
-  background-color: #e8f3f8;
-  border-radius: 20px;
-  width: 170px;
-  height: 40px;
-  padding: 10px;
-  margin-left: 10px;
-}
-.btn-edit-attester {
-  background-color: #e8f3f8;
-  width: 170px;
-  height: 40px;
-  padding: 5px;
-  margin-left: 10px;
-}
-
 .custom-dropdown-attester {
+  width: 26%;
+  height: 45px;
+  color: #8d9091;
+  border-radius: 4px 4px 4px 4px;
+  background-color: #ffffff;
+  padding: 10px;
+  border-color: rgb(231, 229, 229);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.custom-dropdown-attester-w-auto {
   width: auto;
   height: 45px;
   color: #8d9091;
@@ -74,6 +45,9 @@
   background-color: #ffffff;
   padding: 10px;
   border-color: rgb(231, 229, 229);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .custom-dropdown-attester-details {
   width: auto;
@@ -83,58 +57,10 @@
   background-color: #ffffff;
   border-color: rgb(231, 229, 229);
 }
-
-.clr-grey {
-  color: #8d9091;
-}
-
-.ml-40 {
-  margin-left: 40px;
-}
-
-.ml-240 {
-  margin-left: 210px;
-}
-
-.custom-hr {
-  color: #efefef;
-  height: 1px;
-}
-
-.ml-360 {
-  margin-left: 360px;
-}
-
-.ml-13 {
-  margin-left: 13px;
-}
-
 .custom-dropdown2 {
   width: 143px;
   height: 45px;
   color: #8d9091;
   border-radius: 4px 4px 4px 4px;
   background-color: #ffffff;
-}
-
-.clr-grey2 {
-  background-color: #f6f8fc !important;
-}
-
-.clr-blue {
-  color: #1987b6;
-}
-
-.plus-btn {
-  width: 151px;
-  height: 40px;
-
-  background: #e8f3f8;
-  border-radius: 8px;
-}
-
-.newDiv {
-  height: 200px;
-  width: 400px;
-  background-color: red;
 }

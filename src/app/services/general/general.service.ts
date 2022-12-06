@@ -181,6 +181,6 @@ export class GeneralService {
 
     return this.dataService.delete(req);
   }
-  
+
 }
 

@@ -63,7 +63,7 @@
     "MANDATORY": "Mandatory",
     "DESCRIPTION": "Description",
     "VISIBILITY": "Visibility",
-    "Yes": "Yes",
+    "yes": "Yes",
     "No": "No",
     "ADD_FIELDS": "Add Fields",
     "NO_SCHEMA_ADDED": "No schema added yet",

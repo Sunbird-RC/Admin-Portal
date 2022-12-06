@@ -69,14 +69,14 @@
       <div class="row mt-2">
         <div class="col-sm-5" *ngFor="let item of schemaItems">
           <div
-            *ngIf="(item.schema._osConfig.certificateTemplates | keyvalue)?.length" >
+            *ngIf="(item?.schema?._osConfig?.certificateTemplates | keyvalue)?.length" >
             <div class="card p-3 mb-3">
             
               <p class="p16 fw-bold">{{ item?.name }}</p>
               <div class="d-flex align-items-center">
                
                 <img src="{{imgUrl}}" class="float-left mr-2  img16" alt="">
-                <span class="fs-14 fw-bold" *ngFor="let certName of item.schema._osConfig.certificateTemplates | keyvalue">
+                <span class="fs-14 fw-bold" *ngFor="let certName of item?.schema?._osConfig?.certificateTemplates | keyvalue">
                   {{certName.key}}
                 </span>
               

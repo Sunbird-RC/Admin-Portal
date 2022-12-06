@@ -148,7 +148,7 @@ export class CreateVcTemplateComponent implements OnInit {
           this.credTemp.push({
          
             "title":Object.keys(a),    
-            "html": res,
+            "html": res
          
           });
 

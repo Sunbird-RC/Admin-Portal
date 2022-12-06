@@ -923,7 +923,7 @@ export class CreateEntityComponent implements OnInit {
   }
 
   backStep() {
-    if (this.currentTab >= 1 && this.currentTab < 4) {
+    if (this.currentTab >= 1 && this.currentTab < this.steps.length) {
       this.steps[this.currentTab].classList.remove("activeTab");
       this.currentTab -= 1;
       this.steps[this.currentTab].classList.add("activeTab")

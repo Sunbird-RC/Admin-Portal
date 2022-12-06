@@ -12,8 +12,9 @@ export class ConfigurationsComponent implements OnInit {
   constructor(public translate: TranslateService) { 
     this.tenantConfigList = ['Schema','Workflow','VC Template','Ownership','Roles','Theme']
   }
-
+  imgUrl="/assets/images/certificate.svg";
   ngOnInit(): void {
+
   }
 
 }

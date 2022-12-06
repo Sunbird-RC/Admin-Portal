@@ -12,13 +12,14 @@
     <div class="card w-100" *ngIf = "isShow1">
       <div class="ml-1 p-3 w-100">
         <div class="img-hold">
-          <div class="thmbCol" *ngFor="let item of credTemp" > 
+          <div class="thmbCol" *ngFor="let item of credTemp" >           
             <div class="wrap">
               <iframe id="iframe1"   class="iframe-container embed-responsive-item"></iframe>
             </div>
             <div class="l12 fw-bold">{{item?.title}}</div>  
           </div> 
-        
+
+          <a href="/add-template/{{usecase}}/{{entityName}}">
           <div class="btn img-ht">
             <div class="thmbCol">
                 <div class="pt-c">
@@ -42,7 +43,8 @@
               </div>
             </div>
           </div>
-        </div>
+        </a>
+      </div>
    
       </div>
      <div class="pt-2 ms-3 mb-3"></div>

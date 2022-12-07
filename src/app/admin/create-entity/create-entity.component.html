@@ -1,6 +1,6 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-header nav-b navbar-inverse">
-        <a class="nav-link pl-3" href="" onClick="history.go(-1); return false;"><i
+        <a class="nav-link pl-3" href="" onClick="goBack();"><i
                 class="fa fa-angle-left primary-text"></i> </a>
         <span class="p16">{{'GETING_STARTED' | translate}}</span>
     </nav>
@@ -174,7 +174,7 @@
                                                                 </td>
                                                                 <td>
                                                                     <select
-                                                                        (change)="onVisibilityChange($event,'childNased', j, k , m)"
+                                                                        (change)="onVisibilityChange($event, childNastedArrayfield?.data?.visiblity, 'childNased', j, k , m)"
                                                                         class="fieldInput p14 m-2  py-1 px-3 mr-3">
                                                                         <option *ngFor="let opt of visiblityOpt"
                                                                             value={{opt.key}}
@@ -221,7 +221,7 @@
                                                         </td>
                                                         <td>
                                                             <select
-                                                                (change)="onVisibilityChange($event, 'nasted', j , k)"
+                                                                (change)="onVisibilityChange($event, secArrayfield?.visiblity, 'nasted', j , k)"
                                                                 class="fieldInput p14 m-2  py-1 px-3 mr-3">
                                                                 <option *ngFor="let opt of visiblityOpt"
                                                                     value={{opt.key}}
@@ -262,7 +262,7 @@
                                                         <span class="p14">{{field?.data?.description}}</span>
                                                     </td>
                                                     <td>
-                                                        <select (change)="onVisibilityChange($event, j, k)"
+                                                        <select (change)="onVisibilityChange($event, field?.data?.visiblity, j, k)"
                                                             class="fieldInput p14 m-2  py-1 px-3 mr-3">
                                                             <option *ngFor="let opt of visiblityOpt" value={{opt.key}}
                                                                 [selected]="opt.key== field?.data?.visiblity">
@@ -304,7 +304,7 @@
                                                     </td>
 
                                                     <td>
-                                                        <select (change)="onVisibilityChange($event, 'string', j, k )"
+                                                        <select (change)="onVisibilityChange($event, field?.visiblity, 'string', j, k )"
                                                             class="fieldInput p14 m-2  py-1 px-3 mr-3">
                                                             <option *ngFor="let opt of visiblityOpt" value={{opt.key}}
                                                                 [selected]="opt?.key == field?.visiblity">

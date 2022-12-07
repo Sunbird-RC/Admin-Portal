@@ -13,6 +13,8 @@ import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
+import { SpinnersAngularModule } from 'spinners-angular';
+
 // formly
 import { FormlyModule, FormlyFieldConfig } from '@ngx-formly/core';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
@@ -214,6 +216,7 @@ import { SwaggeruiComponent } from './admin/publish/swaggerui/swaggerui.componen
     NgxExtendedPdfViewerModule,
     FormioModule,
     NgJsonEditorModule,
+    SpinnersAngularModule,
     FormlyModule.forRoot({
       extras: { resetFieldOnHide: true },
       wrappers: [{ name: 'form-field-horizontal', component: FormlyHorizontalWrapper },

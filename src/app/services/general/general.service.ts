@@ -183,5 +183,10 @@ export class GeneralService {
     return this.dataService.delete(req);
   }
 
+  getToken(){
+    return this.dataService.getToken();
+  }
 }
+
+
 

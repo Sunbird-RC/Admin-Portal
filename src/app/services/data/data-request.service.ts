@@ -22,11 +22,15 @@ export class DataService {
     private http: HttpClient,
     public keycloak: KeycloakService) {
 
-      this.token = this.keycloak.getToken();
+      this.token = this.getToken();
       if(!this.token)
       {
         this.token = localStorage.getItem('token');
       }
+  }
+
+  getToken(){
+    return this.keycloak.getToken();
   }
 
 /**

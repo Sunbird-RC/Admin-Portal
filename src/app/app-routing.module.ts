@@ -252,7 +252,7 @@ const routes: Routes = [
   },
   { path: "dlogin", component: DloginComponent, canActivate: [AuthGuard] },
   { path: "publish", component: PublishComponent },
-  { path: "explore-api", component: SwaggeruiComponent },
+  { path: "explore-api", component: SwaggeruiComponent, canActivate: [AuthGuard]},
 ];
 
 @NgModule({

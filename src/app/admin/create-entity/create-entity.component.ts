@@ -1971,5 +1971,9 @@ export class CreateEntityComponent implements OnInit {
     return commonBody;
   }
 
+  goBack(){
+    this.location.back();
+  }
+
 }
 

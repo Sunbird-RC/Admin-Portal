@@ -40,7 +40,6 @@ export class DataService {
 
 
     this.keycloak.isLoggedIn().then((res)=>{
-      console.log(res);
       this.isLoogedIn = res;
     })
 

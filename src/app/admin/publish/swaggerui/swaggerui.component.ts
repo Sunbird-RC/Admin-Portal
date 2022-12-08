@@ -29,7 +29,6 @@ export class SwaggeruiComponent implements OnInit {
         'responseInterceptor':
           function (response: any) {
             if (response.obj.access_token) {
-              console.log(response.obj.access_token);
               const token = response.obj.access_token;
               self.token;
             }
@@ -37,7 +36,6 @@ export class SwaggeruiComponent implements OnInit {
           },
         requestInterceptor:
           function (request) {
-            console.log('[Swagger] intercept try-it-out request');
             request.headers.Authorization = "Bearer " + self.token;
             return request;
           }

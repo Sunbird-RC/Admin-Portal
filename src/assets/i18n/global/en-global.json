@@ -65,7 +65,7 @@
     "VISIBILITY": "Visibility",
     "YES": "Yes",
     "NO": "No",
-    "ADD_FIELDS": "Add Fields",
+    "ADD_FIELDS": "Add/Edit Field",
     "NO_SCHEMA_ADDED": "No schema added yet",
     "ADD_ENTITY_LEVEL_SCHEMA": "Please add entity level schema. You can also add common schema example address, field name and field name which can be used or references in other schemas.",
     "ENTER_SCHEMA_NAME": "Enter Schema name",
@@ -75,7 +75,7 @@
     "ENTER_CONFIGURATION_NAME": "Enter Congifuration Name",
     "SAVED_TO_DRAFT": "Saved to DRAFT",
     "WANT_TO_DELETE": "Do you want to delete",
-    "EDUCATION_BOARD_SCHEMA": "'Education Board' schema?",
+    "SCHEMA?": "schema ?",
     "NO_CANCEL": "No, Cancel",
     "YES_DELETE": "Yes, Delete",
     

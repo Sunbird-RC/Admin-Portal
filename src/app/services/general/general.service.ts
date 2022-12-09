@@ -30,7 +30,7 @@ export class GeneralService {
         url = `${this.baseUrl}/${apiUrl}`;
       }
     }
-
+    
     const req = {
       url: url,
       data: data

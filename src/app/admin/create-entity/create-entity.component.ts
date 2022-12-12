@@ -1776,8 +1776,8 @@ export class CreateEntityComponent implements OnInit {
         _self.oldTemplateName = key;
       });
 
-
       this.usecaseSchema[1]._osConfig['certificateTemplates'] = { html: 'minio://' + res.documentLocations[0] }
+      // this.usecaseSchema[1]._osConfig['certificateTemplates'] = { html: 'minio://' + res.documentLocations[0] }
 
       let result = JSON.stringify(this.usecaseSchema[1]);
 
@@ -1976,4 +1976,3 @@ export class CreateEntityComponent implements OnInit {
   }
 
 }
-

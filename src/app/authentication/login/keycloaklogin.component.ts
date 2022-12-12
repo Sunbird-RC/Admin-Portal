@@ -20,8 +20,6 @@ export class KeycloakloginComponent implements OnInit {
 
   ngOnInit(): void {
     this.keycloakService.loadUserProfile().then((res)=>{
-      console.log(res['attributes'].entity[0]);
-
       this.entity = res['attributes'].entity[0];
       if(res['attributes'].hasOwnProperty('locale') && res['attributes'].locale.length){
         localStorage.setItem('setLanguage', res['attributes'].locale[0]);
@@ -30,10 +28,8 @@ export class KeycloakloginComponent implements OnInit {
     
     this.user = this.keycloakService.getUsername();
     this.keycloakService.getToken().then((token)=>{
-      console.log('keyCloak teacher token - ', token);
       localStorage.setItem('token', token);
       localStorage.setItem('loggedInUser', this.user);
-      console.log('---------',this.config.getEnv('appType'))
       if(this.config.getEnv('appType') && this.config.getEnv('appType') === 'digital_wallet'){
         this.profileUrl = 'home' ;
       }else{

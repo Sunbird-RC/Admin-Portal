@@ -168,9 +168,10 @@
                                                                     </span>
                                                                 </td>
                                                                 <td>
-                                                                    <span
-                                                                        class="p14">{{childNastedArrayfield?.data?.description}}
-                                                                    </span>
+                                                                    <div class="descriptionBox">
+                                                                        <span >{{childNastedArrayfield?.data?.description}} </span>                                                                   
+                                                                    </div>
+                                                                    
                                                                 </td>
                                                                 <td>
                                                                     <select
@@ -189,8 +190,9 @@
                                                                             aria-hidden="true"></i>
                                                                         <div class="dropdown-content">
                                                                             <!-- <a (click)="viewField('nasted', j,k, m)">View</a> -->
-                                                                            <a
-                                                                                (click)="deleteField('nasted', j,k, m)">{{'DELETE' | translate}}</a>
+                                                                            <!-- <a (click)="deleteField('nasted', j,k, m)">{{'DELETE' | translate}}</a> -->
+                                                                            <a>{{'DELETE' | translate}}</a>
+                                                                                
                                                                         </div>
                                                                     </div>
                                                                 </td>
@@ -216,8 +218,9 @@
                                                             </span>
                                                         </td>
                                                         <td>
-                                                            <span class="p14">{{secArrayfield?.data?.description}}
-                                                            </span>
+                                                            <div class="descriptionBox">
+                                                                <span class="p14">{{secArrayfield?.data?.description}}</span>                                                            
+                                                            </div>
                                                         </td>
                                                         <td>
                                                             <select
@@ -237,7 +240,7 @@
                                                                     aria-hidden="true"></i>
                                                                 <div class="dropdown-content">
                                                                     <!-- <a (click)="('nasted', j, k)">View</a> -->
-                                                                    <a (click)="deleteField('nasted', j, k)">{{'DELETE' | translate}}</a>
+                                                                    <a>{{'DELETE' | translate}}</a>
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -259,7 +262,9 @@
                                                         <span class="p14" *ngIf="!field?.required">{{'NO' | translate}} </span>
                                                     </td>
                                                     <td>
-                                                        <span class="p14">{{field?.data?.description}}</span>
+                                                        <div class="desciptionBox">
+                                                            <span>{{field?.data?.description}}</span>
+                                                        </div>
                                                     </td>
                                                     <td>
                                                         <select (change)="onVisibilityChange($event, field?.data?.visiblity, j, k)"
@@ -277,7 +282,7 @@
                                                                 aria-hidden="true"></i>
                                                             <div class="dropdown-content">
                                                                 <!-- <a (click)="viewField('string', j, '')">View</a> -->
-                                                                <a (click)="deleteField('string', j, '')">{{'DELETE' | translate}}</a>
+                                                                <a>{{'DELETE' | translate}}</a>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -300,7 +305,9 @@
                                                         <span class="p14" *ngIf="!field?.required">{{'NO' | translate}} </span>
                                                     </td>
                                                     <td>
-                                                        <span class="p14">{{field?.data?.description}} </span>
+                                                        <div class="descriptionBox">
+                                                            <span >{{field?.data?.description}} </span>
+                                                        </div>
                                                     </td>
 
                                                     <td>
@@ -319,7 +326,7 @@
                                                                 aria-hidden="true"></i>
                                                             <div class="dropdown-content">
                                                                 <!-- <a (click)="viewField('string', j, '')">View</a> -->
-                                                                <a (click)="deleteField('string', j, '')">{{'DELETE' | translate}}</a>
+                                                                <a>{{'DELETE' | translate}}</a>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -495,7 +502,7 @@
                     class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2">{{'GO_TO_DASHBOARD' | translate}} </button></a>
                 <button *ngIf="isActive == 'configurations'" (click)="nextStep();"
                     class="btn btn-sec-bg float-end submit-button px-3 my-2 ml-2 mr-2 ">{{'SKIP' | translate}}</button> &nbsp;
-                <button *ngIf="isActive == 'create-vc' || isActive == 'ownership'" (click)="nextStep();"
+                <button *ngIf="isActive == 'createSchema' || isActive == 'create-vc' || isActive == 'ownership'" (click)="nextStep();"
                     class="btn  float-end btn-primary btn-primary-sm px-3 my-2 ml-2 mr-2">{{'SAVE_AS_DRAFT' | translate}}</button>
                 &nbsp;
 

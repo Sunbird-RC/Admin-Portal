@@ -168,10 +168,9 @@
                                                                     </span>
                                                                 </td>
                                                                 <td>
-                                                                    <div class="descriptionBox">
-                                                                        <span >{{childNastedArrayfield?.data?.description}} </span>                                                                   
+                                                                    <div>                                                                        
+                                                                        <span class="p14">{{childNastedArrayfield?.data?.description}}</span>
                                                                     </div>
-                                                                    
                                                                 </td>
                                                                 <td>
                                                                     <select
@@ -184,17 +183,17 @@
                                                                         </option>
                                                                     </select>
                                                                 </td>
-                                                                <td>
-                                                                    <div class="dropdown p14">
+                                                                <td>                                                           
+                                                                    <div *ngIf="usecaseSchema[activeMenuNo]?.status != 'PUBLISHED'" class="dropdown p14">
                                                                         <i class="fa fa-ellipsis-h  text-grey-color"
                                                                             aria-hidden="true"></i>
-                                                                        <div class="dropdown-content">
+                                                                        <div class="dropdown-content" >
                                                                             <!-- <a (click)="viewField('nasted', j,k, m)">View</a> -->
-                                                                            <!-- <a (click)="deleteField('nasted', j,k, m)">{{'DELETE' | translate}}</a> -->
-                                                                            <a>{{'DELETE' | translate}}</a>
-                                                                                
+                                                                            <a 
+                                                                                (click)="deleteField('nasted', j,k, m)" >{{'DELETE' | translate}}</a>
                                                                         </div>
                                                                     </div>
+                                                                  
                                                                 </td>
                                                             </tr>
 
@@ -218,8 +217,8 @@
                                                             </span>
                                                         </td>
                                                         <td>
-                                                            <div class="descriptionBox">
-                                                                <span class="p14">{{secArrayfield?.data?.description}}</span>                                                            
+                                                            <div class="">
+                                                                <span class="p14">{{secArrayfield?.data?.description}}</span>
                                                             </div>
                                                         </td>
                                                         <td>
@@ -235,12 +234,12 @@
                                                            
                                                         </td>
                                                         <td>
-                                                            <div class="dropdown p14">
+                                                            <div *ngIf="usecaseSchema[activeMenuNo]?.status != 'PUBLISHED'" class="dropdown p14">
                                                                 <i class="fa fa-ellipsis-h  text-grey-color"
                                                                     aria-hidden="true"></i>
                                                                 <div class="dropdown-content">
                                                                     <!-- <a (click)="('nasted', j, k)">View</a> -->
-                                                                    <a>{{'DELETE' | translate}}</a>
+                                                                    <a  (click)="deleteField('nasted', j, k)" >{{'DELETE' | translate}}</a>
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -262,8 +261,8 @@
                                                         <span class="p14" *ngIf="!field?.required">{{'NO' | translate}} </span>
                                                     </td>
                                                     <td>
-                                                        <div class="desciptionBox">
-                                                            <span>{{field?.data?.description}}</span>
+                                                        <div class="">
+                                                            <span class="p14">{{field?.data?.description}}</span>
                                                         </div>
                                                     </td>
                                                     <td>
@@ -277,12 +276,12 @@
                                                       
                                                     </td>
                                                     <td>
-                                                        <div class="dropdown p14">
+                                                        <div *ngIf="usecaseSchema[activeMenuNo]?.status != 'PUBLISHED'" class="dropdown p14" >
                                                             <i class="fa fa-ellipsis-h  text-grey-color"
                                                                 aria-hidden="true"></i>
                                                             <div class="dropdown-content">
                                                                 <!-- <a (click)="viewField('string', j, '')">View</a> -->
-                                                                <a>{{'DELETE' | translate}}</a>
+                                                                <a (click)="deleteField('string', j, '')">{{'DELETE' | translate}}</a>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -305,8 +304,8 @@
                                                         <span class="p14" *ngIf="!field?.required">{{'NO' | translate}} </span>
                                                     </td>
                                                     <td>
-                                                        <div class="descriptionBox">
-                                                            <span >{{field?.data?.description}} </span>
+                                                        <div class="">
+                                                            <span class="p14">{{field?.data?.description}} </span>
                                                         </div>
                                                     </td>
 
@@ -320,13 +319,13 @@
                                                         </select>
                                                       
                                                     </td>
-                                                    <td>
-                                                        <div class="dropdown p14">
+                                                    <td >
+                                                        <div *ngIf="usecaseSchema[activeMenuNo]?.status != 'PUBLISHED'" class="dropdown p14" >
                                                             <i class="fa fa-ellipsis-h  text-grey-color"
                                                                 aria-hidden="true"></i>
                                                             <div class="dropdown-content">
                                                                 <!-- <a (click)="viewField('string', j, '')">View</a> -->
-                                                                <a>{{'DELETE' | translate}}</a>
+                                                                <a (click)="deleteField('string', j, '')">{{'DELETE' | translate}}</a>
                                                             </div>
                                                         </div>
                                                     </td>

@@ -167,10 +167,8 @@
                                                                         *ngIf="!childNastedArrayfield?.required">{{'NO' | translate}}
                                                                     </span>
                                                                 </td>
-                                                                <td>
-                                                                    <div>                                                                        
-                                                                        <span class="p14">{{childNastedArrayfield?.data?.description}}</span>
-                                                                    </div>
+                                                                <td>                                                                                                                                        
+                                                                     <span class="p14">{{childNastedArrayfield?.data?.description}}</span>
                                                                 </td>
                                                                 <td>
                                                                     <select
@@ -217,9 +215,7 @@
                                                             </span>
                                                         </td>
                                                         <td>
-                                                            <div class="">
-                                                                <span class="p14">{{secArrayfield?.data?.description}}</span>
-                                                            </div>
+                                                            <span class="p14">{{secArrayfield?.data?.description}}</span>                                                           
                                                         </td>
                                                         <td>
                                                             <select
@@ -261,9 +257,7 @@
                                                         <span class="p14" *ngIf="!field?.required">{{'NO' | translate}} </span>
                                                     </td>
                                                     <td>
-                                                        <div class="">
-                                                            <span class="p14">{{field?.data?.description}}</span>
-                                                        </div>
+                                                        <span class="p14">{{field?.data?.description}}</span>
                                                     </td>
                                                     <td>
                                                         <select (change)="onVisibilityChange($event, field?.data?.visiblity, j, k)"
@@ -304,9 +298,7 @@
                                                         <span class="p14" *ngIf="!field?.required">{{'NO' | translate}} </span>
                                                     </td>
                                                     <td>
-                                                        <div class="">
-                                                            <span class="p14">{{field?.data?.description}} </span>
-                                                        </div>
+                                                       <span class="p14">{{field?.data?.description}} </span>
                                                     </td>
 
                                                     <td>

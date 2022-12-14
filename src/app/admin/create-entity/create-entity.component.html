@@ -368,7 +368,7 @@
                 <p *ngIf="!isShowJson && !usecaseSchema[activeMenuNo]?.definitions?.data?.length" class="p16">{{'FIELDS' | translate}}</p>
 
                 <div class="p-3 sm-card"
-                    *ngIf="usecaseSchema.length &&  !isShowJson && usecaseSchema[activeMenuNo]['status'] != 'PUBLISHED'">
+                    *ngIf="usecaseSchema.length &&  !isShowJson && usecaseSchema[activeMenuNo]?.status != 'PUBLISHED'">
                     <span class="m-3 p14 mbtn-10 submit-button text-secondary-color" (click)="showAddForm()">
                         <i class="fa fa-plus" aria-hidden="true"></i>
                         {{'ADD_FIELDS' | translate}}   </span>

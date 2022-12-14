@@ -116,7 +116,7 @@ export class CreateEntityComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.usecaseSchema = [];
+    
 
     this.editorOptions = new JsonEditorOptions();
     this.editorOptions.mode = 'code';
@@ -191,6 +191,7 @@ export class CreateEntityComponent implements OnInit {
   }
 
   async getSchema() {
+    this.usecaseSchema = [];
     await this.generalService.getData('/Schema').subscribe((res) => {
       if (res) {
         this.schemaService.getEntitySchemaJSON().subscribe((data) => {
@@ -496,6 +497,11 @@ export class CreateEntityComponent implements OnInit {
               "type": dataObj.type,
               "title": dataObj.data.title,
               "required": (dataObj.hasOwnProperty('required')) ? dataObj.required : [],
+            }
+
+            if(dataObj.data.hasOwnProperty('enum') && dataObj.data.enum)
+            {
+              this.secFieldObj[dataObj.key]['enum'] = dataObj.data.enum;
             }
 
             dataObj[sProperties.data[i].key]
@@ -1090,7 +1096,7 @@ export class CreateEntityComponent implements OnInit {
     if (viewSchemaField) {
       let newArr: any = [];
       for (let i = 0; i < viewSchemaField.length; i++) {
-        if (viewSchemaField[i].type == 'string') {
+        if (viewSchemaField[i].type != 'object' &&  viewSchemaField[i].type != 'array') {
           let compJson = {
             "label": viewSchemaField[i].data.title,
             "tableView": true,
@@ -1100,6 +1106,22 @@ export class CreateEntityComponent implements OnInit {
             "$id": "#/properties/" + viewSchemaField[i].key,
             "type": (viewSchemaField[i].type == 'string') ? "textfield" : viewSchemaField[i].type,
             "input": true
+          }
+
+          if(viewSchemaField[i].data.hasOwnProperty('enum') && viewSchemaField[i].data.enum)
+          {
+            compJson["data"] = {
+              values : []
+            };
+            for(let k =0; k < viewSchemaField[i].data.enum.length; k++){
+              compJson["data"]['values'].push({
+                "label" : viewSchemaField[i].data.enum[k],
+                "value" : viewSchemaField[i].data.enum[k] 
+              })
+            }
+
+            compJson['type'] = 'select';
+           
           }
 
 
@@ -1151,6 +1173,21 @@ export class CreateEntityComponent implements OnInit {
                 "$id": "#/properties/" + fieldData.data[i].key,
                 "type": (fieldData.data[i].type == 'string') ? "textfield" : fieldData.data[i].type,
                 "input": true
+              }
+
+              if(fieldData.data[i].data.hasOwnProperty('enum') && fieldData.data[i].data.enum)
+              {
+                compJson["data"] = {
+                  values : []
+                };
+                for(let k =0; k < fieldData.data[i].data.enum.length; k++){
+                  compJson["data"]['values'].push({
+                    "label" : fieldData.data[i].data.enum[k],
+                    "value" : fieldData.data[i].data.enum[k] 
+                  })
+                }
+    
+                compJson['type'] = 'select';
               }
 
               if (fieldData.data[i].data.description) {
@@ -1356,7 +1393,7 @@ export class CreateEntityComponent implements OnInit {
 
         let tempjson1 = {};
         tempjson1['$id'] = data.hasOwnProperty('$id') ? data['$id'] : '#/properties/' + key;
-        tempjson1['type'] = data.hasOwnProperty('type') ? 'string' : 'string'
+        tempjson1['type'] = (data.type != 'number') ? 'string' : data.type;
         tempjson1['title'] = data.hasOwnProperty('label') ? data['label'] : data['title'];
 
         if (data.hasOwnProperty('description') && data.description) {
@@ -1365,6 +1402,10 @@ export class CreateEntityComponent implements OnInit {
 
         if (data.hasOwnProperty('placeholder') && data.placeholder) {
           tempjson1['placeholder'] = data['placeholder'];
+        }
+
+        if (data.hasOwnProperty('data') && data.data.values.length) {
+          tempjson1['enum'] = this.getEnumValueFromFormio(data.data.value);
         }
 
         if (this.privateFieldsName == '') {
@@ -1385,7 +1426,7 @@ export class CreateEntityComponent implements OnInit {
           {
             "key": key,
             "$id": "#/properties/" + key,
-            "type": (formioJson[i].type == 'textfield') ? "string" : formioJson[i].type,
+            "type": (formioJson[i].type != 'number') ? "string" : formioJson[i].type,
             "visiblity": visiblityIs,
             "required": (formioJson[i].hasOwnProperty('validate')) ? formioJson[i].validate.required : false,
             data
@@ -1418,7 +1459,7 @@ export class CreateEntityComponent implements OnInit {
 
 
       arrayObj[i]['title'] = arrayObj[i].label;
-      arrayObj[i]['type'] = (arrayObj[i].type == 'textfield') ? "string" : arrayObj[i].type;
+      arrayObj[i]['type'] = (arrayObj[i].type != 'number') ? "string" : arrayObj[i].type;
       let data = arrayObj[i]
 
 
@@ -1443,6 +1484,10 @@ export class CreateEntityComponent implements OnInit {
 
       if (data.hasOwnProperty('placeholder') && data.placeholder) {
         tempjson1['placeholder'] = data['placeholder'];
+      }
+
+      if (data.hasOwnProperty('data') && data.data.values.length) {
+        tempjson1['enum'] = this.getEnumValueFromFormio(data.data.value);
       }
 
       if (this.privateFieldsName == '') {
@@ -1551,6 +1596,19 @@ export class CreateEntityComponent implements OnInit {
     }
 
     return this.rawCredentials;
+  }
+
+
+  getEnumValueFromFormio(enumList){
+    let enumArr = [];
+
+    for(let i = 0; i< enumList; i++){
+
+      enumArr.push(enumList[i].value);
+    }
+
+    return enumArr;
+
   }
 
   saveData() {
@@ -1777,7 +1835,6 @@ export class CreateEntityComponent implements OnInit {
       });
 
       this.usecaseSchema[1]._osConfig['certificateTemplates'] = { html: 'minio://' + res.documentLocations[0] }
-      // this.usecaseSchema[1]._osConfig['certificateTemplates'] = { html: 'minio://' + res.documentLocations[0] }
 
       let result = JSON.stringify(this.usecaseSchema[1]);
 

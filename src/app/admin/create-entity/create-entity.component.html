@@ -366,7 +366,7 @@
                 <p *ngIf="!isShowJson && !usecaseSchema[activeMenuNo]?.definitions?.data?.length" class="p16">{{'FIELDS' | translate}}</p>
 
                 <div class="p-3 sm-card"
-                    *ngIf="usecaseSchema.length &&  !isShowJson && usecaseSchema[activeMenuNo]['status'] != 'PUBLISHED'">
+                    *ngIf="usecaseSchema.length &&  !isShowJson && usecaseSchema[activeMenuNo]?.status != 'PUBLISHED'">
                     <span class="m-3 p14 mbtn-10 submit-button text-secondary-color" (click)="showAddForm()">
                         <i class="fa fa-plus" aria-hidden="true"></i>
                         {{'ADD_FIELDS' | translate}}   </span>
@@ -493,10 +493,9 @@
                     class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2">{{'GO_TO_DASHBOARD' | translate}} </button></a>
                 <button *ngIf="isActive == 'configurations'" (click)="nextStep();"
                     class="btn btn-sec-bg float-end submit-button px-3 my-2 ml-2 mr-2 ">{{'SKIP' | translate}}</button> &nbsp;
-                <button *ngIf="isActive == 'createSchema' || isActive == 'create-vc' || isActive == 'ownership'" (click)="nextStep();"
+                <button *ngIf="isActive == 'create-vc' || isActive == 'ownership'" (click)="nextStep();"
                     class="btn  float-end btn-primary btn-primary-sm px-3 my-2 ml-2 mr-2">{{'SAVE_AS_DRAFT' | translate}}</button>
                 &nbsp;
-
             </div>
         </div>
     </footer>

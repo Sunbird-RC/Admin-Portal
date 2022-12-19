@@ -110,12 +110,12 @@ export class CreateEntityComponent implements OnInit {
     public toastMsg: ToastMessageService,
     public translate: TranslateService,
     public location: Location,
-    public formioJsonService: FormioJsonService, 
+    public formioJsonService: FormioJsonService,
     public schemaBodyService: SchemaBodyService) {
   }
 
   ngOnInit(): void {
-    
+
 
     this.editorOptions = new JsonEditorOptions();
     this.editorOptions.mode = 'code';
@@ -498,8 +498,7 @@ export class CreateEntityComponent implements OnInit {
               "required": (dataObj.hasOwnProperty('required')) ? dataObj.required : [],
             }
 
-            if(dataObj.data.hasOwnProperty('enum') && dataObj.data.enum)
-            {
+            if (dataObj.data.hasOwnProperty('enum') && dataObj.data.enum) {
               this.secFieldObj[dataObj.key]['enum'] = dataObj.data.enum;
             }
 
@@ -1085,6 +1084,9 @@ export class CreateEntityComponent implements OnInit {
         })
       } else {
         this.usecaseSchema.splice(this.index, 1);
+
+        this.index = (this.index > (this.usecaseSchema.length - 1)) ? this.index - 1 : this.index + 1;
+        this.openEntity(this.index, this.usecaseSchema[this.index].title)
       }
 
     }
@@ -1093,7 +1095,7 @@ export class CreateEntityComponent implements OnInit {
 
   convertSchemaToFormioJson(viewSchemaField) {
     if (viewSchemaField) {
-    let newArr = this.formioJsonService.convertSchemaToFormioJson(viewSchemaField);
+      let newArr = this.formioJsonService.convertSchemaToFormioJson(viewSchemaField);
       return newArr;
     }
   }
@@ -1375,10 +1377,10 @@ export class CreateEntityComponent implements OnInit {
 
   }
 
-  getEnumValueFromFormio(enumList){
+  getEnumValueFromFormio(enumList) {
     let enumArr = [];
 
-    for(let i = 0; i< enumList.length; i++){
+    for (let i = 0; i < enumList.length; i++) {
 
       enumArr.push(enumList[i].value);
     }
@@ -1791,7 +1793,7 @@ export class CreateEntityComponent implements OnInit {
     this.usecaseSchema[this.activeMenuNo]['_osConfig']['internalFields'] = this.internalFields[this.activeMenuNo];
   }
 
-  goBack(){
+  goBack() {
     this.location.back();
   }
 

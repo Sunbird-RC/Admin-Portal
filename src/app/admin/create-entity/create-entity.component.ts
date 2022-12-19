@@ -2,15 +2,12 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SchemaService } from '../../services/data/schema.service';
 import { JsonEditorComponent, JsonEditorOptions } from 'ang-jsoneditor';
-import { getLocaleDateFormat } from '@angular/common';
 import { Location } from '@angular/common';
 import { GeneralService } from 'src/app/services/general/general.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastMessageService } from '../../services/toast-message/toast-message.service';
-import { exit } from 'process';
-import { ignoreElements, single } from 'rxjs/operators';
-import { MinLengthValidator } from '@angular/forms';
-import { join } from 'path';
+import { FormioJsonService } from './schema-to-formiojson';
+import { SchemaBodyService } from './schema-body'
 
 
 @Component({
@@ -112,7 +109,9 @@ export class CreateEntityComponent implements OnInit {
     public generalService: GeneralService,
     public toastMsg: ToastMessageService,
     public translate: TranslateService,
-    public location: Location) {
+    public location: Location,
+    public formioJsonService: FormioJsonService, 
+    public schemaBodyService: SchemaBodyService) {
   }
 
   ngOnInit(): void {
@@ -268,7 +267,7 @@ export class CreateEntityComponent implements OnInit {
 
 
             if (!this.containCommonField) {
-              this.usecaseSchema.unshift(this.commonSchemaBody());
+              this.usecaseSchema.unshift(this.schemaBodyService.commonSchemaBody());
             }
 
             this.getEntityProperties();
@@ -280,7 +279,7 @@ export class CreateEntityComponent implements OnInit {
 
       }
     } else {
-      this.usecaseSchema.push(this.commonSchemaBody());
+      this.usecaseSchema.push(this.schemaBodyService.commonSchemaBody());
       this.activeMenuNo = 0;
     }
 
@@ -1003,7 +1002,7 @@ export class CreateEntityComponent implements OnInit {
       }
 
       this.entityKey = this.entityName;
-      this.usecaseSchema.push(this.newSchemaTemplate(key, data));
+      this.usecaseSchema.push(this.schemaBodyService.newSchemaTemplate(key, data));
       this.getEntityPropertiesByIndex(this.usecaseSchema.length - 1)
 
 
@@ -1094,156 +1093,9 @@ export class CreateEntityComponent implements OnInit {
 
   convertSchemaToFormioJson(viewSchemaField) {
     if (viewSchemaField) {
-      let newArr: any = [];
-      for (let i = 0; i < viewSchemaField.length; i++) {
-        if (viewSchemaField[i].type != 'object' &&  viewSchemaField[i].type != 'array') {
-          let compJson = {
-            "label": viewSchemaField[i].data.title,
-            "tableView": true,
-            "validate": {
-              "required": viewSchemaField[i].required
-            },
-            "$id": "#/properties/" + viewSchemaField[i].key,
-            "type": (viewSchemaField[i].type == 'string') ? "textfield" : viewSchemaField[i].type,
-            "input": true
-          }
-
-          if(viewSchemaField[i].data.hasOwnProperty('enum') && viewSchemaField[i].data.enum)
-          {
-            compJson["data"] = {
-              values : []
-            };
-            for(let k =0; k < viewSchemaField[i].data.enum.length; k++){
-              compJson["data"]['values'].push({
-                "label" : viewSchemaField[i].data.enum[k],
-                "value" : viewSchemaField[i].data.enum[k] 
-              })
-            }
-
-            compJson['type'] = 'select';
-           
-          }
-
-
-          compJson['key'] = (viewSchemaField[i].key == 'textfield') ? (viewSchemaField[i].key + i) : viewSchemaField[i].key;
-
-
-          if (viewSchemaField[i].data.description) {
-            compJson['description'] = viewSchemaField[i].data.description;
-          }
-
-          if (viewSchemaField[i].data.placeholder) {
-            compJson['placeholder'] = viewSchemaField[i].data.placeholder;
-          }
-
-
-          newArr.push(compJson);
-        } else {
-
-          let fieldData = viewSchemaField[i];
-
-          let compJson = {
-            "label": fieldData.propertyName,
-            "tableView": false,
-            "key": fieldData.propertyKey,
-            "type": "container",
-            "input": true,
-            "components": [
-            ]
-          }
-
-          if (fieldData.description) {
-            compJson['description'] = fieldData.description;
-          }
-
-          if (fieldData.placeholder) {
-            compJson['placeholder'] = fieldData.placeholder;
-          }
-
-
-          for (let i = 0; i < fieldData.data.length; i++) {
-            if (fieldData.data[i].type == 'string') {
-              let compJsonS = {
-                "label": fieldData.data[i].data.title,
-                "validate": {
-                  "required": fieldData.data[i].required
-                },
-                "tableView": true,
-                "key": fieldData.data[i].key,
-                "$id": "#/properties/" + fieldData.data[i].key,
-                "type": (fieldData.data[i].type == 'string') ? "textfield" : fieldData.data[i].type,
-                "input": true
-              }
-
-              if(fieldData.data[i].data.hasOwnProperty('enum') && fieldData.data[i].data.enum)
-              {
-                compJson["data"] = {
-                  values : []
-                };
-                for(let k =0; k < fieldData.data[i].data.enum.length; k++){
-                  compJson["data"]['values'].push({
-                    "label" : fieldData.data[i].data.enum[k],
-                    "value" : fieldData.data[i].data.enum[k] 
-                  })
-                }
-    
-                compJson['type'] = 'select';
-              }
-
-              if (fieldData.data[i].data.description) {
-                compJsonS['description'] = fieldData.data[i].data.description;
-              }
-
-              if (fieldData.data[i].data.placeholder) {
-                compJsonS['placeholder'] = fieldData.data[i].data.placeholder;
-              }
-
-              compJson.components.push(compJsonS);
-            }
-          }
-
-          newArr.push(compJson);
-
-        }
-
-      }
-
+    let newArr = this.formioJsonService.convertSchemaToFormioJson(viewSchemaField);
       return newArr;
     }
-
-  }
-
-
-  convertSchemaToFormioJson1(viewSchemaField) {
-    let newArr: any = [];
-    for (let i = 0; i < viewSchemaField.length; i++) {
-      if (viewSchemaField[i].type == 'string') {
-
-        let compJson = this.singleField(viewSchemaField[i]);
-
-        compJson['type'] = (viewSchemaField[i].type == 'string') ? "textfield" : viewSchemaField[i].type,
-
-          compJson['key'] = (viewSchemaField[i].key == 'textfield') ? (viewSchemaField[i].key + i) : viewSchemaField[i].key;
-
-
-        if (viewSchemaField[i].data.hasOwnProperty('description') && viewSchemaField[i].data.description) {
-          compJson['description'] = viewSchemaField[i].data.description;
-        }
-
-        if (viewSchemaField[i].data.hasOwnProperty('placeholder') && viewSchemaField[i].data.placeholder) {
-          compJson['placeholder'] = viewSchemaField[i].data.placeholder;
-        }
-
-
-        newArr.push(compJson);
-      } else {
-        let compJson = this.containerFields(viewSchemaField[i]);
-        newArr.push(compJson);
-      }
-
-    }
-
-    return newArr;
   }
 
   containerFields(fieldData) {
@@ -1523,86 +1375,10 @@ export class CreateEntityComponent implements OnInit {
 
   }
 
-
-  newSchemaTemplate(key, data) {
-
-    let entityTemplate = {
-      "$schema": "http://json-schema.org/draft-07/schema",
-      "type": "object",
-      "status": "DRAFT",
-      "properties": {
-        [key]: {
-          "$ref": "#/definitions/" + key
-        }
-      },
-      "required": [
-        key
-      ],
-      "title": key,
-      "description": data.description,
-      "definitions": {
-        [key]: {
-          "$id": "#/properties/" + key,
-          "type": "object",
-          "title": data.title,
-          "description": data.description,
-          "required": [],
-          "properties": {}
-        }
-      },
-      "_osConfig": this.getRawCredentials(key)
-    }
-
-
-    return entityTemplate;
-  }
-
-  getRawCredentials(key) {
-    this.rawCredentials = {
-      "uniqueIndexFields": [],
-      "ownershipAttributes": [],
-      "privateFields": [],
-      "internalFields": [],
-      "roles": [],
-      "inviteRoles": ["anonymous"],
-      "enableLogin": false,
-      "credentialTemplate": {
-        "@context": [
-          "https://www.w3.org/2018/credentials/v1",
-          {
-            "@context": {
-              "@version": 1.1,
-              "@protected": true,
-              key: {
-                "@id": "https://github.com/sunbird-specs/vc-specs#" + key,
-                "@context": {
-                  "id": "@id",
-                  "@version": 1.1,
-                  "@protected": true,
-                }
-              }
-            }
-          }
-        ],
-        "type": [
-          "VerifiableCredential"
-        ],
-        "issuanceDate": "2021-08-27T10:57:57.237Z",
-        "credentialSubject": {
-        },
-        "issuer": "did:web:sunbirdrc.dev/vc/skill"
-      },
-      "certificateTemplates": {}
-    }
-
-    return this.rawCredentials;
-  }
-
-
   getEnumValueFromFormio(enumList){
     let enumArr = [];
 
-    for(let i = 0; i< enumList; i++){
+    for(let i = 0; i< enumList.length; i++){
 
       enumArr.push(enumList[i].value);
     }
@@ -2015,21 +1791,9 @@ export class CreateEntityComponent implements OnInit {
     this.usecaseSchema[this.activeMenuNo]['_osConfig']['internalFields'] = this.internalFields[this.activeMenuNo];
   }
 
-
-  commonSchemaBody() {
-    let commonBody = {
-      "$schema": "http://json-schema.org/draft-07/schema",
-      "title": "Common",
-      "isRefSchema": true,
-      "status": "DRAFT",
-      "definitions": {}
-    }
-
-    return commonBody;
-  }
-
   goBack(){
     this.location.back();
   }
 
 }
+

@@ -20,7 +20,7 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
   registry:
-    image: dockerhub/sunbird-rc-core:${RELEASE_VERSION}
+    image: dockerhub/sunbird-rc-core:v0.0.13-1
     volumes:
       - ${PWD}/deps/_schemas:/home/sunbirdrc/config/public/_schemas
     environment:

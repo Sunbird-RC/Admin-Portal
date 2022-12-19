@@ -1405,7 +1405,7 @@ export class CreateEntityComponent implements OnInit {
         }
 
         if (data.hasOwnProperty('data') && data.data.values.length) {
-          tempjson1['enum'] = this.getEnumValueFromFormio(data.data.value);
+          tempjson1['enum'] = this.getEnumValueFromFormio(data.data.values);
         }
 
         if (this.privateFieldsName == '') {
@@ -1487,7 +1487,7 @@ export class CreateEntityComponent implements OnInit {
       }
 
       if (data.hasOwnProperty('data') && data.data.values.length) {
-        tempjson1['enum'] = this.getEnumValueFromFormio(data.data.value);
+        tempjson1['enum'] = this.getEnumValueFromFormio(data.data.values);
       }
 
       if (this.privateFieldsName == '') {

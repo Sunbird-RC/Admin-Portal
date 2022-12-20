@@ -6,6 +6,7 @@ import { GeneralService } from 'src/app/services/general/general.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AppConfig } from 'src/app/app.config';
 import { KeycloakService } from 'keycloak-angular';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'create-vc-template',
@@ -29,7 +30,11 @@ export class CreateVcTemplateComponent implements OnInit, OnChanges {
   baseUrl = this.config.getEnv('baseUrl');
   token: any;
   paramFromRoute: any;
-
+  tempStr: any;
+  titleStr: any;
+  iframe: any;
+  tempStr2:any;
+  
   constructor(
     private activeRoute: ActivatedRoute,
     public router: Router,
@@ -54,6 +59,7 @@ export class CreateVcTemplateComponent implements OnInit, OnChanges {
 
 
   ngOnInit() {
+   
     this.keycloakService.getToken().then((res) => {
       this.token = res;
     });
@@ -101,7 +107,7 @@ export class CreateVcTemplateComponent implements OnInit, OnChanges {
   }
 
   async loadPage() {
-    this.userHtml1 = '';
+    this.tempStr = '';
     this.credTemp = [];
     await this.getCredTemplate();
     this.injectHTML();
@@ -120,46 +126,65 @@ export class CreateVcTemplateComponent implements OnInit, OnChanges {
     }
   }
 
-  async getCredTemplate() {
 
+  async getCredTemplate() {
     for (let i = 0; i < this.items.length; i++) {
       if (this.items[i]["name"] == this.entityName) {
         let a = this.items[i]["schema"]["_osConfig"]["certificateTemplates"];
         let b = Object.values(a);
-        let c = b.toString();
-        let d = c.split("Schema/");
+        let e = Object.keys(a);
+      
+        console.log(e)
+        for (let k = 0; k < Object.keys(a).length; k++) {
+          this.titleStr = Object.keys(a)[k];
+          console.log(this.titleStr)
+          this.tempStr = b[k];
+          let c = this.tempStr.toString();
+          let d = c.split("Schema/");
+                 
+         
+          await this.generalService.getText('/Schema/' + d[1]).subscribe((res) => {
+            this.tempStr2 = res;
+             
+            this.credTemp.push({
+              "title":this.titleStr,
+              "html": this.tempStr2,
+            });
 
-        await this.generalService.getText('/Schema/' + d[1]).subscribe((res) => {
-          this.userHtml1 = res;
-          this.credTemp.push({
-            "title": Object.keys(a),
-            "html": res
-          });
-        }, (err) => {
-          console.log({ err });
-        })
+          }, (err) => {
+            console.log({ err });
+          }) 
+          
+          
+        }
+        console.log(this.credTemp)
       }
     }
-
+    
   }
 
 
   injectHTML() {
-
+    console.log(this.credTemp)
     setTimeout(() => {
-      let iframe: HTMLIFrameElement = document.getElementById('iframe1') as HTMLIFrameElement;
-
+ for(let i=0; i<this.credTemp.length; i++){
+      let iframe: HTMLIFrameElement = document.getElementById('iframe'+i) as HTMLIFrameElement;
+    
+   
       if (iframe) {
+
         var iframedoc;
         if (iframe['contentDocument'])
           iframedoc = iframe.contentDocument;
         else if (iframe['contentWindow'])
           iframedoc = iframe.contentWindow.document;
 
+
         if (iframedoc) {
           // Put the content in the iframe
           iframedoc.open();
-          iframedoc.writeln(this.userHtml1);
+          iframedoc.writeln(this.credTemp[i].html);
+
           iframedoc.close();
         } else {
           alert('Cannot inject dynamic contents into iframe.');
@@ -167,8 +192,9 @@ export class CreateVcTemplateComponent implements OnInit, OnChanges {
       } else {
         this.injectHTML();
       }
+    }
     }, 1000)
-
+    // }
 
   }
 

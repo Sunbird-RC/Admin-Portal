@@ -26,6 +26,7 @@
   justify-content: center;
   height: 100%;
 }
+
 .thmbCol2 {
   display: flex;
   flex-direction: column;
@@ -42,7 +43,8 @@
   height: 190px !important;
   overflow: hidden;
 }
-#iframe1 {
+
+.iframeCert {
   height: 430%;
   width: 325%;
   overflow: hidden;

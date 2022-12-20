@@ -508,7 +508,7 @@ export class EditTemplateComponent implements OnInit {
     // Store form name as "file" with file data
     formData.append("files", fileObj, fileObj.name);
     this.generalService.postData('/Schema/' + this.schemaOsid + '/certificateTemplate/documents', formData).subscribe((res) => {
-      this.schemaContent._osConfig['certificateTemplates'] = { [this.templateName]: 'minio://' + res.documentLocations[0] }
+      this.schemaContent._osConfig['certificateTemplates'][this.templateName] = 'minio://' + res.documentLocations[0];
       let result = this.schemaContent;
       let payload = {
         "schema": JSON.stringify(result)

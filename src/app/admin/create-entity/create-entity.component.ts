@@ -1462,15 +1462,15 @@ export class CreateEntityComponent implements OnInit {
           }, (err) => {
             errArr.push(this.usecaseSchema[i].title);
 
-            if (errArr.length == 1 && (errArr.includes('Common') || errArr.includes('common'))) {
+            // if (errArr.length == 1 && (errArr.includes('Common') || errArr.includes('common'))) {
 
-              console.log('err ----', err);
-            } else {
+            //   console.log('err ----', err);
+            // } else {
               if (i == this.usecaseSchema.length - 1) {
                 this.getEntityProperties();
                 this.toastMsg.error('error', errArr + " name schema already exists, please rename ");
               }
-            }
+           // }
 
 
 

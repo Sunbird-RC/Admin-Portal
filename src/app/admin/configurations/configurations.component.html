@@ -73,10 +73,10 @@
             <div class="card p-3 mb-3">
             
               <p class="p16 fw-bold">{{ item?.name }}</p>
-              <div class="d-flex align-items-center">
+              <div class="d-flex align-items-center" *ngFor="let certName of item?.schema?._osConfig?.certificateTemplates | keyvalue">
                
                 <img src="{{imgUrl}}" class="float-left mr-2  img16" alt="">
-                <span class="fs-14 fw-bold" *ngFor="let certName of item?.schema?._osConfig?.certificateTemplates | keyvalue">
+                <span class="fs-14 fw-bold" >
                   {{certName.key}}
                 </span>
               

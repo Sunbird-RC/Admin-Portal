@@ -11,35 +11,27 @@ import { TranslateService } from '@ngx-translate/core';
 export class PublishComponent implements OnInit {
   isShow = false;
   schemaOsid: any;
-  publishData: any;
+  publishData: any = [];
   constructor(private generalService: GeneralService, 
     public translate: TranslateService) { }
 
   ngOnInit(): void {
     this.generalService.getData("/Schema").subscribe((res) => {
       for (let i = 0; i < res.length; i++) {
-        this.publishData = res;
+
+        res[i].schema = JSON.parse(res[i].schema);
+        if( !res[i].schema.hasOwnProperty('isRefSchema') &&  !res[i].schema.isRefSchema){
+          this.publishData.push(res[i]);
+        }
+
+       
       }
     });
-
-
-    // this.generalService.getData("/Schema/").subscribe(
-    //   (res)=>{
-    //     for(let j=0; j<res.length; j++){
-    //       this.publishData = res;
-
-
-    //     }
-
-    //   }
-    // )
 
   }
   ngAfterViewInit() { }
   async changeVal() {
     this.isShow = !this.isShow;
-
-
   }
 
   changeStatus(osid, i) {

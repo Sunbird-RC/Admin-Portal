@@ -45,7 +45,7 @@
         <div class="text-center mt-5" *ngIf="isLoading">
             <sa-spinner-circular-fixed [size]="54" [thickness]="79" [speed]="67" color="rgba(57, 80, 172, 1)" secondaryColor="rgba(172, 57, 57, 0)" ></sa-spinner-circular-fixed>          
         </div>
-        <div *ngIf="!items.length && !isLoading">
+        <div *ngIf="!items.length ">
             <get-started></get-started>
         </div>
         <div *ngIf="items.length && !isLoading"> 

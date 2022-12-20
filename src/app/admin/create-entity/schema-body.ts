@@ -89,7 +89,6 @@ export class SchemaBodyService {
       "$schema": "http://json-schema.org/draft-07/schema",
       "title": "Common",
       "isRefSchema": true,
-      "status": "DRAFT",
       "definitions": {}
     }
 

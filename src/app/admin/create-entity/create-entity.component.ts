@@ -1441,7 +1441,8 @@ export class CreateEntityComponent implements OnInit {
           "name": tempProperty[i].title,
           "description": tempProperty[i].description,
           "schema": JSON.stringify(tempProperty[i]),
-          "referedSchema": this.usecase
+          "referedSchema": this.usecase,
+          "status": "DRAFT"
         }
 
         if (this.isNew) {
@@ -1529,7 +1530,9 @@ export class CreateEntityComponent implements OnInit {
         let payload = {
           "name": this.templateName,
           "description": this.configDescription,
-          "schema": JSON.stringify(tempProperty)
+          "schema": JSON.stringify(tempProperty),
+          "referedSchema": this.usecase,
+          "status": "DRAFT"
         }
 
         this.generalService.postData('/Schema', payload).subscribe((res) => {
@@ -1621,6 +1624,8 @@ export class CreateEntityComponent implements OnInit {
       let payload = {
         "name": this.templateName,
         "description": this.configDescription,
+        "status": "DRAFT",
+        "referedSchema": this.usecase,
         "schema": result
       }
 

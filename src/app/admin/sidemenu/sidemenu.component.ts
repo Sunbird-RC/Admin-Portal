@@ -38,6 +38,10 @@ constructor(
 
      this.generalService.getData('/Schema').subscribe((res) => {
      this.readSchema(res);
+    }, (err)=>{
+      this.items = [];
+      this.isLoading = false;
+
     });
   }
 

@@ -4,6 +4,8 @@ import { GeneralService } from "src/app/services/general/general.service";
 import { TranslateService } from '@ngx-translate/core';
 import { FormGroup, FormControl, FormArray, FormBuilder } from '@angular/forms';
 
+
+
 @Component({
   selector: "config-workflow",
   templateUrl: "./config-workflow.component.html",
@@ -22,12 +24,19 @@ export class ConfigWorkflowComponent implements OnInit {
   studentFieldList = [];
   global_properties = [];
   global_tempName = "";
-
+  fieldtype = ["String", "Boolean", "Number"]
   global_properties_student = [];
   global_tempName_student = "";
-
   name = 'Angular';
   workflowForm: FormGroup;
+  attestationForm: FormGroup;
+  values = [];
+  tname = "add fields";
+  ftype = "";
+  onAddFields: boolean = false;
+  compFieldJson: string;
+  privateFieldsName: string;
+  temp_arr: string[];
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -41,7 +50,6 @@ export class ConfigWorkflowComponent implements OnInit {
       workflowItems: this.fb.array([
       ])
     });
-
 
   }
 
@@ -187,7 +195,6 @@ export class ConfigWorkflowComponent implements OnInit {
 
 
   onSubmit() {
-    console.log(this.workflowForm.value);
   }
 
   //------------------------------------End - dynamic form ---------------------
@@ -227,13 +234,13 @@ export class ConfigWorkflowComponent implements OnInit {
       key_name = this.global_tempName_student + "." + key_name;
     }
     if (item?.properties) {
-      let temp_arr = Object.keys(item?.properties);
+      this.temp_arr = Object.keys(item?.properties);
       let temp_mykey = main_item[index]; //Object.getOwnPropertyNames(main_item)[0];
 
-      for (let i = 0; i < temp_arr.length; i++) {
-        if (item?.properties?.[temp_arr[i]]?.properties) {
+      for (let i = 0; i < this.temp_arr.length; i++) {
+        if (item?.properties?.[this.temp_arr[i]]?.properties) {
           this.getPropertiesNameStudent(
-            item?.properties?.[temp_arr[i]],
+            item?.properties?.[this.temp_arr[i]],
             key_name + temp_mykey + ".",
             Object.keys(item?.properties),
             i
@@ -241,8 +248,8 @@ export class ConfigWorkflowComponent implements OnInit {
         } else {
           this.global_properties_student.push(
             key_name === temp_mykey
-              ? key_name + "." + temp_arr[i]
-              : key_name + temp_mykey + "." + temp_arr[i]
+              ? key_name + "." + this.temp_arr[i]
+              : key_name + temp_mykey + "." + this.temp_arr[i]
           );
         }
       }
@@ -255,7 +262,6 @@ export class ConfigWorkflowComponent implements OnInit {
     this.global_properties = [];
     const attest = this.fieldList.find((e) => e[item]);
     arr = this.getProperties(attest?.[item], attest);
-
     this.feildNameList.push(arr);
   }
 
@@ -316,7 +322,6 @@ export class ConfigWorkflowComponent implements OnInit {
           let myArray = "";
           let feild_name = "";
           let commonSchema_name = item?.properties?.[temp_arr[i]]?.["$ref"];
-          console.log(commonSchema_name);
           myArray = commonSchema_name.split("/")[0].split(".")[0];
           feild_name = commonSchema_name.split("/")[3];
 
@@ -350,6 +355,29 @@ export class ConfigWorkflowComponent implements OnInit {
     }
   }
 
+  //-----------------------start -Attestatation Edit Modal ---------------------
 
+  checks = false;
+  checkAll(x) {
+    if (x.target.checked == true) {
+      this.checks = true;
+    }
+    else {
+      this.checks = false;
+    }
+  }
 
+  removefield(i) {
+    this.values.splice(i, 1);
+  }
+
+  addfield() {
+    this.values.push({ value: "", select: "" });
+
+  }
+
+  saveModaldata(){
+    
+  }
 }
+

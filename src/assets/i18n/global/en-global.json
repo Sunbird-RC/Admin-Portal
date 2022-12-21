@@ -50,6 +50,13 @@
     "ATTRIBUTES_REQUIRED_FOR_ATTESTATION": "Attributes required for attestation",
     "CERTIFICATE_RECORD_DATE_ISSUER_NAME": "Certificate Name, Record Name, Date, Issuer Name",
     "ADD_WORKFLOW": "Add Workflow",
+    "PROPERTIS_REQUIRED_FOR_ATTESTATION":"Properties required for attestation",
+    "SELECT_ATTRIBUTES_REQUIRED_FOR_ATTESTATION":"Select attributes thats required for attestation",
+    "ATTRIBUTES":"Attributes",
+    "ADDITIONAL_ATTRIBUTES":"Additional Attributes",
+    "FIELD_NAME" : "Field Name",
+    "INPUT_TYPE" : "Input Type",
+    "ADD_FIELD":"Add Field",
     
     "SCHEMA_IN_DRAFT_STATUS": "Schema is in draft status",
     "REVIEW_AND_PUBLISH": "Review and Publish",

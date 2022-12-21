@@ -51,6 +51,13 @@
   "ATTRIBUTES_REQUIRED_FOR_ATTESTATION":"सत्यापन के लिए आवश्यक विशेषताएं",
   "CERTIFICATE_RECORD_DATE_ISSUER_NAME":"प्रमाणपत्र का नाम, रिकॉर्ड का नाम, दिनांक, जारीकर्ता का नाम",
   "ADD_WORKFLOW":"कार्यप्रवाह जोड़ें",  
+  "PROPERTIS_REQUIRED_FOR_ATTESTATION":"सत्यापन के लिए आवश्यक गुण",
+  "SELECT_ATTRIBUTES_REQUIRED_FOR_ATTESTATION":"प्रमाणन के लिए आवश्यक विशेषताओं का चयन करें",
+  "ATTRIBUTES":"गुण",
+  "ADDITIONAL_ATTRIBUTES":"अतिरिक्त गुण",
+  "FIELD_NAME" : "कार्यक्षेत्र नाम",
+  "INPUT_TYPE" : "निवेष का प्रकार",
+  "ADD_FIELD":"क्षेत्र जोड़ें",
   
   "SCHEMA_IN_DRAFT_STATUS":"स्कीमा ड्राफ़्ट स्थिति में है",
   "REVIEW_AND_PUBLISH":"समीक्षा करें और प्रकाशित करें",

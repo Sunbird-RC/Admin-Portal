@@ -418,7 +418,7 @@
                     <div class="mb-3">
                         <span class="l12 fw-bold">{{'ENTER_SCHEMA_NAME' | translate}}</span>
                         <input  class="w-100 input-field modal-input-field p14 p-2 inputField"
-                            placeholder="Enter Schema name" type="text" required name="entityName" [(ngModel)]="entityName"/>
+                            placeholder="Enter Schema name" type="text" required  name="entityName" [(ngModel)]="entityName" (keydown)="space($event)"/>
                             
                     </div>
 

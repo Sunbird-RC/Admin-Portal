@@ -24,7 +24,7 @@
         <div class="col-md-3">
             <div class="wrapper ps-2 -e-2">
                 <!--Top menu -->
-                <div id="sideMenu" class="sidebar">
+                <div id="sideMenu" class="sidebar h-100" >
                     <ul class="list-unstyled" *ngIf="isActive == 'createSchema'">
                         <!-- <p class="p16 fw-bold pl-3 text-uppercase">Common </p> -->
                         <ng-template ngFor let-menuItem [ngForOf]="usecaseSchema" let-i="index">
@@ -417,8 +417,9 @@
                 <div class="container mt-1">
                     <div class="mb-3">
                         <span class="l12 fw-bold">{{'ENTER_SCHEMA_NAME' | translate}}</span>
-                        <input [(ngModel)]="entityName" class="w-100 input-field modal-input-field p14 p-2 inputField"
-                            placeholder="Enter Schema name" type="text" />
+                        <input  class="w-100 input-field modal-input-field p14 p-2 inputField"
+                            placeholder="Enter Schema name" type="text" required  name="entityName" [(ngModel)]="entityName" (keydown)="space($event)"/>
+                            
                     </div>
 
                     <div class="mt-2">
@@ -433,7 +434,7 @@
                     <div class="mt-4">
                         <button data-dismiss="modal" aria-label="Close"
                             class="btn text-capitalize float-end btn-primary btn-primary-sm p1"
-                            (click)="createEntity($event)">{{'SAVE' | translate}}</button>
+                            (click)="createEntity($event)" [disabled]="!entityName">{{'SAVE' | translate}}</button>
                         <!-- <button class="close" data-dismiss="modal" aria-label="Close"
                         class="btn text-capitalize float-end btn-primary btn-primary-sm p1 sb-text-primary mr-2 bg-none">Cancel</button> -->
                     </div>

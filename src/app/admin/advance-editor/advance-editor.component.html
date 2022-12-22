@@ -16,7 +16,7 @@
                 <i [hidden]="isShowLessJson" class="fa fa-plus float-end arrIcon"></i>
                 <i [hidden]="!isShowLessJson" class="fa fa-minus float-end arrIcon"></i>
               </button>
-              <div class="well content">
+              <div class="well content overflow-hidden">
                 <json-editor [options]="editorOptions" style="min-height: 700px;" [data]="jsonFields"
                   [(ngModel)]="jsonFields"></json-editor>
               </div>
@@ -47,7 +47,7 @@
       
         <div class="preview-footer">
           <button data-toggle="modal" (click)="saveAdvance()"
-            class="btn text-capitalize float-end btn-primary btn-primary-sm p1">{{'SAVE' | translate}}</button>
+            class="btn text-capitalize float-end btn bg-color-blueubtn bg-color-bluee bg-color-blue text-white-sm p1">{{'SAVE' | translate}}</button>
         </div>
       
       </div>

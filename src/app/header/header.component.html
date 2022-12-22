@@ -34,8 +34,8 @@
       </div>
       <div class="circle-login">
         <!-- <p class="center">A</p>   -->
-        <span class="p12" *ngIf="loggedInUser">{{ loggedInUser }}</span> &nbsp;
-        <!-- <a *ngIf="loggedInUser" href="/logout" class="p12"> <img style="width: 25px;" src="assets/images/logout.png" /></a> -->
+        <span class="fs-12" *ngIf="loggedInUser">{{ loggedInUser }}</span> &nbsp;
+        <!-- <a *ngIf="loggedInUser" href="/logout" class="fs-12"> <img style="width: 25px;" src="assets/images/logout.png" /></a> -->
         <span class="dropdown">
           <i class="fa fa-chevron-down fs-10"></i>
           <div class="dropdown-content">
@@ -54,7 +54,7 @@
                 *ngIf="header?.title"
                 id="{{ header?.title }}"
                 (click)="onTabChange(index, 'left')"
-                class="nav-link  p14 {{ header?.className }}  {{
+                class="nav-link  fs-14 {{ header?.className }}  {{
                   header?.activeTab
                 }}"
                 [routerLink]="[header.redirectTo]"
@@ -88,7 +88,7 @@
             <li class="nav-item">
               <a
                 *ngIf="header?.title"
-                class="nav-link p14 {{ header?.className }} {{
+                class="nav-link fs-14 {{ header?.className }} {{
                   header?.activeTab
                 }}"
                 [routerLink]="[header.redirectTo]"

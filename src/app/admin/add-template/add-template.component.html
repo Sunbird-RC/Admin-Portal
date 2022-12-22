@@ -1,9 +1,9 @@
 <header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-header nav-b navbar-inverse">
+    <nav class="navbar navbar-expand-lg navbar-light bg-header bg-white nav-b navbar-inverse">
         <a class="nav-link pl-4" href="" onClick="history.go(-1); return false;"><i
                 class="fa fa-angle-left primary-text"></i> </a>
         <span class="heading-2" [hidden]="isPreview">{{'ADD_DOCUMENT' | translate}}</span>
-        <span class="p16" [hidden]="!isPreview"><b>{{'EDIT_TEMPLATE' | translate}}</b></span>
+        <span class="fs-16" [hidden]="!isPreview"><b>{{'EDIT_TEMPLATE' | translate}}</b></span>
     </nav>
 
 
@@ -63,7 +63,7 @@
                                         <p class="heading-3 mb-1"> {{'A4' | translate}} </p>
                                         <div class="mb-2">
                                         <div class="box" >
-                                            <img  (click)="previewScreen()" class="templateThumb" src="/assets/images/thumbnail.png" />
+                                            <img  (click)="previewScreen()" class="templateThumb border-white-2 w-120  h-172" src="/assets/images/thumbnail.png" />
                                             <!-- <img *ngIf="!doc?.thumbnailUrl" (click)="previewScreen(doc)" class="templateThumb" src="/assets/images/thumbnail.png" /> -->
 
                                             <!-- <iframe src="/assets/template/sec.html" allowfullscreen="" width="100%"
@@ -80,7 +80,7 @@
                             </div>
                             <div class="tab-pane" id="tab4">
                               <div class="fs-14 mt-2">{{'DONT_HAVE_TEMPLATES_UPLOAD_SVG_CODE' | translate}}</div>
-                                <button class="fs-14 btn btn-sec-bg submit-button mt-2">
+                                <button class="fs-14 btn bg-color-light-blue color-sea-green submit-button mt-2">
                                     <i aria-hidden="true" class="fa fa-upload"></i>{{'UPLOAD_TEMPLATE' | translate}}
                                 </button>
                             </div>
@@ -92,11 +92,11 @@
             </div>
             <div class=" col-12 col-sm-8 p-sm-0" *ngIf="userHtml">
                 <div class="card">
-                    <div class="d-flex flex-justify-between card-body px-4 py-2">
-                        <div class="heading-2">{{'PREVIEW' | translate}}</div>
+                    <div class="d-flex justify-content-between card-body px-4 py-2">
+                        <div class="fs-16 fw-bold">{{'PREVIEW' | translate}}</div>
                         <div>
                             <button (click)="editTemplate()"
-                                class="float-end heading-3 btn btn-sec-bg submit-button"><i
+                                class="float-end heading-3 btn bg-color-light-blue color-sea-green submit-button"><i
                                     class="fa fa-pencil-square-o" aria-hidden="true"></i> {{'EDIT_TEMPLATE' | translate}}</button>
                         </div>
                     </div>
@@ -111,7 +111,7 @@
 
                 </div>
                 <!-- <div class="preview-footer">
-                    <button class="btn btn-sec-bg submit-button">Cancel</button>
+                    <button class="btn bg-color-light-blue color-sea-green submit-button">Cancel</button>
                     <button class="btn btn-bg submit-button float-end mr-2">Save Document</button>
                 </div> -->
             </div>

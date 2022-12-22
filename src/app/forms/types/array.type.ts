@@ -20,7 +20,7 @@ import { FieldArrayType } from '@ngx-formly/core';
     </div>
 
     <div class="d-flex flex-row-reverse">
-      <button class="btn btn-primary" type="button" (click)="add()">+</button>
+      <button class="btn btn bg-color-blue" type="button" (click)="add()">+</button>
     </div>
   </div>
   `,

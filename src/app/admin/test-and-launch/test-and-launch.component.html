@@ -1,6 +1,6 @@
 <h2 class="text-center pt-3 ps-3" >{{'YOU_ARE_READY_AND_CAN_TEST_VERIFIED_CERTIFICATE' | translate}}</h2>
 <div id="content" class="pl-3 py-3 lh-base">
-    <p class="p16 fw-bold pb-1"> {{'SAVED_VC_TEMPLATE' | translate}} </p>
+    <p class="fs-16 fw-bold pb-1"> {{'SAVED_VC_TEMPLATE' | translate}} </p>
     <div class="card p-4 d-flex" *ngFor="let item of thumbnailItems">
        
         <div>
@@ -16,7 +16,7 @@
             <a type= "button" class="ps-3 fw-bold l12" (click) ="testAndVerify()">{{item?.title}}</a>
         </div>
 </div>
-<p class="p16 mt-3 fw-bold">{{'EXPLORE_APIS' | translate}}</p>
+<p class="fs-16 mt-3 fw-bold">{{'EXPLORE_APIS' | translate}}</p>
 <div class="card p-4 lh-base mar-b">
    <div class="ps-2">
     {{'LINKS_TO_INSERTED_EXPLORE_APIS' | translate}}

@@ -107,7 +107,7 @@ export class AttestationComponent implements OnInit {
     },
     {
       "type": "submit",
-      "style": "btn btn-primary text-end mb-3 fw-bold text-capitalize",
+      "style": "btn btn bg-color-blue text-end mb-3 fw-bold text-capitalize",
       "title": "Submit"
     }
   ]
@@ -120,7 +120,7 @@ export class AttestationComponent implements OnInit {
     },
     {
       "type": "submit",
-      "style": "btn btn-primary text-end mb-3 fw-bold text-capitalize",
+      "style": "btn btn bg-color-blue text-end mb-3 fw-bold text-capitalize",
       "title": "Save"
     }
   ]

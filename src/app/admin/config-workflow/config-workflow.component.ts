@@ -4,8 +4,6 @@ import { GeneralService } from "src/app/services/general/general.service";
 import { TranslateService } from '@ngx-translate/core';
 import { FormGroup, FormControl, FormArray, FormBuilder } from '@angular/forms';
 
-
-
 @Component({
   selector: "config-workflow",
   templateUrl: "./config-workflow.component.html",
@@ -21,7 +19,7 @@ export class ConfigWorkflowComponent implements OnInit {
   fieldList_data = [];
   propertyName = [];
   feildNameList = [];
-  studentFieldList = [];
+  selectedMenuFields = [];
   global_properties = [];
   global_tempName = "";
   fieldtype = ["String", "Boolean", "Number"]
@@ -37,6 +35,7 @@ export class ConfigWorkflowComponent implements OnInit {
   compFieldJson: string;
   privateFieldsName: string;
   temp_arr: string[];
+  additionInputArr: any = [];
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -195,6 +194,7 @@ export class ConfigWorkflowComponent implements OnInit {
 
 
   onSubmit() {
+    console.log(this.workflowForm.value);
   }
 
   //------------------------------------End - dynamic form ---------------------
@@ -212,19 +212,57 @@ export class ConfigWorkflowComponent implements OnInit {
 
   onChangeSelect(item: any) {
     let arr = [];
-    this.studentFieldList = [];
+    this.selectedMenuFields = [];
     const attest = this.fieldList.find((e) => e[item]);
     arr = this.getPropertiesStudent(attest?.[item], attest);
 
-    this.studentFieldList.push(arr);
+    this.selectedMenuFields.push(arr);
+
+
+    console.log( this.selectedMenuFields[0]);
+    for(let i = 0; i < this.selectedMenuFields[0].length; i++){
+
+    let fieldName =  this.selectedMenuFields[0][i].split(".");
+    fieldName = fieldName[fieldName.length - 1];
+    let fieldFullPath = this.findPath(attest, fieldName);
+   // this.ObjectbyString(attest, this.findPath(attest, fieldName))
+
+    console.log(fieldFullPath);
+
+
+      //want key
+      // find key path , call findPath()
+      // pass key and fieldArr to ObjectbyString()
+
+      console.log(this.ObjectbyString(attest, fieldFullPath + '.' + fieldName));
+     this.additionInputArr.push(this.ObjectbyString(attest, fieldFullPath + '.' + fieldName));
+     console.log(this.additionInputArr);
+
+     // add key in additionInputArr - todo
+    }
   }
 
+  ObjectbyString = function (o, s) {
+    s = s.replace(/\[(\w+)\]/g, '.$1');
+    s = s.replace(/^\./, '');
+    var a = s.split('.');
+    for (var i = 0, n = a.length; i < n; ++i) {
+      var k = a[i];
+      if (k in o) {
+        o = o[k];
+      } else {
+        return;
+      }
+    }
+    return o;
+  };
+
   getPropertiesStudent(item: any, main_item: any) {
-    this.getPropertiesNameStudent(item, "", Object.keys(main_item), 0);
+    this.getSchemaPropertiesName(item, "", Object.keys(main_item), 0);
     return this.global_properties_student;
   }
 
-  getPropertiesNameStudent(
+  getSchemaPropertiesName(
     item: any,
     key_name: any,
     main_item: any,
@@ -234,13 +272,13 @@ export class ConfigWorkflowComponent implements OnInit {
       key_name = this.global_tempName_student + "." + key_name;
     }
     if (item?.properties) {
-      this.temp_arr = Object.keys(item?.properties);
+      let temp_arr = Object.keys(item?.properties);
       let temp_mykey = main_item[index]; //Object.getOwnPropertyNames(main_item)[0];
 
-      for (let i = 0; i < this.temp_arr.length; i++) {
-        if (item?.properties?.[this.temp_arr[i]]?.properties) {
-          this.getPropertiesNameStudent(
-            item?.properties?.[this.temp_arr[i]],
+      for (let i = 0; i < temp_arr.length; i++) {
+        if (item?.properties?.[temp_arr[i]]?.properties) {
+          this.getSchemaPropertiesName(
+            item?.properties?.[temp_arr[i]],
             key_name + temp_mykey + ".",
             Object.keys(item?.properties),
             i
@@ -248,8 +286,8 @@ export class ConfigWorkflowComponent implements OnInit {
         } else {
           this.global_properties_student.push(
             key_name === temp_mykey
-              ? key_name + "." + this.temp_arr[i]
-              : key_name + temp_mykey + "." + this.temp_arr[i]
+              ? key_name + "." + temp_arr[i]
+              : key_name + temp_mykey + "." + temp_arr[i]
           );
         }
       }
@@ -262,6 +300,7 @@ export class ConfigWorkflowComponent implements OnInit {
     this.global_properties = [];
     const attest = this.fieldList.find((e) => e[item]);
     arr = this.getProperties(attest?.[item], attest);
+
     this.feildNameList.push(arr);
   }
 
@@ -322,6 +361,7 @@ export class ConfigWorkflowComponent implements OnInit {
           let myArray = "";
           let feild_name = "";
           let commonSchema_name = item?.properties?.[temp_arr[i]]?.["$ref"];
+          console.log(commonSchema_name);
           myArray = commonSchema_name.split("/")[0].split(".")[0];
           feild_name = commonSchema_name.split("/")[3];
 
@@ -378,6 +418,230 @@ export class ConfigWorkflowComponent implements OnInit {
 
   saveModaldata(){
     
+  }
+
+   findPath = (ob, key) => {
+    const path = [];
+    const keyExists = (obj) => {
+      if (!obj || (typeof obj !== "object" && !Array.isArray(obj))) {
+        return false;
+      }
+      else if (obj.hasOwnProperty(key)) {
+        return true;
+      }
+      else if (Array.isArray(obj)) {
+        let parentKey = path.length ? path.pop() : "";
+  
+        for (let i = 0; i < obj.length; i++) {
+          path.push(`${parentKey}[${i}]`);
+          const result = keyExists(obj[i]);const findPath = (ob, key) => {
+            const path = [];
+            const keyExists = (obj) => {
+              if (!obj || (typeof obj !== "object" && !Array.isArray(obj))) {
+                return false;
+              }
+              else if (obj.hasOwnProperty(key)) {
+                return true;
+              }
+              else if (Array.isArray(obj)) {
+                let parentKey = path.length ? path.pop() : "";
+          
+                for (let i = 0; i < obj.length; i++) {
+                  path.push(`${parentKey}[${i}]`);
+                  const result = keyExists(obj[i]);
+                  if (result) {
+                    return result;
+                  }const findPath = (ob, key) => {
+                    const path = [];
+                    const keyExists = (obj) => {
+                      if (!obj || (typeof obj !== "object" && !Array.isArray(obj))) {
+                        return false;
+                      }
+                      else if (obj.hasOwnProperty(key)) {
+                        return true;
+                      }
+                      else if (Array.isArray(obj)) {
+                        let parentKey = path.length ? path.pop() : "";
+                  
+                        for (let i = 0; i < obj.length; i++) {
+                          path.push(`${parentKey}[${i}]`);
+                          const result = keyExists(obj[i]);
+                          if (result) {
+                            return result;
+                          }const findPath = (ob, k) => {
+                            const path = [];
+                            const keyExists = (obj) => {
+                              if (!obj || (typeof obj !== "object" && !Array.isArray(obj))) {
+                                return false;
+                              }
+                              else if (obj.hasOwnProperty(key)) {
+                                return true;
+                              }
+                              else if (Array.isArray(obj)) {
+                                let parentKey = path.length ? path.pop() : "";
+                          
+                                for (let i = 0; i < obj.length; i++) {
+                                  path.push(`${parentKey}[${i}]`);
+                                  const result = keyExists(obj[i]);
+                                  if (result) {
+                                    return result;
+                                  }
+                                  path.pop();
+                                }const findPath = (ob, key) => {
+                                  const path = [];
+                                  const keyExists = (obj) => {
+                                    if (!obj || (typeof obj !== "object" && !Array.isArray(obj))) {
+                                      return false;
+                                    }
+                                    else if (obj.hasOwnProperty(key)) {
+                                      return true;
+                                    }
+                                    else if (Array.isArray(obj)) {
+                                      let parentKey = path.length ? path.pop() : "";
+                                
+                                      for (let i = 0; i < obj.length; i++) {
+                                        path.push(`${parentKey}[${i}]`);
+                                        const result = keyExists(obj[i]);
+                                        if (result) {
+                                          return result;
+                                        }
+                                        path.pop();
+                                      }const findPath = (ob, key) => {
+                                        const path = [];
+                                        const keyExists = (obj) => {
+                                          if (!obj || (typeof obj !== "object" && !Array.isArray(obj))) {
+                                            return false;
+                                          }
+                                          else if (obj.hasOwnProperty(key)) {
+                                            return true;
+                                          }
+                                          else if (Array.isArray(obj)) {
+                                            let parentKey = path.length ? path.pop() : "";
+                                      
+                                            for (let i = 0; i < obj.length; i++) {
+                                              path.push(`${parentKey}[${i}]`);
+                                              const result = keyExists(obj[i]);
+                                              if (result) {
+                                                return result;
+                                              }
+                                              path.pop();
+                                            }
+                                          }
+                                          else {
+                                            for (const k in obj) {
+                                              path.push(k);
+                                              const result = keyExists(obj[k]);
+                                              if (result) {
+                                                return result;
+                                              }
+                                              path.pop();
+                                            }
+                                          }
+                                          return false;
+                                        };
+                                      
+                                        keyExists(ob);
+                                      
+                                        return path.join(".");
+                                      }
+                                    }
+                                    else {
+                                      for (const k in obj) {
+                                        path.push(k);
+                                        const result = keyExists(obj[k]);
+                                        if (result) {
+                                          return result;
+                                        }
+                                        path.pop();
+                                      }
+                                    }
+                                    return false;
+                                  };
+                                
+                                  keyExists(ob);
+                                
+                                  return path.join(".");
+                                }
+                              }
+                              else {
+                                for (const k in obj) {
+                                  path.push(k);
+                                  const result = keyExists(obj[k]);
+                                  if (result) {
+                                    return result;
+                                  }
+                                  path.pop();
+                                }
+                              }
+                              return false;
+                            };
+                          
+                            keyExists(ob);
+                          
+                            return path.join(".");
+                          }
+                          path.pop();
+                        }
+                      }
+                      else {
+                        for (const k in obj) {
+                          path.push(k);
+                          const result = keyExists(obj[k]);
+                          if (result) {
+                            return result;
+                          }
+                          path.pop();
+                        }
+                      }
+                      return false;
+                    };
+                  
+                    keyExists(ob);
+                  
+                    return path.join(".");
+                  }
+                  path.pop();
+                }
+              }
+              else {
+                for (const k in obj) {
+                  path.push(k);
+                  const result = keyExists(obj[k]);
+                  if (result) {
+                    return result;
+                  }
+                  path.pop();
+                }
+              }
+              return false;
+            };
+          
+            keyExists(ob);
+          
+            return path.join(".");
+          }
+          if (result) {
+            return result;
+          }
+          path.pop();
+        }
+      }
+      else {
+        for (const k in obj) {
+          path.push(k);
+          const result = keyExists(obj[k]);
+          if (result) {
+            return result;
+          }
+          path.pop();
+        }
+      }
+      return false;
+    };
+  
+    keyExists(ob);
+  
+    return path.join(".");
   }
 }
 

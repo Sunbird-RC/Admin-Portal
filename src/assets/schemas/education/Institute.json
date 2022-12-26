@@ -153,6 +153,7 @@
         "mobile": "/adminMobile",
         "userId": "/adminEmail"
       }
-    ]
+    ],
+    "certificateTemplates": {}
   }
 }

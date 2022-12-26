@@ -104,7 +104,8 @@
   
       "indexFields": ["code","name"],
       "uniqueIndexFields": ["code"],
-      "systemFields": ["osCreatedAt", "osUpdatedAt", "osCreatedBy", "osUpdatedBy"]
+      "systemFields": ["osCreatedAt", "osUpdatedAt", "osCreatedBy", "osUpdatedBy"],
+      "certificateTemplates": {}
     }
   }
   

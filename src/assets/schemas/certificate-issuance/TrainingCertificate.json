@@ -44,6 +44,7 @@
       "contact"
     ],
     "ownershipAttributes": [],
+    "certificateTemplates": {},
     "roles": [],
     "inviteRoles": [
       "anonymous"

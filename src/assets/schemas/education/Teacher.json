@@ -103,6 +103,7 @@
         "mobile": "/contactDetails/mobile",
         "userId": "/contactDetails/mobile"
       }
-    ]
+    ],
+    "certificateTemplates": {}
   }
 }

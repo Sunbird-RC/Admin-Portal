@@ -62,6 +62,7 @@
     "signedFields": [],
     "indexFields": ["contact", "mobile", "email", "preEnrollmentCode"],
     "uniqueIndexFields": ["certificateId"],
-    "systemFields": ["osCreatedAt", "osUpdatedAt", "osCreatedBy", "osUpdatedBy"]
+    "systemFields": ["osCreatedAt", "osUpdatedAt", "osCreatedBy", "osUpdatedBy"],
+    "certificateTemplates": {}
   }
   }

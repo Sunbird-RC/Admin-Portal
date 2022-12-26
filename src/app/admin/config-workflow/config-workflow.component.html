@@ -1,185 +1,12 @@
 <div id="content">
   <div class="p-4">
     <h4>{{ entityName }}</h4>
-    <form [formGroup]="workflowForm" (ngSubmit)="onSubmit()">
-
-      <div formArrayName="workflowItems">
-        <div *ngFor="let workflow of workflowItems().controls; let wIndex=index">
-          <div [formGroupName]="wIndex">
-            <p class="mt-3"><b>{{'ATTESTATION_WORKFLOW' | translate}}</b></p>
-            <!-- <p class="mt-3"><b>Coming Soon</b></p> -->
-
-            <div class="card p-4">
-              <div class="form-group">
-                <label class="form-label">{{'WORKFLOW_NAME' | translate}}</label>
-                <input type="text" formControlName="workflowname" class="form-control" id="workflowname" />
-              </div>
-
-              <div class="form-group">
-                <label for="issuancesystem" class="form-label">{{'SELECT_ISSUANCE_SYSTEM' | translate}}</label>
-                <div class="row">
-                  <select class="custom-dropdown" id="issuancesystem" formControlName="issuancesystem"
-                    id="issuancesystem">
-                    <option selected>{{'SUNBIRD_RC_ISSUANCE_SYSTEM' | translate}}</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="d-flex">
-                <label>
-                  <input type="radio" formControlName="attestation_type" value="auto_attestation" id="attestation_type"
-                    name="attestation_type" checked />
-                  {{'AUTO_ATTESTATION' | translate}}
-
-                  <input type="radio" formControlName="attestation_type" value="manual_attestation"
-                    id="attestation_type" name="attestation_type" class="ml-40" />
-                  {{'MANUAL_ATTESTATION' | translate}}
-
-                </label>
-              </div>
-
-              <div formArrayName="attestConditions">
-                <!-- -----------------------start: Form Static code ---------------------------------- -->
-
-
-                <p class="mt-2 mb-0">
-                  <b> {{'ATTESTOR_DETAILS' | translate}}</b>
-                </p>
-
-                <div class="container custom-container-attester"
-                  *ngFor="let attestCondition of attestConditions(wIndex).controls; let aIndex= index">
-                  <div [formGroupName]="aIndex">
-                    <p class="mt-2 mb-0">
-                      <b>{{'ATTESTOR' | translate}}</b>
-                      <b class="ml-240">{{'CONDITIONS_FOR_ATTESTOR' | translate}}</b>
-                      <span class="float-end" (click)="removeAttestorCondition(wIndex, aIndex)">
-                        <i class="fa fa-close" aria-hidden="true"></i>
-                      </span>
-                    </p>
-
-                    <div class="row">
-
-                      <div class="col-sm-3">
-                        <select #mySelect formControlName="selectEntity" id="selectEntity"
-                          class="custom-dropdown-attester-w-auto" (change)="onSelect(mySelect.value)">
-                          <option *ngFor="let item of entityList" [value]="item">
-                            {{ item }}
-                          </option>
-                        </select>
-                      </div> <!-- end - col-sm-3  -->
-
-                      <div class="col-sm-9">
-                        <select formControlName="anyOrAllCondition" id="anyOrAllCondition"
-                          class="custom-dropdown-attester-details">
-                          <option>{{'ANY' | translate}}</option>
-                          <option>{{'ALL' | translate}}</option>
-                        </select>
-                        <label class="ml-2">{{'OF_THE_CONDITIONS_BELOW' | translate}}</label>
-
-                        <div class="mt-3" formArrayName="fieldConditions">
-                          <div
-                            *ngFor="let fieldCondition of fieldConditions(wIndex, aIndex).controls; let fIndex=index">
-                            <div [formGroupName]="fIndex">
-                              <select formControlName="selectConditionOne" id="selectConditionOne"
-                                class="custom-dropdown-attester">
-                                <option *ngFor="let val of studentFieldList[0]" [value]="val">
-                                  {{ val }}
-                                </option>
-                              </select>
-
-                              <select formControlName="equalTo" id="equalTo" class="custom-dropdown-attester ml-4">
-                                <option>{{'EQUAL_TO' | translate}}</option>
-                              </select>
-
-                              <select formControlName="selectConditionTwo" id="selectConditionTwo"
-                                class="custom-dropdown-attester ml-4 mr-4" #selectConditionTwo
-                                (change)="onChangeSelect(selectConditionTwo.value)">
-                                <option *ngFor="let val of feildNameList[0]" [value]="val">
-                                  {{ val }}
-                                </option>
-                              </select>
-                              <span (click)="removeFieldCondition(wIndex, aIndex, fIndex)">
-                                <i class="fa fa-close" aria-hidden="true"></i>
-                              </span>
-                            </div>
-                          </div> <!-- End - ngfor field array -->
-
-                          <div class="mt-3" (click)="addFieldCondition(wIndex, aIndex)">
-                            <span class="p14 submit-button clr-blue">
-                              <i class="fa fa-plus" aria-hidden="true"></i>
-                              {{'ADD_CONDITION' | translate}}
-                            </span>
-                          </div>
-
-
-                        </div> <!-- End - mt-3 div class-->
-
-                      </div> <!-- end - col-sm-9  -->
-                    </div> <!-- end row -->
-                  </div>
-                </div>
-
-                <div class="mt-3">
-                  <span class="p14 submit-button clr-blue btn-add-attester" (click)="addNewAttestCondition(wIndex);">
-                    <i class="fa fa-plus" aria-hidden="true"></i>
-                    {{'ADD_NEXT_ATTESTOR' | translate}}
-                  </span>
-                </div>
-
-                <!-- <button type="submit" class="btn btn-success">Submit</button> -->
-
-
-
-                <!-- -----------------------End: Form Static code ---------------------------------- -->
-
-              </div>
-
-              <!-- <div class="mt-3">
-              <span class="p14 submit-button clr-blue btn-add-attester">
-                <i class="fa fa-plus" aria-hidden="true"></i>
-                {{'ADD_NEXT_ATTESTOR' | translate}}
-              </span>
-            </div> -->
-
-              <div>
-                <p class="mt-5 mb-0">
-                  <b> {{'ATTRIBUTES_REQUIRED_FOR_ATTESTATION' | translate}}</b>
-                  <span class="p14 submit-button clr-blue btn-edit-attester" data-toggle="modal"
-                    data-target="#editWorlflowModal" (click)="editWorlflowModal()">
-                    {{'EDIT' | translate}} </span>
-                </p>
-                <div class="custom-container-edit">
-                  <p>{{'CERTIFICATE_RECORD_DATE_ISSUER_NAME' | translate}}</p>
-                </div>
-              </div>
-
-              <div class="mt-3" (click)="removeWorkflowItems(wIndex)">
-                <span class="p14 submit-button delete-btn text-color"> {{'DELETE' | translate}} </span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="mt-3">
-          <span class="p14 submit-button clr-blue btn-add-attester" (click)="addWorkflowItems();">
-            <i class="fa fa-plus" aria-hidden="true"></i>
-            {{'ADD_WORKFLOW' | translate}}
-          </span>
-        </div>
-        <p>
-          <!-- <button type="submit">Submit</button> -->
-          <!-- {{this.workflowForm.value | json}} -->
-
-        </p>
-      </div>
-    </form>
+     <p class="mt-3"><b>Coming Soon</b></p>
+ 
   </div>
-
-  <!-- -----------------------start - dynamic code ---------------------------------- -->
 
 </div>
 
-
-<!-- Modal Start : Edit Workflow -->
 <div class="modal right fade" id="editWorlflowModal" tabindex="-1" role="dialog" aria-labelledby="editWorlflowModal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -196,16 +23,19 @@
             <tr>
               <th scope="col" class="fw-bold">
                 <input class="form-check-input" (change)="checkAll($event)" type="checkbox" /> &nbsp;
-                {{'ATTRIBUTES' | translate}}
+                <label class="p-1 ml-2"> {{'ATTRIBUTES' | translate}}</label>
               </th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let val of temp_arr">
-          <span class="p-3">         
-            <input class="form-check-input"  [checked]="checks" type="checkbox"/> &nbsp; {{val}}
-          </span>              
-            </tr> 
+            <tr *ngFor="let val of selectedMenuFields[0]">
+              <span class="p-3">
+             
+                  <input class="form-check-input" (change)="checkAll($event)" type="checkbox" /> &nbsp;
+                &nbsp; 
+                <label class="p-1 ml-2">{{val}}</label>
+              </span>
+            </tr>
           </tbody>
         </table>
         <p class="ml-3 fw-bold">{{'ADDITIONAL_ATTRIBUTES' | translate}}</p>
@@ -243,13 +73,14 @@
             </tr>
           </tbody>
         </table>
-        
+
         <button class="m-3 p14 btn btn-sec-bg submit-button text-secondary-color" (click)="addfield()">
           <i class="fa fa-plus" aria-hidden="true"></i> {{'ADD_FIELD' | translate}}</button>
-             
-      
+
+
         <div>
-          <button class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2" (click)="saveModaldata()">{{'SAVE' | translate}}</button>
+          <button class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2"
+            (click)="saveModaldata()">{{'SAVE' | translate}}</button>
         </div>
 
       </div>
@@ -258,4 +89,3 @@
   </div>
 </div>
 <!-- Modal End : Edit Workflow -->
-

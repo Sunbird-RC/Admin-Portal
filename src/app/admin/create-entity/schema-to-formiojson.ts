@@ -13,6 +13,7 @@ export class FormioJsonService {
 
   convertSchemaToFormioJson(viewSchemaField) {
     let newArr: any = [];
+    viewSchemaField = (viewSchemaField.length) ? viewSchemaField : (viewSchemaField.hasOwnProperty('propertyKey') ? viewSchemaField.data : viewSchemaField)
     for (let i = 0; i < viewSchemaField.length; i++) {
       if (viewSchemaField[i].type != 'object' && viewSchemaField[i].type != 'array') {
         let compJson = {

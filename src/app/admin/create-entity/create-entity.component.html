@@ -109,12 +109,12 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th class="p12 text-grey-color fw-bold" scope="col">  {{'LABEL' | translate}} </th>
-                                        <th class="p12 text-grey-color fw-bold" scope="col"> {{'FIELD_TYPE' | translate}}</th>
-                                        <th class="p12 text-grey-color fw-bold" scope="col"> {{'MANDATORY' | translate}}</th>
-                                        <th class="p12 text-grey-color fw-bold" scope="col"> {{'DESCRIPTION' | translate}} </th>
-                                        <th class="p12 text-grey-color fw-bold" scope="col"> {{'VISIBILITY' | translate}} </th>
-                                        <th class="p12 text-grey-color fw-bold" scope="col"> </th>
+                                        <th class="p12 text-grey-color fw-bold p-2" scope="col">  {{'LABEL' | translate}} </th>
+                                        <th class="p12 text-grey-color fw-bold p-2" scope="col"> {{'FIELD_TYPE' | translate}}</th>
+                                        <th class="p12 text-grey-color fw-bold p-2" scope="col"> {{'MANDATORY' | translate}}</th>
+                                        <th class="p12 text-grey-color fw-bold p-2" scope="col"> {{'DESCRIPTION' | translate}} </th>
+                                        <th class="p12 text-grey-color fw-bold p-2" scope="col"> {{'VISIBILITY' | translate}} </th>
+                                        <th class="p12 text-grey-color fw-bold p-2" scope="col"> </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -133,7 +133,7 @@
                                             [ngForOf]="usecaseSchema[activeMenuNo]?.definitions?.data" let-j="index">
 
                                             <ng-template [ngIf]="field?.type == 'array' || field?.type == 'object'">
-                                                <p class="mt-3 fw-bold">
+                                                <p class="mt-3 fw-bold p-2">
                                                     {{field?.propertyName}}
                                                 </p>
                                                 <ng-template ngFor let-secArrayfield [ngForOf]="field?.data"
@@ -153,22 +153,22 @@
 
                                                                 <td>
                                                                     <span
-                                                                        class="p14">{{childNastedArrayfield?.data?.title}}</span>
+                                                                        class="p14 p-2">{{childNastedArrayfield?.data?.title}}</span>
                                                                 </td>
 
                                                                 <td>
                                                                     <span
-                                                                        class="p14">{{childNastedArrayfield?.data?.type | titlecase}}</span>
+                                                                        class="p14 p-2">{{childNastedArrayfield?.data?.type | titlecase}}</span>
                                                                 </td>
                                                                 <td>
-                                                                    <span class="p14"
+                                                                    <span class="p14 p-2"
                                                                         *ngIf="childNastedArrayfield?.required">{{'YES' | translate}}</span>
-                                                                    <span class="p14"
+                                                                    <span class="p14 p-2"
                                                                         *ngIf="!childNastedArrayfield?.required">{{'NO' | translate}}
                                                                     </span>
                                                                 </td>
                                                                 <td>                                                                                                                                        
-                                                                     <span class="p14">{{childNastedArrayfield?.data?.description}}</span>
+                                                                     <span class="p14 p-2">{{childNastedArrayfield?.data?.description}}</span>
                                                                 </td>
                                                                 <td>
                                                                     <select
@@ -202,20 +202,20 @@
                                                         style="border: white solid;">
 
                                                         <td>
-                                                            <span class="p14">{{secArrayfield?.data?.title}} </span>
+                                                            <span class="p14 p-2">{{secArrayfield?.data?.title}} </span>
                                                         </td>
 
                                                         <td>
-                                                            <span class="p14">{{secArrayfield?.data?.type | titlecase}}</span>
+                                                            <span class="p14 p-2">{{secArrayfield?.data?.type | titlecase}}</span>
                                                         </td>
                                                         <td>
-                                                            <span class="p14" *ngIf="secArrayfield?.required">
+                                                            <span class="p14 p-2" *ngIf="secArrayfield?.required">
                                                                 {{'YES' | translate}}</span>
-                                                            <span class="p14" *ngIf="!secArrayfield?.required"> {{'NO' | translate}}
+                                                            <span class="p14 p-2" *ngIf="!secArrayfield?.required"> {{'NO' | translate}}
                                                             </span>
                                                         </td>
                                                         <td>
-                                                            <span class="p14">{{secArrayfield?.data?.description}}</span>                                                           
+                                                            <span class="p14 p-2">{{secArrayfield?.data?.description}}</span>                                                           
                                                         </td>
                                                         <td>
                                                             <select
@@ -246,18 +246,18 @@
                                                 <tr style="border: white solid;" [hidden]="!field[j]?.title">
 
                                                     <td>
-                                                        <span class="p14">{{field[j]?.title}}</span>
+                                                        <span class="p14 p-2">{{field[j]?.title}}</span>
                                                     </td>
 
                                                     <td>
-                                                        <span class="p14">{{field?.data?.type | titlecase}}</span>
+                                                        <span class="p14 p-2">{{field?.data?.type | titlecase}}</span>
                                                     </td>
                                                     <td>
-                                                        <span class="p14" *ngIf="field?.required">{{'YES' | translate}} </span>
-                                                        <span class="p14" *ngIf="!field?.required">{{'NO' | translate}} </span>
+                                                        <span class="p14 p-2" *ngIf="field?.required">{{'YES' | translate}} </span>
+                                                        <span class="p14 p-2" *ngIf="!field?.required">{{'NO' | translate}} </span>
                                                     </td>
                                                     <td>
-                                                        <span class="p14">{{field?.data?.description}}</span>
+                                                        <span class="p14 p-2">{{field?.data?.description}}</span>
                                                     </td>
                                                     <td>
                                                         <select (change)="onVisibilityChange($event, field?.data?.visiblity, j, k)"
@@ -287,18 +287,18 @@
 
 
                                                     <td>
-                                                        <span class="p14">{{field?.data?.title}}</span>
+                                                        <span class="p14 p-2">{{field?.data?.title}}</span>
                                                     </td>
 
                                                     <td>
-                                                        <span class="p14">{{field?.data?.type | titlecase}}</span>
+                                                        <span class="p14 p-2">{{field?.data?.type | titlecase}}</span>
                                                     </td>
                                                     <td>
-                                                        <span class="p14" *ngIf="field?.required">{{'YES' | translate}} </span>
-                                                        <span class="p14" *ngIf="!field?.required">{{'NO' | translate}} </span>
+                                                        <span class="p14 p-2" *ngIf="field?.required">{{'YES' | translate}} </span>
+                                                        <span class="p14 p-2" *ngIf="!field?.required">{{'NO' | translate}} </span>
                                                     </td>
                                                     <td>
-                                                       <span class="p14">{{field?.data?.description}} </span>
+                                                       <span class="p14 p-2">{{field?.data?.description}} </span>
                                                     </td>
 
                                                     <td>

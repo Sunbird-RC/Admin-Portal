@@ -19,12 +19,12 @@
     </nav>
 </header>
 
-<div id="schemaEntity" class="container-fluid mt-1 ml-12">
+<div id="schemaEntity" class="container-fluid mt-0 ml-12" >
     <div class="row" *ngIf="!isAddFormPg">
         <div class="col-md-3">
-            <div class="wrapper ps-2 -e-2">
+            <div class="wrapper">
                 <!--Top menu -->
-                <div id="sideMenu" class="sidebar h-100" >
+                <div id="sideMenu" class="sidebar h-100 border-end" >
                     <ul class="list-unstyled" *ngIf="isActive == 'createSchema'">
                         <!-- <p class="p16 fw-bold pl-3 text-uppercase">Common </p> -->
                         <ng-template ngFor let-menuItem [ngForOf]="usecaseSchema" let-i="index">
@@ -51,7 +51,7 @@
 
                     <ul class="list-unstyled components">
                         <ng-template ngFor let-menuItem [ngForOf]="usecaseSchema" let-i="index">
-                            <li class="menu" *ngIf="!menuItem['isRefSchema']" (click)="openEntity(i, menuItem?.title)">
+                            <li class="menu my-3" *ngIf="!menuItem['isRefSchema']" (click)="openEntity(i, menuItem?.title)">
                                 <a class="a-menu" [class.selected]=" menuItem?.title === usecaseSchema[i].title" (click)="onSelect(menuItem?.title);"> {{menuItem?.title}} 
                                     <div *ngIf="isActive == 'createSchema' && menuItem['status'] != 'PUBLISHED'"
                                         class="dropdown p14 float-end">

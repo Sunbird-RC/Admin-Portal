@@ -22,7 +22,7 @@
                         </form> -->
                         <div class="container mt-4">
                         <ul class="nav nav-tabs ui-tabs font-600">
-                            <li class=" heading-2"><a href="#tab3" data-toggle="tab">{{'GENERAL_TEMPLATE' | translate}}</a></li>
+                            <p class=" heading-2">{{'GENERAL_TEMPLATE' | translate}}</p>
                            <!-- <li class="heading-2"><a href="#tab4" data-toggle="tab">QR Code Only</a></li>  -->
                           </ul>
                         
@@ -62,8 +62,8 @@
                                         <br />
                                         <p class="heading-3 mb-1"> {{'A4' | translate}} </p>
                                         <div class="mb-2">
-                                        <div class="box" >
-                                            <img  (click)="previewScreen()" class="templateThumb" src="/assets/images/thumbnail.png" />
+                                        <div class="box" >              
+                                                <img  (click)="previewScreen()" class="templateThumb" role="button" src="/assets/images/thumbnail.png" />                                           
                                             <!-- <img *ngIf="!doc?.thumbnailUrl" (click)="previewScreen(doc)" class="templateThumb" src="/assets/images/thumbnail.png" /> -->
 
                                             <!-- <iframe src="/assets/template/sec.html" allowfullscreen="" width="100%"

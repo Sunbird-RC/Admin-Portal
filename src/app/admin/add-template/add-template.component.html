@@ -62,10 +62,8 @@
                                         <br />
                                         <p class="heading-3 mb-1"> {{'A4' | translate}} </p>
                                         <div class="mb-2">
-                                        <div class="box" >
-                                            <button class="btn btn-outline-light">
-                                                <img  (click)="previewScreen()" class="templateThumb" src="/assets/images/thumbnail.png" />
-                                            </button>
+                                        <div class="box" >              
+                                                <img  (click)="previewScreen()" class="templateThumb" role="button" src="/assets/images/thumbnail.png" />                                           
                                             <!-- <img *ngIf="!doc?.thumbnailUrl" (click)="previewScreen(doc)" class="templateThumb" src="/assets/images/thumbnail.png" /> -->
 
                                             <!-- <iframe src="/assets/template/sec.html" allowfullscreen="" width="100%"

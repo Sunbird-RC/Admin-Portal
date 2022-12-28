@@ -21,7 +21,7 @@
 
 <div id="schemaEntity" class="container-fluid mt-0 ml-12" >
     <div class="row" *ngIf="!isAddFormPg">
-        <div class="col-md-3">
+        <div class="col-md-3" *ngIf="isActive == 'createSchema' || isActive == 'configurations' || isActive == 'create-vc' || isActive == 'ownership' ">
             <div class="wrapper">
                 <!--Top menu -->
                 <div id="sideMenu" class="sidebar h-100 border-end" >

@@ -9,8 +9,35 @@
       
    
     <div class="card w-100" *ngIf = "isShow1">
-      <div class="ml-1 p-3 w-100">
+      <div class="m-2 p-3 overflow-auto">
         <div class="img-hold">
+
+          <a href="/add-template/{{usecase}}/{{entityName}}">
+            <div class="btn img-ht">
+              <div class="thmbCol">
+                  <div class="pt-c">
+                    <a href="/add-template/{{usecase}}/{{entityName}}" class="btn submit-button pt-c">
+                       <i class="fa fa-plus text-secondary-color pt-c" aria-hidden="true"></i>
+                    </a>
+                  </div>
+                  <div class="fs-12">
+                    <b>{{'ADD_TEMPLATE' | translate}}</b>
+                  </div>
+                  <div class="fs-10 thmbCol2">
+                    <div>
+                      {{'ANY_EDIT_IN_QR_CODE' | translate}}
+                    </div>
+                    <div>
+                      {{'WILL_REFLECT_ALL_VC' | translate}}
+                    </div>
+                    <div>
+                      {{'OF_THIS_SCHEMA' | translate}}
+                     </div>
+                </div>
+              </div>
+            </div>
+          </a>
+
           <div class="thmbCol" *ngFor="let item of credTemp; let i=index" >           
             <div class="wrap" >
               <iframe id="iframe{{i}}" class="iframe-container embed-responsive-item iframeCert" ></iframe>
@@ -18,35 +45,10 @@
             <div class="l12 fw-bold">{{item?.title}}</div>  
           </div> 
 
-          <a href="/add-template/{{usecase}}/{{entityName}}">
-          <div class="btn img-ht">
-            <div class="thmbCol">
-                <div class="pt-c">
-                  <a href="/add-template/{{usecase}}/{{entityName}}" class="btn submit-button pt-c">
-                     <i class="fa fa-plus text-secondary-color pt-c" aria-hidden="true"></i>
-                  </a>
-                </div>
-                <div class="fs-12">
-                  <b>{{'ADD_TEMPLATE' | translate}}</b>
-                </div>
-                <div class="fs-10 thmbCol2">
-                  <div>
-                    {{'ANY_EDIT_IN_QR_CODE' | translate}}
-                  </div>
-                  <div>
-                    {{'WILL_REFLECT_ALL_VC' | translate}}
-                  </div>
-                  <div>
-                    {{'OF_THIS_SCHEMA' | translate}}
-                   </div>
-              </div>
-            </div>
-          </div>
-        </a>
+         
       </div>
    
       </div>
-     <div class="pt-2 ms-3 mb-3"></div>
     </div>
     
   </div>

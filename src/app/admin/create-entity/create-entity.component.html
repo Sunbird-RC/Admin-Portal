@@ -483,10 +483,15 @@
             <div>
                 <button (click)="backStep()"
                     class="btn btn-sec-bg submit-button px-3 my-2 ml-2 mr-2 ">{{'BACK' | translate}}</button> &nbsp;
-                <button (click)="createSchema()" *ngIf="isActive == 'createSchema'"
+                <button (click)="createSchema('')" *ngIf="isActive == 'createSchema'"
                     [disabled]="!usecaseSchema[activeMenuNo]?.definitions?.data?.length"
                     class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2">{{'SAVE_AND_NEXT' | translate}}
                     </button>
+
+                    <button *ngIf="isActive == 'createSchema'" (click)="createSchema(activeMenuNo);"
+                    class="btn  float-end btn-primary btn-primary-sm px-3 my-2 ml-2 mr-2">{{'SAVE_AS_DRAFT' | translate}}</button>
+                &nbsp;
+
                 <button (click)="nextStep()" *ngIf="isActive == 'create-vc'"
                     class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2">{{'SAVE_AND_NEXT' | translate}}
                     </button>

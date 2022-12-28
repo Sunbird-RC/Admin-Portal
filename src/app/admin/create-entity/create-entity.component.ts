@@ -890,6 +890,9 @@ export class CreateEntityComponent implements OnInit {
 
   goBackEvent() {
     this.isAddFormPg = false;
+    setTimeout(() => {
+      this.openEntity(this.activeMenuNo, this.usecaseSchema[this.activeMenuNo].title)
+    }, 500);
   }
 
   showJson() {
@@ -1020,10 +1023,8 @@ export class CreateEntityComponent implements OnInit {
       this.usecaseSchema.push(this.schemaBodyService.newSchemaTemplate(key, data));
       this.getEntityPropertiesByIndex(this.usecaseSchema.length - 1)
 
-
       setTimeout(() => {
         this.openEntity(this.menus.length, key);
-
       }, 500);
 
     } else {
@@ -1199,7 +1200,6 @@ export class CreateEntityComponent implements OnInit {
     let tempFieldObjSec = [];
     let requiredFields = [];
 
-
     for (let i = 0; i < formioJson.length; i++) {
 
       if (formioJson[i].type == "container") {
@@ -1211,7 +1211,6 @@ export class CreateEntityComponent implements OnInit {
           key = formioJson[i].label.replaceAll(/\s/g, '');
           key = key.charAt(0).toLowerCase() + key.slice(1);
         }
-
 
         if (this.privateFieldsName == '') {
           this.privateFieldsName = "$." + key;
@@ -1306,6 +1305,10 @@ export class CreateEntityComponent implements OnInit {
 
     this.usecaseSchema[this.activeMenuNo].definitions['data'] = tempFieldObjSec;
     this.usecaseSchema[this.activeMenuNo].definitions['required'] = requiredFields;
+
+    setTimeout(() => {
+      this.openEntity(this.activeMenuNo, this.usecaseSchema[this.activeMenuNo].title)
+    }, 500);
 
     if (this.usecaseSchema[this.activeMenuNo].hasOwnProperty('isRefSchema') && this.usecaseSchema[this.activeMenuNo].isRefSchema) {
 

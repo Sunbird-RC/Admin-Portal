@@ -130,7 +130,7 @@
 
 
                                         <ng-template ngFor let-field
-                                            [ngForOf]="usecaseSchema[activeMenuNo]?.definitions?.data" let-j="index">
+                                            [ngForOf]="usecaseSchema[activeMenuNo]?.definitions?.data || usecaseSchema[activeMenuNo]?.definitions?.propertyKey" let-j="index">
 
                                             <ng-template [ngIf]="field?.type == 'array' || field?.type == 'object'">
                                                 <p class="mt-3 fw-bold p-2">

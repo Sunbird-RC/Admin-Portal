@@ -120,11 +120,9 @@ export class CreateEntityComponent implements OnInit {
     this.editorOptions.mode = 'code';
     this.editorOptions.history = true;
     this.editorOptions.onChange = () => this.jsonEditor.get();
-    localStorage.setItem('draftSchemaOsid', "");
+
     this.activeRoute.params.subscribe(params => {
       this.params = params;
-
-
       if (this.params.hasOwnProperty('step')) {
 
         this.currentTab = Number(params.step);
@@ -136,7 +134,6 @@ export class CreateEntityComponent implements OnInit {
 
       switch (this.currentTab) {
         case 0: this.isActive = 'createSchema';
-          localStorage.setItem('draftSchemaOsid', "");
           break;
         case 1: this.isActive = 'configurations'
           break;

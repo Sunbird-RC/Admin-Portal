@@ -117,8 +117,18 @@ export class FormioJsonService {
 
             compJson.components.push(compJsonS);
           }else{
-            compJson.components.push(this.convertSchemaToFormioJson(fieldData.data[i]));
-            console.log('-----------------> ', compJson);
+            let compJsonS = {
+              "label": fieldData.propertyName,
+              "tableView": false,
+              "key": fieldData.propertyKey,
+              "type": "container",
+              "input": true,
+              "components": []
+            }
+
+            compJsonS.components = this.convertSchemaToFormioJson(fieldData.data[i]);
+
+            compJson.components.push(compJsonS);
           }
         }
 
@@ -127,6 +137,7 @@ export class FormioJsonService {
       }
 
     }
+
     return newArr;
 
   }

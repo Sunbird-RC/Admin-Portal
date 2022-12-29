@@ -68,13 +68,13 @@
   
   
   //This is color dark blue - mainly used for buttons 
-  .color-blue{
+  .color-primary{
     color:var(--primaryColorBlue) !important;
   }
-  .bg-color-blue{
+  .bg-color-primary{
     background-color:var(--primaryColorBlue) !important;
   }
-  .border-color-blue{
+  .border-color-primary{
     border: 1px solid var(--primaryColorBlue) !important;
   }
   
@@ -270,6 +270,10 @@
   
   .border2 {
     border: 1px solid #fff !important;
+  }
+
+  .border3{
+    border: 1px solid rgba(0,0,0,.125);
   }
   
   /***************************** Height ************************************/

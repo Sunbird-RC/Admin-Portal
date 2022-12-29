@@ -197,3 +197,46 @@ p code {
 .dropdown:hover .dropbtn {
   background-color: #3e8e41;
 }
+
+
+/* ---------------------------------------------------
+    SIDEBAR STYLE
+----------------------------------------------------- */
+
+#sidebar.active {
+  margin-left: 0;
+   background-color: #7386D5;
+}
+
+#sidebar ul.components {
+   padding: 10px 0;
+}
+
+
+#sidebar ul li a:hover {
+   color: #7386D5;
+   background: #F6F8FC;
+}
+
+.active-link{
+   color:var(--primaryColorBlue) !important;
+}
+
+/* ---------------------------------------------------
+   MEDIAQUERIES
+----------------------------------------------------- */
+
+@media (max-width: 768px) {
+   #sidebar {
+       margin-left: 0;
+   }
+
+   #sidebar.active {
+       margin-left: 0;
+   }
+
+   #sidebarCollapse span {
+       display: none;
+   }
+}
+

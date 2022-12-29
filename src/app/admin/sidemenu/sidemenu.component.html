@@ -1,6 +1,6 @@
 <app-header></app-header>
 <!-- Sidebar  -->
-<div class="m-0 mt-5 row">
+<div class="m-0 mt-5 row h-100">
     <nav id="sidebar" class="col-2 border3 card">
         <ul id="sideMenu" class="list-unstyled components">
             <!-- <li class="menu" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">
@@ -40,7 +40,7 @@
         </ul>
     </nav>
 
-    <div class="col">
+    <div class="col bg-grey-4">
 
         <div class="text-center mt-5" *ngIf="isLoading">
             <sa-spinner-circular-fixed [size]="54" [thickness]="79" [speed]="67" color="rgba(57, 80, 172, 1)" secondaryColor="rgba(172, 57, 57, 0)" ></sa-spinner-circular-fixed>          

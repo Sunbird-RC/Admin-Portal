@@ -193,6 +193,18 @@
     border: 1px solid #d7d5d5 !important;
   }
   
+
+    //This type of grey -
+    .color-grey-4{
+      color:var(--greyColorFour) !important;
+    }
+    .bg-grey-4{
+      background-color:var(--greyColorFour) !important;
+    }
+    .border-grey-4{
+      border: 1px solid var(--greyColorFour) !important;
+    }
+    
   
   .ylow {
     background-color: rgba(255, 217, 101, 0.3);

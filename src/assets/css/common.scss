@@ -1,0 +1,372 @@
+
+/************** Font Size ****************/
+
+.fs-10{
+    font-size: 10px !important;
+  }
+  .fs-12{
+    font-size: 12px !important;
+  }
+  .fs-14{
+    font-size: 14px !important;
+  }
+  .fs-16{
+    font-size: 16px !important;
+  }
+  .fs-18{
+    font-size: 18px !important;
+  }
+  .fs-20{
+    font-size: 20px !important;
+  }
+  .fs-22{
+    font-size: 22px !important;
+  }
+  .fs-24{
+    font-size: 24px !important;
+  }
+  .fs-32{
+    font-size: 32px !important;
+  }
+  .fs-36{
+    font-size: 36px !important;
+  }
+  .fs-40{
+    font-size: 40px !important;
+  }
+  .fs-64{
+    font-size: 64px !important;
+  
+  }
+  
+  
+  
+  
+  
+  /************** Font Weight ****************/
+  
+  .fw-400{
+    font-weight: 400 !important;
+  }
+  
+  .fw-700{
+    font-weight: 700 !important;
+  }
+  
+  /************* Buttons ***********************/
+  
+  
+  .btn {
+    border-radius: 20px !important;
+    text-transform: inherit !important;
+    box-shadow: none !important;
+    height: 40px;
+    border: none !important;
+  }
+  
+  /********************* Colors,BG Colors, Border Colors ****************************/
+  
+  
+  //This is color dark blue - mainly used for buttons 
+  .color-blue{
+    color:var(--primaryColorBlue) !important;
+  }
+  .bg-color-blue{
+    background-color:var(--primaryColorBlue) !important;
+  }
+  .border-color-blue{
+    border: 1px solid var(--primaryColorBlue) !important;
+  }
+  
+  
+  //This is color light blue - mainly used for buttons like back,JSON Schema etc
+  .color-light-blue{
+    color:var(--lightColorbtn) !important;
+  }
+  .bg-color-light-blue{
+    background-color:var(--lightColorbtn) !important;
+  }
+  
+  .border-color-light-blue{
+    border: 1px solid var(--lightColorbtn) !important;
+  }
+  
+  //This is color red - mainly used for buttons like delete
+  .color-red{
+    color:var(--darksecondaryColorRed) !important;
+  }
+  .bg-color-red{
+    background-color:var(--darksecondaryColorRed) !important;
+  }
+  
+  .border-color-red{
+    border: 1px solid var(--darksecondaryColorRed) !important;
+  }
+  
+  
+  //This is color sea green - Mainly used for div outlines, experience demo on Get Started page
+  
+  .color-sea-green{
+    color:var(--darkprimaryColorGreen) !important;
+  }
+  .bg-color-sea-green{
+    background-color:var(--darkprimaryColorGreen) !important;
+  }
+  .border-color-sea-green{
+    border: 1px solid var(--darkprimaryColorGreen) !important;
+  }
+  
+  
+  
+  //This is color grey - this color is used for background - the grey background we see on all pages
+  
+  .color-grey{
+    color:var(--backgroundColorGrey) !important;
+  }
+  .bg-grey{
+    background-color:var(--backgroundColorGrey) !important;
+  }
+  .border-grey{
+    border: 1px solid var(--backgroundColorGrey) !important;
+  }
+  
+  
+  
+  // Another type of grey color - this is used mainly as a text color on Get Started etc 
+  
+  .color-grey-txt{
+    color:var(--darkgreyColorOne) !important;
+  }
+  .bg-grey-txt{
+    background-color:var(--darkgreyColorOne) !important;
+  }
+  .border-grey-txt{
+    border: 1px solid var(--darkgreyColorOne) !important;
+  }
+  
+  
+  
+  // Almost black - but not black, is used for text color sometimes
+  
+  .color-grey-dark{
+    color:var(--darkprimaryColorGrey) !important;
+  }
+  .bg-grey-dark{
+    background-color:var(--darkprimaryColorGrey) !important;
+  }
+  .border-grey-dark{
+    border: 1px solid var(--darkprimaryColorGrey) !important;
+  }
+  
+  //This type of grey - used mainly for borders of inputs,selects etc.
+  .color-grey-3{
+    color:var(--darkgreyColorThree) !important;
+  }
+  .bg-grey-3{
+    background-color:var(--darkgreyColorThree) !important;
+  }
+  .border-grey-3{
+    border: 1px solid var(--greyColorThree) !important;
+  }
+  
+  
+  //This type of grey - used mainly for borders of inputs,selects etc. CCCCCCC
+  .color-grey-2{
+    color:var(--darkgreyColorTwo) !important;
+  }
+  .bg-grey-2{
+    background-color:var(--darkgreyColorTwo) !important;
+  }
+  .border-grey-2{
+    border: 1px solid var(--darkgreyColorTwo) !important;
+  }
+  
+  
+  //This type of grey - used mainly for borders of inputs,selects etc. d7d7d5
+  .color-white-2{
+    color:#d7d5d5 !important;
+  }
+  .bg-white-2{
+    background-color:#d7d5d5!important;
+  }
+  .border-white-2{
+    border: 1px solid #d7d5d5 !important;
+  }
+  
+  
+  .ylow {
+    background-color: rgba(255, 217, 101, 0.3);
+  }
+  
+  /*********************  Border Radius ****************************/
+  
+  .border-radius-4{
+    border-radius: 4px !important;
+  }
+  
+  .border-radius-5{
+    border-radius: 5px !important;
+  }
+  
+  .border-radius-8{
+    border-radius: 8px !important;
+  }
+  
+  .border-radius-20{
+  border-radius: 20px !important;
+  }
+  
+  /********************** Z-Indexxxx **********************************/
+  
+  .z-index-1{
+    z-index: 1 !important;
+  }
+  
+  .z-index-2{
+    z-index: 2 !important;
+  }
+  
+  .z-index-2000{
+    z-index: 2000 !important;
+  }
+  
+  /******************* Opacity ****************************************/
+  
+  .op-01{
+    opacity: 0.1 !important;
+  }
+  
+  .op-1{
+    opacity: 1 !important;
+  }
+  
+  /************************Max Width**********************************/
+  
+  .max-w-100{
+    max-width: 100px !important;
+  }
+  
+  .max-w-350{
+    max-width: 350px !important;
+  }
+  
+  
+  /******************* Padding *****************************************/
+  
+  .pb-56{
+  padding-bottom: 56px !important;
+  }
+  
+  
+  /**************** Min Ht *****************************************/
+  
+  .min-ht {
+    min-height: 220px;
+  }
+  
+  .min-ht2 {
+    min-height: 84px;
+  }
+  
+  .border2 {
+    border: 1px solid #fff !important;
+  }
+  
+  /***************************** Height ************************************/
+  
+  
+  .ht-24{
+    height: 24px !important;
+  }
+  
+  
+  .ht-172{
+      height: 172px;
+  }
+  
+  .ht-786{
+      
+    height: 786px;
+  }
+  
+  .ht-auto{
+    height: auto;
+  }
+  
+  
+  
+  /*****************************Width************************************/
+  .w-24{
+    width: 24px !important;
+  }
+  
+  .w-96{
+    width: 96% !important;
+  }
+  
+  .w-120{
+    width: 120px !important;
+  }
+  
+  /**************************Overflows***************************************/
+  .overflow-x-scroll{
+    overflow-y: scroll; /* Show vertical scrollbar */
+  }
+  
+  .overflow-y-scroll{
+    overflow-y: scroll; 
+  }
+  
+  /********************************Transitions*****************************************/
+  
+  .tr-05{
+    transition: all 0.5s ease;
+  }
+  
+  /*********************************** Margin Left ***********************************************/
+  
+  .ml-12 {
+    margin-left: -12px;
+  }
+  
+  .ml-32 {
+    margin-left: -32px;
+  }
+  
+  .mr-48{
+    right: 48px;
+   }
+
+.top-8{
+  top:8px;
+}
+
+
+.bottom-2{
+ bottom:2px;
+}
+
+/*********************************** Margin Bottom ***********************************************/
+  
+.ml-n-25 {
+    margin-bottom: -25px;
+}
+      
+      
+  
+  /************************************** Box Shadow************************************************************/
+  .bs-1{
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  
+  }
+
+/***************************************** Flex Displayyy   ************************************************************/  
+.fl-main{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+a .activeMenu{
+ background-color: var(--cardColor) !important;
+}

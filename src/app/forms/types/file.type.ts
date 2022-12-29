@@ -14,7 +14,7 @@ import { DomSanitizer } from '@angular/platform-browser';
       <div (click)="openFileInput()">
         <div></div>
           
-           <label class="p12 text-primary-color"> {{'UPLOAD_FILE' | translate}} </label>
+           <label class="fs-12  text-primary-color"> {{'UPLOAD_FILE' | translate}} </label>
           
         <input
           #fileinput

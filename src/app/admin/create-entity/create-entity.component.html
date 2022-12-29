@@ -345,7 +345,7 @@
                                     <button (click)="readConvertJsonData($event)"
                                         class="btn text-capitalize float-end bg-color-primary text-white fw-bold bg-color-primary text-white fw-bold-sm px-3 my-2">{{'SAVE' | translate}}</button>
                                     <button (click)="hideJSon()"
-                                        class="btn btn-sec-bg float-end submit-button px-3 my-2">{{'CANCEL' | translate}}</button>
+                                        class="btn bg-color-secondary  color-sea-green fw-bold float-end submit-button px-3 my-2">{{'CANCEL' | translate}}</button>
 
                                 </div>
                             </div>
@@ -498,7 +498,7 @@
                     <a  href="/home"> <button *ngIf="isActive == 'test-publish'"
                     class="btn text-capitalize float-end bg-color-primary text-white fw-bold bg-color-primary text-white fw-bold-sm px-3 my-2">{{'GO_TO_DASHBOARD' | translate}} </button></a>
                 <button *ngIf="isActive == 'configurations'" (click)="nextStep();"
-                    class="btn btn-sec-bg float-end submit-button px-3 my-2 ml-2 mr-2 ">{{'SKIP' | translate}}</button> &nbsp;
+                    class="btn bg-color-secondary  color-sea-green fw-bold float-end submit-button px-3 my-2 ml-2 mr-2 ">{{'SKIP' | translate}}</button> &nbsp;
                 <button *ngIf="isActive == 'create-vc' || isActive == 'ownership'" (click)="nextStep();"
                     class="btn  fw-bold float-end bg-color-primary bbg-color-primary-sm px-3 my-2 ml-2 mr-2 text-white">{{'SAVE_AS_DRAFT' | translate}}</button>
                 &nbsp;

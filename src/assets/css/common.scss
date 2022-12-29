@@ -343,6 +343,11 @@
   
   /*********************************** Margin Left ***********************************************/
   
+
+.mr-10{
+  margin-right: 10px;
+}
+
   .ml-12 {
     margin-left: -12px;
   }
@@ -386,4 +391,19 @@
 
 a .activeMenu{
  background-color: var(--cardColor) !important;
+}
+
+.templateThumb {
+  width: 120px;
+  height: 172px;
+  border: 1px solid #d7d5d5;
+  box-sizing: border-box;
+  margin: 4px 0 2px 2px;
+}
+
+.img-ht {
+  height: 190px;
+  width: 130px;
+  background-color: #FFFFFF;
+  border: 1px solid #EFEFEF;
 }

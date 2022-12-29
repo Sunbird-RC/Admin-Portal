@@ -31,10 +31,10 @@
 
         <!-- <div class="">
         </div> -->
-        <!-- <button style="margin: 8px;" class="btn btn-primary text-end pr-20 fw-bold text-capitalize"
+        <!-- <button style="margin: 8px;" class="btn bg-color-primary text-white fw-bold text-end pr-20 fw-bold text-capitalize"
                         (click)="onAttestApproveReject()"><i class="fa fa-check-circle text-success"
                                 data-mdb-toggle="tooltip" title="Attested"></i>Approve</button>
-                        <button style="margin: 8px;" class="btn btn-primary text-end fw-bold pr-20 text-capitalize"
+                        <button style="margin: 8px;" class="btn bg-color-primary text-white fw-bold text-end fw-bold pr-20 text-capitalize"
                             data-toggle="modal" data-target="#deny"><i
                                 class="fa fa-exclamation-circle red"></i>Deny</button> -->
 
@@ -54,9 +54,9 @@
                         <div class="fs-7 text-grey-color">{{experienceDetail.EmploymentType}}</div>
                     </dd>
                     <dd style="text-align-last: right;">
-                        <button style="margin: 8px;" class="btn btn-primary text-end pr-20 fw-bold text-capitalize"
+                        <button style="margin: 8px;" class="btn bg-color-primary text-white fw-bold text-end pr-20 fw-bold text-capitalize"
                             (click)="onAttest()"><i class="fa fa-check-circle text-success"></i>Approve</button>
-                        <button style="margin: 8px;" class="btn btn-primary text-end fw-bold pr-20 text-capitalize"
+                        <button style="margin: 8px;" class="btn bg-color-primary text-white fw-bold text-end fw-bold pr-20 text-capitalize"
                             data-toggle="modal" data-target="#deny"><i
                                 class="fa fa-exclamation-circle red"></i>Deny</button>
                     </dd>
@@ -140,7 +140,7 @@
                                 </formly-form>
                            
                                 <button type="button" [disabled]="!noteForm.value.note"
-                                    class="btn btn-primary text-capitalize font-weight-bold submit-button"
+                                    class="btn bg-color-primary text-white fw-bold text-capitalize font-weight-bold submit-button"
                                     (click)="saveNote()">{{'SAVE_NOTE' | translate}}</button>
                             </form>
 
@@ -218,7 +218,7 @@
                                             class="label-primary font-weight-bold text-capitalize">{{'CANCEL' | translate}}</span></button>
 
                                     <button type="button" [disabled]="!denyForm.valid"
-                                        class="btn btn-primary btn-style float-end submit-button"
+                                        class="btn bg-color-primary text-white fw-bold btn-style float-end submit-button"
                                         (click)="onAttestApproveReject('REJECT_CLAIM',$event)"><span
                                             class="font-weight-bold text-capitalize">{{'YES_DENY' | translate}}</span></button>
 

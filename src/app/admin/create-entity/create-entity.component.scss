@@ -1,58 +1,19 @@
-.next-arrow {
-  color: #cccccc;
-}
-
 .wrapper .sidebar {
-  background: rgb(255, 255, 255);
-  position: relative;
   left: 0;
-  width: 96%;
-  height: 786px;
   padding: 20px 0;
-  transition: all 0.5s ease;
-  z-index: 1;
-  overflow: hidden;
 }
 
-.ml-12 {
-  margin-left: -12px;
-}
 
 .wrapper .sidebar ul li a {
   display: block;
   padding: 13px 14px;
-  //  color: #000000;
   font-size: 16px;
-  position: relative;
   border: 1px solid #efefef;
   margin-left: 18px;
   border-right: unset;
-  height: 52px;
+  height: 52px;  // use padding insted of height
 }
 
-.wrapper .sidebar ul li a .icon {
-  color: #dee4ec;
-  width: 30px;
-  display: inline-block;
-}
-
-.wrapper .sidebar ul li a:hover,
-.wrapper .sidebar ul li a.active {
-  color: #0c7db1;
-
-  background: white;
-  border-right: 2px solid rgb(5, 68, 104);
-}
-
-.wrapper .sidebar ul li a:hover .icon,
-.wrapper .sidebar ul li a.active .icon {
-  color: #0c7db1;
-}
-
-.wrapper .sidebar ul li a:hover:before,
-.wrapper .sidebar ul li a.active:before {
-  display: block;
-}
 
 /* side menu  : start*/
 
@@ -70,9 +31,9 @@
 
 /*-----------------------------Add field modal css  --------------------------------------*/
 
-.container {
-  padding-bottom: 40px !important;
-}
+// .container {
+//   padding-bottom: 40px !important;
+// }
 
 .modal-input-field {
   background: #ffffff;
@@ -87,24 +48,24 @@
 
 /* ----------Start-----  Drop down list ------- */
 
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
+// .dropdown {
+//   position: relative;
+//   display: inline-block;
+// }
 
 .dropdown-content {
   display: none;
-  position: absolute;
+  position: relative;
   background-color: #f9f9f9;
-  min-width: 100px;
+  min-width: 100px; // check if needed than use it 
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
   margin: -16px -60px;
 }
 
-.dropdown-content-margin {
-  margin: -5px -75px !important;
-}
+// .dropdown-content-margin {
+//   margin: -5px -75px !important;
+// }
 
 .dropdown-content a {
   color: black;
@@ -123,33 +84,12 @@
 
 /* ----------End-----  Drop down list ------- */
 
-.ml-32 {
-  margin-left: -32px;
-}
+// .mbtn-10 {
+//   margin-top: -25px !important;
+//   cursor: pointer;
+// }
 
-.content-js {
-  padding: 0 18px;
-  display: none;
-  overflow: hidden;
-  background-color: #f1f1f1;
-}
 
-.well {
-  min-height: 20px;
-  padding: 19px;
-  margin-bottom: 20px;
-  background-color: #ffffff;
-  border: 1px solid #e8e8e8;
-  border-radius: 0;
-  -webkit-box-shadow: inset 0 1px 1px rgb(0 0 0 / 5%);
-  box-shadow: inset 0 1px 1px rgb(0 0 0 / 5%);
-}
-
-.ace_editor.ace-jsoneditor {
-  min-height: 500px;
-  width: 700px !important;
-  height: 500px !important;
-}
 
 /*----------------------------- test ------------------------------------ */
 
@@ -167,7 +107,6 @@
   font-size: 12px;
   width: 25%;
   float: left;
-  position: relative;
 }
 
 .fixed-bottom {
@@ -195,18 +134,7 @@
   padding: 7px 0 0 0 !important;
 }
 
-.table tr {
-  padding: 0 !important;
-}
 
-.fixed-bottom-json {
-  z-index: 20000;
-}
-
-.sm-card {
-  background-color: var(--cardBackground) !important;
-  border: 1px solid var(--cardBorder) !important;
-}
 
 @media (max-width: 768px) {
   .wrapper .sidebar {
@@ -263,4 +191,3 @@
   cursor: pointer;
   border-radius: 20px;
 }
-

@@ -5,7 +5,7 @@
     (initError)="handleInitError($event)"></webcam>
     <br/>
     <div *ngIf="showWebcam" style="text-align: center;">
-        <button class="btn btn-primary mr-2" (click)="triggerSnapshot();"><i class="fa fa-camera" aria-hidden="true"></i> {{'CAPTURE'|translate}}</button>
+        <button class="btn bg-color-primary text-white fw-bold mr-2" (click)="triggerSnapshot();"><i class="fa fa-camera" aria-hidden="true"></i> {{'CAPTURE'|translate}}</button>
         <button class="btn btn-secondary" (click)="showNextWebcam(true);" [disabled]="!multipleWebcamsAvailable"><i class="fa fa-refresh" aria-hidden="true"></i> {{'SWITCH'|translate}}</button>
     </div>
     <!-- <button class="actionBtn" (click)="triggerSnapshot();">Capture</button> -->

@@ -11,7 +11,7 @@
         <ul id="stepList">
             <li *ngFor="let steps of processSteps; let i = index" class="col-md-2 tab" id="step{{i}}"><strong>
                     <i *ngIf="steps?.key != 'test-publish'"
-                        class="float-end fa fas fa-chevron-right text-grey-color mt-3 fs-3 next-arrow"></i>
+                        class="float-end fa fas fa-chevron-right text-grey-color mt-3 fs-3 color-grey-2"></i>
                     <span class="l10">STEP {{i + 1}}</span> <br />
                     <span class="fs-14 fw-bold">{{steps?.title}}</span>
                 </strong></li>
@@ -24,13 +24,13 @@
         <div class="col-md-3" *ngIf="isActive != 'test-publish' ">
             <div class="wrapper">
                 <!--Top menu -->
-                <div id="sideMenu" class="sidebar h-100 border-end" >
+                <div id="sideMenu" class="sidebar bg-white ht-786 position-relative tr-05 h-100 border-end z-index-1 overflow-hidden w-96" >
                     <ul class="list-unstyled" *ngIf="isActive == 'createSchema'">
                         <!-- <p class="fs-16fw-bold pl-3 text-uppercase">Common </p> -->
                         <ng-template ngFor let-menuItem [ngForOf]="usecaseSchema" let-i="index">
 
                             <li class="menu" *ngIf="menuItem['isRefSchema']" (click)="openEntity(i, menuItem?.title)">
-                                <a class="a-menu"> Common Schema
+                                <a class="a-menu text-color"> Common Schema
 
                                     <div *ngIf="isActive == 'createSchema' && menuItem['status'] != 'PUBLISHED'"
                                         class="dropdown fs-14 float-end">
@@ -52,7 +52,7 @@
                     <ul class="list-unstyled components">
                         <ng-template ngFor let-menuItem [ngForOf]="usecaseSchema" let-i="index">
                             <li class="menu my-3" *ngIf="!menuItem['isRefSchema']" (click)="openEntity(i, menuItem?.title)">
-                                <a class="a-menu" [class.selected]=" menuItem?.title === usecaseSchema[i].title" (click)="onSelect(menuItem?.title);"> {{menuItem?.title}} 
+                                <a class="a-menu text-color" [class.selected]=" menuItem?.title === usecaseSchema[i].title" (click)="onSelect(menuItem?.title);"> {{menuItem?.title}} 
                                     <div *ngIf="isActive == 'createSchema' && menuItem['status'] != 'PUBLISHED'"
                                         class="dropdown fs-14 float-end">
                                         <i class="fa fa-ellipsis-h text-grey-color" aria-hidden="true"></i>
@@ -69,7 +69,7 @@
                     </ul>
                     <ul class="list-unstyled" *ngIf="isActive == 'createSchema'">
                         <li>
-                            <button class="m-3 fs-14 btn btn-sec-bg submit-button text-secondary-color"
+                            <button class="m-3 fw-bold fs-14 btn bg-color-secondary submit-button color-sea-green"
                                 data-toggle="modal" data-target="#addEntity" (click)="openEntityModal('add')"><i
                                     class="fa fa-plus" aria-hidden="true"></i>  {{'ADD_SCHEMA' | translate}}</button>
                         </li>
@@ -89,13 +89,13 @@
 
         <div class="col-md-9 p-2 mb-6">
             <div class="step" *ngIf="isActive == 'createSchema'">
-                <div class="d-flex flex-justify-between card-body pr-2 py-2">
+                <div class="d-flex justify-content-between card-body pr-2 py-2">
                     <div class="heading-2">
                         <h3>{{usecaseSchema[activeMenuNo]?.title}}</h3>
                         <p class="fs-14 text-grey-color">{{usecaseSchema[activeMenuNo]?.description}}</p>
                     </div>
                     <div *ngIf="!isShowJson && usecaseSchema[activeMenuNo]?.definitions?.data?.length">
-                        <button class="float-end fs-14 btn btn-sec-bg submit-button text-secondary-color"
+                        <button class="float-end fw-bold fs-14 btn bg-color-secondary submit-button color-sea-green"
                             (click)="showJson()" [disabled]="usecaseSchema[activeMenuNo]['status'] == 'PUBLISHED'">
                             <i class="fa fa-pencil-square-o" aria-hidden="true"></i> {{'JSON_SCHEMA' | translate}}
                             </button>
@@ -343,7 +343,7 @@
                             <div class="container-fluid">
                                 <div>
                                     <button (click)="readConvertJsonData($event)"
-                                        class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2">{{'SAVE' | translate}}</button>
+                                        class="btn text-capitalize float-end bg-color-primary text-white fw-bold bg-color-primary text-white fw-bold-sm px-3 my-2">{{'SAVE' | translate}}</button>
                                     <button (click)="hideJSon()"
                                         class="btn btn-sec-bg float-end submit-button px-3 my-2">{{'CANCEL' | translate}}</button>
 
@@ -367,7 +367,7 @@
 
                 <div class="p-3 sm-card"
                     *ngIf="usecaseSchema.length &&  !isShowJson && usecaseSchema[activeMenuNo]?.status != 'PUBLISHED'">
-                    <span class="m-3 fs-14 btn btn-sec-bg submit-button text-secondary-color" (click)="showAddForm()">
+                    <span class="m-3 fs-14 btn fw-bold bg-color-secondary submit-button color-sea-green" (click)="showAddForm()">
                         <i class="fa fa-plus" aria-hidden="true"></i>
                         {{'ADD_FIELDS' | translate}}   </span>
                 </div>
@@ -433,10 +433,10 @@
 
                     <div class="mt-4">
                         <button data-dismiss="modal" aria-label="Close"
-                            class="btn text-capitalize float-end btn-primary btn-primary-sm p1"
+                            class="btn text-capitalize float-end bg-color-primary text-white fw-bold bg-color-primary text-white fw-bold-sm p1"
                             (click)="createEntity($event)" [disabled]="!entityName">{{'SAVE' | translate}}</button>
                         <!-- <button class="close" data-dismiss="modal" aria-label="Close"
-                        class="btn text-capitalize float-end btn-primary btn-primary-sm p1 sb-text-primary mr-2 bg-none">Cancel</button> -->
+                        class="btn text-capitalize float-end bg-color-primary text-white fw-bold bg-color-primary text-white fw-bold-sm p1 sb-text-primary mr-2 bg-none">Cancel</button> -->
                     </div>
                 </div>
             </div>
@@ -469,38 +469,38 @@
 
                     <div class="mt-4">
                         <button (click)="saveConfiguration()" data-dismiss="modal" aria-label="Close"
-                            class="btn text-capitalize float-end btn-primary btn-primary-sm p1">{{'SAVE' | translate}}</button>
+                            class="btn text-capitalize float-end bg-color-primary text-white fw-bold bg-color-primary text-white fw-bold-sm p1">{{'SAVE' | translate}}</button>
                         <button class="close" data-dismiss="modal" aria-label="Close"
-                            class="btn text-capitalize float-end btn-primary btn-primary-sm p1 sb-text-primary mr-2 bg-none">{{'CANCEL' | translate}}</button>
+                            class="btn text-capitalize float-end bg-color-primary text-white fw-bold bg-color-primary text-white fw-bold-sm p1 sb-text-primary mr-2 bg-none">{{'CANCEL' | translate}}</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <footer class="footer fixed-bottom">
+    <footer class="footer fixed-bottom border-grey-4 bs-1">
         <div class="container-fluid">
             <div>
                 <button (click)="backStep()"
-                    class="btn btn-sec-bg submit-button px-3 my-2 ml-2 mr-2 ">{{'BACK' | translate}}</button> &nbsp;
+                    class="fs-14 fw-bold btn bg-color-secondary submit-button color-sea-green px-3 my-2 ml-2 mr-2 ">{{'BACK' | translate}}</button> &nbsp;
                 <button (click)="createSchema('')" *ngIf="isActive == 'createSchema'"
                     [disabled]="!usecaseSchema[activeMenuNo]?.definitions?.data?.length"
-                    class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2">{{'SAVE_AND_NEXT' | translate}}
+                    class="btn text-capitalize fw-bold float-end bg-color-primary bg-color-primary-sm px-3 my-2 text-white">{{'SAVE_AND_NEXT' | translate}}
                     </button>
 
                     <button *ngIf="isActive == 'createSchema'" (click)="createSchema(activeMenuNo);"
-                    class="btn  float-end btn-primary btn-primary-sm px-3 my-2 ml-2 mr-2">{{'SAVE_AS_DRAFT' | translate}}</button>
+                    class="btn fw-bold float-end bg-color-primary bg-color-primary-sm px-3 my-2 ml-2 mr-2 text-white">{{'SAVE_AS_DRAFT' | translate}}</button>
                 &nbsp;
 
                 <button (click)="nextStep()" *ngIf="isActive == 'create-vc'"
-                    class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2">{{'SAVE_AND_NEXT' | translate}}
+                    class="btn fw-bold text-capitalize float-end bg-color-primary bg-color-primary-sm px-3 my-2 text-white">{{'SAVE_AND_NEXT' | translate}}
                     </button>
                     <a  href="/home"> <button *ngIf="isActive == 'test-publish'"
-                    class="btn text-capitalize float-end btn-primary btn-primary-sm px-3 my-2">{{'GO_TO_DASHBOARD' | translate}} </button></a>
+                    class="btn text-capitalize float-end bg-color-primary text-white fw-bold bg-color-primary text-white fw-bold-sm px-3 my-2">{{'GO_TO_DASHBOARD' | translate}} </button></a>
                 <button *ngIf="isActive == 'configurations'" (click)="nextStep();"
                     class="btn btn-sec-bg float-end submit-button px-3 my-2 ml-2 mr-2 ">{{'SKIP' | translate}}</button> &nbsp;
                 <button *ngIf="isActive == 'create-vc' || isActive == 'ownership'" (click)="nextStep();"
-                    class="btn  float-end btn-primary btn-primary-sm px-3 my-2 ml-2 mr-2">{{'SAVE_AS_DRAFT' | translate}}</button>
+                    class="btn  fw-bold float-end bg-color-primary bbg-color-primary-sm px-3 my-2 ml-2 mr-2 text-white">{{'SAVE_AS_DRAFT' | translate}}</button>
                 &nbsp;
             </div>
         </div>

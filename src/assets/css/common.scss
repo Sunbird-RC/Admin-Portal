@@ -61,7 +61,9 @@
     text-transform: inherit !important;
     box-shadow: none !important;
     height: 40px;
+    width: 96px;
     border: none !important;
+    text-align: center;
   }
   
   /********************* Colors,BG Colors, Border Colors ****************************/
@@ -379,8 +381,7 @@
 /***************************************** Flex Displayyy   ************************************************************/  
 .fl-main{
   display: flex;
-  justify-content: center;
-  align-items: center;
+ 
 }
 
 a .activeMenu{

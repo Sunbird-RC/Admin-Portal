@@ -94,13 +94,8 @@ a{
   height: 190px !important;
   overflow: hidden;
 }
-#iframe1 {
-  height: 430%;
-  width: 325%;
-  overflow: hidden;
-  transform: scale(0.32, 0.3);
-  transform-origin: 0 0;
-}
+
+
 
 .templateThumb {
   border: 1px solid #d7d5d5;
@@ -242,4 +237,104 @@ p code {
 
 .card-title{
   color: var(--textColor) !important;
+}
+
+.thmbCol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.thmbCol2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.img-ht {
+  height: 190px;
+  width: 130px;
+  background-color: #ffffff;
+  border: 1px solid #efefef;
+}
+.wrap {
+  width: 130px !important;
+  height: 190px !important;
+  overflow: hidden;
+}
+
+.iframeCert {
+  height: 430%;
+  width: 325%;
+  overflow: hidden;
+  transform: scale(0.32, 0.3);
+  transform-origin: 0 0;
+}
+
+
+.templateThumb {
+  border: 1px solid #d7d5d5;
+  box-sizing: border-box;
+}
+.img-hold {
+  display: flex;
+  gap: 15px;
+}
+
+
+@media (max-width: 768px) {
+  .templateThumb {
+    width: 90px;
+    height: 105px;
+  }
+  .Add-set {
+    margin-bottom: 80px;
+  }
+  .img-hold {
+    display: flex;
+    gap: 5px;
+  }
+}
+
+
+/* Start - ngx-editor css */
+.collapsible {
+  background-color: #777;
+  color: white;
+  cursor: pointer;
+  padding: 10px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+  margin-bottom: 5px;
+}
+// .active,
+// .collapsible:hover {
+//   background-color: #555;
+// }
+.content {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: #f1f1f1;
+}
+.ngx-text-editor {
+  background-color: #ffffff !important;
+  font-size: 14px;
+}
+.ngx-toolbar {
+  display: none !important;
+}
+/* End - ngx-editor css */
+.arrIcon {
+  font-size: x-small;
+  padding: 5px;
+}
+
+
+.ace-jsoneditor .ace_scroller {
+  pointer-events: none !important;
 }

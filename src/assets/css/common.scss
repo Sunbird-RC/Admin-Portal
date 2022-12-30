@@ -108,13 +108,13 @@
   
   //This is color sea green - Mainly used for div outlines, experience demo on Get Started page
   
-  .color-sea-green{
+  .color-sec{
     color:var(--darkprimaryColorGreen) !important;
   }
-  .bg-color-sea-green{
+  .bg-color-sec{
     background-color:var(--darkprimaryColorGreen) !important;
   }
-  .border-color-sea-green{
+  .border-color-sec{
     border: 1px solid var(--darkprimaryColorGreen) !important;
   }
   
@@ -214,6 +214,10 @@
   
   /*********************  Border Radius ****************************/
   
+  .border-radius-0{
+    border-radius: 0px !important;
+  }
+
   .border-radius-4{
     border-radius: 4px !important;
   }
@@ -275,11 +279,24 @@
   /**************** Min Ht *****************************************/
   
   .min-ht {
-    min-height: 220px;
+    min-height: 220px !important;
   }
   
   .min-ht2 {
-    min-height: 84px;
+    min-height: 84px !important;
+  }
+
+  .min-ht3
+  {
+    min-height: 20px !important;
+  }
+
+  .pd-19{
+    padding: 19px !important;
+  }
+
+  .mb-20{
+    margin-bottom: 20px !important;
   }
   
   .border2 {
@@ -406,4 +423,17 @@ a .activeMenu{
   width: 130px;
   background-color: #FFFFFF;
   border: 1px solid #EFEFEF;
+}
+
+.h-card{
+    min-height: 570px!important;
+    height: auto;
+}
+
+#iframe1 {
+  height: 430%;
+  width: 325%;
+  overflow: hidden;
+  transform: scale(0.32, 0.3);
+  transform-origin: 0 0;
 }

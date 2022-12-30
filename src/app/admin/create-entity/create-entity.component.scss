@@ -11,11 +11,9 @@
   border: 1px solid #efefef;
   margin-left: 18px;
   border-right: unset;
-  height: 52px;  // use padding insted of height
+  height: 52px;  
 }
 
-
-/* side menu  : start*/
 
 .fieldBorder {
   background: #f9f9f9;
@@ -29,11 +27,7 @@
   border-radius: 4px;
 }
 
-/*-----------------------------Add field modal css  --------------------------------------*/
 
-// .container {
-//   padding-bottom: 40px !important;
-// }
 
 .modal-input-field {
   background: #ffffff;
@@ -46,12 +40,6 @@
   margin: 0.75rem auto !important;
 }
 
-/* ----------Start-----  Drop down list ------- */
-
-// .dropdown {
-//   position: relative;
-//   display: inline-block;
-// }
 
 .dropdown-content {
   display: none;
@@ -62,10 +50,6 @@
   z-index: 1;
   margin: -16px -60px;
 }
-
-// .dropdown-content-margin {
-//   margin: -5px -75px !important;
-// }
 
 .dropdown-content a {
   color: black;
@@ -82,16 +66,6 @@
   display: block;
 }
 
-/* ----------End-----  Drop down list ------- */
-
-// .mbtn-10 {
-//   margin-top: -25px !important;
-//   cursor: pointer;
-// }
-
-
-
-/*----------------------------- test ------------------------------------ */
 
 #stepList {
   overflow: hidden;

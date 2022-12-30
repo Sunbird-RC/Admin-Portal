@@ -69,7 +69,7 @@
                     </ul>
                     <ul class="list-unstyled" *ngIf="isActive == 'createSchema'">
                         <li>
-                            <button class="m-3 fw-bold fs-14 btn bg-color-secondary submit-button color-sea-green"
+                            <button class="m-3 fw-bold fs-14 btn bg-color-secondary submit-button color-sec"
                                 data-toggle="modal" data-target="#addEntity" (click)="openEntityModal('add')"><i
                                     class="fa fa-plus" aria-hidden="true"></i>  {{'ADD_SCHEMA' | translate}}</button>
                         </li>
@@ -95,7 +95,7 @@
                         <p class="fs-14 text-grey-color">{{usecaseSchema[activeMenuNo]?.description}}</p>
                     </div>
                     <div *ngIf="!isShowJson && usecaseSchema[activeMenuNo]?.definitions?.data?.length">
-                        <button class="float-end fw-bold fs-14 btn bg-color-secondary submit-button color-sea-green"
+                        <button class="float-end fw-bold fs-14 btn bg-color-secondary submit-button color-sec"
                             (click)="showJson()" [disabled]="usecaseSchema[activeMenuNo]['status'] == 'PUBLISHED'">
                             <i class="fa fa-pencil-square-o" aria-hidden="true"></i> {{'JSON_SCHEMA' | translate}}
                             </button>
@@ -345,7 +345,7 @@
                                     <button (click)="readConvertJsonData($event)"
                                         class="btn text-capitalize float-end bg-color-primary text-white fw-bold bg-color-primary text-white fw-bold-sm px-3 my-2">{{'SAVE' | translate}}</button>
                                     <button (click)="hideJSon()"
-                                        class="btn bg-color-secondary  color-sea-green fw-bold float-end submit-button px-3 my-2">{{'CANCEL' | translate}}</button>
+                                        class="btn bg-color-secondary  color-sec fw-bold float-end submit-button px-3 my-2">{{'CANCEL' | translate}}</button>
 
                                 </div>
                             </div>
@@ -367,7 +367,7 @@
 
                 <div class="p-3 sm-card"
                     *ngIf="usecaseSchema.length &&  !isShowJson && usecaseSchema[activeMenuNo]?.status != 'PUBLISHED'">
-                    <span class="m-3 fs-14 btn fw-bold bg-color-secondary submit-button color-sea-green" (click)="showAddForm()">
+                    <span class="m-3 fs-14 btn fw-bold bg-color-secondary submit-button color-sec" (click)="showAddForm()">
                         <i class="fa fa-plus" aria-hidden="true"></i>
                         {{'ADD_FIELDS' | translate}}   </span>
                 </div>
@@ -482,7 +482,7 @@
         <div class="container-fluid">
             <div>
                 <button (click)="backStep()"
-                    class="fs-14 fw-bold btn bg-color-secondary submit-button color-sea-green px-3 my-2 ml-2 mr-2 ">{{'BACK' | translate}}</button> &nbsp;
+                    class="fs-14 fw-bold btn bg-color-secondary submit-button color-sec px-3 my-2 ml-2 mr-2 ">{{'BACK' | translate}}</button> &nbsp;
                 <button (click)="createSchema('')" *ngIf="isActive == 'createSchema'"
                     [disabled]="!usecaseSchema[activeMenuNo]?.definitions?.data?.length"
                     class="btn text-capitalize fw-bold float-end bg-color-primary bg-color-primary-sm px-3 my-2 text-white">{{'SAVE_AND_NEXT' | translate}}
@@ -498,7 +498,7 @@
                     <a  href="/home"> <button *ngIf="isActive == 'test-publish'"
                     class="btn text-capitalize float-end bg-color-primary text-white fw-bold bg-color-primary text-white fw-bold-sm px-3 my-2">{{'GO_TO_DASHBOARD' | translate}} </button></a>
                 <button *ngIf="isActive == 'configurations'" (click)="nextStep();"
-                    class="btn bg-color-secondary  color-sea-green fw-bold float-end submit-button px-3 my-2 ml-2 mr-2 ">{{'SKIP' | translate}}</button> &nbsp;
+                    class="btn bg-color-secondary  color-sec fw-bold float-end submit-button px-3 my-2 ml-2 mr-2 ">{{'SKIP' | translate}}</button> &nbsp;
                 <button *ngIf="isActive == 'create-vc' || isActive == 'ownership'" (click)="nextStep();"
                     class="btn  fw-bold float-end bg-color-primary bbg-color-primary-sm px-3 my-2 ml-2 mr-2 text-white">{{'SAVE_AS_DRAFT' | translate}}</button>
                 &nbsp;

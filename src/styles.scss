@@ -75,20 +75,7 @@ a{
 }
 
 
-.thmbCol {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-}
 
-.img-ht {
-  height: 190px;
-  width: 130px;
-  background-color: #ffffff !important;
-  border: 1px solid #EFEFEF !important;
-}
 .wrap {
   width: 130px !important;
   height: 190px !important;
@@ -239,14 +226,6 @@ p code {
   color: var(--textColor) !important;
 }
 
-.thmbCol {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-}
-
 .thmbCol2 {
   display: flex;
   flex-direction: column;
@@ -311,10 +290,7 @@ p code {
   font-size: 15px;
   margin-bottom: 5px;
 }
-// .active,
-// .collapsible:hover {
-//   background-color: #555;
-// }
+
 .content {
   padding: 0 18px;
   display: none;
@@ -337,4 +313,18 @@ p code {
 
 .ace-jsoneditor .ace_scroller {
   pointer-events: none !important;
+}
+
+
+.h-card{
+    min-height: 570px!important;
+    height: auto;
+}
+
+#responsive-iframe {
+  height: 430%;
+  width: 325%;
+  overflow: hidden;
+  transform: scale(0.32, 0.3);
+  transform-origin: 0 0;
 }

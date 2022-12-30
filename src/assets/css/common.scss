@@ -328,6 +328,9 @@
     height: auto;
   }
   
+  .h-60{
+    height: 60vw;
+  }
   
   
   /*****************************Width************************************/
@@ -410,30 +413,3 @@ a .activeMenu{
  background-color: var(--cardColor) !important;
 }
 
-.templateThumb {
-  width: 120px;
-  height: 172px;
-  border: 1px solid #d7d5d5;
-  box-sizing: border-box;
-  margin: 4px 0 2px 2px;
-}
-
-.img-ht {
-  height: 190px;
-  width: 130px;
-  background-color: #FFFFFF;
-  border: 1px solid #EFEFEF;
-}
-
-.h-card{
-    min-height: 570px!important;
-    height: auto;
-}
-
-#iframe1 {
-  height: 430%;
-  width: 325%;
-  overflow: hidden;
-  transform: scale(0.32, 0.3);
-  transform-origin: 0 0;
-}

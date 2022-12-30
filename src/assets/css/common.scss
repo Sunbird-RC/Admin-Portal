@@ -306,6 +306,10 @@
   .border3{
     border: 1px solid rgba(0,0,0,.125);
   }
+
+  .border-sp{
+    border-spacing: 10vh;
+  }
   
   /***************************** Height ************************************/
   
@@ -328,8 +332,8 @@
     height: auto;
   }
   
-  .h-60{
-    height: 60vw;
+  .w-60{
+    width: 60vw;
   }
   
   
@@ -411,5 +415,25 @@
 
 a .activeMenu{
  background-color: var(--cardColor) !important;
+}
+
+.publishedbtn{
+
+  background-color: gba(34, 176, 46, 0.1);
+  color: var(--secondaryColorGreen) !important;
+  border: 1px solid var(--secondaryColorGreen); 
+
+  }
+
+  .common-btn{
+    border-radius: 5px;
+    padding: 9px 4px;
+  }
+
+.draftbtn {
+  background-color:var(--greyColorThree) !important;
+  color: var(--greyColorOne) !important;
+  border: 1px solid var(--greyColorTwo) !important;;
+
 }
 

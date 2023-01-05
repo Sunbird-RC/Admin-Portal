@@ -162,7 +162,8 @@
   "AND_PUBLISH_IT_LATER": "और इसे बाद में प्रकाशित करें।",
   "SAVE_DRAFT": "ड्राफ़्ट सहेजें",
   "SCHEMA_IS_PUBLISHED": "स्कीमा प्रकाशित हो चुकी है",
-  "EXPLORE_API_HERE": "एपीआई को यहां एक्सप्लोर करें",  
+  "EXPLORE_API_HERE": "एपीआई को यहां एक्सप्लोर करें", 
+  "SCHEMA_PUBLISHED":"स्कीमा प्रकाशित।", 
   
   "DASHBOARD": "डैशबोर्ड",
   "ATTESTATION_WORKFLOW": "प्रमाणन कार्यप्रवाह",

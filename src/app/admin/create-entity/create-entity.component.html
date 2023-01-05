@@ -106,15 +106,15 @@
                     <p class="fs-16">{{usecaseSchema[activeMenuNo]?.definitions?.length}}</p>
                     <div class="card w-100">
                         <div class="px-3">
-                            <table class="table">
+                            <table class="table table-borderless mb-0">
                                 <thead>
                                     <tr>
-                                        <th class="fs-12 text-grey-color fw-bold p-2" scope="col">  {{'LABEL' | translate}} </th>
+                                        <th class="fs-12 text-grey-color fw-bold pt-2" scope="col">  {{'LABEL' | translate}} </th>
                                         <th class="fs-12 text-grey-color fw-bold p-2" scope="col"> {{'FIELD_TYPE' | translate}}</th>
                                         <th class="fs-12 text-grey-color fw-bold p-2" scope="col"> {{'MANDATORY' | translate}}</th>
                                         <th class="fs-12 text-grey-color fw-bold p-2" scope="col"> {{'DESCRIPTION' | translate}} </th>
                                         <th class="fs-12 text-grey-color fw-bold p-2" scope="col"> {{'VISIBILITY' | translate}} </th>
-                                        <th class="fs-12 text-grey-color fw-bold p-2" scope="col"> </th>
+                                        <th class="fs-12 text-grey-color fw-bold p-2 px-3" scope="col"> </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -243,7 +243,7 @@
 
                                                 </ng-template>
 
-                                                <tr style="border: white solid;" [hidden]="!field[j]?.title">
+                                                <tr style="border: white solid;"  [hidden]="!field[j]?.title">
 
                                                     <td>
                                                         <span class="fs-14 p-2">{{field[j]?.title}}</span>
@@ -282,7 +282,7 @@
                                                 </tr>
                                             </ng-template>
 
-                                            <ng-template [ngIf]="field?.type == 'string'">
+                                            <ng-template [ngIf]="field?.type == 'string'" >
                                                 <tr [hidden]="!field?.data?.title">
 
 

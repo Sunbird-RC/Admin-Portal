@@ -3,7 +3,7 @@
         <a class="nav-link pl-4" href="" onClick="history.go(-1); return false;"><i
                 class="fa fa-angle-left primary-text"></i> </a>
         <span class="heading-2" [hidden]="isPreview">{{'ADD_DOCUMENT' | translate}}</span>
-        <span class="p16" [hidden]="!isPreview"><b>{{'EDIT_TEMPLATE' | translate}}</b></span>
+        <span class="fs-16" [hidden]="!isPreview"><b>{{'EDIT_TEMPLATE' | translate}}</b></span>
     </nav>
 
 
@@ -62,7 +62,7 @@
                                         <br />
                                         <p class="heading-3 mb-1"> {{'A4' | translate}} </p>
                                         <div class="mb-2">
-                                        <div class="box" >              
+                                        <div class="float-left mr-10" >              
                                                 <img  (click)="previewScreen()" class="templateThumb" role="button" src="/assets/images/thumbnail.png" />                                           
                                             <!-- <img *ngIf="!doc?.thumbnailUrl" (click)="previewScreen(doc)" class="templateThumb" src="/assets/images/thumbnail.png" /> -->
 
@@ -80,7 +80,7 @@
                             </div>
                             <div class="tab-pane" id="tab4">
                               <div class="fs-14 mt-2">{{'DONT_HAVE_TEMPLATES_UPLOAD_SVG_CODE' | translate}}</div>
-                                <button class="fs-14 btn btn-sec-bg submit-button mt-2">
+                                <button class="fs-14 btn bg-color-secondary  color-sec fw-bold submit-button mt-2">
                                     <i aria-hidden="true" class="fa fa-upload"></i>{{'UPLOAD_TEMPLATE' | translate}}
                                 </button>
                             </div>
@@ -92,11 +92,11 @@
             </div>
             <div class=" col-12 col-sm-8 p-sm-0" *ngIf="userHtml">
                 <div class="card">
-                    <div class="d-flex flex-justify-between card-body px-4 py-2">
+                    <div class="d-flex justify-content-between card-body px-4 py-2">
                         <div class="heading-2">{{'PREVIEW' | translate}}</div>
                         <div>
                             <button (click)="editTemplate()"
-                                class="float-end heading-3 btn btn-sec-bg submit-button"><i
+                                class="float-end heading-3 btn bg-color-secondary  color-sec fw-bold submit-button"><i
                                     class="fa fa-pencil-square-o" aria-hidden="true"></i> {{'EDIT_TEMPLATE' | translate}}</button>
                         </div>
                     </div>
@@ -107,11 +107,11 @@
                 <!-- <div class=" card div-scroll h-90"> -->
                     <div class="embed-responsive embed-responsive-1by1">
                         <!-- <div class="card-body w-100" [innerHtml]="userHtml | safe : 'html'"></div> -->
-                    <iframe id="iframe1" class="iframe-container w-100 h-100 embed-responsive-item"></iframe>
+                    <iframe id="imgIframe" class="w-100 h-100 embed-responsive-item"></iframe>
 
                 </div>
                 <!-- <div class="preview-footer">
-                    <button class="btn btn-sec-bg submit-button">Cancel</button>
+                    <button class="btn bg-color-secondary  color-sec fw-bold submit-button">Cancel</button>
                     <button class="btn btn-bg submit-button float-end mr-2">Save Document</button>
                 </div> -->
             </div>

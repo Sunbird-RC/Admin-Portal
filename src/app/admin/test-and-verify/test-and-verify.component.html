@@ -34,7 +34,7 @@
                   </select>
             </div>
             
-            <button type="submit" class="btn btn-primary pl-3 pr-3" >{{'TEST' | translate}}</button>
+            <button type="submit" class="btn bg-color-primary text-white fw-bold pl-3 pr-3" >{{'TEST' | translate}}</button>
         </form>
     </div>
 
@@ -44,8 +44,8 @@
             <div class="flex-justify-between clearfix fw-bold">
                 <div class="float-left">{{'PREVIEW' | translate}}</div>
                 <div class="float-right">
-                    <button class="mr-2 btn btn-sec-bg submit-button text-secondary-color">{{'PRINT' | translate}}</button>
-                    <button class="btn btn-sec-bg submit-button text-secondary-color">{{'VERIFY_CERTIFICATE' | translate}}</button>
+                    <button class="mr-2 btn bg-color-secondary  color-sec fw-bold submit-button text-secondary-color">{{'PRINT' | translate}}</button>
+                    <button class="btn bg-color-secondary  color-sec fw-bold submit-button text-secondary-color">{{'VERIFY_CERTIFICATE' | translate}}</button>
                 </div>
             </div>
             <div class="pt-4">
@@ -84,7 +84,7 @@
             </div>
             <!-- {{testForm.value | json}} -->
             
-            <button type="submit" class="btn btn-primary pl-3 pr-3" (click)="previewScreen(selectedDecType)">{{'TEST' | translate}}</button>
+            <button type="submit" class="btn bg-color-primary text-white fw-bold pl-3 pr-3" (click)="previewScreen(selectedDecType)">{{'TEST' | translate}}</button>
         </form>
     </div>
 
@@ -97,7 +97,7 @@
                 <!-- <div class=" card div-scroll h-90"> -->
                     <div class="embed-responsive embed-responsive-1by1">
                         <!-- <div class="card-body w-100" [innerHtml]="userHtml | safe : 'html'"></div> -->
-                    <iframe id="iframe1" class="iframe-container w-100 h-100 embed-responsive-item"></iframe>
+                    <iframe id="responsive-iframe" class="iframe-container w-100 h-100 embed-responsive-item"></iframe>
 
                 </div>
 
@@ -108,5 +108,5 @@
 
 <!-- <form [formGroup]="form" (ngSubmit)="submit()">
     <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form"></formly-form>
-    <button type="submit" class="btn btn-primary submit-button" [disabled]="!form.valid">Submit</button>
+    <button type="submit" class="btn bg-color-primary text-white fw-bold submit-button" [disabled]="!form.valid">Submit</button>
   </form> -->

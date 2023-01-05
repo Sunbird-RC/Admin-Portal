@@ -1,53 +1,10 @@
-@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
-
-body {
-  background: #ffffff;
-}
-p {
-  font-size: 1.1em;
-  font-weight: 300;
-  line-height: 1.7em;
-  color: #999;
-}
-.white-background {
-  background-color: #fff;
-}
-.top-margin-container {
-  margin-bottom: 1em !important;
-}
-.form-check {
-  padding-left: 1.5rem;
-}
-.bottom-padding-container {
-  padding-bottom: 45px !important;
-}
 .container .form-check-input {
-  width: 1.125rem;
-  height: 1.125rem;
-  opacity: 1;
-  border-color: rgb(212, 210, 210);
-  background-color: none;
+  width: 24px;
+  height: 24px;
+
 }
 .form-check-input:checked {
   background-color: none;
-}
-.top-padding-title {
-  padding-top: 0;
-}
-
-//  Added css by - pratiksha
-
-.row {
-  overflow-x: hidden;
-  overflow-y: hidden;
-  min-height: 215px !important;
-  position: relative;
-  width: auto !important;
-  flex-wrap: nowrap;
-}
-
-.col {
-  margin-right: 82px !important;
 }
 
 /* Hide the browser's default checkbox */
@@ -58,10 +15,10 @@ p {
   height: 0;
   width: 0;
 }
+
 @media (max-width: 768px) {
   .row {
     overflow-x: scroll;
-    min-height: 220px;
   }
   .card .card-body {
     min-height: 220px;
@@ -76,23 +33,4 @@ p {
       height: 95px;
     }
   }
-}
-.border1 {
-  border: 3px solid #0098ab !important;
-}
-.border2 {
-  border: 1px solid #fff !important;
-}
-.min-ht {
-  min-height: 220px;
-}
-
-.min-ht2 {
-  min-height: 84px;
-}
-.card-title {
-  margin-bottom: 0rem !important;
-}
-.fw-400 {
-  font-weight: 400;
 }

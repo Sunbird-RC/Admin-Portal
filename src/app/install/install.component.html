@@ -7,7 +7,7 @@
                 <!-- <sf-form [schema]="schema"></sf-form> -->
                 <form [formGroup]="form" (ngSubmit)="submit()">
                     <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form"></formly-form>
-                    <button type="submit" class="btn btn-primary submit-button" [disabled]="!form.valid">{{'INSTALL' | translate}}</button>
+                    <button type="submit" class="btn bg-color-primary text-white fw-bold submit-button" [disabled]="!form.valid">{{'INSTALL' | translate}}</button>
                 </form>
             </div>
             <ng-template #elseBlock>
@@ -17,7 +17,7 @@
                 </div>
                 <input type="checkbox" [(ngModel)]="added">{{'I_HAVE_YOU_ADDED_THE_CONFIG_FILE' | translate}}.
                 <br>
-                <button [disabled]="!added" class="btn btn-primary submit-button" [routerLink]="['']">{{'FINISH' | translate}}</button>
+                <button [disabled]="!added" class="btn bg-color-primary text-white fw-bold submit-button" [routerLink]="['']">{{'FINISH' | translate}}</button>
             </ng-template>
         </div>
        

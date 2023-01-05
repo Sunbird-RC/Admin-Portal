@@ -1,46 +1,46 @@
 <app-header></app-header>
 <!-- Sidebar  -->
-<div class="wrapper mtop6 row">
-    <nav id="sidebar" class="col-2">
+<div class="m-0 mt-5 row h-100">
+    <nav id="sidebar" class="col-2 border3 card">
         <ul id="sideMenu" class="list-unstyled components">
             <!-- <li class="menu" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">
                 <a class="a-menu"routerLink="/started/get-started" (click)="openMenu('get-started')">{{'GET_STARTED' | translate}}</a>
             </li> -->
             <li class="menu" class="active-link" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">
-                <a class="a-menu" routerLink="/#"><b>{{'DASHBOARD' | translate}}</b></a>
+                <a class="a-menu fs-14 p-3  d-block" routerLink="/#"><b>{{'DASHBOARD' | translate}}</b></a>
             </li>
             <li class="menu" routerLinkActive="active-link"  *ngIf="items.length">
-                <a class="a-menu" routerLink="/schema"><b>{{'SCHEMA' | translate}}</b></a>
+                <a class="a-menu fs-14 p-3  d-block" routerLink="/schema"><b>{{'SCHEMA' | translate}}</b></a>
             </li>
             <li class="menu" routerLinkActive="active-link">
-                <a class="a-menu" routerLink="/a"><b>{{'ATTESTATION_WORKFLOW' | translate}}</b></a>
+                <a class="a-menu fs-14 p-3  d-block" routerLink="/a"><b>{{'ATTESTATION_WORKFLOW' | translate}}</b></a>
 
             </li>
             <li class="menu" routerLinkActive="active-link">
-                <a class="a-menu" routerLink="/a"><b>{{'VERIFIABLE_CREDENTIALS' | translate}}</b></a>
+                <a class="a-menu fs-14 p-3  d-block" routerLink="/a"><b>{{'VERIFIABLE_CREDENTIALS' | translate}}</b></a>
             </li>
 
             <li class="menu" routerLinkActive="active-link">
-                <a class="a-menu" routerLink="/a"><b>{{'OWNERSHIP' | translate}}</b></a>
+                <a class="a-menu fs-14 p-3  d-block" routerLink="/a"><b>{{'OWNERSHIP' | translate}}</b></a>
             </li>
             <li class="menu" routerLinkActive="active-link">
-                <a class="a-menu" routerLink="/a"><b>{{'ROLES' | translate}}</b></a>
+                <a class="a-menu fs-14 p-3  d-block" routerLink="/a"><b>{{'ROLES' | translate}}</b></a>
             </li>
             <li class="menu" routerLinkActive="active-link">
-                <a class="a-menu" routerLink="/a"><b>{{'THEME' | translate}}</b></a>
+                <a class="a-menu fs-14 p-3  d-block" routerLink="/a"><b>{{'THEME' | translate}}</b></a>
             </li>
 
             <li class="menu" routerLinkActive="active-link">
-                <a class="a-menu" routerLink="/#"><b>{{'HELP' | translate}}</b></a>
+                <a class="a-menu fs-14 p-3  d-block" routerLink="/#"><b>{{'HELP' | translate}}</b></a>
             </li>
             <li class="menu" routerLinkActive="active-link">
-                <a class="a-menu" routerLink="/#"><b>{{'ACCOUNT' | translate}}</b></a>
+                <a class="a-menu fs-14 p-3  d-block" routerLink="/#"><b>{{'ACCOUNT' | translate}}</b></a>
             </li>
 
         </ul>
     </nav>
 
-    <div class="col">
+    <div class="col bg-grey-4">
 
         <div class="text-center mt-5" *ngIf="isLoading">
             <sa-spinner-circular-fixed [size]="54" [thickness]="79" [speed]="67" color="rgba(57, 80, 172, 1)" secondaryColor="rgba(172, 57, 57, 0)" ></sa-spinner-circular-fixed>          

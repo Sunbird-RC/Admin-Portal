@@ -1,4 +1,4 @@
-<header class="header">
+<header class="header position-fixed top-0 w-100 zi-2">
   <!-- <div class="banner">
       
         <span class="span-1"></span>
@@ -12,7 +12,7 @@
     </div>   -->
 
   <nav
-    class="navbar navbar-expand-lg navbar-light bg-header nav-b navbar-inverse"
+    class="card navbar navbar-expand-lg navbar-light bg-header nav-b bottom-2 navbar-inverse"
   >
     <div class="container-fluid custom-header">
       <button
@@ -27,17 +27,17 @@
         <i class="fa fa-bars toggler"></i>
         <!-- <span class="navbar-toggler-icon"></span> -->
       </button>
-      <div class="nav-item active logo-text">
+      <div class="nav-item active">
         <a role="link" aria-disabled="true"
           ><img class="logo" src="{{ logo }}"
         /></a>
       </div>
-      <div class="circle-login">
+      <div class="position-absolute text-center mr-48 top-8">
         <!-- <p class="center">A</p>   -->
-        <span class="p12" *ngIf="loggedInUser">{{ loggedInUser }}</span> &nbsp;
-        <!-- <a *ngIf="loggedInUser" href="/logout" class="p12"> <img style="width: 25px;" src="assets/images/logout.png" /></a> -->
-        <span class="dropdown">
-          <i class="fa fa-chevron-down fs-10"></i>
+        <span class="fs-12 text-color" *ngIf="loggedInUser">{{ loggedInUser }}</span> &nbsp;
+        <!-- <a *ngIf="loggedInUser" href="/logout" class="fs-12"> <img style="width: 25px;" src="assets/images/logout.png" /></a> -->
+        <span class="dropdown position-relative d-inline-block">
+          <i class="fa fa-chevron-down fs-10 text-color"></i>
           <div class="dropdown-content">
             <a *ngIf="loggedInUser" href="/logout">Logout</a>
           </div></span
@@ -47,14 +47,14 @@
         <ng-template [ngIf]="headerSchema?.left">
           <ul class="navbar-nav nav-tabs-line mb-2 mb-lg-0">
             <li
-              class="nav-item"
+              class="nav-item ml-n-25"
               *ngFor="let header of headerSchema.left; let index = index"
             >
               <a
                 *ngIf="header?.title"
                 id="{{ header?.title }}"
                 (click)="onTabChange(index, 'left')"
-                class="nav-link  p14 {{ header?.className }}  {{
+                class="nav-link  fs-14 {{ header?.className }}  {{
                   header?.activeTab
                 }}"
                 [routerLink]="[header.redirectTo]"
@@ -88,7 +88,7 @@
             <li class="nav-item">
               <a
                 *ngIf="header?.title"
-                class="nav-link p14 {{ header?.className }} {{
+                class="nav-link fs-14 {{ header?.className }} {{
                   header?.activeTab
                 }}"
                 [routerLink]="[header.redirectTo]"
@@ -133,11 +133,11 @@
                             [selected]="(lang.code == langCode)? true : false">{{lang.name}}</option>
                     </select>
                 </span> -->
-        <!-- <span (click)="changeTheme()">
+        <span (click)="changeTheme()">
                     <a class="nav-link pr-0">
                         <img style="width: 20px;" src="assets/images/theme_icon.svg" />
                     </a>
-                </span> -->
+                </span>
       </div>
     </div>
   </nav>

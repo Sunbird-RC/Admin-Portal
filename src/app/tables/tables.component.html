@@ -1,10 +1,10 @@
 <app-header [headerFor]='entity' [tab]='tab'></app-header>
 <div class="container mt-150">
-    <h6 class="d-inline-block p16 font-weight-bold">{{tableSchema?.title | translate}}</h6>
+    <h6 class="d-inline-block fs-16 font-weight-bold">{{tableSchema?.title | translate}}</h6>
     <table class="table table-striped">
         <thead>
             <tr>
-                <th class="p12 text-grey-color" *ngFor="let th of tableSchema?.fields;" scope="col">{{th?.title | translate}}</th>
+                <th class="fs-12  text-grey-color" *ngFor="let th of tableSchema?.fields;" scope="col">{{th?.title | translate}}</th>
             
                 <!-- <th scope="col">Name</th>
         <th scope="col"></th> -->
@@ -21,7 +21,7 @@
                     <!-- {{td | json}} -->
                     <ng-template ngFor let-td [ngForOf]="item" class="row">
                         <td  width="20%" *ngIf="td.type && td.type === 'button'; else normalTd">
-                            <a [routerLink]="[td.redirectToUrl]" class="btn btn-bg btn-sec-bg btn-style text-primary-color text-end fw-bold text-capitalize">{{td?.buttonText | translate}}</a>
+                            <a [routerLink]="[td.redirectToUrl]" class="btn btn-bg bg-color-secondary  color-sec fw-bold btn-style text-primary-color text-end fw-bold text-capitalize">{{td?.buttonText | translate}}</a>
                         </td>
                         <ng-template #normalTd>
                             <td class="col-3" *ngIf="td?.formate && td.formate == 'date' && td?.type !== 'name'; else notFormate"><b>{{td?.value | date : 'd MMM y'}}</b></td>

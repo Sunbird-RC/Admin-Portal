@@ -2,11 +2,11 @@
   <div class="p-4">
     <!-- <div>
             <h1 class="float-left">Tenant Configuration Name 1</h1>
-            <button class="btn btn-primary float-right">Add New Configuration</button>
+            <button class="btn bg-color-primary text-white fw-bold float-right">Add New Configuration</button>
         </div> -->
     <div class="d-flex align-items-center">
       <div class="mr-2">
-        <h3 class="pl-3 h2">{{'SCHEMA' | translate}}</h3>
+        <h3 class="pl-3 h2 text-color">{{'SCHEMA' | translate}}</h3>
       </div>
     </div>
 
@@ -16,7 +16,7 @@
           {{'SCHEMA_IN_DRAFT_STATUS' | translate}}
           <a
             href="/explore-api" target="_blank"
-            class="text-primary-color"
+            class="color-primary"
           >
           {{'REVIEW_AND_PUBLISH' | translate}} </a
           >{{'TO_EXPLORE_API' | translate}}
@@ -26,26 +26,26 @@
     <div>
       <div class="row p-2 m-2">
         <div
-          class="card card-bottom col-sm-3 p-2 mr-2 mb-2"
+          class="card d-flex flex-column justify-content-between col-sm-3 p-2 mr-2 mb-2"
           *ngFor="let item of schemaItems"
         >
-          <div class="card-title fw-bold p16">
+          <div class="card-title fw-bold fs-16">
             {{ item?.name }}
             <span
               *ngIf="item?.status == 'DRAFT'"
-              class="badge badge-secondary ml-2 p12"
+              class="badge badge-secondary ml-2 fs-12"
             >
               {{ item?.status }}</span
             >
             <span
               *ngIf="item?.status == 'PUBLISHED'"
-              class="badge badge-success ml-2 p12"
+              class="badge badge-success ml-2 fs-12"
               >{{ item?.status }}</span
             >
           </div>
 
           <div class="mt-4">
-            <button class="btn btn-sec-bg submit-button text-secondary-color">
+            <button class="btn bg-color-secondary submit-button color-sec">
               {{'VIEW_ADD' | translate}}
             </button>
           </div>
@@ -56,10 +56,10 @@
     <div class="pl-3 white-background">
       <div class="row gy-3 gx-3">
         <div class="col-10">
-          <p class="card-title fw-bold"> {{'VERIFIABLE_CREDENTIAL' | translate}}</p>
+          <p class="card-title text-color fw-bold"> {{'VERIFIABLE_CREDENTIAL' | translate}}</p>
         </div>
         <div class="col-2">
-          <button class="btn btn-sec-bg submit-button text-secondary-color">
+          <button class="btn bg-color-secondary submit-button color-sec">
             +{{'ADD' | translate}}
           </button>
         </div>
@@ -72,7 +72,7 @@
             *ngIf="(item?.schema?._osConfig?.certificateTemplates | keyvalue)?.length" >
             <div class="card p-3 mb-3">
             
-              <p class="p16 fw-bold">{{ item?.name }}</p>
+              <p class="fs-16 fw-bold">{{ item?.name }}</p>
               <div class="d-flex align-items-center" *ngFor="let certName of item?.schema?._osConfig?.certificateTemplates | keyvalue">
                
                 <img src="{{imgUrl}}" class="float-left mr-2  img16" alt="">

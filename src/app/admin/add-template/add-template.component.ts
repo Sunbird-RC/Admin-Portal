@@ -194,7 +194,7 @@ export class AddTemplateComponent implements OnInit {
   injectHTML() {
 
     setTimeout(() => {
-      const iframe: HTMLIFrameElement = document.getElementById('iframe1') as HTMLIFrameElement;
+      const iframe: HTMLIFrameElement = document.getElementById('imgIframe') as HTMLIFrameElement;
       var iframedoc;
 
       if (iframe.contentDocument) {

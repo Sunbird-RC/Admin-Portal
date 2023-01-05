@@ -10,7 +10,7 @@
                     <a role="link" aria-disabled="true"><img class="logo" src={{logo}} /></a>
                 </div>
                 <div class="nav-item active logo-text">
-                    <a class="nav-link p14 active" aria-current="page">{{'ATTEST_DETAILS' | translate}}</a>
+                    <a class="nav-link fs-14 active" aria-current="page">{{'ATTEST_DETAILS' | translate}}</a>
                 </div>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
@@ -27,14 +27,14 @@
 
     <div class="row">
     <div class="col">
-        <p class="p14 font-weight-bold">{{'REVIEW_AND_ATTEST_CLAIM' | translate}}</p>
+        <p class="fs-14 font-weight-bold">{{'REVIEW_AND_ATTEST_CLAIM' | translate}}</p>
 
         <!-- <div class="">
         </div> -->
-        <!-- <button style="margin: 8px;" class="btn btn-primary text-end pr-20 fw-bold text-capitalize"
+        <!-- <button style="margin: 8px;" class="btn bg-color-primary text-white fw-bold text-end pr-20 fw-bold text-capitalize"
                         (click)="onAttestApproveReject()"><i class="fa fa-check-circle text-success"
                                 data-mdb-toggle="tooltip" title="Attested"></i>Approve</button>
-                        <button style="margin: 8px;" class="btn btn-primary text-end fw-bold pr-20 text-capitalize"
+                        <button style="margin: 8px;" class="btn bg-color-primary text-white fw-bold text-end fw-bold pr-20 text-capitalize"
                             data-toggle="modal" data-target="#deny"><i
                                 class="fa fa-exclamation-circle red"></i>Deny</button> -->
 
@@ -54,9 +54,9 @@
                         <div class="fs-7 text-grey-color">{{experienceDetail.EmploymentType}}</div>
                     </dd>
                     <dd style="text-align-last: right;">
-                        <button style="margin: 8px;" class="btn btn-primary text-end pr-20 fw-bold text-capitalize"
+                        <button style="margin: 8px;" class="btn bg-color-primary text-white fw-bold text-end pr-20 fw-bold text-capitalize"
                             (click)="onAttest()"><i class="fa fa-check-circle text-success"></i>Approve</button>
-                        <button style="margin: 8px;" class="btn btn-primary text-end fw-bold pr-20 text-capitalize"
+                        <button style="margin: 8px;" class="btn bg-color-primary text-white fw-bold text-end fw-bold pr-20 text-capitalize"
                             data-toggle="modal" data-target="#deny"><i
                                 class="fa fa-exclamation-circle red"></i>Deny</button>
                     </dd>
@@ -77,14 +77,14 @@
                                     {{item?.title}} : <a href="" style="color:#1266f1">{{item?.value}}</a>
                                 </div>
                                 <ng-template #noFile>
-                                    <div class="lh-lg"> <span class="p14 text-grey-color"> {{item?.title}}: </span>
-                                        <!-- <span class="p14 primary-text"> {{item?.value}}
+                                    <div class="lh-lg"> <span class="fs-14 text-grey-color"> {{item?.title}}: </span>
+                                        <!-- <span class="fs-14 primary-text"> {{item?.value}}
                                         </span> -->
 
-                                        <span class="p14 primary-text" *ngIf="typeOf(item?.value) != 'object'"> {{item?.value}}
+                                        <span class="fs-14 primary-text" *ngIf="typeOf(item?.value) != 'object'"> {{item?.value}}
                                         </span>
 
-                                        <span class="p14 primary-text" *ngIf="typeOf(item?.value) === 'object'"> 
+                                        <span class="fs-14 primary-text" *ngIf="typeOf(item?.value) === 'object'"> 
                                             <span *ngFor="let subField of item?.value; let i = index">  <br/>
                                                 <span *ngIf="item?.value[i]?.grades">
                                                      Grades : {{item?.value[i]?.grades}} ,  
@@ -114,11 +114,11 @@
                         </dd>
                         <dd class="float-end col col-lg-5">
                             <button
-                                class="btn btn-style m-1 text-end pr-20  px-2 fw-bold p14 text-capitalize btn-success"
+                                class="btn btn-style m-1 text-end pr-20  px-2 fw-bold fs-14 text-capitalize btn-success"
                                 (click)="onAttestApproveReject('GRANT_CLAIM',$event)"><i
                                     class="fa fa-check text-success" data-mdb-toggle="tooltip" title="Attested"></i>
                                 &nbsp; {{'APPROVE' | translate}}</button>
-                            <button class="m-1 btn btn-deny btn-style text-end fw-bold pr-20 p14  px-2 text-capitalize"
+                            <button class="m-1 btn btn-deny btn-style text-end fw-bold pr-20 fs-14  px-2 text-capitalize"
                                 data-toggle="modal" data-target="#deny"><i class="fa fa-times red"></i> &nbsp;
                                {{'DENY' | translate}}</button>
                         </dd>
@@ -131,7 +131,7 @@
 
                             <ng-template [ngIf]="noteAdded">
                                
-                                <div class="text-success p14"><i class="fa fa-check"></i> {{'NOTE_ADDED' | translate}}
+                                <div class="text-success fs-14"><i class="fa fa-check"></i> {{'NOTE_ADDED' | translate}}
                                 </div>
                             </ng-template>
                             <form [formGroup]="noteForm">
@@ -140,13 +140,13 @@
                                 </formly-form>
                            
                                 <button type="button" [disabled]="!noteForm.value.note"
-                                    class="btn btn-primary text-capitalize font-weight-bold submit-button"
+                                    class="btn bg-color-primary text-white fw-bold text-capitalize font-weight-bold submit-button"
                                     (click)="saveNote()">{{'SAVE_NOTE' | translate}}</button>
                             </form>
 
                             <div class="mt-3">
                                 <ng-template class="pt-4 mb-1"  *ngFor="let noteData of notes" [ngIf]="noteData.notes != ''">
-                                    <h6 class="mb-1 p14 primary-text lh-1"> <b>{{noteData.notes}}</b></h6>
+                                    <h6 class="mb-1 fs-14 primary-text lh-1"> <b>{{noteData.notes}}</b></h6>
                                     <span class="fs-7 text-grey-color lh-1">
                                         <span *ngIf="noteData.addedBy"> {{'BY' | translate}} {{noteData.addedBy}}, </span>
                                         <span *ngIf="noteData.createdAt"> {{noteData.createdAt | date : 'd MMM y'}}
@@ -168,7 +168,7 @@
         <!-- <div class="mt-2"> -->
         <!-- </div> -->
         <!-- <h5>Public Profile of {{claimData?.requestorName}}</h5> -->
-        <p class="p14 font-weight-bold">{{'PUBLIC_PROFILE_OF' | translate}} {{claimData?.requestorName}}</p>
+        <p class="fs-14 font-weight-bold">{{'PUBLIC_PROFILE_OF' | translate}} {{claimData?.requestorName}}</p>
     <div>
         <div class="card">
             <div class="card-body">
@@ -218,7 +218,7 @@
                                             class="label-primary font-weight-bold text-capitalize">{{'CANCEL' | translate}}</span></button>
 
                                     <button type="button" [disabled]="!denyForm.valid"
-                                        class="btn btn-primary btn-style float-end submit-button"
+                                        class="btn bg-color-primary text-white fw-bold btn-style float-end submit-button"
                                         (click)="onAttestApproveReject('REJECT_CLAIM',$event)"><span
                                             class="font-weight-bold text-capitalize">{{'YES_DENY' | translate}}</span></button>
 

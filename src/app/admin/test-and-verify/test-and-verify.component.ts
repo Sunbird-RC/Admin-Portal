@@ -247,7 +247,7 @@ export class TestAndVerifyComponent implements OnInit {
   injectHTML() {
 
     setTimeout(() => {
-      const iframe: HTMLIFrameElement = document.getElementById('iframe1') as HTMLIFrameElement;
+      const iframe: HTMLIFrameElement = document.getElementById('responsive-iframe') as HTMLIFrameElement;
       var iframedoc;
 
       if (iframe.contentDocument) {

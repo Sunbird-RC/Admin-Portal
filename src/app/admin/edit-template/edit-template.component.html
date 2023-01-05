@@ -14,7 +14,7 @@
     <div>
        <div class="row d-flex mt-4 setHeight">
           <div class="preview-footer">
-             <button data-toggle="modal" data-target="#prewiewProfile" class="btn text-capitalize float-end btn-primary btn-primary-sm p1">{{'SAVE_DOCUMENT' | translate}}</button>
+             <button data-toggle="modal" data-target="#prewiewProfile" class="btn text-capitalize float-end bg-color-primary text-white fw-bold  p1">{{'SAVE_DOCUMENT' | translate}}</button>
           </div>
           <div class=" p-0 setHeight border-right mtn-28">
              <div  id="htmlDiv" [hidden]="!htmlDiv">
@@ -49,21 +49,21 @@
                    <div class="container mt-4">
                       <div class="mb-4">
                          <p class="heading-4 font-700 mb-05">{{'NAME' | translate}}</p>
-                         <input [(ngModel)]="templateName" class="w-100 input-field p14 p-3 inputField"
+                         <input [(ngModel)]="templateName" class="w-100 input-field fs-14 p-3 inputField"
                          placeholder="Enter Document name" type="text" />
                       </div>
                       <div class="mt-2">
                          <p class="heading-4 font-700 mb-05">{{'DESCRIPTION' | translate}}<span
                             class="text-muted">(optional)</span></p>
                          <textarea [(ngModel)]="description"
-                         class="w-100 desc py-2 input-field p14 pl-3 inputField"
+                         class="w-100 desc py-2 input-field fs-14 pl-3 inputField"
                          placeholder="Enter description"></textarea>
                       </div>
-                      <div class="mt-4">
+                      <div class="mt-2">
                          <button (click)="submit()" data-dismiss="modal" aria-label="Close"
-                            class="btn text-capitalize float-end btn-primary btn-primary-sm p1">{{'SAVE' | translate}}</button>
+                            class="btn text-capitalize float-end bg-color-primary text-white fw-bold p1">{{'SAVE' | translate}}</button>
                          <button class="close" data-dismiss="modal" aria-label="Close"
-                            class="btn text-capitalize float-end btn-primary btn-primary-sm p1 sb-text-primary mr-2 bg-none">{{'CANCEL' | translate}}</button>
+                            class="btn text-capitalize float-end bg-color-primary text-white fw-bold p1 sb-text-primary mr-2 bg-none">{{'CANCEL' | translate}}</button>
                       </div>
                    </div>
                 </div>

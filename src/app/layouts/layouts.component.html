@@ -14,7 +14,7 @@
                     </span>
                 </p>
             </div>
-            <a *ngIf="!public" class=" p-2 p14 btn-bg label-primary btn-style float-end" data-toggle="modal" data-target="#prewiewProfile" (click)="openPreview()">{{'PREVIEW_PUBLIC_PROFILE' | translate}}</a>
+            <a *ngIf="!public" class=" p-2 fs-14 btn-bg label-primary btn-style float-end" data-toggle="modal" data-target="#prewiewProfile" (click)="openPreview()">{{'PREVIEW_PUBLIC_PROFILE' | translate}}</a>
         </div>
     </nav>
 </div>
@@ -50,7 +50,7 @@
                 <ng-template [ngIf]="block.add">
                     <a *ngIf="!public" panelAddLink="{{block.addform}}" class="fs-7 text-secondary-color"><i
                             class="fa fa-plus pr-1" aria-hidden="true"></i><span
-                            class="text-secondary-color p12">{{block.title | translate}}</span></a>
+                            class="text-secondary-color fs-12 ">{{block.title | translate}}</span></a>
                 </ng-template>
                 <!-- <a *ngIf="!public" class="text-end d-block text-primary-color blue-shade-btn float-end" data-toggle="modal"
                 data-target="#prewiewProfile">Preview Public Profile</a> -->
@@ -99,13 +99,13 @@
                                     <ng-template ngFor let-objects [ngForOf]="element" let-objectIndex="index">
                                         <div *ngIf="element[objectIndex].property != block.headValue;">
                                             <div *ngIf="objectIndex + 1 != element.length; else greyBlock" data-mdb-toggle="tooltip" title={{element[objectIndex].title}}>
-                                                <span class="text-grey-color p14">{{element[objectIndex].title}}:
-                                                </span> <span class="p14">{{element[objectIndex].value}}</span>
+                                                <span class="text-grey-color fs-14">{{element[objectIndex].title}}:
+                                                </span> <span class="fs-14">{{element[objectIndex].value}}</span>
                                             </div>
                                             <ng-template #greyBlock>
-                                                <div class="fs-6" data-mdb-toggle="tooltip" title={{element[objectIndex].title}}><span class="text-grey-color p14">{{element[objectIndex].title}}:</span>
+                                                <div class="fs-6" data-mdb-toggle="tooltip" title={{element[objectIndex].title}}><span class="text-grey-color fs-14">{{element[objectIndex].title}}:</span>
 
-                                                    <span class="p14"> {{element[objectIndex].value}}</span>
+                                                    <span class="fs-14"> {{element[objectIndex].value}}</span>
                                                 </div>
                                             </ng-template>
                                         </div>
@@ -135,14 +135,14 @@
                                             <ng-template #smallBlock>
                                                 <div *ngIf="objectIndex + 1 != element.length; else greyBlock" data-mdb-toggle="tooltip" title={{element[objectIndex].title}}>
 
-                                                    <span class="text-grey-color p14">{{element[objectIndex].title}}:
-                                                </span> <span class="p14">{{element[objectIndex].value}}</span>
+                                                    <span class="text-grey-color fs-14">{{element[objectIndex].title}}:
+                                                </span> <span class="fs-14">{{element[objectIndex].value}}</span>
                                                 </div>
 
                                                 <ng-template #greyBlock>
                                                     <div class="fs-7" data-mdb-toggle="tooltip" title={{element[objectIndex].title}}>
-                                                        <span class="text-grey-color p14">{{element[objectIndex].title}}:
-                                                    </span> <span class="p14">{{element[objectIndex].value}}</span>
+                                                        <span class="text-grey-color fs-14">{{element[objectIndex].title}}:
+                                                    </span> <span class="fs-14">{{element[objectIndex].value}}</span>
                                                     </div>
                                                     <hr class="mb-5">
                                                 </ng-template>
@@ -209,7 +209,7 @@
 
         <ng-template #noData>
             <div *ngIf="!public">
-                <a panelAddLink="{{block.addform}}" class="text-end d-block btn-sec-bg blue-shade-btn mt-4"><i
+                <a panelAddLink="{{block.addform}}" class="text-end d-block bg-color-secondary  color-sec fw-bold blue-shade-btn mt-4"><i
                         class="fa fa-plus pr-1 text-primary-color" aria-hidden="true"></i> <span
                         class="text-primary-color font-weight-bold">{{block.title | translate}} </span></a>
             </div>

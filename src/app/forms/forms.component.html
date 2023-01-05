@@ -8,7 +8,7 @@
         <div>
           <form [formGroup]="form2" (ngSubmit)="submit()" *ngIf="fields">
             <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form2"></formly-form>
-            <button type="submit" class="btn btn-primary w-100 submit-button" [disabled]="!form2.valid">{{'SUBMIT' | translate}}</button>
+            <button type="submit" class="btn bg-color-primary text-white fw-bold w-100 submit-button" [disabled]="!form2.valid">{{'SUBMIT' | translate}}</button>
           </form>
         </div>
         <div class="text-center text-secondary-color p-3 font-weight-bold" *ngIf="isSignupForm"> 
@@ -24,15 +24,15 @@
   <div *ngIf="modal==='true'; else noModal" class="modal-body">
     <form [formGroup]="form2" (ngSubmit)="submit()" *ngIf="fields">
      <div *ngIf="globalPrivacy" class="mb-3">
-        <h6 class="mb-1 p12 font-weight-bold">{{'VISIBILITY' | translate}}</h6>
-        <span class="p12"> {{'PRIVACY_ATTRIBUTE_DEFINE' | translate}} <span class="float-end {{globalPrivacy}}">
+        <h6 class="mb-1 fs-12  font-weight-bold">{{'VISIBILITY' | translate}}</h6>
+        <span class="fs-12 "> {{'PRIVACY_ATTRIBUTE_DEFINE' | translate}} <span class="float-end {{globalPrivacy}}">
           <span  *ngIf="globalPrivacy == 'public-access'"> &nbsp; {{'ANYONE' | translate}}</span>
           <span *ngIf="globalPrivacy == 'internal-access'"> &nbsp;{{'ONLY_BY_ME' | translate}}</span>
           <span *ngIf="globalPrivacy == 'private-access'"> &nbsp;{{'ONLY_BY_CONSENT' | translate}}</span>
            </span></span>
       </div>
       <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form2"></formly-form>
-      <button type="submit" id="btn-one" class="btn btn-primary submit-button" [disabled]="!form2.valid || isSubmitForm || form2.pristine">{{'SUBMIT' | translate}}</button>
+      <button type="submit" id="btn-one" class="btn bg-color-primary text-white fw-bold submit-button" [disabled]="!form2.valid || isSubmitForm || form2.pristine">{{'SUBMIT' | translate}}</button>
     </form>
 
 
@@ -55,7 +55,7 @@
   </div>
 </div>
 
-<!-- <div class="text-center text-secondary-color p14 font-weight-bold" *ngIf="isSignupForm">
+<!-- <div class="text-center text-secondary-color fs-14 font-weight-bold" *ngIf="isSignupForm">
  <a  href="/login"> {{'ALREADY_REGISTERED_LOGIN' | translate}}? </a>
 </div> -->
 <ng-template #loader>

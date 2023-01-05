@@ -3,15 +3,15 @@
     <div class="card" style="width: 450px; height: 299px">
       <div class="card-body" style="margin: 10%; padding: 5%">
         <p class="wrapped bTitle">{{'PUBLISH_TO_EXPLORE_APIS' | translate}}</p>
-        <div class="card-text lh-lg p14 wrapped">
+        <div class="card-text lh-lg fs-14 wrapped">
           {{'HAVE_COMPLETED_SCHEMA_CONFIGURATION' | translate}}
         </div>
-        <div class="card-text lh-lg p14 wrapped">
+        <div class="card-text lh-lg fs-14 wrapped">
           {{'CLICK_PUBLISH_TO_EXPLORE_API' | translate}}
         </div>
 
         <div class="mt-4 wrapped">
-          <a class="float-end p14 btn btn-primary" (click)="changeVal()"
+          <a class="float-end fs-14 btn bg-color-primary text-white fw-bold" (click)="changeVal()"
             >{{'PUBLISH' | translate}}</a
           >
         </div>
@@ -23,12 +23,12 @@
     <div class="card" style="width: 450px; height: 299px">
       <div class="card-body" style="margin: 10%; padding: 5%">
         <p class="wrapped bTitle">{{'SAVE_TO_PUBLISH_LATER' | translate}}</p>
-        <div class="card-text lh-lg p14 wrapped">
+        <div class="card-text lh-lg fs-14 wrapped">
           {{'SAVE_SCHEMA_CONFIGURATION_AS_DRAFT' | translate}}
         </div>
-        <div class="card-text lh-lg p14 wrapped">{{'AND_PUBLISH_IT_LATER' | translate}}</div>
+        <div class="card-text lh-lg fs-14 wrapped">{{'AND_PUBLISH_IT_LATER' | translate}}</div>
         <div class="mt-4 wrapped">
-          <a href="/home" class="float-end p14 btn btn-primary">{{'SAVE_DRAFT' | translate}}</a>
+          <a href="/home" class="float-end fs-14 btn bg-color-primary text-white fw-bold">{{'SAVE_DRAFT' | translate}}</a>
         </div>
       </div>
     </div>
@@ -38,11 +38,11 @@
     <div class="card" style="width: 450px; height: 299px">
       <div class="card-body" style="margin: 10%; padding: 5%">
         <p class="wrapped bTitle">{{'SCHEMA_IS_PUBLISHED' | translate}}</p>
-        <div class="card-text lh-lg p14 wrapped">
+        <div class="card-text lh-lg fs-14 wrapped">
           <a routerLink="/explore-api" target="_blank">{{'EXPLORE_API_HERE' | translate}}</a>
         </div>
         <div class="mt-4 wrapped">
-          <a href="/home" class="float-end p14 btn btn-primary"
+          <a href="/home" class="float-end fs-14 btn bg-color-primary text-white fw-bold"
             >{{'GO_TO_DASHBOARD' | translate}}</a
           >
         </div>
@@ -53,9 +53,9 @@
 
 <!-- -----------Publish Table------------------- -->
 <br>
-<div class="publishHeading">{{'PUBLISH' | translate}}</div>
+<div class="fs-16 fw-700 d-flex text-color justify-content-center ">{{'PUBLISH' | translate}}</div>
 <br>
-<table class="table">
+<table class="bg-card vw-60 border-sp table">
   <tr>
     <th><b>{{'SCHEMA' | translate}}</b></th>
     <th><b>{{'LAST_UPDATE' | translate}}</b></th>
@@ -63,11 +63,11 @@
 
   <tr *ngFor="let item of publishData; let i=index" >
     <td scope="col">{{item.name}}</td>
-    <td>{{item.osUpdatedAt | date}}</td>
+    <td class="ml-3">{{item.osUpdatedAt | date}}</td>
     <td>
-      <button type="button" class="publishedbtn" *ngIf="item.status== 'PUBLISHED'">{{'PUBLISHED' | translate}}</button>
-      <button type="button" class="draftbtn" *ngIf="item.status== 'DRAFT'">{{'DRAFT' | translate}}</button>
-      <button type="button" class="publishbtn" *ngIf="item.status== 'DRAFT'" (click)="changeStatus(item.osid, i)">{{'PUBLISH' | translate}}</button>
+      <button type="button" class="publishedbtn common-btn" *ngIf="item.status== 'PUBLISHED'">{{'PUBLISHED' | translate}}</button>
+      <button type="button" class="draftbtn common-btn" *ngIf="item.status== 'DRAFT'">{{'DRAFT' | translate}}</button>
+      <button type="button" class="btn text-capitalize float-end bg-color-primary text-white fw-bold p-2" *ngIf="item.status== 'DRAFT'" (click)="changeStatus(item.osid, i)">{{'PUBLISH' | translate}}</button>
     </td>
   </tr>
 </table>

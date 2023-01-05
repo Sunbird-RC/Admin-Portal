@@ -3,12 +3,12 @@
     <div>
 
         <div class="d-flex">
-          <div class="col-sm-7 well">
+          <div class="col-sm-7 min-ht3 pd-19 mb-20 bg-white border-grey-4  bs-1 br-0">
             <form-builder [form]="myForm" (change)="onChange($event)" (submit)="onSubmit($event)" [options]="options">
             </form-builder>
           </div>
           <div class="col-sm-5">
-            <!-- <div class="well jsonviewer">
+            <!-- <div class="min-ht3 pd-19 mb-20 bg-white border-grey-4  bs-1 br-0 jsonviewer">
               <pre id="json"><code class="language-json" #json></code></pre>
             </div> -->
             <div>
@@ -16,7 +16,7 @@
                 <i [hidden]="isShowLessJson" class="fa fa-plus float-end arrIcon"></i>
                 <i [hidden]="!isShowLessJson" class="fa fa-minus float-end arrIcon"></i>
               </button>
-              <div class="well content">
+              <div class="min-ht3 pd-19 mb-20 bg-white border-grey-4  bs-1 br-0 content">
                 <json-editor [options]="editorOptions" style="min-height: 700px;" [data]="jsonFields"
                   [(ngModel)]="jsonFields"></json-editor>
               </div>
@@ -27,7 +27,7 @@
                 <i [hidden]="isShowLessVc" class="fa fa-plus float-end arrIcon"></i>
                 <i [hidden]="!isShowLessVc" class="fa fa-minus float-end arrIcon"></i>
               </button>
-              <div class="well content">
+              <div class="min-ht3 pd-19 mb-20 bg-white border-grey-4  bs-1 br-0 content">
                 <!-- <input type="text"  [value]="vcFields"  [(ngModel)]="vcFields"/> -->
                 <div [hidden]="!isVcString">
                   <ngx-text-editor [(ngModel)]="vcFields"></ngx-text-editor>
@@ -47,7 +47,7 @@
       
         <div class="preview-footer">
           <button data-toggle="modal" (click)="saveAdvance()"
-            class="btn text-capitalize float-end btn-primary btn-primary-sm p1">{{'SAVE' | translate}}</button>
+            class="btn text-capitalize float-end bg-color-primary text-white fw-bold fw-bold-sm p1">{{'SAVE' | translate}}</button>
         </div>
       
       </div>

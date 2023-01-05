@@ -112,9 +112,8 @@ p code {
 /* grapesjs : end*/
 
 .modal-content {
-  width: 45%;
-  height: 425px;
-  margin: 10% 30%;
+height: auto;
+width: auto;
 }
 
 .box {
@@ -228,6 +227,9 @@ p code {
 .img-hold {
   display: flex;
   gap: 15px;
+  align-items: flex-start;
+  justify-content: flex-start;
+
 }
 
 @media (max-width: 768px) {
@@ -356,6 +358,13 @@ textarea.jsoneditor-text {
 .formcomponents {
   padding-right: 5px !important;
   padding-left: 5px !important;
+}
 
+.btn-primary {
+background-color:var(--primaryColorBlue) !important;
+}
+
+.col-form-label{
+  color: #000000;
 }
 /*  advance editor: End */

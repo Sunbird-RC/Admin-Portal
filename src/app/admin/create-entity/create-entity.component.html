@@ -21,10 +21,10 @@
 
 <div id="schemaEntity" class="container-fluid mt-0 ml-12" >
     <div class="row bg-grey-4 ht-786" *ngIf="!isAddFormPg">
-        <div class="col-md-3" *ngIf="isActive != 'test-publish' ">
+        <div class="col-md-3 p-0" *ngIf="isActive != 'test-publish' ">
             <div class="wrapper">
                 <!--Top menu -->
-                <div id="sideMenu" class="sidebar bg-white ht-786 border-end zi-1 w-96-p pt-4 pb-1" >
+                <div id="sideMenu" class="sidebar bg-white ht-786 border-end zi-1 w-90-p pt-4 pb-1" >
                     <ul class="list-unstyled" *ngIf="isActive == 'createSchema'">
                         <!-- <p class="fs-16fw-bold pl-3 text-uppercase">Common </p> -->
                         <ng-template ngFor let-menuItem [ngForOf]="usecaseSchema" let-i="index">
@@ -87,9 +87,9 @@
         </div>
 
 
-        <div class="col-md-9 p-2 mb-6">
+        <div class="col-md-9 pr-4 mb-6">
             <div class="step" *ngIf="isActive == 'createSchema'">
-                <div class="d-flex justify-content-between card-body pr-2 py-2">
+                <div class="d-flex justify-content-between card-body pr-2 py-2 mt-3">
                     <div class="heading-2">
                         <h3>{{usecaseSchema[activeMenuNo]?.title}}</h3>
                         <p class="fs-14 text-grey-color">{{usecaseSchema[activeMenuNo]?.description}}</p>
@@ -399,7 +399,7 @@
         </div>
     </div>
 
-    <div *ngIf="isAddFormPg" class="p-5">
+    <div *ngIf="isAddFormPg" class="p-5 bg-grey-4">
         <add-field-form [jsonSchema]="compFieldJson" [commonSchema]="commonSchemaField"
             (newItemEvent)="jsonSchemaData($event)" (backEvent)="goBackEvent($event)"></add-field-form>
     </div>
@@ -408,13 +408,13 @@
     <!-- Modal Start : Save Entity Name -->
     <div class="modal right fade" id="addEntity" tabindex="-1" role="dialog" aria-labelledby="addEntity">
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
+            <div class="modal-content mt-5">
                 <div class="modal-header pt-4 border-0">
                     <h3 class="heading-5">{{'ADD_SCHEMA' | translate}}</h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
                 </div>
-                <div class="container mt-1">
+                <div class="container mt-1 mb-2">
                     <div class="mb-3">
                         <span class="l12 fw-bold">{{'ENTER_SCHEMA_NAME' | translate}}</span>
                         <input  class="w-100 input-field bg-card br-4 border-grey-3d fs-14 p-2 inputField"
@@ -445,7 +445,7 @@
 
     <div class="modal right fade" id="saveSchemaConfig" tabindex="-1" role="dialog" aria-labelledby="saveSchemaConfig">
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
+            <div class="modal-content mt-5">
                 <div class="modal-header pt-4 border-0">
                     <h3 class="heading-5">{{'SAVE_CONFIGURATION' | translate}}</h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
@@ -511,9 +511,9 @@
 <!-- Modal Start : Delete Entity -->
 <div class="modal right fade" id="deleteEntity" tabindex="-1" role="dialog" aria-labelledby="deleteEntity">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
+        <div class="modal-content mt-5">
             <div class="container mt-4">
-                <div class="dialog-box pt-5 text-center">
+                <div class="dialog-box pt-4 pb-4 text-center">
                     <h3 class="heading-del">{{'WANT_TO_DELETE' | translate}}</h3>
                     <h3 class="heading-del">{{usecaseSchema[activeMenuNo]?.title}} {{'SCHEMA?' | translate}}</h3>
                     <br>

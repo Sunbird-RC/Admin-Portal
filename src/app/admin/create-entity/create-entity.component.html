@@ -8,8 +8,8 @@
     <nav class="card mt-0 p-2 ml-32" [hidden]="isAddFormPg">
 
         <!-- <ul id="stepList" *ngFor="let steps of processSteps; let i = index"> -->
-        <ul id="stepList">
-            <li *ngFor="let steps of processSteps; let i = index" class="col-md-2 tab" id="step{{i}}"><strong>
+        <ul id="stepList" class="color-wt1 overflow-hidden">
+            <li *ngFor="let steps of processSteps; let i = index" class="col-md-2 tab fs-12" id="step{{i}}"><strong>
                     <i *ngIf="steps?.key != 'test-publish'"
                         class="float-end fa fas fa-chevron-right text-grey-color mt-3 fs-3 color-grey-2"></i>
                     <span class="l10">STEP {{i + 1}}</span> <br />
@@ -20,17 +20,17 @@
 </header>
 
 <div id="schemaEntity" class="container-fluid mt-0 ml-12" >
-    <div class="row bg-grey-4" *ngIf="!isAddFormPg">
+    <div class="row bg-grey-4 ht-786" *ngIf="!isAddFormPg">
         <div class="col-md-3" *ngIf="isActive != 'test-publish' ">
             <div class="wrapper">
                 <!--Top menu -->
-                <div id="sideMenu" class="sidebar bg-white ht-786 position-relative tr-05 h-100 border-end z-index-1 overflow-hidden w-96" >
+                <div id="sideMenu" class="sidebar bg-white ht-786 border-end zi-1 w-96-p pt-4 pb-1" >
                     <ul class="list-unstyled" *ngIf="isActive == 'createSchema'">
                         <!-- <p class="fs-16fw-bold pl-3 text-uppercase">Common </p> -->
                         <ng-template ngFor let-menuItem [ngForOf]="usecaseSchema" let-i="index">
 
                             <li class="menu" *ngIf="menuItem['isRefSchema']" (click)="openEntity(i, menuItem?.title)">
-                                <a class="a-menu text-color"> Common Schema
+                                <a class="a-menu text-color fs-16 d-block border-grey-3"> Common Schema
 
                                     <div *ngIf="isActive == 'createSchema' && menuItem['status'] != 'PUBLISHED'"
                                         class="dropdown fs-14 float-end">
@@ -52,7 +52,7 @@
                     <ul class="list-unstyled components">
                         <ng-template ngFor let-menuItem [ngForOf]="usecaseSchema" let-i="index">
                             <li class="menu my-3" *ngIf="!menuItem['isRefSchema']" (click)="openEntity(i, menuItem?.title)">
-                                <a class="a-menu text-color" [class.selected]=" menuItem?.title === usecaseSchema[i].title" (click)="onSelect(menuItem?.title);"> {{menuItem?.title}} 
+                                <a class="a-menu text-color fs-16 d-block border-grey-3" [class.selected]=" menuItem?.title === usecaseSchema[i].title" (click)="onSelect(menuItem?.title);"> {{menuItem?.title}} 
                                     <div *ngIf="isActive == 'createSchema' && menuItem['status'] != 'PUBLISHED'"
                                         class="dropdown fs-14 float-end">
                                         <i class="fa fa-ellipsis-h text-grey-color" aria-hidden="true"></i>
@@ -173,7 +173,7 @@
                                                                 <td>
                                                                     <select
                                                                         (change)="onVisibilityChange($event, childNastedArrayfield?.data?.visiblity, 'childNased', j, k , m)"
-                                                                        class="fieldInput fs-14 m-2  py-1 px-3 mr-3">
+                                                                        class="br-4 border-grey-3 bg-card fs-14 m-2  py-1 px-3 mr-3">
                                                                         <option *ngFor="let opt of visiblityOpt"
                                                                             value={{opt.key}}
                                                                             [selected]="opt?.key == childNastedArrayfield?.data?.visiblity">
@@ -220,7 +220,7 @@
                                                         <td>
                                                             <select
                                                                 (change)="onVisibilityChange($event, secArrayfield?.visiblity, 'nasted', j , k)"
-                                                                class="fieldInput fs-14 m-2  py-1 px-3 mr-3">
+                                                                class="br-4 border-grey-3 bg-card fs-14 m-2  py-1 px-3 mr-3">
                                                                 <option *ngFor="let opt of visiblityOpt"
                                                                     value={{opt.key}}
                                                                     [selected]="opt.key== secArrayfield?.visiblity">
@@ -261,7 +261,7 @@
                                                     </td>
                                                     <td>
                                                         <select (change)="onVisibilityChange($event, field?.data?.visiblity, j, k)"
-                                                            class="fieldInput fs-14 m-2  py-1 px-3 mr-3">
+                                                            class="br-4 border-grey-3 bg-card fs-14 m-2  py-1 px-3 mr-3">
                                                             <option *ngFor="let opt of visiblityOpt" value={{opt.key}}
                                                                 [selected]="opt.key== field?.data?.visiblity">
                                                                 {{opt.name}}
@@ -303,7 +303,7 @@
 
                                                     <td>
                                                         <select (change)="onVisibilityChange($event, field?.visiblity, 'string', j, k )"
-                                                            class="fieldInput fs-14 m-2  py-1 px-3 mr-3">
+                                                            class="br-4 bg-card border-grey-3 fs-14 m-2  py-1 px-3 mr-3">
                                                             <option *ngFor="let opt of visiblityOpt" value={{opt.key}}
                                                                 [selected]="opt?.key == field?.visiblity">
                                                                 {{opt.name}}
@@ -339,11 +339,11 @@
                         <!-- <create-vc-template></create-vc-template> -->
                         <json-editor *ngIf="properties" [options]="editorOptions" [data]="properties"
                             [(ngModel)]="properties" (change)="readConvertJsonData($event)"></json-editor>
-                        <footer class="footer fixed-bottom fixed-bottom-json">
+                        <footer class="footer fixed-bottom bg-card fixed-bottom-json">
                             <div class="container-fluid">
                                 <div>
                                     <button (click)="readConvertJsonData($event)"
-                                        class="btn text-capitalize float-end bg-color-primary text-white fw-bold bg-color-primary text-white fw-bold-sm px-3 my-2">{{'SAVE' | translate}}</button>
+                                        class="btn text-capitalize float-end bg-color-primary text-white fw-bold px-3 my-2">{{'SAVE' | translate}}</button>
                                     <button (click)="hideJSon()"
                                         class="btn bg-color-secondary  color-sec fw-bold float-end submit-button px-3 my-2">{{'CANCEL' | translate}}</button>
 
@@ -417,7 +417,7 @@
                 <div class="container mt-1">
                     <div class="mb-3">
                         <span class="l12 fw-bold">{{'ENTER_SCHEMA_NAME' | translate}}</span>
-                        <input  class="w-100 input-field modal-input-field fs-14 p-2 inputField"
+                        <input  class="w-100 input-field bg-card br-4 border-grey-3d fs-14 p-2 inputField"
                             placeholder="Enter Schema name" type="text" required  name="entityName" [(ngModel)]="entityName" (keydown)="space($event)"/>
                             
                     </div>
@@ -426,14 +426,14 @@
                         <span class="l12 fw-bold">{{'ENTER_DESCRIPTION' | translate}}<span class="text-muted">
                                 (optional)</span></span>
                         <textarea [(ngModel)]="description"
-                            class="w-100 desc input-field modal-input-field fs-14 pl-3 inputField"></textarea>
+                            class="w-100 desc input-field bg-card br-4 border-grey-3d fs-14 pl-3 inputField"></textarea>
                         <span class="l12 text-grey-color">{{'DESCRIPTION_ABOUT_SCHEMA' | translate}}</span>
                     </div>
 
 
                     <div class="mt-4">
                         <button data-dismiss="modal" aria-label="Close"
-                            class="btn text-capitalize float-end bg-color-primary text-white fw-bold bg-color-primary text-white fw-bold-sm p1"
+                            class="btn text-capitalize float-end bg-color-primary text-white fw-bold p1"
                             (click)="createEntity($event)" [disabled]="!entityName">{{'SAVE' | translate}}</button>
                         <!-- <button class="close" data-dismiss="modal" aria-label="Close"
                         class="btn text-capitalize float-end bg-color-primary text-white fw-bold bg-color-primary text-white fw-bold-sm p1 sb-text-primary mr-2 bg-none">Cancel</button> -->
@@ -469,16 +469,16 @@
 
                     <div class="mt-4">
                         <button (click)="saveConfiguration()" data-dismiss="modal" aria-label="Close"
-                            class="btn text-capitalize float-end bg-color-primary text-white fw-bold bg-color-primary text-white fw-bold-sm p1">{{'SAVE' | translate}}</button>
+                            class="btn text-capitalize float-end bg-color-primary text-white fw-bold p1">{{'SAVE' | translate}}</button>
                         <button class="close" data-dismiss="modal" aria-label="Close"
-                            class="btn text-capitalize float-end bg-color-primary text-white fw-bold bg-color-primary text-white fw-bold-sm p1 sb-text-primary mr-2 bg-none">{{'CANCEL' | translate}}</button>
+                            class="btn text-capitalize float-end bg-color-primary text-white fw-bold p1 sb-text-primary mr-2 bg-none">{{'CANCEL' | translate}}</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <footer class="footer fixed-bottom border-grey-4 bs-1">
+    <footer class="footer fixed-bottom bg-card border-grey-4 bs-1">
         <div class="container-fluid">
             <div>
                 <button (click)="backStep()"
@@ -496,11 +496,11 @@
                     class="btn fw-bold text-capitalize float-end bg-color-primary bg-color-primary-sm px-3 my-2 text-white">{{'SAVE_AND_NEXT' | translate}}
                     </button>
                     <a  href="/home"> <button *ngIf="isActive == 'test-publish'"
-                    class="btn text-capitalize float-end bg-color-primary text-white fw-bold bg-color-primary text-white fw-bold-sm px-3 my-2">{{'GO_TO_DASHBOARD' | translate}} </button></a>
+                    class="btn text-capitalize float-end bg-color-primary text-white fw-bold px-3 my-2">{{'GO_TO_DASHBOARD' | translate}} </button></a>
                 <button *ngIf="isActive == 'configurations'" (click)="nextStep();"
                     class="btn bg-color-secondary  color-sec fw-bold float-end submit-button px-3 my-2 ml-2 mr-2 ">{{'SKIP' | translate}}</button> &nbsp;
                 <button *ngIf="isActive == 'create-vc' || isActive == 'ownership'" (click)="nextStep();"
-                    class="btn  fw-bold float-end bg-color-primary bbg-color-primary-sm px-3 my-2 ml-2 mr-2 text-white">{{'SAVE_AS_DRAFT' | translate}}</button>
+                    class="btn  fw-bold float-end bg-color-primary bg-color-primary-sm px-3 my-2 ml-2 mr-2 text-white">{{'SAVE_AS_DRAFT' | translate}}</button>
                 &nbsp;
             </div>
         </div>
@@ -513,12 +513,12 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="container mt-4">
-                <div class="dialog-box">
+                <div class="dialog-box pt-5 text-center">
                     <h3 class="heading-del">{{'WANT_TO_DELETE' | translate}}</h3>
                     <h3 class="heading-del">{{usecaseSchema[activeMenuNo]?.title}} {{'SCHEMA?' | translate}}</h3>
                     <br>
-                    <button type="button" class="cancelbtn" data-dismiss="modal">{{'NO_CANCEL' | translate}}</button>&nbsp;
-                    <button type="button" class="delbtn" (click)="deleteEntity('', 'delete')" data-dismiss="modal">{{'YES_DELETE' | translate}}</button>
+                    <button type="button" class="bg-color-secondary color-sec common-btn2" data-dismiss="modal">{{'NO_CANCEL' | translate}}</button>&nbsp;
+                    <button type="button" class="bg-color-primary text-white common-btn2" (click)="deleteEntity('', 'delete')" data-dismiss="modal">{{'YES_DELETE' | translate}}</button>
                 </div>
             </div>
         </div>

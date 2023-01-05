@@ -10,55 +10,53 @@
 /* Importing Bootstrap SCSS file. */
 
 @import "~bootstrap/scss/bootstrap";
-
 @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
-:root{
+:root {
 
   //For light colors
-    --primaryColorGreen:#0098AB;
-    --primaryColorBlue:#1987B6;
-    --primaryColorGrey:#1B2124;
-    --primaryColorBlack:#000000;
-    --greyColorOne:#8D9091;
-    --greyColorTwo:#CCCCCC;
-    --greyColorThree:#EFEFEF;
-    --greyColorFour:#F6F8FC;
-    --whiteColor:#FFFFFF;
-    --secondaryColorNavy:#191489;
-    --secondaryColorRed:#C5292A;
-    --secondaryColorYellow:#FFD965;
-    --secondaryColorLightBlue:#A6D4FF;
-    --secondaryColorGreen:#22B02E;
-    --backgroundColorGrey:#E1E1E1;
-    --lightColorbtn:#E8F3F8;
-    --cardColor:#FFFFFF;
-    --textColor:#000000;
-    --primaryColor: #1987b6;
+  --primaryColorGreen: #0098AB;
+  --primaryColorBlue: #1987B6;
+  --primaryColorGrey: #1B2124;
+  --primaryColorBlack: #000000;
+  --greyColorOne: #8D9091;
+  --greyColorTwo: #CCCCCC;
+  --greyColorThree: #EFEFEF;
+  --greyColorFour: #F6F8FC;
+  --whiteColor: #FFFFFF;
+  --secondaryColorNavy: #191489;
+  --secondaryColorRed: #C5292A;
+  --secondaryColorYellow: #FFD965;
+  --secondaryColorLightBlue: #A6D4FF;
+  --secondaryColorGreen: #22B02E;
+  --backgroundColorGrey: #E1E1E1;
+  --lightColorbtn: #E8F3F8;
+  --cardColor: #FFFFFF;
+  --textColor: #000000;
+  --primaryColor: #1987b6;
+  --stepList: #d3d3d3;
 
   //for dark colors
 
-  --darkprimaryColorGreen:#0098AB;
-  --darkprimaryColorBlue:#1987B6;
-  --darkprimaryColorGrey:#1B2124;
-  --darkprimaryColorBlack:#000000;
-  --darkgreyColorOne:#8D9091;
-  --darkgreyColorTwo:#CCCCCC;
-  --darkgreyColorThree:#EFEFEF;
-  --darkgreyColorFour:#F6F8FC;
-  --darkwhiteColor:#FFFFFF;
-  --darksecondaryColorNavy:#191489;
-  --darksecondaryColorRed:#C5292A;
-  --darksecondaryColorYellow:#FFD965;
-  --darksecondaryColorLightBlue:#A6D4FF;
-  --darksecondaryColorGreen:#22B02E;
-  --darklightColorbtn:#E8F3F8;
-  
-
+  --darkprimaryColorGreen: #0098AB;
+  --darkprimaryColorBlue: #1987B6;
+  --darkprimaryColorGrey: #1B2124;
+  --darkprimaryColorBlack: #000000;
+  --darkgreyColorOne: #8D9091;
+  --darkgreyColorTwo: #CCCCCC;
+  --darkgreyColorThree: #EFEFEF;
+  --darkgreyColorFour: #F6F8FC;
+  --darkwhiteColor: #FFFFFF;
+  --darksecondaryColorNavy: #191489;
+  --darksecondaryColorRed: #C5292A;
+  --darksecondaryColorYellow: #FFD965;
+  --darksecondaryColorLightBlue: #A6D4FF;
+  --darksecondaryColorGreen: #22B02E;
+  --darklightColorbtn: #E8F3F8;
 }
 
 /****************** Body ******************/
-
-html, body {
+html,
+body {
   margin: 0;
   font-family: "Lato", sans-serif !important;
   color: rgb(0, 0, 0);
@@ -69,21 +67,15 @@ html, body {
 
 
 /*******************************Component Based*************************************/
-
-a{
-  color:#8D9091;
+//anchor check
+a {
+  color: #8D9091;
 }
-
-
-
 .wrap {
   width: 130px !important;
   height: 190px !important;
   overflow: hidden;
 }
-
-
-
 .templateThumb {
   border: 1px solid #d7d5d5;
   box-sizing: border-box;
@@ -92,10 +84,10 @@ a{
   display: flex;
   gap: 15px;
 }
-
 .desc {
   height: 90px;
 }
+
 /* Move the textarea in front of the result */
 /* Paragraphs; First Image */
 p code {
@@ -103,17 +95,20 @@ p code {
   background-color: #eee;
   color: #111;
 }
+
 /*  grapesjs: start*/
 .gjs-cv-canvas {
   top: 0;
   width: 100%;
   height: 100%;
 }
+
 .gjs-block {
   width: auto;
   height: auto;
   min-height: auto;
 }
+
 /* grapesjs : end*/
 
 .modal-content {
@@ -121,40 +116,36 @@ p code {
   height: 425px;
   margin: 10% 30%;
 }
+
 .box {
   float: left;
   margin-right: 10px;
 }
+
 .prevBtn {
   margin: 1px 0 -2px 20px;
   z-index: 9999;
   position: absolute;
 }
+
 .templateThumb {
   box-sizing: border-box;
   margin: 4px 0 2px 2px;
 }
 
-.text-color{
+.text-color {
   color: var(--textColor) !important;
 }
 
-.card{
+.card {
   background-color: var(--cardColor) !important;
   color: var(--textColor) !important;
 }
 
-.bg-card{
+.bg-card {
   background-color: var(--cardColor) !important;
 
 }
-
-// a {
-//   color: var(--primaryColorBlue) !important;
-//   text-decoration: none; 
-// }
-
-
 //Drop downs used for most components//
 .dropdown-content {
   display: none;
@@ -165,7 +156,6 @@ p code {
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
-
 .dropdown-content a {
   color: black;
   padding: 12px 16px;
@@ -173,17 +163,16 @@ p code {
   display: block;
   font-size: 14px;
 }
-
 .dropdown-content a:hover {
   background-color: #f1f1f1;
 }
 .dropdown:hover .dropdown-content {
   display: block;
 }
+
 .dropdown:hover .dropbtn {
   background-color: #3e8e41;
 }
-
 
 /* ---------------------------------------------------
     SIDEBAR STYLE
@@ -191,21 +180,21 @@ p code {
 
 #sidebar.active {
   margin-left: 0;
-   background-color: #7386D5;
+  background-color: #7386D5;
 }
 
 #sidebar ul.components {
-   padding: 10px 0;
+  padding: 10px 0;
 }
 
 
 #sidebar ul li a:hover {
-   color: #7386D5;
-   background: #F6F8FC;
+  color: #7386D5;
+  background: #F6F8FC;
 }
 
-.active-link{
-   color:var(--primaryColorBlue) !important;
+.active-link {
+  color: var(--primaryColorBlue) !important;
 }
 
 /* ---------------------------------------------------
@@ -213,21 +202,57 @@ p code {
 ----------------------------------------------------- */
 
 @media (max-width: 768px) {
-   #sidebar {
-       margin-left: 0;
-   }
+  #sidebar {
+    margin-left: 0;
+  }
 
-   #sidebar.active {
-       margin-left: 0;
-   }
+  #sidebar.active {
+    margin-left: 0;
+  }
 
-   #sidebarCollapse span {
-       display: none;
-   }
+  #sidebarCollapse span {
+    display: none;
+  }
 }
 
-.card-title{
+.card-title {
   color: var(--textColor) !important;
+}
+
+
+.templateThumb {
+  border: 1px solid #d7d5d5;
+  box-sizing: border-box;
+}
+
+.img-hold {
+  display: flex;
+  gap: 15px;
+}
+
+@media (max-width: 768px) {
+  .templateThumb {
+    width: 90px;
+    height: 105px;
+  }
+
+  .Add-set {
+    margin-bottom: 80px;
+  }
+
+  .img-hold {
+    display: flex;
+    gap: 5px;
+  }
+}
+
+//We need thmbCol class
+.thmbCol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 
 .thmbCol2 {
@@ -235,12 +260,14 @@ p code {
   flex-direction: column;
   align-items: center;
 }
+
 .img-ht {
   height: 190px;
   width: 130px;
   background-color: #ffffff;
   border: 1px solid #efefef;
 }
+
 .wrap {
   width: 130px !important;
   height: 190px !important;
@@ -254,32 +281,6 @@ p code {
   transform: scale(0.32, 0.3);
   transform-origin: 0 0;
 }
-
-
-.templateThumb {
-  border: 1px solid #d7d5d5;
-  box-sizing: border-box;
-}
-.img-hold {
-  display: flex;
-  gap: 15px;
-}
-
-
-@media (max-width: 768px) {
-  .templateThumb {
-    width: 90px;
-    height: 105px;
-  }
-  .Add-set {
-    margin-bottom: 80px;
-  }
-  .img-hold {
-    display: flex;
-    gap: 5px;
-  }
-}
-
 
 /* Start - ngx-editor css */
 .collapsible {
@@ -313,18 +314,13 @@ p code {
   font-size: x-small;
   padding: 5px;
 }
-
-
 .ace-jsoneditor .ace_scroller {
   pointer-events: none !important;
 }
-
-
-.h-card{
-    min-height: 570px!important;
-    height: auto;
+.h-card {
+  min-height: 570px !important;
+  height: auto;
 }
-
 #responsive-iframe {
   height: 430%;
   width: 325%;
@@ -332,3 +328,34 @@ p code {
   transform: scale(0.32, 0.3);
   transform-origin: 0 0;
 }
+
+/*  Json Editor : start*/
+.json-editor,
+div.jsoneditor-outer,
+.ace-jsoneditor,
+textarea.jsoneditor-text {
+  min-height: 600px !important;
+  width: 100%;
+}
+.jsoneditor-menu {
+  display: none;
+}
+.mt-6 {
+  margin-top: 6rem !important;
+}
+.jsoneditor {
+  height: 700px !important;
+}
+/*  Json Editor : end */
+
+.btn-bg-grey {
+  background-color: #CCCCCC !important;
+}
+
+/*  Advance editor: start */
+.formcomponents {
+  padding-right: 5px !important;
+  padding-left: 5px !important;
+
+}
+/*  advance editor: End */

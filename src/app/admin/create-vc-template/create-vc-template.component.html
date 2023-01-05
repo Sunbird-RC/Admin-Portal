@@ -1,4 +1,4 @@
-<div id="content" class=" px-4 lh-base">
+<div id="content ht-786" class=" px-4 lh-base">
 
 
   <div>
@@ -9,12 +9,11 @@
       
    
     <div class="card w-100" *ngIf = "isShow1">
-      <div class="m-2 p-3 overflow-auto">
+      <div class="m-5 p-5 overflow-auto">
         <div class="img-hold">
-
           <a href="/add-template/{{usecase}}/{{entityName}}">
             <div class="btn img-ht">
-              <div class="thmbCol2 justify-content-center h-100">
+              <div class="thmbCol">
                   <div class="pt-c">
                     <a href="/add-template/{{usecase}}/{{entityName}}" class="btn submit-button pt-c">
                        <i class="fa fa-plus text-secondary-color pt-c" aria-hidden="true"></i>
@@ -37,7 +36,7 @@
               </div>
             </div>
           </a>
-
+       
           <div class="thmbCol" *ngFor="let item of credTemp; let i=index" >           
             <div class="wrap" >
               <iframe id="iframe{{i}}" class="iframe-container embed-responsive-item iframeCert" ></iframe>

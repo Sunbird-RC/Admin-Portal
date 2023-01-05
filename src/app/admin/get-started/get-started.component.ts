@@ -25,8 +25,8 @@ export class GetStartedComponent implements OnInit {
     this.colorBorder2 = "border2";
 
     if (this.checkbox1 == true && this.checkbox2 == true) {
-      this.colorBorder = "border1";
-      this.colorBorder2 = "border1";
+      this.colorBorder = "border-color-sec";
+      this.colorBorder2 = "border-color-sec";
 
       this.checkEntity();
     }
@@ -37,7 +37,7 @@ export class GetStartedComponent implements OnInit {
   changeEvent1() {
     this.checkbox1 = !this.checkbox1;
     if (this.checkbox1) {
-      this.colorBorder = "border1";
+      this.colorBorder = "border-color-sec";
     } else {
       this.colorBorder = "border2";
     }
@@ -47,7 +47,7 @@ export class GetStartedComponent implements OnInit {
   changeEvent2() {
     this.checkbox2 = !this.checkbox2;
     if (this.checkbox2) {
-      this.colorBorder2 = "border1";
+      this.colorBorder2 = "border-color-sec";
     } else {
       this.colorBorder2 = "border2";
     }

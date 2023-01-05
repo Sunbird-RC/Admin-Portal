@@ -1,38 +1,8 @@
-.wrapper .sidebar {
-  left: 0;
-  padding: 20px 0;
-}
-
-
 .wrapper .sidebar ul li a {
-  display: block;
   padding: 13px 14px;
-  font-size: 16px;
-  border: 1px solid #efefef;
   margin-left: 18px;
   border-right: unset;
   height: 52px;  
-}
-
-
-.fieldBorder {
-  background: #f9f9f9;
-  border: 1px solid #dddddd;
-  border-radius: 4px;
-}
-
-.fieldInput {
-  background: #ffffff;
-  border: 1px solid #efefef;
-  border-radius: 4px;
-}
-
-
-
-.modal-input-field {
-  background: #ffffff;
-  border: 1px solid #efefef;
-  border-radius: 4px;
 }
 
 .modal-dialog-field {
@@ -40,60 +10,23 @@
   margin: 0.75rem auto !important;
 }
 
-
-.dropdown-content {
-  display: none;
-  position: relative;
-  background-color: #f9f9f9;
-  min-width: 100px; // check if needed than use it 
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-  margin: -16px -60px;
-}
-
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-
-.dropdown-content a:hover {
-  background-color: #f1f1f1;
-}
-
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
-
-#stepList {
-  overflow: hidden;
-  color: lightgrey;
-}
-
 #stepList .active {
-  color: #000000;
+  color: var(--textColor) !important;
 }
 
 #stepList li {
   list-style-type: none;
-  font-size: 12px;
   width: 25%;
   float: left;
 }
 
-.fixed-bottom {
-  background-color: #ffffff;
-}
-
 #menu {
   overflow: hidden;
-  color: lightgrey;
+  color:  var(--stepList) !important;
 }
 
 #menu .active {
-  color: #000000;
+  color: var(--textColor) !important;
 }
 
 .activeTab {
@@ -101,14 +34,12 @@
 }
 
 .activeMenu {
-  background: #f6f8fc;
+  background:  var(--greyColorFour) !important;
 }
 
 .table td {
   padding: 7px 0 0 0 !important;
 }
-
-
 
 @media (max-width: 768px) {
   .wrapper .sidebar {
@@ -122,46 +53,4 @@
   }
 }
 
-.btn-holder {
-  display: flex;
-  align-items: center;
-}
 
-.border-white {
-  border: white solid;
-}
-
-/*-----------------------------Delete modal css  --------------------------------------*/
-
-.dialog-box {
-  padding: 10%;
-  text-align: center;
- }
-
-.delbtn {
-  background-color: #1987B6;
-  border: none;
-  color: #FFFFFF;
-  padding: 10px 50px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  margin: 4px 2px;
-  cursor: pointer;
-  border-radius: 20px;
-}
-
-
-.cancelbtn {
-  color: #1987B6;
-  background-color: #cae6f3;
-  //opacity: 0.1;
-  border: none;
-  padding: 10px 50px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  margin: 4px 2px;
-  cursor: pointer;
-  border-radius: 20px;
-}

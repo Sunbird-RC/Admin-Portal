@@ -98,13 +98,14 @@
    </div>
 
    <div class="col-sm-6 col-md-4">
-     <div class="card border-white">
+     <div class="card {{ colorBorder3 }}">
        <div class="ps-4 pb-3 check-ht-wt">
          <input
            class="form-check-input"
            type="checkbox"
-           value=""
            id="OwnershipCheckbox"
+           [checked]="checkbox3"
+           (change)="changeEvent3()"
          />
        </div>
        <label for="OwnershipCheckbox">

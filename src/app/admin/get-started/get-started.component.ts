@@ -11,22 +11,27 @@ import { TranslateService } from '@ngx-translate/core';
 export class GetStartedComponent implements OnInit {
   checkbox1: boolean;
   checkbox2: boolean;
+  checkbox3: boolean;
   chooseEntity: string;
   colorBorder: string;
   colorBorder2: string;
+  colorBorder3: string;
 
-  constructor(public translate: TranslateService) {}
+  constructor(public translate: TranslateService) { }
 
   ngOnInit(): void {
     localStorage.setItem("schemaParams", "");
     this.checkbox1 = true;
     this.checkbox2 = true;
+    this.checkbox3 = false;
     this.colorBorder = "border2";
     this.colorBorder2 = "border2";
+    this.colorBorder3 = "border2";
 
     if (this.checkbox1 == true && this.checkbox2 == true) {
       this.colorBorder = "border-color-sec";
       this.colorBorder2 = "border-color-sec";
+      // this.colorBorder3 = "border1";
 
       this.checkEntity();
     }
@@ -54,19 +59,37 @@ export class GetStartedComponent implements OnInit {
     this.checkEntity();
   }
 
-  checkthebox(){
+  changeEvent3() {
+    this.checkbox3 = !this.checkbox3;
+    if (this.checkbox3) {
+      this.colorBorder3 = "border-color-sec";
+    } else {
+      this.colorBorder3 = "border2";
+    }
+    this.checkEntity();
+  }
+
+  checkthebox() {
     console.log("checked")
   }
 
   checkEntity() {
-    if (this.checkbox1 == true && this.checkbox2 == false) {
-      this.chooseEntity = "atstandclaim";
-    } else if (this.checkbox1 == false && this.checkbox2 == true) {
-      this.chooseEntity = "issuance";
-    } else if (this.checkbox1 == false && this.checkbox2 == false) {
-      this.chooseEntity = "new";
-    } else if (this.checkbox1 == true && this.checkbox2 == true) {
-      this.chooseEntity = "newcombination";
+    if (this.checkbox1 == true && this.checkbox2 == false && this.checkbox3 == false) {
+      this.chooseEntity = "attestmodule";
+    } else if (this.checkbox1 == false && this.checkbox2 == true && this.checkbox3 == false) {
+      this.chooseEntity = "vcmodule";
+    } else if (this.checkbox1 == false && this.checkbox2 == false && this.checkbox3 == true) {
+      this.chooseEntity = "ownershipmodule";
+    } else if (this.checkbox1 == true && this.checkbox2 == true && this.checkbox3 == false) {
+      this.chooseEntity = "attestmodule";
+    } else if (this.checkbox1 == false && this.checkbox2 == true && this.checkbox3 == true) {
+      this.chooseEntity = "vcownershipmodule";
+    } else if (this.checkbox1 == true && this.checkbox2 == false && this.checkbox3 == true) {
+      this.chooseEntity = "attestmodule";
+    } else if (this.checkbox1 == true && this.checkbox2 == true && this.checkbox3 == true) {
+      this.chooseEntity = "attestmodule";
+    } else if (this.checkbox1 == false && this.checkbox2 == false && this.checkbox3 == false) {
+      this.chooseEntity = "newmodule";
     }
   }
 }

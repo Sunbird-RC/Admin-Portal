@@ -12,19 +12,21 @@ export class PublishComponent implements OnInit {
   isShow = false;
   schemaOsid: any;
   publishData: any = [];
+  count: number;
   constructor(private generalService: GeneralService, 
     public translate: TranslateService) { }
 
   ngOnInit(): void {
     this.generalService.getData("/Schema").subscribe((res) => {
+      this.count = 0;
       for (let i = 0; i < res.length; i++) {
-
+        if (res[i]["status"] == 'PUBLISHED') {
+          this.count++;
+        }
         res[i].schema = JSON.parse(res[i].schema);
-        if( !res[i].schema.hasOwnProperty('isRefSchema') &&  !res[i].schema.isRefSchema){
+        if (!res[i].schema.hasOwnProperty('isRefSchema') && !res[i].schema.isRefSchema) {
           this.publishData.push(res[i]);
         }
-
-       
       }
     });
 
@@ -45,6 +47,7 @@ export class PublishComponent implements OnInit {
             console.log(res);
             if (res["params"]["status"] = "SUCCESSFUL") {
               this.publishData[i]["status"] = 'PUBLISHED';
+              this.count++
             }
           },
             (err) => {

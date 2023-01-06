@@ -25,7 +25,6 @@ export class ConfigWorkflowComponent implements OnInit {
   fieldtype = ["String", "Boolean", "Number"]
   global_properties_student = [];
   global_tempName_student = "";
-  name = 'Angular';
   workflowForm: FormGroup;
   attestationForm: FormGroup;
   values = [];

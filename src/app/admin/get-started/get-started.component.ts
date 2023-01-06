@@ -74,20 +74,14 @@ export class GetStartedComponent implements OnInit {
   }
 
   checkEntity() {
-    if (this.checkbox1 == true && this.checkbox2 == false && this.checkbox3 == false) {
+    if (this.checkbox1 == true) {
       this.chooseEntity = "attestmodule";
     } else if (this.checkbox1 == false && this.checkbox2 == true && this.checkbox3 == false) {
       this.chooseEntity = "vcmodule";
     } else if (this.checkbox1 == false && this.checkbox2 == false && this.checkbox3 == true) {
       this.chooseEntity = "ownershipmodule";
-    } else if (this.checkbox1 == true && this.checkbox2 == true && this.checkbox3 == false) {
-      this.chooseEntity = "attestmodule";
-    } else if (this.checkbox1 == false && this.checkbox2 == true && this.checkbox3 == true) {
+    }  else if (this.checkbox1 == false && this.checkbox2 == true && this.checkbox3 == true) {
       this.chooseEntity = "vcownershipmodule";
-    } else if (this.checkbox1 == true && this.checkbox2 == false && this.checkbox3 == true) {
-      this.chooseEntity = "attestmodule";
-    } else if (this.checkbox1 == true && this.checkbox2 == true && this.checkbox3 == true) {
-      this.chooseEntity = "attestmodule";
     } else if (this.checkbox1 == false && this.checkbox2 == false && this.checkbox3 == false) {
       this.chooseEntity = "newmodule";
     }

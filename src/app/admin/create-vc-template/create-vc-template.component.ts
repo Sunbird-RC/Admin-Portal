@@ -76,7 +76,7 @@ export class CreateVcTemplateComponent implements OnInit, OnChanges {
       if (this.params.hasOwnProperty('usecase')) {
         this.usecase = params.usecase;
         this.usecase = params.usecase;
-        if (this.usecase == 'attestmodule') {
+        if (this.usecase == 'vcmodule') {
           this.isShow1 = true;
           this.isShow2 = true;
         }

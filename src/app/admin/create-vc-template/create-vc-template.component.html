@@ -11,13 +11,6 @@
     <div class="card w-100 min-ht" *ngIf = "isShow1">
       <div class="ml-1 p-3 w-100">
         <div class="img-hold">
-          <div class="thmbCol" *ngFor="let item of credTemp; let i=index" > 
-            <div class="wrap">
-              <iframe id="iframe{{i}}" class="iframe-container embed-responsive-item iframeCert" ></iframe>
-            </div>
-            <div class="l12 fw-bold">{{item?.title}}</div>  
-          </div> 
-        
           <div class="btn wrap border-grey">
             <div class="thmbCol">
                 <div class="pt-c">
@@ -41,6 +34,12 @@
               </div>
             </div>
           </div>
+          <div class="thmbCol" *ngFor="let item of credTemp; let i=index" > 
+            <div class="wrap">
+              <iframe id="iframe{{i}}" class="iframe-container embed-responsive-item iframeCert" ></iframe>
+            </div>
+            <div class="l12 fw-bold">{{item?.title}}</div>  
+          </div> 
         </div>
    
       </div>

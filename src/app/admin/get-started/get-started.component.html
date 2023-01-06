@@ -75,13 +75,13 @@
    </div>
 
    <div class="col-sm-6 col-md-4">
-     <div class="card {{ VCcheckboxBorder }}">
+     <div class="card {{ vcCheckboxBorder }}">
        <div class="ps-4 pb-3 check-ht-wt">
          <input
            class="form-check-input"
            type="checkbox"
            id="VerifiableCredentialCheckbox"
-           [checked]="VerifiableCredentialCheckbox"
+           [checked]="verifiableCredentialCheckbox"
            (change)="changeEvent2()"
          />
        </div>
@@ -98,13 +98,13 @@
    </div>
 
    <div class="col-sm-6 col-md-4">
-     <div class="card {{ OwnershipCheckboxBorder }}">
+     <div class="card {{ ownershipCheckboxBorder }}">
        <div class="ps-4 pb-3 check-ht-wt">
          <input
            class="form-check-input"
            type="checkbox"
            id="OwnershipCheckbox"
-           [checked]="OwnershipCheckbox"
+           [checked]="ownershipCheckbox"
            (change)="changeEvent3()"
          />
        </div>

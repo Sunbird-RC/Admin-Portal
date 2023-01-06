@@ -9,24 +9,22 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ["./get-started.component.scss"],
 })
 export class GetStartedComponent implements OnInit {
-  checkbox1: boolean;
-  checkbox2: boolean;
+  attestationCheckbox: boolean =true;
+  verifiableCredentialCheckbox: boolean = true;
+  ownershipCheckbox: boolean = false;
   chooseEntity: string;
-  colorBorder: string;
-  colorBorder2: string;
+  attestationCheckboxBorder: string;
+  vcCheckboxBorder: string;
+  ownershipCheckboxBorder: string;
 
-  constructor(public translate: TranslateService) {}
+  constructor(public translate: TranslateService) { }
 
   ngOnInit(): void {
     localStorage.setItem("schemaParams", "");
-    this.checkbox1 = true;
-    this.checkbox2 = true;
-    this.colorBorder = "border2";
-    this.colorBorder2 = "border2";
-
-    if (this.checkbox1 == true && this.checkbox2 == true) {
-      this.colorBorder = "border-color-sec";
-      this.colorBorder2 = "border-color-sec";
+      
+    if (this.attestationCheckbox == true && this.verifiableCredentialCheckbox == true) {
+      this.attestationCheckboxBorder = "border-color-sec";
+      this.vcCheckboxBorder = "border-color-sec";
 
       this.checkEntity();
     }
@@ -35,38 +33,40 @@ export class GetStartedComponent implements OnInit {
   status: boolean = false;
 
   changeEvent1() {
-    this.checkbox1 = !this.checkbox1;
-    if (this.checkbox1) {
-      this.colorBorder = "border-color-sec";
+    this.attestationCheckbox = !this.attestationCheckbox;
+    if (this.attestationCheckbox) {
+      this.attestationCheckboxBorder = "border-color-sec";
     } else {
-      this.colorBorder = "border2";
+      this.attestationCheckboxBorder = "border-color-pri";
     }
     this.checkEntity();
   }
 
   changeEvent2() {
-    this.checkbox2 = !this.checkbox2;
-    if (this.checkbox2) {
-      this.colorBorder2 = "border-color-sec";
+    this.verifiableCredentialCheckbox = !this.verifiableCredentialCheckbox;
+    if (this.verifiableCredentialCheckbox) {
+      this.vcCheckboxBorder = "border-color-sec";
     } else {
-      this.colorBorder2 = "border2";
+      this.vcCheckboxBorder = "border-color-pri";
     }
     this.checkEntity();
   }
 
-  checkthebox(){
-    console.log("checked")
+  changeEvent3() {
+    this.ownershipCheckbox = !this.ownershipCheckbox;
+    if (this.ownershipCheckbox) {
+      this.ownershipCheckboxBorder = "border-color-sec";
+    } else {
+      this.ownershipCheckboxBorder = "border-color-pri";
+    }
+    this.checkEntity();
   }
 
-  checkEntity() {
-    if (this.checkbox1 == true && this.checkbox2 == false) {
-      this.chooseEntity = "atstandclaim";
-    } else if (this.checkbox1 == false && this.checkbox2 == true) {
-      this.chooseEntity = "issuance";
-    } else if (this.checkbox1 == false && this.checkbox2 == false) {
-      this.chooseEntity = "new";
-    } else if (this.checkbox1 == true && this.checkbox2 == true) {
-      this.chooseEntity = "newcombination";
-    }
+   checkEntity(){
+    return this.attestationCheckbox ? this.chooseEntity = "attestmodule"
+         : this.verifiableCredentialCheckbox && !this.ownershipCheckbox ? this.chooseEntity = "vcmodule"
+         : this.ownershipCheckbox && !this.verifiableCredentialCheckbox ? this.chooseEntity = "ownershipmodule" 
+         : this.verifiableCredentialCheckbox && this.ownershipCheckbox ? this.chooseEntity = "vcownershipmodule"
+         : this.chooseEntity = "newmodule" ;
   }
 }

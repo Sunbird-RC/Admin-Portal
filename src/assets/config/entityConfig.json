@@ -107,24 +107,8 @@
                 "schemaUrl": "/assets/schemas/divoc/Vaccinator.json"
             }]
         },
-        "new": {
-            "name": "",
-            "commonField" : "",
-            "steps" : [
-                {
-                    "title" : "Create Schema",
-                    "key" : "createSchema"
-                },
-               
-                {
-                    "title" : "Publish",
-                    "key" : "test-publish"
-                }
-            ],
-            "entity": []
-        },
-        "atstandclaim": {
-            "name": "attesatation",
+        "attestmodule": {
+            "name": "attestmodule",
             "commonField" : "",
             "steps" : [
                 {
@@ -139,7 +123,10 @@
                     "title" : "Create VC template",
                     "key" : "create-vc"
                 },
-               
+                {
+                    "title" : "Ownership",
+                    "key" : "ownership"
+                },  
                 {
                     "title" : "Publish",
                     "key" : "test-publish"
@@ -147,8 +134,8 @@
             ],
             "entity": []
         },
-        "newcombination": {
-            "name": "newcombination",
+        "vcmodule": {
+            "name": "vcmodule",
             "commonField" : "",
             "steps" : [
                 {
@@ -156,14 +143,66 @@
                     "key" : "createSchema"
                 },
                 {
-                    "title" : "Configure Workflow",
-                    "key" : "configurations"
+                    "title" : "Create VC template",
+                    "key" : "create-vc"
+                },               
+                {
+                    "title" : "Publish",
+                    "key" : "test-publish"
+                }
+            ],
+            "entity": []
+        },
+        "ownershipmodule": {
+            "name": "ownership",
+            "commonField" : "",
+            "steps" : [
+                {
+                    "title" : "Create Schema",
+                    "key" : "createSchema"
+                },
+                {
+                    "title" : "Ownership",
+                    "key" : "ownership"
+                },
+                {
+                    "title" : "Publish",
+                    "key" : "test-publish"
+                }
+            ],
+            "entity": []
+        },
+        "vcownershipmodule": {
+            "name": "vcownershipmodule",
+            "commonField" : "",
+            "steps" : [
+                {
+                    "title" : "Create Schema",
+                    "key" : "createSchema"
                 },
                 {
                     "title" : "Create VC template",
                     "key" : "create-vc"
+                },  
+                {
+                    "title" : "Ownership",
+                    "key" : "ownership"
                 },
-               
+                {
+                    "title" : "Publish",
+                    "key" : "test-publish"
+                }
+            ],
+            "entity": []
+        },
+        "newmodule": {
+            "name": "newmodule",
+            "commonField" : "",
+            "steps" : [
+                {
+                    "title" : "Create Schema",
+                    "key" : "createSchema"
+                },              
                 {
                     "title" : "Publish",
                     "key" : "test-publish"

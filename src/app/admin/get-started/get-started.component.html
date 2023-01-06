@@ -51,14 +51,14 @@
  </div>
  <div  class="row justify-content-center align-items-center check-container mt-3 mb-4" >
    <div class="col-sm-6 col-md-4">
-     <div class="card {{ colorBorder }}">
+     <div class="card {{ attestationCheckboxBorder }}">
        <div class="ps-4 pb-3 check-ht-wt">
          <input
-           class="form-check-input border-grey-2 op-1 w-24 h-24"
+           class="form-check-input"
            type="checkbox"
            id="attestationCheckbox"
            name="example2"
-           [checked]="checkbox1"
+           [checked]="attestationCheckbox"
            (change)="changeEvent1()"
          />
        </div>
@@ -75,13 +75,13 @@
    </div>
 
    <div class="col-sm-6 col-md-4">
-     <div class="card {{ colorBorder2 }}">
+     <div class="card {{ vcCheckboxBorder }}">
        <div class="ps-4 pb-3 check-ht-wt">
          <input
            class="form-check-input"
            type="checkbox"
            id="VerifiableCredentialCheckbox"
-           [checked]="checkbox2"
+           [checked]="verifiableCredentialCheckbox"
            (change)="changeEvent2()"
          />
        </div>
@@ -98,13 +98,14 @@
    </div>
 
    <div class="col-sm-6 col-md-4">
-     <div class="card border-white">
+     <div class="card {{ ownershipCheckboxBorder }}">
        <div class="ps-4 pb-3 check-ht-wt">
          <input
            class="form-check-input"
            type="checkbox"
-           value=""
            id="OwnershipCheckbox"
+           [checked]="ownershipCheckbox"
+           (change)="changeEvent3()"
          />
        </div>
        <label for="OwnershipCheckbox">

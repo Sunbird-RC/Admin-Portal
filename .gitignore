@@ -48,3 +48,4 @@ testem.log
 Thumbs.db
 .angular
 db-data
+package-lock.json

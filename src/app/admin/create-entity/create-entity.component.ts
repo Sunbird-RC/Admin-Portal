@@ -176,7 +176,7 @@ export class CreateEntityComponent implements OnInit {
 
         if (i == (res.length - 1)) {
           this.getEntityProperties();
-          if(!this.containCommonField){
+          if (!this.containCommonField) {
             this.usecaseSchema.unshift(this.schemaBodyService.commonSchemaBody());
           }
           if (!this.params.entity) {
@@ -528,7 +528,7 @@ export class CreateEntityComponent implements OnInit {
       }
 
 
-     
+
     } else {
       return {};
     }
@@ -985,7 +985,7 @@ export class CreateEntityComponent implements OnInit {
     }
 
     this.actionIs = action;
-   
+
   }
 
   openEntity(index, entitykey) {
@@ -1108,8 +1108,8 @@ export class CreateEntityComponent implements OnInit {
         this.usecaseSchema.splice(this.index, 1);
 
         this.index = (this.index >= this.usecaseSchema.length) ? (this.index - 1) : this.index;
-       this.changeActiveMenu(this.index);
-       
+        this.changeActiveMenu(this.index);
+
       }
 
     }
@@ -1289,7 +1289,7 @@ export class CreateEntityComponent implements OnInit {
 
         data = tempjson1;
         let visiblityIs;
-        if (!this.usecaseSchema[this.activeMenuNo].hasOwnProperty('isRefSchema') && !this.usecaseSchema[this.activeMenuNo].isRefSchema) {
+        if (!this.usecaseSchema[this.activeMenuNo].hasOwnProperty('isRefSchema') && this.privateFields.hasOwnProperty(this.activeMenuNo)) {
           visiblityIs = (!(this.privateFields[this.activeMenuNo]).length && !(this.internalFields[this.activeMenuNo]).length) ? this.setPVisibility() : this.checkVisibility();
         } else {
           visiblityIs = 'public';
@@ -1469,12 +1469,12 @@ export class CreateEntityComponent implements OnInit {
     if (this.isActive == 'createSchema') {
       let tempProperty: any;
       tempProperty = this.usecaseSchema;
-     for (let i = 0; i < this.usecaseSchema.length; i++) {
+      for (let i = 0; i < this.usecaseSchema.length; i++) {
 
         tempProperty[i].definitions = this.convertIntoSBRCSchema(this.usecaseSchema[i].definitions);
-       let cJson = this.convertIntoSBRCSchema(this.usecaseSchema[i].definitions);
-    
-     }
+        let cJson = this.convertIntoSBRCSchema(this.usecaseSchema[i].definitions);
+
+      }
 
     }
   }
@@ -1484,7 +1484,7 @@ export class CreateEntityComponent implements OnInit {
 
     let errArr = [];
     let tempProperty: any;
-  
+
     tempProperty = this.usecaseSchema;
 
     for (let i = 0; i < this.usecaseSchema.length; i++) {
@@ -1520,8 +1520,8 @@ export class CreateEntityComponent implements OnInit {
         }
 
         if (!this.isNew) {
-        this.usecaseSchema[i].osid = osid;
-        this.usecaseSchema[i].status = this.isStatus;
+          this.usecaseSchema[i].osid = osid;
+          this.usecaseSchema[i].status = this.isStatus;
         }
 
         if (this.isNew) {
@@ -1533,16 +1533,17 @@ export class CreateEntityComponent implements OnInit {
               if (!index) {
                 this.nextStep();
               }
+            } else if (i == this.usecaseSchema.length - 1) {
+              this.showErrMsg(errArr);
             }
           }, (err) => {
             errArr.push(this.usecaseSchema[i].title);
             if (i == this.usecaseSchema.length - 1) {
-              this.getEntityProperties();
-              this.toastMsg.error('error', errArr + " name schema already exists, please rename ");
+              this.showErrMsg(errArr);
             }
           })
         } else if (this.isStatus != 'PUBLISHED') {
-        
+
           this.generalService.putData('/Schema', osid, payload).subscribe((res) => {
 
             if (i == this.usecaseSchema.length - 1 && !errArr.length) {
@@ -1550,6 +1551,8 @@ export class CreateEntityComponent implements OnInit {
               if (!index) {
                 this.nextStep();
               }
+            } else if (i == this.usecaseSchema.length - 1) {
+              this.showErrMsg(errArr);
             }
           }, (err) => {
             errArr.push(this.usecaseSchema[i].title);
@@ -1559,9 +1562,7 @@ export class CreateEntityComponent implements OnInit {
               console.log('err ----', err);
             } else {
               if (i == this.usecaseSchema.length - 1) {
-                this.getEntityProperties();
-
-                this.toastMsg.error('error', errArr + " name schema already exists, please rename ");
+                this.showErrMsg(errArr);
               }
             }
           })
@@ -1575,6 +1576,12 @@ export class CreateEntityComponent implements OnInit {
         }
       }
     }
+  }
+
+
+  showErrMsg(errArr) {
+    this.getEntityProperties();
+    this.toastMsg.error('error', errArr + " name schema already exists, please rename ");
   }
 
 
@@ -1796,15 +1803,15 @@ export class CreateEntityComponent implements OnInit {
     this.location.back();
   }
 
-  space(event:any){
+  space(event: any) {
 
-    if (event.target.selectionStart === 0 && event.code === 'Space'){
+    if (event.target.selectionStart === 0 && event.code === 'Space') {
       event.preventDefault();
     }
   }
 
 
-  changeActiveMenu(index){
+  changeActiveMenu(index) {
     setTimeout(() => {
       this.openEntity(index, this.usecaseSchema[index].title);
     }, 700);

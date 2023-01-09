@@ -357,7 +357,12 @@ textarea.jsoneditor-text {
 /*  Advance editor: start */
 .formcomponents {
   padding-right: 5px !important;
-  padding-left: 5px !important;
+  padding-left: 15px !important;
+}
+
+/*  Advance editor: start */
+.formcomponents .formcomponent {
+  padding: 12px !important;
 }
 
 .btn-primary {

@@ -96,7 +96,7 @@ export class ConfigWorkflowComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.patchValueData();
+   // this.patchValueData();
 
 
     this.entityName = this.activeRoute.snapshot.params.entity;
@@ -114,7 +114,7 @@ export class ConfigWorkflowComponent implements OnInit {
         selectedMenuList = this.fieldList.find((e) => e[this.entityName]);
       }
 
-      this.onChangeSelect(this.entityName);
+    //  this.onChangeSelect(this.entityName);
     });
   }
 

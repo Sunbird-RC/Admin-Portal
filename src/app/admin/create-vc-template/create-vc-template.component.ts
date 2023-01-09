@@ -91,6 +91,8 @@ export class CreateVcTemplateComponent implements OnInit, OnChanges {
         else if (this.usecase == 'education') {
           this.isShow1 = true;
           this.isShow2 = false;
+        }else{
+          this.isShow1 = true;
         }
       }
 

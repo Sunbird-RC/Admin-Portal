@@ -20,17 +20,17 @@
 </header>
 
 <div id="schemaEntity" class="container-fluid mt-0 ml-12" >
-    <div class="row bg-grey-4 ht-786" *ngIf="!isAddFormPg">
+    <div class="row bg-grey-4" *ngIf="!isAddFormPg">
         <div class="col-md-3 p-0" *ngIf="isActive != 'test-publish' ">
             <div class="wrapper">
                 <!--Top menu -->
-                <div id="sideMenu" class="sidebar bg-white ht-786 border-end zi-1 w-90-p pt-4 pb-1" >
+                <div id="sideMenu" class="sidebar bg-white h-100 border-end border-bottom zi-1 w-90-p pt-4 pb-1 mb-5" >
                     <ul class="list-unstyled" *ngIf="isActive == 'createSchema'">
                         <!-- <p class="fs-16fw-bold pl-3 text-uppercase">Common </p> -->
                         <ng-template ngFor let-menuItem [ngForOf]="usecaseSchema" let-i="index">
 
                             <li class="menu" *ngIf="menuItem['isRefSchema']" (click)="openEntity(i, menuItem?.title)">
-                                <a class="a-menu text-color fs-16 d-block border-grey-3"> Common Schema
+                                <a class="a-menu text-color fs-16 d-block border-grey-3" role="button"> Common Schema
 
                                     <div *ngIf="isActive == 'createSchema' && menuItem['status'] != 'PUBLISHED'"
                                         class="dropdown fs-14 float-end">
@@ -52,7 +52,7 @@
                     <ul class="list-unstyled components">
                         <ng-template ngFor let-menuItem [ngForOf]="usecaseSchema" let-i="index">
                             <li class="menu my-3" *ngIf="!menuItem['isRefSchema']" (click)="openEntity(i, menuItem?.title)">
-                                <a class="a-menu text-color fs-16 d-block border-grey-3" [class.selected]=" menuItem?.title === usecaseSchema[i].title" (click)="onSelect(menuItem?.title);"> {{menuItem?.title}} 
+                                <a class="a-menu text-color fs-16 d-block border-grey-3" role="button" [class.selected]=" menuItem?.title === usecaseSchema[i].title" (click)="onSelect(menuItem?.title);"> {{menuItem?.title}} 
                                     <div *ngIf="isActive == 'createSchema' && menuItem['status'] != 'PUBLISHED'"
                                         class="dropdown fs-14 float-end">
                                         <i class="fa fa-ellipsis-h text-grey-color" aria-hidden="true"></i>

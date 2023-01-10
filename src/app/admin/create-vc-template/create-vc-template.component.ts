@@ -159,7 +159,7 @@ export class CreateVcTemplateComponent implements OnInit, OnChanges {
 
 
   injectHTML() {
-    console.log(this.credTemp)
+
     setTimeout(() => {
       for (let i = 0; i < this.credTemp.length; i++) {
         let iframe: HTMLIFrameElement = document.getElementById('iframe' + i) as HTMLIFrameElement;

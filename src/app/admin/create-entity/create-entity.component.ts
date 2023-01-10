@@ -1089,7 +1089,7 @@ export class CreateEntityComponent implements OnInit {
 
 
   deleteEntity(i, action) {
-    if (i) {
+    if (i || !action) {
       this.deleteingOsid = (this.usecaseSchema[i].osid) ? this.usecaseSchema[i].osid : '';
       this.index = i;
     }

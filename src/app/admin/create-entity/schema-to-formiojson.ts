@@ -118,9 +118,9 @@ export class FormioJsonService {
             compJson.components.push(compJsonS);
           }else{
             let compJsonS = {
-              "label": fieldData.propertyName,
+              "label": fieldData.data[i].propertyName,
               "tableView": false,
-              "key": fieldData.propertyKey,
+              "key": fieldData.data[i].propertyKey,
               "type": "container",
               "input": true,
               "components": []

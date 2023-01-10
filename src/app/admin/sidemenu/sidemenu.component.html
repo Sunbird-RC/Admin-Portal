@@ -9,7 +9,7 @@
             <li class="menu" class="active-link" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">
                 <a class="a-menu fs-14 p-3  d-block" routerLink="/#"><b>{{'DASHBOARD' | translate}}</b></a>
             </li>
-            <li class="menu" routerLinkActive="active-link"  *ngIf="items.length">
+            <li class="menu" routerLinkActive="active-link"  *ngIf="isSchemaCreated">
                 <a class="a-menu fs-14 p-3  d-block" routerLink="/schema"><b>{{'SCHEMA' | translate}}</b></a>
             </li>
             <li class="menu" routerLinkActive="active-link">
@@ -45,10 +45,10 @@
         <div class="text-center mt-5" *ngIf="isLoading">
             <sa-spinner-circular-fixed [size]="54" [thickness]="79" [speed]="67" color="rgba(57, 80, 172, 1)" secondaryColor="rgba(172, 57, 57, 0)" ></sa-spinner-circular-fixed>          
         </div>
-        <div *ngIf="!items.length ">
+        <div *ngIf="!isSchemaCreated ">
             <get-started></get-started>
         </div>
-        <div *ngIf="items.length && !isLoading"> 
+        <div *ngIf="isSchemaCreated && !isLoading"> 
             <configurations [schemaItems]="items"></configurations>
         </div>
        

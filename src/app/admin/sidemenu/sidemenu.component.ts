@@ -20,6 +20,7 @@ activeMenu: string = '';
   currentMenu: number = 0;
   items = [];
   isLoading : boolean = true;
+  isSchemaCreated: boolean = false;
 constructor(
   private activeRoute: ActivatedRoute,
   private generalService: GeneralService,
@@ -53,6 +54,7 @@ constructor(
       if(typeof(res[i].schema)== 'string')
       {
         res[i].schema = JSON.parse(res[i].schema);
+        this.isSchemaCreated = true;
 
         if( !res[i].schema.hasOwnProperty('isRefSchema') &&  !res[i].schema.isRefSchema){
           this.items.push(res[i]);

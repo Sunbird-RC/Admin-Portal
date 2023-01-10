@@ -115,6 +115,8 @@ export class CreateEntityComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.commonSchemaField = [];
+    localStorage.setItem('commonSchema', "[]");
 
     this.editorOptions = new JsonEditorOptions();
     this.editorOptions.mode = 'code';

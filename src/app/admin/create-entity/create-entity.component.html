@@ -23,8 +23,8 @@
     <div class="row bg-grey-4" *ngIf="!isAddFormPg">
         <div class="col-md-3 p-0" *ngIf="isActive != 'test-publish' ">
             <div class="wrapper">
-                <!--Top menu -->
-                <div id="sideMenu" class="sidebar bg-white h-100 border-end border-bottom zi-1 w-90-p pt-4 pb-1 mb-5" >
+                <!--Top menu -->               
+                <div id="sideMenu" class="sidebar bg-white ht-100 border-end border-bottom zi-1 w-90-p pt-4 pb-1 mb-5" >
                     <ul class="list-unstyled" *ngIf="isActive == 'createSchema'">
                         <!-- <p class="fs-16fw-bold pl-3 text-uppercase">Common </p> -->
                         <ng-template ngFor let-menuItem [ngForOf]="usecaseSchema" let-i="index">
@@ -81,7 +81,7 @@
                     </ul>
 
                 </div>
-
+                
             </div>
 
         </div>
@@ -381,20 +381,17 @@
             <div *ngIf="isActive == 'configurations'">
                 <config-workflow [usecaseSchema]="usecaseSchemaData"></config-workflow>
             </div>
-
-
-
             <div *ngIf="isActive =='create-vc'">
                 <create-vc-template [usecaseSchema]="usecaseSchemaData"></create-vc-template>
             </div>
-
             <div *ngIf="isActive == 'ownership'">
                 <ownership></ownership>
             </div>
             <div *ngIf="isActive == 'test-publish'">
+               <div class="ht-100">
                 <publish></publish>
+             </div>
             </div>
-
 
         </div>
     </div>
@@ -403,7 +400,6 @@
         <add-field-form [jsonSchema]="compFieldJson" [commonSchema]="commonSchemaField"
             (newItemEvent)="jsonSchemaData($event)" (backEvent)="goBackEvent($event)"></add-field-form>
     </div>
-
 
     <!-- Modal Start : Save Entity Name -->
     <div class="modal right fade" id="addEntity" tabindex="-1" role="dialog" aria-labelledby="addEntity">
@@ -429,7 +425,6 @@
                             class="w-100 desc input-field bg-card br-4 border-grey-3d fs-14 pl-3 inputField"></textarea>
                         <span class="l12 text-grey-color">{{'DESCRIPTION_ABOUT_SCHEMA' | translate}}</span>
                     </div>
-
 
                     <div class="mt-4">
                         <button data-dismiss="modal" aria-label="Close"

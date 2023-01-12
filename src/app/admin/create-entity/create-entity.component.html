@@ -387,10 +387,8 @@
             <div *ngIf="isActive == 'ownership'">
                 <ownership></ownership>
             </div>
-            <div *ngIf="isActive == 'test-publish'">
-               <div class="ht-100">
-                <publish></publish>
-             </div>
+            <div class="ht-100" *ngIf="isActive == 'test-publish'"> 
+                <publish></publish>           
             </div>
 
         </div>

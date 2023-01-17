@@ -193,6 +193,7 @@ export class CreateEntityComponent implements OnInit {
   getSchema() {
     this.usecaseSchema = [];
     this.generalService.getData('/Schema').subscribe((res) => {
+      
       if (res) {
         this.schemaService.getEntitySchemaJSON().subscribe((data) => {
           this.processSteps = data['usecase']['education']['steps'];
@@ -1232,9 +1233,7 @@ export class CreateEntityComponent implements OnInit {
 
         let requiredSecFields = [];
         for (let j = 0; j < formioJson[i].components.length; j++) {
-          if (formioJson[i].components[j].validate.required) {
-            requiredSecFields.push(formioJson[i].components[j].key);
-          }
+                     requiredSecFields.push(formioJson[i].components[j].key);
         }
 
 

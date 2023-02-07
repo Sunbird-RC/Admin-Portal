@@ -118,24 +118,22 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-
-
                                     <!-- <ng-template ngFor let-field [ngForOf]="usecaseSchema[activeMenuNo]?.definitions" let-i="index"> -->
-                                    <ng-template
-                                        [ngIf]="usecaseSchema[activeMenuNo]?.definitions?.type == 'array' || usecaseSchema[activeMenuNo]?.definitions?.type == 'object'"
-                                        class="p-4">
-                                        <!-- <p class="mt-3 fw-bold">
-                                            {{usecaseSchema[activeMenuNo]?.definitions?.propertyName}}
-                                        </p> -->
-
-
+                                        <ng-template
+                                            [ngIf]="usecaseSchema[activeMenuNo]?.definitions?.type == 'array' || usecaseSchema[activeMenuNo]?.definitions?.type == 'object' || usecaseSchema[activeMenuNo]?.type == 'object' || usecaseSchema[activeMenuNo]?.type == 'array' "
+                                            class="p-4">
+                                            <!-- <p class="mt-3 fw-bold">
+                                                {{usecaseSchema[activeMenuNo]?.definitions?.propertyName}}
+                                            </p> -->
+                                            
                                         <ng-template ngFor let-field
                                             [ngForOf]="usecaseSchema[activeMenuNo]?.definitions?.data || usecaseSchema[activeMenuNo]?.definitions?.propertyKey" let-j="index">
-
+                                           
                                             <ng-template [ngIf]="field?.type == 'array' || field?.type == 'object'">
                                                 <p class="mt-3 fw-bold p-2">
                                                     {{field?.propertyName}}
                                                 </p>
+                                               
                                                 <ng-template ngFor let-secArrayfield [ngForOf]="field?.data"
                                                     let-k="index">
 
@@ -143,19 +141,16 @@
                                                         [ngIf]="secArrayfield?.type == 'array' || secArrayfield?.type == 'object'">
                                                         <p class="mt-3 fw-bold">
                                                             {{secArrayfield?.propertyName}}
-
+                                                            
                                                         </p>
                                                         <ng-template ngFor let-childNastedArrayfield
                                                             [ngForOf]="secArrayfield?.data" let-m="index">
 
-                                                            <tr [hidden]="!childNastedArrayfield?.data?.title"
-                                                                style="border: white solid;">
-
+                                                            <tr [hidden]="!childNastedArrayfield?.data?.title">
                                                                 <td>
                                                                     <span
                                                                         class="fs-14 p-2">{{childNastedArrayfield?.data?.title}}</span>
                                                                 </td>
-
                                                                 <td>
                                                                     <span
                                                                         class="fs-14 p-2">{{childNastedArrayfield?.data?.type | titlecase}}</span>
@@ -198,13 +193,10 @@
                                                         </ng-template>
                                                     </ng-template>
 
-                                                    <tr [hidden]="!secArrayfield?.data?.title"
-                                                        style="border: white solid;">
-
+                                                    <tr [hidden]="!secArrayfield?.data?.title" class="border-bottom">
                                                         <td>
                                                             <span class="fs-14 p-2">{{secArrayfield?.data?.title}} </span>
                                                         </td>
-
                                                         <td>
                                                             <span class="fs-14 p-2">{{secArrayfield?.data?.type | titlecase}}</span>
                                                         </td>
@@ -243,12 +235,10 @@
 
                                                 </ng-template>
 
-                                                <tr style="border: white solid;"  [hidden]="!field[j]?.title">
-
+                                                <tr [hidden]="!field[j]?.title" >
                                                     <td>
                                                         <span class="fs-14 p-2">{{field[j]?.title}}</span>
                                                     </td>
-
                                                     <td>
                                                         <span class="fs-14 p-2">{{field?.data?.type | titlecase}}</span>
                                                     </td>
@@ -282,14 +272,11 @@
                                                 </tr>
                                             </ng-template>
 
-                                            <ng-template [ngIf]="field?.type == 'string'" >
-                                                <tr [hidden]="!field?.data?.title">
-
-
+                                            <ng-template [ngIf]="field?.type == 'string' || field?.type == 'number'" >
+                                                <tr [hidden]="!field?.data?.title" class="border-bottom">
                                                     <td>
                                                         <span class="fs-14 p-2">{{field?.data?.title}}</span>
                                                     </td>
-
                                                     <td>
                                                         <span class="fs-14 p-2">{{field?.data?.type | titlecase}}</span>
                                                     </td>
@@ -300,7 +287,6 @@
                                                     <td>
                                                        <span class="fs-14 p-2">{{field?.data?.description}} </span>
                                                     </td>
-
                                                     <td>
                                                         <select (change)="onVisibilityChange($event, field?.visiblity, 'string', j, k )"
                                                             class="br-4 bg-card border-grey-3 fs-14 m-2  py-1 px-3 mr-3">
@@ -308,8 +294,7 @@
                                                                 [selected]="opt?.key == field?.visiblity">
                                                                 {{opt.name}}
                                                             </option>
-                                                        </select>
-                                                      
+                                                        </select>                                                  
                                                     </td>
                                                     <td >
                                                         <div *ngIf="usecaseSchema[activeMenuNo]?.status != 'PUBLISHED'" class="dropdown fs-14" >
@@ -326,9 +311,7 @@
                                         </ng-template>
                                     </ng-template>
                                 </tbody>
-
                             </table>
-
                         </div>
                     </div>
                 </div>

@@ -8,6 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ToastMessageService } from '../../services/toast-message/toast-message.service';
 import { FormioJsonService } from './schema-to-formiojson';
 import { SchemaBodyService } from './schema-body'
+import { RequiredValidator } from '@angular/forms';
 
 
 @Component({
@@ -263,7 +264,7 @@ export class CreateEntityComponent implements OnInit {
         this.schemaService.getJSONData(this.entityList[j].schemaUrl).subscribe((res) => {
           this.defination.push(res);
           res['status'] = 'DRAFT';
-
+          
           if (res.hasOwnProperty('isRefSchema') && res.isRefSchema) {
             this.usecaseSchema.unshift(res);
             this.commonschemaDefination = res;
@@ -341,10 +342,10 @@ export class CreateEntityComponent implements OnInit {
         tempObj.push({
           "propertyName": (res.definitions[self.entityKey].hasOwnProperty('title')) ? res.definitions[self.entityKey].title : self.entityKey,
           "propertyKey": self.entityKey,
-          "type": res.definitions[self.entityKey].type,
+          "type": res.definitions[self.entityKey]?.type || 'object',
           "required": (res.definitions[self.entityKey].hasOwnProperty('required') && res.definitions[self.entityKey].required.length) ? res.definitions[self.entityKey].required : [],
           "$id": (res.definitions[self.entityKey].hasOwnProperty('$id')) ? res.definitions[self.entityKey]['$id'] : '',
-          "data": self.readPropertyObj(res.definitions[self.entityKey].properties)
+          "data": res.definitions[self.entityKey]?.properties ? self.readPropertyObj(res.definitions[self.entityKey].properties): []
         });
       });
 
@@ -1511,7 +1512,7 @@ export class CreateEntityComponent implements OnInit {
       }
 
       console.log({ tempProperty });
-      if (tempProperty.length == this.usecaseSchema.length) {
+          if (tempProperty.length == this.usecaseSchema.length) {
         let payload = {
           "name": tempProperty[i].title,
           "description": tempProperty[i].description,
@@ -1819,4 +1820,3 @@ export class CreateEntityComponent implements OnInit {
   }
 
 }
-

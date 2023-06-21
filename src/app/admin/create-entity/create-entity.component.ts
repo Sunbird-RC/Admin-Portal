@@ -193,44 +193,50 @@ export class CreateEntityComponent implements OnInit {
   getSchema() {
     this.usecaseSchema = [];
     this.generalService.getData('/Schema').subscribe((res) => {
-      
       if (res) {
         this.schemaService.getEntitySchemaJSON().subscribe((data) => {
           this.processSteps = data['usecase']['education']['steps'];
+          this.readSchema(res);
+          this.initializeTabsAndMenus();
         });
-
-        this.readSchema(res);
-
       } else {
         this.getSchemaJSON();
+        this.initializeTabsAndMenus();
       }
-
     }, (err) => {
       this.getSchemaJSON();
-
+      this.initializeTabsAndMenus();
     });
-
+  }
+  
+  initializeTabsAndMenus() {
     setTimeout(() => {
       this.stepList = document.querySelector('#stepList');
       this.steps = this.stepList.querySelectorAll(".tab");
-      this.steps[this.currentTab].classList.add("activeTab");
-
+  
+      if (this.steps.length > 0) {
+        this.steps[this.currentTab].classList.add("activeTab");
+      }
+  
       this.sideMenu = document.querySelector('#sideMenu');
       this.menus = this.sideMenu.querySelectorAll(".menu");
-
+  
       if (this.params.entity) {
         for (let i = 0; i < this.menus.length; i++) {
           if (this.menus[i].innerText == this.params.entity) {
             this.activeMenuNo = i;
+            break;
           }
         }
       } else {
         this.activeMenuNo = (this.activeMenuNo >= this.menus.length) ? this.activeMenuNo - 1 : this.activeMenuNo;
       }
-
+  
       if (this.menus.length) {
         this.an_menus = this.menus[this.activeMenuNo]?.querySelectorAll(".a-menu");
-        this.an_menus[0].classList.add("activeMenu");
+        if (this.an_menus.length > 0) {
+          this.an_menus[0].classList.add("activeMenu");
+        }
       }
     }, 1000);
   }
@@ -344,7 +350,7 @@ export class CreateEntityComponent implements OnInit {
           "type": res.definitions[self.entityKey].type,
           "required": (res.definitions[self.entityKey].hasOwnProperty('required') && res.definitions[self.entityKey].required.length) ? res.definitions[self.entityKey].required : [],
           "$id": (res.definitions[self.entityKey].hasOwnProperty('$id')) ? res.definitions[self.entityKey]['$id'] : '',
-          "data": self.readPropertyObj(res.definitions[self.entityKey].properties)
+          "data": self.readPropertyObj(res.definitions[self.entityKey].hasOwnProperty('properties') ? res.definitions[self.entityKey].properties : res.definitions)
         });
       });
 
@@ -924,7 +930,7 @@ export class CreateEntityComponent implements OnInit {
 
 
   nextStep() {
-    this.usecaseSchema = [];
+    // this.usecaseSchema = [];
     this.saveData();
     if (this.currentTab < this.steps.length) {
       this.steps[this.currentTab].classList.remove("activeTab");
@@ -1473,7 +1479,7 @@ export class CreateEntityComponent implements OnInit {
       for (let i = 0; i < this.usecaseSchema.length; i++) {
 
         tempProperty[i].definitions = this.convertIntoSBRCSchema(this.usecaseSchema[i].definitions);
-        let cJson = this.convertIntoSBRCSchema(this.usecaseSchema[i].definitions);
+        // let cJson = this.convertIntoSBRCSchema(this.usecaseSchema[i].definitions);
 
       }
 
@@ -1481,14 +1487,12 @@ export class CreateEntityComponent implements OnInit {
   }
 
 
-  createSchema(index) {
-
+  createSchema() {
     let errArr = [];
     let tempProperty: any;
-
     tempProperty = this.usecaseSchema;
 
-    for (let i = 0; i < this.usecaseSchema.length; i++) {
+     for (let i = 0; i < this.usecaseSchema.length; i++) {
       let osid;
       if (!this.usecaseSchema[i].hasOwnProperty('isRefSchema') || !this.usecaseSchema[i].isRefSchema) {
         this.addCrtTemplateFields(this.usecaseSchema[i]);
@@ -1527,15 +1531,16 @@ export class CreateEntityComponent implements OnInit {
 
         if (this.isNew) {
           this.generalService.postData('/Schema', payload).subscribe((res) => {
+            console.log(res);
             this.usecaseSchema[i].osid = res.result.Schema.osid;
 
             if (i == this.usecaseSchema.length - 1 && !errArr.length) {
               this.getEntityProperties();
-              if (!index) {
-                this.nextStep();
-              }
-            } else if (i == this.usecaseSchema.length - 1) {
-              this.showErrMsg(errArr);
+              this.nextStep();
+             }
+          
+             else if (i == this.usecaseSchema.length - 1) {
+               this.showErrMsg(errArr);
             }
           }, (err) => {
             errArr.push(this.usecaseSchema[i].title);
@@ -1547,11 +1552,9 @@ export class CreateEntityComponent implements OnInit {
 
           this.generalService.putData('/Schema', osid, payload).subscribe((res) => {
 
-            if (i == this.usecaseSchema.length - 1 && !errArr.length) {
+             if (i == this.usecaseSchema.length - 1 && !errArr.length) {
               this.getEntityProperties();
-              if (!index) {
-                this.nextStep();
-              }
+              this.nextStep();
             } else if (i == this.usecaseSchema.length - 1) {
               this.showErrMsg(errArr);
             }
@@ -1569,7 +1572,7 @@ export class CreateEntityComponent implements OnInit {
           })
         } else {
           if (i == (this.usecaseSchema.length - 1)) {
-            if (!index) {
+            if (!i) {
               this.nextStep();
             }
           }

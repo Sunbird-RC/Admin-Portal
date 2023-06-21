@@ -263,7 +263,7 @@ export class CreateEntityComponent implements OnInit {
         this.schemaService.getJSONData(this.entityList[j].schemaUrl).subscribe((res) => {
           this.defination.push(res);
           res['status'] = 'DRAFT';
-
+          
           if (res.hasOwnProperty('isRefSchema') && res.isRefSchema) {
             this.usecaseSchema.unshift(res);
             this.commonschemaDefination = res;
@@ -1511,7 +1511,7 @@ export class CreateEntityComponent implements OnInit {
       }
 
       console.log({ tempProperty });
-      if (tempProperty.length == this.usecaseSchema.length) {
+        if (tempProperty.length == this.usecaseSchema.length) {
         let payload = {
           "name": tempProperty[i].title,
           "description": tempProperty[i].description,
@@ -1819,4 +1819,3 @@ export class CreateEntityComponent implements OnInit {
   }
 
 }
-

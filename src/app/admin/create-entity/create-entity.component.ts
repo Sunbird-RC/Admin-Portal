@@ -234,7 +234,7 @@ export class CreateEntityComponent implements OnInit {
   
       if (this.menus.length) {
         this.an_menus = this.menus[this.activeMenuNo]?.querySelectorAll(".a-menu");
-        if (this.an_menus.length > 0) {
+        if (this.an_menus.length) {
           this.an_menus[0].classList.add("activeMenu");
         }
       }

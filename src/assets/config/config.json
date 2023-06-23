@@ -1,7 +1,7 @@
 {
     "environment": "development",
     "keycloak": {
-        "url": "https://demo-admin-portal.xiv.in/auth",
+        "url": "https://demo-admin-portal.sunbirdrc.dev",
         "clientId": "admin-portal",
         "realm": "sunbird-rc"
     },
@@ -9,8 +9,8 @@
     "referanceSchema" : "/assets/config",
     "languageFolder": "/assets/i18n",
     "title": "Admin Portal",
-    "baseUrl": "https://demo-admin-portal.xiv.in/registry/api/v1",
-    "schemaUrl": "https://demo-admin-portal.xiv.in/registry/api/docs/swagger.json",
+    "baseUrl": "https://demo-admin-portal.sunbirdrc.dev/registry/api/v1",
+    "schemaUrl": "https://demo-admin-portal.sunbirdrc.dev/api/docs/swagger.json",
     "footerText": "Admin Portal",
     "languages": [
         "en",

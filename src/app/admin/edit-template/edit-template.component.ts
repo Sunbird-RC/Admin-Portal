@@ -4,7 +4,7 @@ import { AnyARecord } from 'dns';
 import { map } from 'rxjs/operators';
 import { GeneralService } from 'src/app/services/general/general.service';
 declare var grapesjs: any;
-import { TranslateService } from '@ngx-translate/core'; 
+import { TranslateService } from '@ngx-translate/core';
 
 
 import 'grapesjs-preset-webpage';
@@ -47,11 +47,11 @@ export class EditTemplateComponent implements OnInit {
   usecase: any;
   schemaOsid: string;
 
-  constructor(public router: Router, public route: ActivatedRoute, public toastMsg: ToastMessageService,public translate: TranslateService,
+  constructor(public router: Router, public route: ActivatedRoute, public toastMsg: ToastMessageService, public translate: TranslateService,
     public generalService: GeneralService, public schemaService: SchemaService) {
 
     this.editorOptions = new JsonEditorOptions()
-  
+
     this.editorOptions.mode = 'code';
     this.editorOptions.history = true;
     this.editorOptions.onChange = () => this.jsonEditor.get();
@@ -69,7 +69,7 @@ export class EditTemplateComponent implements OnInit {
 
     this.route.params.subscribe(params => {
       this.params = params;
-  
+
       if (this.params.hasOwnProperty('usecase')) {
         this.usecase = params.usecase;
         this.entityName = params.entity;
@@ -109,6 +109,16 @@ export class EditTemplateComponent implements OnInit {
       panelManager.removeButton('options', 'undo');
       const um = this.editor.UndoManager;
       um.clear();
+
+      const iconsOptions = document.querySelector('.gjs-pn-options');
+      if (iconsOptions) {
+        iconsOptions.classList.add('custom-icons-margin-right');
+      }
+
+      const iconsViews = document.querySelector('.gjs-pn-views');
+      if (iconsViews) {
+        iconsViews.classList.add('custom-icons-margin-right');
+      }
     })
 
     this.editor.on('asset:add', () => {
@@ -191,11 +201,11 @@ export class EditTemplateComponent implements OnInit {
             const cardDiv = document.createElement('div');
             cardDiv.className = 'pcard p-3';
             cardDiv.setAttribute('style', 'text-align: left; color:white');
-            cardDiv.innerHTML = ` <div class="d-flex flex-justify-between px-2 py-2">
+            cardDiv.innerHTML = ` <div class="d-flex flex-justify-between  py-2">
             <div class="heading-2">Preview</div>
             <div>
                 <button id="advanceBtn" (click)="editTemplate()"
-                    class="float-end adv-btn btn"><i
+                    class="ml-2 adv-btn btn"><i
                         class="fa fa-pencil-square-o" aria-hidden="true"></i>Advance Editor</button>
             </div>
         </div>
@@ -318,7 +328,7 @@ export class EditTemplateComponent implements OnInit {
     });
 
     var html = this.editor.getHtml();
-    }
+  }
 
   dataChange() {
     window.location.reload();
@@ -340,26 +350,24 @@ export class EditTemplateComponent implements OnInit {
   }
 
   async readHtmlSchemaContent(doc) {
-   this.userHtml = doc;
-   await this.generalService.getData('/Schema').subscribe((res) => {
-          for(let i =0; i < res.length; i++)
-          {
-            if(res[i]["name"] == this.entityName)
-            {
+    this.userHtml = doc;
+    await this.generalService.getData('/Schema').subscribe((res) => {
+      for (let i = 0; i < res.length; i++) {
+        if (res[i]["name"] == this.entityName) {
 
-              this.schemaOsid = res[i].osid;
-              this.generalService.getData('/Schema/' + this.schemaOsid).subscribe((response) => {
-                let data = JSON.parse(response['schema']);
-                this.certificateTitle = response['name'];
-                this.userJson = data;
-              });
-            
-            }
-      
-          }
-         
-        });
-      
+          this.schemaOsid = res[i].osid;
+          this.generalService.getData('/Schema/' + this.schemaOsid).subscribe((response) => {
+            let data = JSON.parse(response['schema']);
+            this.certificateTitle = response['name'];
+            this.userJson = data;
+          });
+
+        }
+
+      }
+
+    });
+
   }
 
   addCrtTemplateFields111(userJson) {
@@ -386,7 +394,7 @@ export class EditTemplateComponent implements OnInit {
       if (temp[key].type == 'string' || temp[key].type == 'number') {
         propertyName = "{{credentialSubject." + key + "}}";
         let isRequire = required.includes(key) ? true : false;
-      
+
         _self.propertyArr.push({ 'propertyTag': propertyName, 'require': isRequire });
 
 
@@ -397,7 +405,7 @@ export class EditTemplateComponent implements OnInit {
 
           propertyName = "{{credentialSubject." + key2 + "}}";
           let isRequire = objProReq.includes(key2) ? true : false;
-         
+
           _self.propertyArr.push({ 'propertyTag': propertyName, 'require': isRequire });
         })
       } else if (temp[key].type == 'array') {
@@ -437,13 +445,13 @@ export class EditTemplateComponent implements OnInit {
     } else {
 
       certTmpJson = certTmpJson['credentialSubject'];
-   
+
       if (this.schemaContent) {
         let _self = this;
         let propertyData = this.schemaContent.definitions[this.certificateTitle].properties;
         let contextJson = this.schemaContent._osConfig.credentialTemplate["@context"][1]["@context"];
         Object.keys(propertyData).forEach(function (key) {
-       
+
           if (key != 'name') {
             if (propertyData[key].type == 'string' || propertyData[key].type == 'number') {
               certTmpJson[key] = "{{" + key + "}}";
@@ -457,7 +465,7 @@ export class EditTemplateComponent implements OnInit {
             } else if (propertyData[key].type == 'object') {
               let objPro = propertyData[key].properties;
               Object.keys(objPro).forEach(function (key2) {
-              
+
                 certTmpJson[key2] = "{{" + key + "." + key2 + "}}";
               })
             }
@@ -471,54 +479,54 @@ export class EditTemplateComponent implements OnInit {
   }
 
   async submit() {
-   this.generalService.getData('/Schema/' + this.schemaOsid).subscribe((res) => {
+    this.generalService.getData('/Schema/' + this.schemaOsid).subscribe((res) => {
       let data = JSON.parse(res['schema']);
       this.certificateTitle = res['name'];
       this.userJson = data;
       this.schemaContent = data;
-    
-    var htmlWithCss = this.editor.runCommand('gjs-get-inlined-html');
+
+      var htmlWithCss = this.editor.runCommand('gjs-get-inlined-html');
 
 
-    var parser = new DOMParser();
-    var htmlDoc = parser.parseFromString(htmlWithCss, 'text/html');
-    this.userHtml = htmlDoc.documentElement.innerHTML;
+      var parser = new DOMParser();
+      var htmlDoc = parser.parseFromString(htmlWithCss, 'text/html');
+      this.userHtml = htmlDoc.documentElement.innerHTML;
 
-    let vcTrmplate = {
-      [this.entityName]: {
-        'name': this.templateName,
-        'description': this.description,
-        'html': this.userHtml
-      },
-      'title': this.usecase
-    }
-
-    localStorage.setItem('schemaVc', JSON.stringify(vcTrmplate));
-
-
-    // Creating a file object with some content
-    var fileObj = new File([this.userHtml], this.templateName.replace(/\s+/g, '') + '.html');
-
-
-    let str = this.templateName.replace(/\s+/g, '');
-    this.templateName = str.charAt(0).toUpperCase() + str.slice(1);
-
-    // Create form data
-    const formData = new FormData();
-    // Store form name as "file" with file data
-    formData.append("files", fileObj, fileObj.name);
-    this.generalService.postData('/Schema/' + this.schemaOsid + '/certificateTemplate/documents', formData).subscribe((res) => {
-      this.schemaContent._osConfig['certificateTemplates'][this.templateName] = 'minio://' + res.documentLocations[0];
-      let result = this.schemaContent;
-      let payload = {
-        "schema": JSON.stringify(result)
+      let vcTrmplate = {
+        [this.entityName]: {
+          'name': this.templateName,
+          'description': this.description,
+          'html': this.userHtml
+        },
+        'title': this.usecase
       }
 
-     this.generalService.putData('/Schema/', this.schemaOsid, payload).subscribe((res) => {
-        this.router.navigate(['/create/2/' + this.usecase + '/' + this.entityName]);
+      localStorage.setItem('schemaVc', JSON.stringify(vcTrmplate));
+
+
+      // Creating a file object with some content
+      var fileObj = new File([this.userHtml], this.templateName.replace(/\s+/g, '') + '.html');
+
+
+      let str = this.templateName.replace(/\s+/g, '');
+      this.templateName = str.charAt(0).toUpperCase() + str.slice(1);
+
+      // Create form data
+      const formData = new FormData();
+      // Store form name as "file" with file data
+      formData.append("files", fileObj, fileObj.name);
+      this.generalService.postData('/Schema/' + this.schemaOsid + '/certificateTemplate/documents', formData).subscribe((res) => {
+        this.schemaContent._osConfig['certificateTemplates'][this.templateName] = 'minio://' + res.documentLocations[0];
+        let result = this.schemaContent;
+        let payload = {
+          "schema": JSON.stringify(result)
+        }
+
+        this.generalService.putData('/Schema/', this.schemaOsid, payload).subscribe((res) => {
+          this.router.navigate(['/create/2/' + this.usecase + '/' + this.entityName]);
+        });
       });
     });
-  });
   }
 
 

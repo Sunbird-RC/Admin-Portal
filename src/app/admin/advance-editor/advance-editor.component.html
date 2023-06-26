@@ -3,7 +3,7 @@
     <div>
 
         <div class="d-flex">
-          <div class="col-sm-7 min-ht3 pd-19 mb-20 bg-white border-grey-4  bs-1 br-0">
+          <div class="col-sm-9 well">
             <form-builder [form]="myForm" (change)="onChange($event)" (submit)="onSubmit($event)" [options]="options">
             </form-builder>
           </div>
@@ -16,8 +16,8 @@
                 <i [hidden]="isShowLessJson" class="fa fa-plus float-end arrIcon"></i>
                 <i [hidden]="!isShowLessJson" class="fa fa-minus float-end arrIcon"></i>
               </button>
-              <div class="min-ht3 pd-19 mb-20 bg-white border-grey-4  bs-1 br-0 content">
-                <json-editor [options]="editorOptions" style="min-height: 700px;" [data]="jsonFields"
+              <div class="well content" style="width: 360px;">
+                <json-editor [options]="editorOptions" style="min-height: 1000px;" [data]="jsonFields"
                   [(ngModel)]="jsonFields"></json-editor>
               </div>
             </div>
@@ -27,7 +27,7 @@
                 <i [hidden]="isShowLessVc" class="fa fa-plus float-end arrIcon"></i>
                 <i [hidden]="!isShowLessVc" class="fa fa-minus float-end arrIcon"></i>
               </button>
-              <div class="min-ht3 pd-19 mb-20 bg-white border-grey-4  bs-1 br-0 content">
+              <div class="well content" style="width: 360px;">
                 <!-- <input type="text"  [value]="vcFields"  [(ngModel)]="vcFields"/> -->
                 <div [hidden]="!isVcString">
                   <ngx-text-editor [(ngModel)]="vcFields"></ngx-text-editor>

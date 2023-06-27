@@ -284,13 +284,43 @@ width: auto;
   transform-origin: 0 0;
 }
 
+.well {
+  min-height: 20px;
+  width: 360px;
+  padding: 19px;
+  margin-bottom: 20px;
+  background-color: #ffffff;
+  border: 1px solid #e8e8e8;
+  border-radius: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgb(0 0 0 / 5%);
+  box-shadow: inset 0 1px 1px rgb(0 0 0 / 5%);
+}
+
+.adv-btn {
+  color: #A6D4FF !important;
+  background-color: #100e0e9c !important;
+  font-size: 12px !important;
+  line-height: 18px !important;
+  font-weight: 700 !important;
+}
+
+.btn {
+  border-radius: 8px !important;
+  text-transform: capitalize !important;
+  box-shadow: none !important;
+}
+
+.custom-icons-margin-right {
+  margin-right: 40px; 
+}
+
 /* Start - ngx-editor css */
 .collapsible {
   background-color: #777;
   color: white;
   cursor: pointer;
   padding: 10px;
-  width: 100%;
+  width: 85%;
   border: none;
   text-align: left;
   outline: none;

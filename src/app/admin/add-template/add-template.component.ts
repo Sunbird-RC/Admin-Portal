@@ -133,14 +133,18 @@ export class AddTemplateComponent implements OnInit {
           font-family:'Lato';
           font-size: 2em;
         }
+
+        .certTemp{
+          float: right;
+          padding-left:2em;
+        }
       </style>
     </head>
     <body style="width: 900px">
       <div style="margin: 1em;border-radius: 5px;background-color: white;height: 600px;border: 3px solid #B275FF;">
         <div style="padding:1em;text-align:center;font-family: Lato;font-size: 4em;"> Certificate Title</div>
         <table width="100%">
-          <tr>
-  
+          <tr>  
             <td>
               <div class="line">
                 <div>Certified to</div>
@@ -155,11 +159,11 @@ export class AddTemplateComponent implements OnInit {
                 <div>issued by </div>
                 <div>{{issuer.name}}</div>
               </div>
+              </td>
+              </tr>
+              <td valign="bottom">
+              <img class="certTemp" src="{{qrCode}}" alt="qr_code" />
             </td>
-                  <td valign="bottom">
-              <img style="float:left;padding-left: 2em;" src="{{qrCode}}" alt="qr_code" />
-            </td>
-          </tr>
         </table>
       </div>
       <div></div>

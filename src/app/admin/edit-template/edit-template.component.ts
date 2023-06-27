@@ -109,6 +109,16 @@ export class EditTemplateComponent implements OnInit {
       panelManager.removeButton('options', 'undo');
       const um = this.editor.UndoManager;
       um.clear();
+
+      const iconsOptions = document.querySelector('.gjs-pn-options');
+        if (iconsOptions) {
+          iconsOptions.classList.add('custom-icons-margin-right');
+      }
+
+      const iconsViews = document.querySelector('.gjs-pn-views');
+        if (iconsViews) {
+          iconsViews.classList.add('custom-icons-margin-right');
+      }
     })
 
     this.editor.on('asset:add', () => {
@@ -191,11 +201,11 @@ export class EditTemplateComponent implements OnInit {
             const cardDiv = document.createElement('div');
             cardDiv.className = 'pcard p-3';
             cardDiv.setAttribute('style', 'text-align: left; color:white');
-            cardDiv.innerHTML = ` <div class="d-flex flex-justify-between px-2 py-2">
+            cardDiv.innerHTML = ` <div class="d-flex flex-justify-between py-2">
             <div class="heading-2">Preview</div>
             <div>
                 <button id="advanceBtn" (click)="editTemplate()"
-                    class="float-end adv-btn btn"><i
+                    class="ml-2 adv-btn btn"><i
                         class="fa fa-pencil-square-o" aria-hidden="true"></i>Advance Editor</button>
             </div>
         </div>

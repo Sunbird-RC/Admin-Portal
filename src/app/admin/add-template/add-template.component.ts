@@ -133,6 +133,11 @@ export class AddTemplateComponent implements OnInit {
           font-family:'Lato';
           font-size: 2em;
         }
+
+        .certTemp{
+          float: right;
+          padding-left:2em;
+        }
       </style>
     </head>
     <body style="width: 900px">
@@ -157,7 +162,7 @@ export class AddTemplateComponent implements OnInit {
               </td>
               </tr>
               <td valign="bottom">
-              <img style="float:right;padding-left:2em;" src="{{qrCode}}" alt="qr_code" />
+              <img class="certTemp" src="{{qrCode}}" alt="qr_code" />
             </td>
         </table>
       </div>

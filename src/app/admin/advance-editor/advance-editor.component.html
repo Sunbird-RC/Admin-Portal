@@ -16,7 +16,7 @@
                 <i [hidden]="isShowLessJson" class="fa fa-plus float-end arrIcon"></i>
                 <i [hidden]="!isShowLessJson" class="fa fa-minus float-end arrIcon"></i>
               </button>
-              <div class="well content" style="width: 360px;">
+              <div class="well content">
                 <json-editor [options]="editorOptions" style="min-height: 1000px;" [data]="jsonFields"
                   [(ngModel)]="jsonFields"></json-editor>
               </div>
@@ -27,7 +27,7 @@
                 <i [hidden]="isShowLessVc" class="fa fa-plus float-end arrIcon"></i>
                 <i [hidden]="!isShowLessVc" class="fa fa-minus float-end arrIcon"></i>
               </button>
-              <div class="well content" style="width: 360px;">
+              <div class="well content">
                 <!-- <input type="text"  [value]="vcFields"  [(ngModel)]="vcFields"/> -->
                 <div [hidden]="!isVcString">
                   <ngx-text-editor [(ngModel)]="vcFields"></ngx-text-editor>

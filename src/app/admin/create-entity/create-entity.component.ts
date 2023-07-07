@@ -343,26 +343,20 @@ export class CreateEntityComponent implements OnInit {
       Object.keys(this.properties).forEach(function (key) {
         self.entityKey = key;
         self.required = (res.definitions[self.entityKey].hasOwnProperty('required') && res.definitions[self.entityKey].required.length) ? res.definitions[self.entityKey].required : self.required;
-
-        tempObj.push({
-          "propertyName": (res.definitions[self.entityKey].hasOwnProperty('title')) ? res.definitions[self.entityKey].title : self.entityKey,
-          "propertyKey": self.entityKey,
-          "type": res.definitions[self.entityKey].type,
-          "required": (res.definitions[self.entityKey].hasOwnProperty('required') && res.definitions[self.entityKey].required.length) ? res.definitions[self.entityKey].required : [],
-          "$id": (res.definitions[self.entityKey].hasOwnProperty('$id')) ? res.definitions[self.entityKey]['$id'] : '',
-          "data": self.readPropertyObj(res.definitions[self.entityKey].hasOwnProperty('properties') ? res.definitions[self.entityKey].properties : res.definitions)
-        });
       });
 
       let cKey = res.title.replaceAll(/\s/g, '');
       cKey = cKey.charAt(0).toLowerCase() + cKey.slice(1);
 
       this.usecaseSchema[j].definitions = {
+        "propertyName": (res.definitions[self.entityKey].hasOwnProperty('title')) ? res.definitions[self.entityKey].title : self.entityKey,
+        "propertyKey": self.entityKey,
         "type": 'object',
-        "data": tempObj,
-        "isRefSchema": true
+        "required": (res.definitions[self.entityKey].hasOwnProperty('required') && res.definitions[self.entityKey].required.length) ? res.definitions[self.entityKey].required : [],
+        "$id": (res.definitions[self.entityKey].hasOwnProperty('$id')) ? res.definitions[self.entityKey]['$id'] : '',
+        "data": self.readPropertyObj(res.definitions[self.entityKey].hasOwnProperty('properties') ? res.definitions[self.entityKey].properties : res.definitions)
       };
-
+      
       this.commonschemaDefination = this.usecaseSchema[j];
 
     } else if (res.definitions.hasOwnProperty(this.entityKey)) {

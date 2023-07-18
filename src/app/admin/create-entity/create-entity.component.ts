@@ -151,7 +151,9 @@ export class CreateEntityComponent implements OnInit {
         this.usecase = params.usecase.toLowerCase();
       }
 
-      this.getSchema();
+      setTimeout(() => {
+        this.getSchema();
+        }, 800);
 
     })
 

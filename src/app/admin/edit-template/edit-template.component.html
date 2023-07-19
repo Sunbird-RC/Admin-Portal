@@ -14,7 +14,7 @@
     <div>
        <div class="row d-flex mt-4 setHeight">
           <div class="preview-footer">
-             <button data-toggle="modal" data-target="#prewiewProfile" class="btn text-capitalize float-end bg-color-primary text-white fw-bold  p1">{{'SAVE_DOCUMENT' | translate}}</button>
+             <button  [hidden]="!htmlDiv" data-toggle="modal" data-target="#prewiewProfile" class="btn text-capitalize float-end bg-color-primary text-white fw-bold  p1">{{'SAVE_DOCUMENT' | translate}}</button>
           </div>
           <div class=" p-0 setHeight border-right mtn-28">
              <div  id="htmlDiv" [hidden]="!htmlDiv">
@@ -22,10 +22,10 @@
                    <div class="heading-2">{{'HTML' | translate}}</div>
                 </div>
                 <div class="mx-3">
-                   <div id="gjs">
+                   <div id="gjs" style="width:50% ;">
                       {{userHtml}}
                    </div>
-                   <div id="blocks"></div>
+                   <div id="blocks" ></div>
                 </div>
              </div>
              <div  id="schemaDiv"[hidden]="!schemaDiv">

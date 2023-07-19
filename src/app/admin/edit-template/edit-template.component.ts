@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators';
 import { GeneralService } from 'src/app/services/general/general.service';
 declare var grapesjs: any;
 import { TranslateService } from '@ngx-translate/core'; 
-
+import { TranslatePipe } from 'ngx-extended-pdf-viewer/lib/translate.pipe';
 
 import 'grapesjs-preset-webpage';
 import { JsonEditorComponent, JsonEditorOptions } from 'ang-jsoneditor';
@@ -203,9 +203,9 @@ export class EditTemplateComponent implements OnInit {
             cardDiv.setAttribute('style', 'text-align: left; color:white');
             cardDiv.innerHTML = ` <div class="d-flex flex-justify-between py-2">
             <div class="heading-2">Preview</div>
-            <div>
+            <div class="adv-btn-div">
                 <button id="advanceBtn" (click)="editTemplate()"
-                    class="ml-2 adv-btn btn"><i
+                    class="float-end adv-btn btn"><i
                         class="fa fa-pencil-square-o" aria-hidden="true"></i>Advance Editor</button>
             </div>
         </div>

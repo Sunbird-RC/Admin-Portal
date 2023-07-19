@@ -99,8 +99,12 @@ p code {
 /*  grapesjs: start*/
 .gjs-cv-canvas {
   top: 0;
-  width: 100%;
+  width: 70% !important;
   height: 100%;
+}
+
+.gjs-pn-views-container {
+  width: 30% !important;
 }
 
 .gjs-block {
@@ -173,6 +177,15 @@ width: auto;
   background-color: #3e8e41;
 }
 
+.preview-footer{
+  position: fixed;
+  width: 100%;
+  bottom: 0px;
+  z-index: 9999;
+  background: #fff;
+  left: 0;
+  padding: 10px;
+}
 /* ---------------------------------------------------
     SIDEBAR STYLE
 ----------------------------------------------------- */
@@ -304,6 +317,9 @@ width: auto;
   font-weight: 700 !important;
 }
 
+.adv-btn-div{
+  margin-left: 50%;
+}
 .btn {
   border-radius: 8px !important;
   text-transform: capitalize !important;

@@ -5,7 +5,6 @@ import { map } from 'rxjs/operators';
 import { GeneralService } from 'src/app/services/general/general.service';
 declare var grapesjs: any;
 import { TranslateService } from '@ngx-translate/core'; 
-import { TranslatePipe } from 'ngx-extended-pdf-viewer/lib/translate.pipe';
 
 import 'grapesjs-preset-webpage';
 import { JsonEditorComponent, JsonEditorOptions } from 'ang-jsoneditor';

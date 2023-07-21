@@ -9,8 +9,8 @@
     "referanceSchema" : "/assets/config",
     "languageFolder": "/assets/i18n",
     "title": "Admin Portal",
-    "baseUrl": "http://localhost:4200/registry/api/v1",
-    "schemaUrl": "http://localhost:4200/api/docs/swagger.json",
+    "baseUrl": "https://demo-admin-portal.sunbirdrc.dev/registry/api/v1",
+    "schemaUrl": "https://demo-admin-portal.sunbirdrc.dev/api/docs/swagger.json",
     "footerText": "Admin Portal",
     "languages": [
         "en",

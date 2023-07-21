@@ -81,8 +81,8 @@ export class CreateVcTemplateComponent implements OnInit, OnChanges {
           this.isShow2 = true;
         }
         else if (this.usecase == 'attestmodule') {
-          this.isShow1 = false;
-          this.isShow2 = true;
+          this.isShow1 = true;
+          this.isShow2 = false;
         }
         else if (this.usecase == 'divoc') {
           this.isShow1 = true;

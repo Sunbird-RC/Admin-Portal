@@ -151,7 +151,8 @@
   "SELECT_FIELD" : "फ़ील्ड चुनें",
   "MOBILE_NUMBER" : "मोबाइल नंबर",
   "EDUCATIONBOARD_EMAIL" : "शिक्षा.ईमेल",
-  "SELECT_TYPE" : "फ़ील्ड चुनें",  
+  "SELECT_TYPE" : "फ़ील्ड चुनें",
+  "SELECT_ROLE": "भूमिका चुनें",
 
   "LAST_UPDATE": "आखिरी बार अपडेट किया गया",
   "PUBLISH_TO_EXPLORE_APIS": "एपीआई एक्सप्लोर करने के लिए प्रकाशित करें",

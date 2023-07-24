@@ -102,6 +102,7 @@ export class CreateEntityComponent implements OnInit {
   deleteingOsid: any;
   index: any;
   usecaseSchemaData: any;
+  cJson: {};
   constructor(
     private activeRoute: ActivatedRoute,
     public router: Router,
@@ -503,13 +504,13 @@ export class CreateEntityComponent implements OnInit {
         return tempFieldObj;
       } else if (sProperties.hasOwnProperty('isRefSchema')) {
 
-        for (let i = 0; i < sProperties.data.length; i++) {
+        for (let i = 0; i < sProperties['definitions'].data.length; i++) {
 
-          if (sProperties.data[i].hasOwnProperty('propertyKey')) {
-            let dataObj = this.convertIntoSBRCSchema(sProperties.data[i]);
-            this.secFieldObj[sProperties.data[i].propertyKey] = dataObj[sProperties.data[i].propertyKey]
+          if (sProperties['definitions'].data[i].hasOwnProperty('propertyKey')) {
+            let dataObj = this.convertIntoSBRCSchema(sProperties['definitions'].data[i]);
+            this.secFieldObj[sProperties['definitions'].data[i].propertyKey] = dataObj[sProperties['definitions'].data[i].propertyKey]
           } else {
-            let dataObj = sProperties.data[i];
+            let dataObj = sProperties['definitions'].data[i];
             this.secFieldObj[dataObj.key] = {
               "$id": "#/properties/" + dataObj.key,
               "type": dataObj.type,
@@ -521,8 +522,7 @@ export class CreateEntityComponent implements OnInit {
               this.secFieldObj[dataObj.key]['enum'] = dataObj.data.enum;
             }
 
-            dataObj[sProperties.data[i].key]
-
+            dataObj[sProperties['definitions'].data[i].key]
           }
         }
 
@@ -1494,11 +1494,15 @@ export class CreateEntityComponent implements OnInit {
         this.addCrtTemplateFields(this.usecaseSchema[i]);
       }
 
-      let cJson = this.convertIntoSBRCSchema(this.usecaseSchema[i].definitions);
+      if(this.usecaseSchema[i].isRefSchema){
+        this.cJson = this.convertIntoSBRCSchema(this.usecaseSchema[i]);
+      }else {
+        this.cJson = this.convertIntoSBRCSchema(this.usecaseSchema[i].definitions);
+      }
 
-      if (cJson) {
+      if (this.cJson) {
         tempProperty[i].definitions = {};
-        tempProperty[i].definitions = cJson;
+        tempProperty[i].definitions = this.cJson;
       }
 
       this.isNew = (tempProperty[i].hasOwnProperty('osid') ? false : true);

@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SchemaService } from '../../services/data/schema.service';
 import { JsonEditorComponent, JsonEditorOptions } from 'ang-jsoneditor';
@@ -19,7 +19,6 @@ export class CreateEntityComponent implements OnInit {
   public editorOptions: JsonEditorOptions;
 
   @ViewChild(JsonEditorComponent) jsonEditor: JsonEditorComponent;
-  @ViewChild('duplicateEntity') modalElement: ElementRef;
   params: any;
   usecase: any;
   entity: any;
@@ -103,7 +102,6 @@ export class CreateEntityComponent implements OnInit {
   index: any;
   usecaseSchemaData: any;
   cJson: {};
-  addSchema: boolean = false;
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -347,7 +345,7 @@ export class CreateEntityComponent implements OnInit {
 
       Object.keys(this.properties).forEach( key => {
         self.entityKey = key;
-        // self.required = (res.definitions[self.entityKey].hasOwnProperty('required') && res.definitions[self.entityKey].required.length) ? res.definitions[self.entityKey].required : self.required;
+        self.required = (res.definitions[self.entityKey].hasOwnProperty('required') && res.definitions[self.entityKey].required.length) ? res.definitions[self.entityKey].required : self.required;
       });
 
       let cKey = res.title.replaceAll(/\s/g, '');
@@ -359,7 +357,6 @@ export class CreateEntityComponent implements OnInit {
         "type": 'object',
         "required": (res.definitions[self.entityKey].hasOwnProperty('required') && res.definitions[self.entityKey].required.length) ? res.definitions[self.entityKey].required : [],
         "$id": (res.definitions[self.entityKey].hasOwnProperty('$id')) ? res.definitions[self.entityKey]['$id'] : '',
-        // "data": self.readPropertyObj(res.definitions[self.entityKey].hasOwnProperty('properties') ? res.definitions[self.entityKey].properties : res.definitions)
         "data": self.readPropertyObj(this.properties)
       };
    
@@ -395,7 +392,7 @@ export class CreateEntityComponent implements OnInit {
 
   }
 
-  convertIntoSBRCSchema(sProperties){
+  convertIntoSBRCSchema(sProperties): {} {
     let tempFieldObj = {};
 
     if (!sProperties.hasOwnProperty('property')) {
@@ -1033,11 +1030,9 @@ export class CreateEntityComponent implements OnInit {
   openEntityModal(action, i) {
 
     if (action == 'add') {
-      this.addSchema = true;
       this.entityName = '';
       this.description = '';
     } else {
-      this.addSchema = false;
       this.entityName = this.usecaseSchema[i].title;
       this.description = this.usecaseSchema[i].description;
       this.activeMenuNo = i;

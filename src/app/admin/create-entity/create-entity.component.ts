@@ -102,6 +102,7 @@ export class CreateEntityComponent implements OnInit {
   index: any;
   usecaseSchemaData: any;
   cJson: {};
+  addSchema: boolean = false;
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -1030,9 +1031,11 @@ export class CreateEntityComponent implements OnInit {
   openEntityModal(action, i) {
 
     if (action == 'add') {
+      this.addSchema = true;   
       this.entityName = '';
       this.description = '';
     } else {
+      this.addSchema = false;
       this.entityName = this.usecaseSchema[i].title;
       this.description = this.usecaseSchema[i].description;
       this.activeMenuNo = i;

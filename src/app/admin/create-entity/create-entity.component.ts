@@ -104,6 +104,9 @@ export class CreateEntityComponent implements OnInit {
   deleteingOsid: any;
   index: any;
   usecaseSchemaData: any;
+  cJson: {};
+  addSchema: boolean = false;
+
   constructor(
     private activeRoute: ActivatedRoute,
     public router: Router,
@@ -344,7 +347,7 @@ export class CreateEntityComponent implements OnInit {
       let self = this;
       let tempObj = [];
 
-      Object.keys(this.properties).forEach(function (key) {
+      Object.keys(this.properties).forEach( key => {
         self.entityKey = key;
         self.required = (res.definitions[self.entityKey].hasOwnProperty('required') && res.definitions[self.entityKey].required.length) ? res.definitions[self.entityKey].required : self.required;
       });
@@ -358,9 +361,9 @@ export class CreateEntityComponent implements OnInit {
         "type": 'object',
         "required": (res.definitions[self.entityKey].hasOwnProperty('required') && res.definitions[self.entityKey].required.length) ? res.definitions[self.entityKey].required : [],
         "$id": (res.definitions[self.entityKey].hasOwnProperty('$id')) ? res.definitions[self.entityKey]['$id'] : '',
-        "data": self.readPropertyObj(res.definitions[self.entityKey].hasOwnProperty('properties') ? res.definitions[self.entityKey].properties : res.definitions)
+        "data": self.readPropertyObj(this.properties)
       };
-      
+   
       this.commonschemaDefination = this.usecaseSchema[j];
 
     } else if (res.definitions.hasOwnProperty(this.entityKey)) {
@@ -411,12 +414,16 @@ export class CreateEntityComponent implements OnInit {
 
           if (sProperties.data[i].hasOwnProperty('propertyKey')) {
             let field = sProperties.data[i];
+            if(!field.propertyKey){
+               var refField = sProperties;
+            }
             let tempFieldSecObj = {};
             let nastedKey;
             if (sProperties.hasOwnProperty('isRefSchema') && !sProperties.isRefSchema) {
               nastedKey = field.propertyKey;
             } else {
-              nastedKey = field.propertyKey.charAt(0).toLowerCase() + field.propertyKey.slice(1);
+              //  nastedKey = field.propertyKey.charAt(0).toLowerCase() + field.propertyKey.slice(1);
+               nastedKey = field.propertyKey ? field.propertyKey : refField.propertyKey;
             }
 
             if ((field['$ref'] != "" && field.type == 'array') && (!sProperties.hasOwnProperty('isRefSchema') && !sProperties.isRefSchema)) {
@@ -452,16 +459,27 @@ export class CreateEntityComponent implements OnInit {
                 }
 
               } else {
-                tempFieldSecObj[nastedKey] = {
-                  "$id": field['$id'],
-                  "type": field['type'],
-                  "title": field['propertyName'],
-                  "required": (field.hasOwnProperty('required')) ? field.required : [],
-                  "properties": {}
+                if(field.hasOwnProperty('propertyKey')){
+                  tempFieldSecObj[nastedKey] = {
+                    "$id": field['$id'],
+                    "type": field['type'],
+                    "title": field['propertyName'],
+                    "required": (field.hasOwnProperty('required')) ? field.required : [],
+                    "properties": {}
+                  }
+                }
+                else{
+                  tempFieldSecObj[nastedKey] = {
+                    "$id":  refField['$id'],
+                    "type": refField['type'],
+                    "title": refField['propertyName'],
+                    "required": (refField.hasOwnProperty('required')) ? refField.required : [],
+                    "properties": {}
+                  }
                 }
               }
 
-              if (field.hasOwnProperty('data')) {
+              if (field.hasOwnProperty('propertyKey') && field.hasOwnProperty('data')) {
                 for (let j = 0; j < field.data.length; j++) {
                   let property = field.data[j];
 
@@ -490,8 +508,42 @@ export class CreateEntityComponent implements OnInit {
                   }
                 }
               }
+              if (refField && refField.hasOwnProperty('data')) {
+                for (let j = 0; j < refField.data.length; j++) {
+                  let property = refField.data[j];
 
-              tempFieldObj[sProperties.propertyKey]['properties'][nastedKey] = tempFieldSecObj[nastedKey];
+                  if (refField['type'] == 'array') {
+                    tempFieldSecObj[nastedKey]['items']['properties'][property.key] = property.data;
+
+                  } else if (refField['type'] == 'object') {
+
+                    if (property.type != 'array' && property.type != 'object') {
+                      tempFieldSecObj[nastedKey]['properties'][property.key] = property.data;
+                    } else {
+
+                      tempFieldSecObj[nastedKey]['properties'][property.propertyKey] = {
+
+                        "type": property['type'],
+                        "properties": {}
+                      }
+                      for (let m = 0; m < property.data.length; m++) {
+                        tempFieldSecObj[nastedKey]['properties'][property.propertyKey]['properties'][property.data[m].key] = property.data[m].data;
+                      }
+                    }
+
+                  } else {
+                    tempFieldSecObj[nastedKey]['properties'][property.key] = property.data;
+
+                  }
+                }
+              }
+
+              if(refField){
+                tempFieldObj[sProperties.propertyKey]['properties'] = tempFieldSecObj[nastedKey]['properties'] ;
+              }
+              if(!refField){
+                tempFieldObj[sProperties.propertyKey]['properties'][nastedKey] = tempFieldSecObj[nastedKey];
+              }            
 
             }
           } else {
@@ -505,13 +557,13 @@ export class CreateEntityComponent implements OnInit {
         return tempFieldObj;
       } else if (sProperties.hasOwnProperty('isRefSchema')) {
 
-        for (let i = 0; i < sProperties.data.length; i++) {
+        for (let i = 0; i < sProperties['definitions'].data.length; i++) {
 
-          if (sProperties.data[i].hasOwnProperty('propertyKey')) {
-            let dataObj = this.convertIntoSBRCSchema(sProperties.data[i]);
-            this.secFieldObj[sProperties.data[i].propertyKey] = dataObj[sProperties.data[i].propertyKey]
+          if (sProperties['definitions'].data[i].hasOwnProperty('propertyKey')) {
+            let dataObj = this.convertIntoSBRCSchema(sProperties['definitions'].data[i]);
+            this.secFieldObj[sProperties['definitions'].data[i].propertyKey] = dataObj[sProperties['definitions'].data[i].propertyKey]
           } else {
-            let dataObj = sProperties.data[i];
+            let dataObj = sProperties['definitions'].data[i];
             this.secFieldObj[dataObj.key] = {
               "$id": "#/properties/" + dataObj.key,
               "type": dataObj.type,
@@ -523,8 +575,7 @@ export class CreateEntityComponent implements OnInit {
               this.secFieldObj[dataObj.key]['enum'] = dataObj.data.enum;
             }
 
-            dataObj[sProperties.data[i].key]
-
+            dataObj[sProperties['definitions'].data[i].key]
           }
         }
 
@@ -983,16 +1034,17 @@ export class CreateEntityComponent implements OnInit {
   openEntityModal(action, i) {
 
     if (action == 'add') {
+      this.addSchema = true;   
       this.entityName = '';
       this.description = '';
     } else {
+      this.addSchema = false;
       this.entityName = this.usecaseSchema[i].title;
       this.description = this.usecaseSchema[i].description;
       this.activeMenuNo = i;
     }
 
     this.actionIs = action;
-
   }
 
   openEntity(index, entitykey) {
@@ -1496,11 +1548,15 @@ export class CreateEntityComponent implements OnInit {
         this.addCrtTemplateFields(this.usecaseSchema[i]);
       }
 
-      let cJson = this.convertIntoSBRCSchema(this.usecaseSchema[i].definitions);
+      if(this.usecaseSchema[i].isRefSchema){
+        this.cJson = this.convertIntoSBRCSchema(this.usecaseSchema[i]);
+      }else {
+        this.cJson = this.convertIntoSBRCSchema(this.usecaseSchema[i].definitions);
+      }
 
-      if (cJson) {
+      if (this.cJson) {
         tempProperty[i].definitions = {};
-        tempProperty[i].definitions = cJson;
+        tempProperty[i].definitions = this.cJson;
       }
 
       this.isNew = (tempProperty[i].hasOwnProperty('osid') ? false : true);

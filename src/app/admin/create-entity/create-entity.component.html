@@ -387,7 +387,8 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content mt-5">
                 <div class="modal-header pt-4 border-0">
-                    <h3 class="heading-5">{{'ADD_SCHEMA' | translate}}</h3>
+                    <h3 *ngIf="addSchema" class="heading-5">{{'ADD_SCHEMA' | translate}}</h3>
+                    <h3 *ngIf="!addSchema" class="heading-5">{{'EDIT_SCHEMA' | translate}}</h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
                 </div>

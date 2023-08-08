@@ -7,7 +7,8 @@ import { GeneralService } from 'src/app/services/general/general.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastMessageService } from '../../services/toast-message/toast-message.service';
 import { FormioJsonService } from './schema-to-formiojson';
-import { SchemaBodyService } from './schema-body'
+import { SchemaBodyService } from './schema-body';
+import { OwnershipComponent } from '../ownership/ownership.component'
 
 
 @Component({
@@ -19,6 +20,8 @@ export class CreateEntityComponent implements OnInit {
   public editorOptions: JsonEditorOptions;
 
   @ViewChild(JsonEditorComponent) jsonEditor: JsonEditorComponent;
+  @ViewChild(OwnershipComponent) OwnershipComp: OwnershipComponent;
+
   params: any;
   usecase: any;
   entity: any;
@@ -1870,6 +1873,11 @@ export class CreateEntityComponent implements OnInit {
     setTimeout(() => {
       this.openEntity(index, this.usecaseSchema[index].title);
     }, 700);
+  }
+
+  saveOwnershipAttributes() {
+    this.OwnershipComp.submitOwnershipForm();
+    this.nextStep();
   }
 
 }

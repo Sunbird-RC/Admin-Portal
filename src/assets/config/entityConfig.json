@@ -52,7 +52,6 @@
         },
         "issuance": {
             "name": "issuance",
-            "commonField" : "/assets/schemas/certificate-issuance/Common.json",
             "steps" : [
                 {
                     "title" : "Create Schema",
@@ -68,10 +67,6 @@
                 }
             ],
             "entity": [
-                {
-                    "entityName": "Common",
-                    "schemaUrl": "/assets/schemas/certificate-issuance/Common.json" 
-                },
                 {
                     "entityName": "Skill Certificate",
                     "schemaUrl": "/assets/schemas/certificate-issuance/SkillCertificate.json"

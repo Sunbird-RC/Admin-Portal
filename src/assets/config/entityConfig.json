@@ -52,6 +52,7 @@
         },
         "issuance": {
             "name": "issuance",
+            "commonField" : "/assets/schemas/certificate-issuance/Common.json",
             "steps" : [
                 {
                     "title" : "Create Schema",
@@ -67,6 +68,10 @@
                 }
             ],
             "entity": [
+                {
+                    "entityName": "Common",
+                    "schemaUrl": "/assets/schemas/certificate-issuance/Common.json" 
+                },
                 {
                     "entityName": "Skill Certificate",
                     "schemaUrl": "/assets/schemas/certificate-issuance/SkillCertificate.json"
@@ -99,6 +104,10 @@
                 }
             ],
             "entity": [{
+                "entityName": "Common",
+                "schemaUrl": "/assets/schemas/divoc/Common.json" 
+            },
+            {
                 "entityName": "Vaccination Certificate",
                 "schemaUrl": "/assets/schemas/divoc/VaccinationCertificate.json"
             },
@@ -118,15 +127,7 @@
                 {
                     "title" : "Configure Workflow",
                     "key" : "configurations"
-                },
-                {
-                    "title" : "Create VC template",
-                    "key" : "create-vc"
-                },
-                {
-                    "title" : "Ownership",
-                    "key" : "ownership"
-                },  
+                },               
                 {
                     "title" : "Publish",
                     "key" : "test-publish"
@@ -172,6 +173,52 @@
             ],
             "entity": []
         },
+        "attestvcmodule": {
+            "name": "attestvcmodule",
+            "commonField" : "",
+            "steps" : [
+                {
+                    "title" : "Create Schema",
+                    "key" : "createSchema"
+                },
+                {
+                    "title" : "Configure Workflow",
+                    "key" : "configurations"
+                },
+                {
+                    "title" : "Create VC template",
+                    "key" : "create-vc"
+                },                  
+                {
+                    "title" : "Publish",
+                    "key" : "test-publish"
+                }
+            ],
+            "entity": []
+        },
+        "attestownershipmodule": {
+            "name": "attestownershipmodule",
+            "commonField" : "",
+            "steps" : [
+                {
+                    "title" : "Create Schema",
+                    "key" : "createSchema"
+                },
+                {
+                    "title" : "Configure Workflow",
+                    "key" : "configurations"
+                },
+                {
+                    "title" : "Ownership",
+                    "key" : "ownership"
+                },  
+                {
+                    "title" : "Publish",
+                    "key" : "test-publish"
+                }
+            ],
+            "entity": []
+        },
         "vcownershipmodule": {
             "name": "vcownershipmodule",
             "commonField" : "",
@@ -180,6 +227,33 @@
                     "title" : "Create Schema",
                     "key" : "createSchema"
                 },
+                {
+                    "title" : "Create VC template",
+                    "key" : "create-vc"
+                },  
+                {
+                    "title" : "Ownership",
+                    "key" : "ownership"
+                },
+                {
+                    "title" : "Publish",
+                    "key" : "test-publish"
+                }
+            ],
+            "entity": []
+        },
+        "registrymodule": {
+            "name": "registrymodule",
+            "commonField" : "",
+            "steps" : [
+                {
+                    "title" : "Create Schema",
+                    "key" : "createSchema"
+                },
+                {
+                    "title" : "Configure Workflow",
+                    "key" : "configurations"
+                }, 
                 {
                     "title" : "Create VC template",
                     "key" : "create-vc"

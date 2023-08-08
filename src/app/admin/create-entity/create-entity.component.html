@@ -502,3 +502,47 @@
     </div>
 </div>
 <!-- Modal End : Delete Entity -->
+
+<!-- Modal Start : Duplicate Entity -->
+<div class="modal right fade" #duplicateEntity tabindex="-1" role="dialog" aria-labelledby="addEntity"
+    data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content mt-5">
+            <div class="modal-header pt-4 border-0 justify-content-center">
+                <h3 class="heading-5 ">{{'Duplicate Schema Name' | translate}}</h3>
+            </div>
+            <div class="container mt-1 mb-2">
+                <div class="mb-3 justify-content-center p-3">
+                    <div class="l12 ml-4"><i class="fa fa-info-circle" aria-hidden="true" style="color: red;"></i>                        
+                        <ng-container *ngIf="duplicateSchemas.length > 1; else singleError">
+                            The Schema name
+                            <span *ngFor="let error of duplicateSchemas; let i = index; let last = last">
+                                <ng-container *ngIf="i === 0">
+                                    "<strong>{{ error }}</strong>"
+                                </ng-container>
+                                <ng-container *ngIf="i > 0 && !last">
+                                    , "<strong>{{ error }}</strong>"
+                                </ng-container>
+                                <ng-container *ngIf="i > 0 && last">
+                                    and "<strong>{{ error }}</strong>" already exist.
+                                </ng-container>
+                            </span>
+                        </ng-container>
+                        <ng-template #singleError>
+                            The Schema name "<strong>{{ duplicateSchemas[0] }}</strong>" already exists.
+                        </ng-template>
+                    </div>&nbsp;
+                    <div class="l12 ml-5">{{'Please rename schema name by clicking edit.' | translate}}</div>
+                </div>
+
+                <div class="mt-4 d-flex justify-content-center">
+                    <button data-dismiss="modal" aria-label="Close"
+                        class="btn text-capitalize bg-color-primary text-white fw-bold" (click)="hideModal()">{{'OK' |
+                        translate}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="custom-backdrop" [ngClass]="{ 'show': isModalOpen }"></div>
+<!-- Modal End : Duplicate Entity -->

@@ -427,3 +427,17 @@ background-color:var(--primaryColorBlue) !important;
   color: #000000;
 }
 /*  advance editor: End */
+
+.custom-backdrop{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Adjust the alpha value for the desired darkness */
+  display: none;
+}
+
+.custom-backdrop.show {
+  display: block;
+}

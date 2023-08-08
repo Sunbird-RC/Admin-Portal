@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, AfterContentChecked} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SchemaService } from '../../services/data/schema.service';
 import { JsonEditorComponent, JsonEditorOptions } from 'ang-jsoneditor';
@@ -15,10 +15,11 @@ import { SchemaBodyService } from './schema-body'
   templateUrl: './create-entity.component.html',
   styleUrls: ['./create-entity.component.scss']
 })
-export class CreateEntityComponent implements OnInit {
+export class CreateEntityComponent implements OnInit, AfterContentChecked {
   public editorOptions: JsonEditorOptions;
 
   @ViewChild(JsonEditorComponent) jsonEditor: JsonEditorComponent;
+  @ViewChild('duplicateEntity') modalElement: ElementRef;
   params: any;
   usecase: any;
   entity: any;
@@ -103,6 +104,9 @@ export class CreateEntityComponent implements OnInit {
   usecaseSchemaData: any;
   cJson: {};
   addSchema: boolean = false;
+  errArr: any[] = [];
+  isModalOpen: boolean = false;
+  duplicateSchemas: any[];
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -161,6 +165,9 @@ export class CreateEntityComponent implements OnInit {
 
   }
 
+  ngAfterContentChecked(){
+    this.duplicateSchemas = [ ...new Set(this.errArr)];
+  }
   readSchema(res) {
     for (let i = 0; i < res.length; i++) {
       if (typeof (res[i].schema) == 'string') {
@@ -1535,7 +1542,6 @@ export class CreateEntityComponent implements OnInit {
 
 
   createSchema() {
-    let errArr = [];
     let tempProperty: any;
     tempProperty = this.usecaseSchema;
 
@@ -1585,39 +1591,39 @@ export class CreateEntityComponent implements OnInit {
             console.log(res);
             this.usecaseSchema[i].osid = res.result.Schema.osid;
 
-            if (i == this.usecaseSchema.length - 1 && !errArr.length) {
+            if (i == this.usecaseSchema.length - 1 && !this.errArr.length) {
               this.getEntityProperties();
               this.nextStep();
              }
           
              else if (i == this.usecaseSchema.length - 1) {
-               this.showErrMsg(errArr);
+               this.showErrMsg(this.errArr);
             }
           }, (err) => {
-            errArr.push(this.usecaseSchema[i].title);
+            this.errArr.push(this.usecaseSchema[i].title);
             if (i == this.usecaseSchema.length - 1) {
-              this.showErrMsg(errArr);
+              this.showErrMsg(this.errArr);
             }
           })
         } else if (this.isStatus != 'PUBLISHED') {
 
           this.generalService.putData('/Schema', osid, payload).subscribe((res) => {
 
-             if (i == this.usecaseSchema.length - 1 && !errArr.length) {
+             if (i == this.usecaseSchema.length - 1 && !this.errArr.length) {
               this.getEntityProperties();
               this.nextStep();
             } else if (i == this.usecaseSchema.length - 1) {
-              this.showErrMsg(errArr);
+              this.showErrMsg(this.errArr);
             }
           }, (err) => {
-            errArr.push(this.usecaseSchema[i].title);
+            this.errArr.push(this.usecaseSchema[i].title);
 
-            if (errArr.length == 1 && (errArr.includes('Common') || errArr.includes('common'))) {
+            if (this.errArr.length == 1 && (this.errArr.includes('Common') || this.errArr.includes('common'))) {
 
               console.log('err ----', err);
             } else {
               if (i == this.usecaseSchema.length - 1) {
-                this.showErrMsg(errArr);
+                this.showErrMsg(this.errArr);
               }
             }
           })
@@ -1636,8 +1642,19 @@ export class CreateEntityComponent implements OnInit {
 
   showErrMsg(errArr) {
     this.getEntityProperties();
-    this.toastMsg.error('error', errArr + " name schema already exists, please rename ");
+    this.isModalOpen = true;
+    const modal: HTMLElement = this.modalElement.nativeElement;
+    modal.classList.add('show');
+    modal.style.display = 'block';
   }
+
+  hideModal(): void {
+    this.isModalOpen = false;
+    const modal: HTMLElement = this.modalElement.nativeElement;
+    modal.classList.remove('show');
+    modal.style.display = 'none';
+  }
+  
 
 
   saveConfiguration() {

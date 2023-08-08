@@ -7,7 +7,8 @@ import { GeneralService } from 'src/app/services/general/general.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastMessageService } from '../../services/toast-message/toast-message.service';
 import { FormioJsonService } from './schema-to-formiojson';
-import { SchemaBodyService } from './schema-body'
+import { SchemaBodyService } from './schema-body';
+import { OwnershipComponent } from '../ownership/ownership.component'
 
 
 @Component({
@@ -20,6 +21,7 @@ export class CreateEntityComponent implements OnInit, AfterContentChecked {
 
   @ViewChild(JsonEditorComponent) jsonEditor: JsonEditorComponent;
   @ViewChild('duplicateEntity') modalElement: ElementRef;
+
   params: any;
   usecase: any;
   entity: any;
@@ -1887,6 +1889,11 @@ export class CreateEntityComponent implements OnInit, AfterContentChecked {
     setTimeout(() => {
       this.openEntity(index, this.usecaseSchema[index].title);
     }, 700);
+  }
+
+  saveOwnershipAttributes() {
+    this.OwnershipComp.submitOwnershipForm();
+    this.nextStep();
   }
 
 }

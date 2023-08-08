@@ -368,7 +368,7 @@
                 <create-vc-template [usecaseSchema]="usecaseSchemaData"></create-vc-template>
             </div>
             <div *ngIf="isActive == 'ownership'">
-                <ownership></ownership>
+                <ownership [usecaseSchema]="usecaseSchemaData"></ownership>
             </div>
             <div class="ht-100" *ngIf="isActive == 'test-publish'"> 
                 <publish></publish>           
@@ -476,7 +476,9 @@
                     class="btn text-capitalize float-end bg-color-primary text-white fw-bold px-3 my-2">{{'GO_TO_DASHBOARD' | translate}} </button></a>
                 <button *ngIf="isActive == 'configurations'" (click)="nextStep();"
                     class="btn bg-color-secondary  color-sec fw-bold float-end submit-button px-3 my-2 ml-2 mr-2 ">{{'SKIP' | translate}}</button> &nbsp;
-                <button *ngIf="isActive == 'create-vc' || isActive == 'ownership'" (click)="nextStep();"
+                <button *ngIf="isActive == 'ownership'" (click)="saveOwnershipAttributes();"
+                    class="btn  fw-bold float-end bg-color-primary bg-color-primary-sm px-3 my-2 ml-2 mr-2 text-white">{{'SAVE_AS_DRAFT' | translate}}</button>
+                <button *ngIf="isActive == 'create-vc'" (click)="nextStep();"
                     class="btn  fw-bold float-end bg-color-primary bg-color-primary-sm px-3 my-2 ml-2 mr-2 text-white">{{'SAVE_AS_DRAFT' | translate}}</button>
                 &nbsp;
             </div>

@@ -21,6 +21,7 @@ export class CreateEntityComponent implements OnInit, AfterContentChecked {
 
   @ViewChild(JsonEditorComponent) jsonEditor: JsonEditorComponent;
   @ViewChild('duplicateEntity') modalElement: ElementRef;
+  @ViewChild(OwnershipComponent) OwnershipComp: OwnershipComponent;
 
   params: any;
   usecase: any;

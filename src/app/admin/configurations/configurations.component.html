@@ -53,20 +53,20 @@
       </div>
     </div>
 
-    <div class="pl-3 white-background">
+    <div *ngIf="addvc" class="pl-3 white-background card d-flex flex-column justify-content-between p-2 mr-2 mb-2">
       <div class="row gy-3 gx-3">
         <div class="col-10">
           <p class="card-title text-color fw-bold"> {{'VERIFIABLE_CREDENTIAL' | translate}}</p>
         </div>
         <div class="col-2">
-          <button class="btn bg-color-secondary submit-button color-sec">
+          <button class="btn bg-color-secondary submit-button color-sec" (click)="addVC()">
             +{{'ADD' | translate}}
           </button>
         </div>
       </div>
 
       <!-- -->
-      <div class="row mt-2">
+      <div class="row mt-2 ">
         <div class="col-sm-5" *ngFor="let item of schemaItems">
           <div
             *ngIf="(item?.schema?._osConfig?.certificateTemplates | keyvalue)?.length" >

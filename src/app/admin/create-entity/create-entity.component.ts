@@ -9,6 +9,7 @@ import { ToastMessageService } from '../../services/toast-message/toast-message.
 import { FormioJsonService } from './schema-to-formiojson';
 import { SchemaBodyService } from './schema-body';
 import { OwnershipComponent } from '../ownership/ownership.component'
+import { Console, log } from 'console';
 
 
 @Component({
@@ -166,6 +167,9 @@ export class CreateEntityComponent implements OnInit, AfterContentChecked {
 
   ngAfterContentChecked(){
     this.duplicateSchemas = [ ...new Set(this.errArr)];
+    console.log("errArr", this.errArr);
+    console.log("duplicate", this.duplicateSchemas);
+    
   }
   readSchema(res) {
     for (let i = 0; i < res.length; i++) {
@@ -1542,6 +1546,7 @@ export class CreateEntityComponent implements OnInit, AfterContentChecked {
 
 
   createSchema() {
+    this.errArr = []
     let tempProperty: any;
     tempProperty = this.usecaseSchema;
 

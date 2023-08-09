@@ -145,18 +145,14 @@ export class CreateEntityComponent implements OnInit, AfterContentChecked {
         this.isActive = 'createSchema'
       }
 
-      switch (this.currentTab) {
-        case 0: this.isActive = 'createSchema';
+      this.schemaService.getEntitySchemaJSON().subscribe((data) => {
+        this.processSteps = data['usecase'][this.usecase]['steps'];
+        for (let i = 0; i < this.processSteps.length; i++) {
+          i = this.currentTab;
+          this.isActive = this.processSteps[i]['key'];
           break;
-        case 1: this.isActive = 'configurations'
-          break;
-        case 2: this.isActive = 'create-vc'
-          break;
-        case 3: this.isActive = 'ownership'
-          break;
-        case 4: this.isActive = 'test-publish'
-          break;
-      }
+        }
+      })
 
       if (this.params.hasOwnProperty('usecase')) {
         this.usecase = params.usecase.toLowerCase();
@@ -209,9 +205,10 @@ export class CreateEntityComponent implements OnInit, AfterContentChecked {
   getSchema() {
     this.usecaseSchema = [];
     this.generalService.getData('/Schema').subscribe((res) => {
+      this.usecase = res[0].referedSchema;
       if (res) {
         this.schemaService.getEntitySchemaJSON().subscribe((data) => {
-          this.processSteps = data['usecase']['education']['steps'];
+          this.processSteps = data['usecase'][this.usecase]['steps'];
           this.readSchema(res);
           this.initializeTabsAndMenus();
         });
@@ -300,8 +297,8 @@ export class CreateEntityComponent implements OnInit, AfterContentChecked {
             if (!this.containCommonField) {
               this.usecaseSchema.unshift(this.schemaBodyService.commonSchemaBody());
             }
-
-            this.getEntityProperties();
+          
+              this.getEntityProperties();             
             if (this.params.entity) {
               this.location.replaceState('/create/' + this.currentTab + '/' + this.usecase + '/' + this.params.entity);
             } else {

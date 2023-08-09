@@ -105,7 +105,6 @@ export class OwnershipComponent implements OnInit, OnChanges {
   }
 
   submitOwnershipForm() {
-    console.log("ownership Submitted!!")
     if(this.ownershipForm.value.uniqueField.length === 0) {
       return;
     }
@@ -118,7 +117,6 @@ export class OwnershipComponent implements OnInit, OnChanges {
 
     for(let i = 0; i < this.items.length; i++){
       if(this.entityName === this.items[i].name) {
-        console.log("reached In");
         let ownershipObj = {};
         let alternateOwnershipObj = {};
         let editSchema = this.items[i]["schema"];

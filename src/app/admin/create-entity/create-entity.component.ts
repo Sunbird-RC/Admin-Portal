@@ -9,6 +9,7 @@ import { ToastMessageService } from '../../services/toast-message/toast-message.
 import { FormioJsonService } from './schema-to-formiojson';
 import { SchemaBodyService } from './schema-body';
 import { OwnershipComponent } from '../ownership/ownership.component'
+import { ConfigWorkflowComponent } from '../config-workflow/config-workflow.component'
 
 
 @Component({
@@ -21,6 +22,8 @@ export class CreateEntityComponent implements OnInit, AfterContentChecked {
 
   @ViewChild(JsonEditorComponent) jsonEditor: JsonEditorComponent;
   @ViewChild('duplicateEntity') modalElement: ElementRef;
+  @ViewChild(OwnershipComponent) OwnershipComp: OwnershipComponent;
+  @ViewChild(ConfigWorkflowComponent) ConfigWorkflowComp: ConfigWorkflowComponent;
 
   params: any;
   usecase: any;
@@ -1893,6 +1896,11 @@ export class CreateEntityComponent implements OnInit, AfterContentChecked {
 
   saveOwnershipAttributes() {
     this.OwnershipComp.submitOwnershipForm();
+    this.nextStep();
+  }
+
+  saveConfigWorkflow() {
+    this.ConfigWorkflowComp.submitConfigWorkflowForm();
     this.nextStep();
   }
 

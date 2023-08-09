@@ -8,8 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ToastMessageService } from '../../services/toast-message/toast-message.service';
 import { FormioJsonService } from './schema-to-formiojson';
 import { SchemaBodyService } from './schema-body';
-import { OwnershipComponent } from '../ownership/ownership.component'
-import { Console, log } from 'console';
+import { OwnershipComponent } from '../ownership/ownership.component';
 
 
 @Component({
@@ -166,10 +165,7 @@ export class CreateEntityComponent implements OnInit, AfterContentChecked {
   }
 
   ngAfterContentChecked(){
-    this.duplicateSchemas = [ ...new Set(this.errArr)];
-    console.log("errArr", this.errArr);
-    console.log("duplicate", this.duplicateSchemas);
-    
+    this.duplicateSchemas = [ ...new Set(this.errArr)];    
   }
   readSchema(res) {
     for (let i = 0; i < res.length; i++) {

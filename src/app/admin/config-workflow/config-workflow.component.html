@@ -28,14 +28,14 @@
                 <div class="mb-3 d-flex">
                     <div class="form-check">
                         <input class="form-check-input" type="radio"
-                            [id]="'autoAttestation'+workflowIndex" formControlName="attestation_type" value="auto_attestation" [defaultChecked]="true">
+                            [id]="'autoAttestation'+workflowIndex" formControlName="attestation_type" value="AUTO_ATTESTATION" [defaultChecked]="true">
                         <label class="form-check-label" [for]="'autoAttestation'+workflowIndex">
                           {{'AUTO_ATTESTATION' | translate}}
                         </label>
                     </div>
                     <div class="form-check mx-3">
                         <input class="form-check-input" type="radio"
-                            [id]="'manual'+workflowIndex" checked formControlName="attestation_type" value="manual">
+                            [id]="'manual'+workflowIndex" checked formControlName="attestation_type" value="MANUAL">
                         <label class="form-check-label" [for]="'manual'+workflowIndex">
                           {{'MANUAL_ATTESTATION' | translate}}
                         </label>
@@ -52,10 +52,11 @@
                                   <div class="mb-3">
                                       <span class="fs-12 fw-bold">{{'ATTESTOR' | translate}}</span><br />
                                       <select name="selectEntity" id="selectEntity" class="w-100 br-4 border-1 border-light fs-14 p-3"
-                                        formControlName="selectEntity">
-                                          <option value="" disabled hidden>{{'SELECT_FIELD' | translate}}</option>
-                                          <option value="option1">option1</option>
-                                          <option value="option2">option2</option>
+                                        formControlName="selectEntity" (change)="setSelectOptions(workflowIndex, attestorIndex, workflowForm.get('workflowItems')['value'][workflowIndex]?.attestorConditions[attestorIndex].selectEntity)">
+                                          <option value="" disabled selected hidden>{{'SELECT_FIELD' | translate}}</option>
+                                          <ng-container *ngFor="let entity of entityList">
+                                          <option *ngIf="entity!=entityName" [value]="entity">{{entity}}</option>
+                                        </ng-container>
                                       </select>
                                   </div>
                               </div>
@@ -78,7 +79,7 @@
                               </div>
                             </div>
                           </div>
-                          <div formArrayName="fieldConditions">
+                          <fieldset [disabled]="!workflowForm.get('workflowItems')['value'][workflowIndex]?.attestorConditions[attestorIndex].selectEntity" formArrayName="fieldConditions">
                             <div
                               *ngFor="let child of workflowForm.get('workflowItems')['controls'][workflowIndex].get('attestorConditions')['controls'][attestorIndex].get('fieldConditions')['controls'];
                               let conditionIndex = index;"
@@ -90,8 +91,7 @@
                                             class="w-100 br-4 border-1 border-light fs-14 p-3"
                                             formControlName="selectConditionOne">
                                             <option value="" disabled hidden>{{'SELECT_FIELD' | translate}}</option>
-                                            <option value="option1">option1</option>
-                                            <option value="option2">option2</option>
+                                            <option *ngFor="let child of conditionSelectOptions[workflowIndex]['workflow'][attestorIndex]['attestor']" [value]="child">{{child}}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -111,8 +111,7 @@
                                             class="w-100 br-4 border-1 border-light fs-14 p-3"
                                             formControlName="selectConditionTwo">
                                             <option value="" disabled hidden>{{'SELECT_FIELD' | translate}}</option>
-                                            <option value="option1">option1</option>
-                                            <option value="option2">option2</option>
+                                            <option *ngFor="let child of currentEntityProperties" [value]="child">{{ child }}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -123,7 +122,7 @@
                                 </div>
                               </div>
                             </div>
-                          </div>
+                          </fieldset>
                               <a class="link-primary offset-2" role="button" ><span class="fs-12 mt-n2"
                                   (click)="addFieldCondition(workflowIndex, attestorIndex)">
                                   + {{'ADD_CONDITION' | translate}}

@@ -35,6 +35,8 @@ export class ConfigWorkflowComponent implements OnInit {
   privateFieldsName: string;
   temp_arr: string[];
   additionInputArr: any = [];
+  conditionSelectOptions: any = [];
+  currentEntityProperties: any = [];
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -113,6 +115,7 @@ export class ConfigWorkflowComponent implements OnInit {
         this.fieldList.push(this.schemaName[i]["definitions"]);
         selectedMenuList = this.fieldList.find((e) => e[this.entityName]);
       }
+      this.setEntityProperties(this.entityName);
 
     //  this.onChangeSelect(this.entityName);
     });
@@ -137,6 +140,7 @@ export class ConfigWorkflowComponent implements OnInit {
 
   addWorkflowItems() {
     this.workflowItems().push(this.newWorkflowItems());
+    console.log(this.conditionSelectOptions)
   }
 
   removeWorkflowItems(wIndex) {
@@ -161,10 +165,12 @@ export class ConfigWorkflowComponent implements OnInit {
 
   addNewAttestCondition(wIndex) {
     this.attestConditions(wIndex).push(this.newAttestCondition());
+    this.conditionSelectOptions[wIndex]?this.conditionSelectOptions[wIndex]['workflow'].push({ "attestor": [] }):this.conditionSelectOptions[wIndex] = { "workflow": [{ "attestor": [] }] };
   }
 
   removeAttestCondition(wIndex: number, aIndex: number) {
     this.attestConditions(wIndex).removeAt(aIndex);
+    this.conditionSelectOptions[wIndex]['workflow'].splice(aIndex, 1);
   }
 
 
@@ -206,6 +212,7 @@ export class ConfigWorkflowComponent implements OnInit {
       this.global_properties_student = [];
 
       this.onChangeSelect(this.entityName);
+      this.setEntityProperties(this.entityName);
     }
   }
 
@@ -238,6 +245,16 @@ export class ConfigWorkflowComponent implements OnInit {
      console.log(this.additionInputArr);
 
      // add key in additionInputArr - todo
+    }
+  }
+
+  setEntityProperties(item: any) {
+    this.currentEntityProperties = [];
+    const attest = this.fieldList.find((e) => e[item]);
+    const properties = attest?.[item]?.properties;
+    const propertiesKeys = Object.keys(properties);
+    for (let i = 0; i < propertiesKeys.length; i++) {
+      this.currentEntityProperties.push(item+"."+properties[propertiesKeys[i]].title);
     }
   }
 
@@ -290,6 +307,17 @@ export class ConfigWorkflowComponent implements OnInit {
           );
         }
       }
+    }
+  }
+
+  setSelectOptions(wIndex: number, aIndex: number, key: string) {
+    console.log("setSelectOptions Triggered", key);
+    this.conditionSelectOptions[wIndex]['workflow'][aIndex]['attestor'] = [];
+    const attest = this.fieldList.find((e) => e[key]);
+    const properties = attest?.[key]?.properties;
+    const propertiesKeys = Object.keys(properties);
+    for (let i = 0; i < propertiesKeys.length; i++) {
+      this.conditionSelectOptions[wIndex]['workflow'][aIndex]['attestor'].push(key+"."+properties[propertiesKeys[i]].title);
     }
   }
 
@@ -641,6 +669,24 @@ export class ConfigWorkflowComponent implements OnInit {
     keyExists(ob);
   
     return path.join(".");
+  }
+
+  submitConfigWorkflowForm() {
+    let submittedWorkflowData = this.workflowForm.value.workflowItems;
+    console.log(submittedWorkflowData);
+    let attestationPolicies = [];
+
+    if(submittedWorkflowData.length === 0){
+      return;
+    }
+
+    for(let i = 0; i < submittedWorkflowData.length; i++) {
+      let attestationPolicyItem = {
+        "name": submittedWorkflowData[i].workflowname,
+        "type": submittedWorkflowData[i].attestation_type,
+      }
+    }
+
   }
 }
 

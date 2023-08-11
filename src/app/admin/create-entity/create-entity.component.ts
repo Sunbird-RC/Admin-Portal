@@ -167,7 +167,7 @@ export class CreateEntityComponent implements OnInit, AfterContentChecked {
   }
 
   ngAfterContentChecked(){
-    this.duplicateSchemas = [ ...new Set(this.errArr)];
+    this.duplicateSchemas = [ ...new Set(this.errArr)];    
   }
   readSchema(res) {
     for (let i = 0; i < res.length; i++) {
@@ -1544,6 +1544,7 @@ export class CreateEntityComponent implements OnInit, AfterContentChecked {
 
 
   createSchema() {
+    this.errArr = []
     let tempProperty: any;
     tempProperty = this.usecaseSchema;
 

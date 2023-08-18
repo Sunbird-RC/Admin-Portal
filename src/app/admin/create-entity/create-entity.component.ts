@@ -1543,7 +1543,7 @@ export class CreateEntityComponent implements OnInit, AfterContentChecked {
   }
 
 
-  createSchema() {
+  createSchema(moveNext = false) {
     this.errArr = []
     let tempProperty: any;
     tempProperty = this.usecaseSchema;
@@ -1596,7 +1596,7 @@ export class CreateEntityComponent implements OnInit, AfterContentChecked {
 
             if (i == this.usecaseSchema.length - 1 && !this.errArr.length) {
               this.getEntityProperties();
-              this.nextStep();
+              moveNext ? this.nextStep() : '';
              }
           
              else if (i == this.usecaseSchema.length - 1) {
@@ -1614,7 +1614,7 @@ export class CreateEntityComponent implements OnInit, AfterContentChecked {
 
              if (i == this.usecaseSchema.length - 1 && !this.errArr.length) {
               this.getEntityProperties();
-              this.nextStep();
+              moveNext ? this.nextStep() : '';
             } else if (i == this.usecaseSchema.length - 1) {
               this.showErrMsg(this.errArr);
             }
@@ -1633,10 +1633,9 @@ export class CreateEntityComponent implements OnInit, AfterContentChecked {
         } else {
           if (i == (this.usecaseSchema.length - 1)) {
             if (!i) {
-              this.nextStep();
+              moveNext ? this.nextStep() : '';
             }
           }
-
         }
       }
     }

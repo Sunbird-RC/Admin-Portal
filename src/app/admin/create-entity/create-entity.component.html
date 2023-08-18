@@ -460,12 +460,12 @@
             <div>
                 <button (click)="backStep()"
                     class="fs-14 fw-bold btn bg-color-secondary submit-button color-sec px-3 my-2 ml-2 mr-2 ">{{'BACK' | translate}}</button> &nbsp;
-                <button (click)="createSchema('')" *ngIf="isActive == 'createSchema'"
+                <button (click)="createSchema(true)" *ngIf="isActive == 'createSchema'"
                     [disabled]="!usecaseSchema[activeMenuNo]?.definitions?.data?.length"
                     class="btn text-capitalize fw-bold float-end bg-color-primary bg-color-primary-sm px-3 my-2 text-white">{{'SAVE_AND_NEXT' | translate}}
                     </button>
 
-                    <button *ngIf="isActive == 'createSchema'" (click)="createSchema(activeMenuNo);"
+                    <button *ngIf="isActive == 'createSchema'" (click)="createSchema();"
                     class="btn fw-bold float-end bg-color-primary bg-color-primary-sm px-3 my-2 ml-2 mr-2 text-white">{{'SAVE_AS_DRAFT' | translate}}</button>
                 &nbsp;
 
@@ -480,6 +480,8 @@
                     class="btn bg-color-secondary  color-sec fw-bold float-end submit-button px-3 my-2 ml-2 mr-2 ">{{'SKIP' | translate}}</button> &nbsp;
                 <button *ngIf="isActive == 'ownership'" (click)="saveOwnershipAttributes();"
                     class="btn  fw-bold float-end bg-color-primary bg-color-primary-sm px-3 my-2 ml-2 mr-2 text-white">{{'SAVE_AS_DRAFT' | translate}}</button>
+                <button *ngIf="isActive == 'ownership'" (click)="saveOwnershipAttributes();"
+                    class="btn  fw-bold float-end bg-color-primary bg-color-primary-sm px-3 my-2 ml-2 mr-2 text-white">{{'SAVE_AND_NEXT' | translate}}</button>
                 <button *ngIf="isActive == 'create-vc'" (click)="nextStep();"
                     class="btn  fw-bold float-end bg-color-primary bg-color-primary-sm px-3 my-2 ml-2 mr-2 text-white">{{'SAVE_AS_DRAFT' | translate}}</button>
                 &nbsp;

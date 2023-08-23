@@ -534,7 +534,6 @@ export class EditTemplateComponent implements OnInit {
       }
 
      this.generalService.putData('/Schema/', this.schemaOsid, payload).subscribe((res) => {
-      console.log("Here it is");
         this.router.navigate(['/create/' + this.vcStep + '/' + this.usecase + '/' + this.entityName]);
       });
     });

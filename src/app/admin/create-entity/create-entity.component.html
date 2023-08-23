@@ -482,7 +482,7 @@
                     class="btn  fw-bold float-end bg-color-primary bg-color-primary-sm px-3 my-2 ml-2 mr-2 text-white">{{'SAVE_AND_NEXT' | translate}}</button>
                 <button *ngIf="isActive == 'ownership'" (click)="saveOwnershipAttributes();"
                     class="btn  fw-bold float-end bg-color-primary bg-color-primary-sm px-3 my-2 ml-2 mr-2 text-white">{{'SAVE_AS_DRAFT' | translate}}</button>
-                <button *ngIf="isActive == 'create-vc'"
+                <button *ngIf="isActive == 'create-vc'" (click)="saveAsDraftMsg()"
                     class="btn  fw-bold float-end bg-color-primary bg-color-primary-sm px-3 my-2 ml-2 mr-2 text-white">{{'SAVE_AS_DRAFT' | translate}}</button>
                 &nbsp;
             </div>

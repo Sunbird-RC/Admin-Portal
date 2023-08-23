@@ -6,23 +6,28 @@
             "steps" : [
                 {
                     "title" : "Create Schema",
-                    "key" : "createSchema"
+                    "key" : "createSchema",
+                    "label":"Schema"
                 },
                 {
                     "title" : "Workflow",
-                    "key" : "configurations"
+                    "key" : "configurations",
+                    "label":"Workflow"
                 },
                 {
                     "title" : "Create VC template",
-                    "key" : "create-vc"
+                    "key" : "create-vc",
+                    "label":"Verifiable Credentials"
                 },
                 {
                     "title" : "Ownership",
-                    "key" : "ownership"
+                    "key" : "ownership",
+                    "label":"Ownership"
                 },
                 {
                     "title" : "Publish",
-                    "key" : "test-publish"
+                    "key" : "test-publish",
+                    "label":"Publish"
                 }
             ],
             "entity": [
@@ -55,15 +60,18 @@
             "steps" : [
                 {
                     "title" : "Create Schema",
-                    "key" : "createSchema"
+                    "key" : "createSchema",
+                    "label":"Schema"
                 },
                 {
                     "title" : "Create VC template",
-                    "key" : "create-vc"
+                    "key" : "create-vc",
+                    "label":"Verifiable Credentials"
                 },
                 {
                     "title" : "Publish",
-                    "key" : "test-publish"
+                    "key" : "test-publish",
+                    "label":"Publish"
                 }
             ],
             "entity": [
@@ -83,19 +91,23 @@
             "steps" : [
                 {
                     "title" : "Create Schema",
-                    "key" : "createSchema"
+                    "key" : "createSchema",
+                    "label":"Schema"
                 },
                 {
                     "title" : "Create VC template",
-                    "key" : "create-vc"
+                    "key" : "create-vc",
+                    "label":"Verifiable Credentials"
                 },
                 {
                     "title" : "Configure Roles",
-                    "key" : "configurations"
+                    "key" : "configurations",
+                    "label":"Configuration Roles"
                 },
                 {
                     "title" : "Publish",
-                    "key" : "test-publish"
+                    "key" : "test-publish",
+                    "label":"Publish"
                 }
             ],
             "entity": [{
@@ -117,15 +129,18 @@
             "steps" : [
                 {
                     "title" : "Create Schema",
-                    "key" : "createSchema"
+                    "key" : "createSchema",
+                    "label":"Schema"
                 },
                 {
                     "title" : "Configure Workflow",
-                    "key" : "configurations"
+                    "key" : "configurations",
+                    "label":"Workflow"
                 },               
                 {
                     "title" : "Publish",
-                    "key" : "test-publish"
+                    "key" : "test-publish",
+                    "label":"Publish"
                 }
             ],
             "entity": []
@@ -136,15 +151,18 @@
             "steps" : [
                 {
                     "title" : "Create Schema",
-                    "key" : "createSchema"
+                    "key" : "createSchema",
+                    "label":"Schema"
                 },
                 {
                     "title" : "Create VC template",
-                    "key" : "create-vc"
+                    "key" : "create-vc",
+                    "label":"Verifiable Credentials"
                 },               
                 {
                     "title" : "Publish",
-                    "key" : "test-publish"
+                    "key" : "test-publish",
+                    "label":"Publish"
                 }
             ],
             "entity": []
@@ -155,15 +173,18 @@
             "steps" : [
                 {
                     "title" : "Create Schema",
-                    "key" : "createSchema"
+                    "key" : "createSchema",
+                    "label":"Schema"
                 },
                 {
                     "title" : "Ownership",
-                    "key" : "ownership"
+                    "key" : "ownership",
+                    "label":"Ownership"
                 },
                 {
                     "title" : "Publish",
-                    "key" : "test-publish"
+                    "key" : "test-publish",
+                    "label":"Publish"
                 }
             ],
             "entity": []
@@ -174,19 +195,23 @@
             "steps" : [
                 {
                     "title" : "Create Schema",
-                    "key" : "createSchema"
+                    "key" : "createSchema",
+                    "label":"Schema"
                 },
                 {
                     "title" : "Configure Workflow",
-                    "key" : "configurations"
+                    "key" : "configurations",
+                    "label":"Workflow"
                 },
                 {
                     "title" : "Create VC template",
-                    "key" : "create-vc"
+                    "key" : "create-vc",
+                    "label":"Verifiable Credentials"
                 },                  
                 {
                     "title" : "Publish",
-                    "key" : "test-publish"
+                    "key" : "test-publish",
+                    "label":"Publish"
                 }
             ],
             "entity": []
@@ -197,19 +222,23 @@
             "steps" : [
                 {
                     "title" : "Create Schema",
-                    "key" : "createSchema"
+                    "key" : "createSchema",
+                    "label":"Schema"
                 },
                 {
                     "title" : "Configure Workflow",
-                    "key" : "configurations"
+                    "key" : "configurations",
+                    "label":"Workflow"
                 },
                 {
                     "title" : "Ownership",
-                    "key" : "ownership"
+                    "key" : "ownership",
+                    "label":"Ownership"
                 },  
                 {
                     "title" : "Publish",
-                    "key" : "test-publish"
+                    "key" : "test-publish",
+                    "label":"Publish"
                 }
             ],
             "entity": []
@@ -220,19 +249,23 @@
             "steps" : [
                 {
                     "title" : "Create Schema",
-                    "key" : "createSchema"
+                    "key" : "createSchema",
+                    "label":"Schema"
                 },
                 {
                     "title" : "Create VC template",
-                    "key" : "create-vc"
+                    "key" : "create-vc",
+                    "label":"Verifiable Credentials"
                 },  
                 {
                     "title" : "Ownership",
-                    "key" : "ownership"
+                    "key" : "ownership",
+                    "label":"Ownership"
                 },
                 {
                     "title" : "Publish",
-                    "key" : "test-publish"
+                    "key" : "test-publish",
+                    "label":"Publish"
                 }
             ],
             "entity": []
@@ -243,23 +276,28 @@
             "steps" : [
                 {
                     "title" : "Create Schema",
-                    "key" : "createSchema"
+                    "key" : "createSchema",
+                    "label":"Schema"
                 },
                 {
                     "title" : "Configure Workflow",
-                    "key" : "configurations"
+                    "key" : "configurations",
+                    "label":"Workflow"
                 }, 
                 {
                     "title" : "Create VC template",
-                    "key" : "create-vc"
+                    "key" : "create-vc",
+                    "label":"Verifiable Credentials"
                 },  
                 {
                     "title" : "Ownership",
-                    "key" : "ownership"
+                    "key" : "ownership",
+                    "label":"Ownership"
                 },
                 {
                     "title" : "Publish",
-                    "key" : "test-publish"
+                    "key" : "test-publish",
+                    "label":"Publish"
                 }
             ],
             "entity": []
@@ -270,11 +308,13 @@
             "steps" : [
                 {
                     "title" : "Create Schema",
-                    "key" : "createSchema"
+                    "key" : "createSchema",
+                    "label":"Schema"
                 },              
                 {
                     "title" : "Publish",
-                    "key" : "test-publish"
+                    "key" : "test-publish",
+                    "label":"Publish"
                 }
             ],
             "entity": []

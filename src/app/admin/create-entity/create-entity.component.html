@@ -474,15 +474,15 @@
                     </button>
                     <a  href="/home"> <button *ngIf="isActive == 'test-publish'"
                     class="btn text-capitalize float-end bg-color-primary text-white fw-bold px-3 my-2">{{'GO_TO_DASHBOARD' | translate}} </button></a>
+                <button *ngIf="isActive == 'configurations'" (click)="saveConfigWorkflow(true);"
+                    class="btn  fw-bold float-end bg-color-primary bg-color-primary-sm px-3 my-2 ml-2 mr-2 text-white">{{'SAVE_AND_NEXT' | translate}}</button>
                 <button *ngIf="isActive == 'configurations'" (click)="saveConfigWorkflow();"
                     class="btn  fw-bold float-end bg-color-primary bg-color-primary-sm px-3 my-2 ml-2 mr-2 text-white">{{'SAVE_AS_DRAFT' | translate}}</button>
-                <button *ngIf="isActive == 'configurations'" (click)="nextStep();"
-                    class="btn bg-color-secondary  color-sec fw-bold float-end submit-button px-3 my-2 ml-2 mr-2 ">{{'SKIP' | translate}}</button> &nbsp;
+                <button *ngIf="isActive == 'ownership'" (click)="saveOwnershipAttributes(true);"
+                    class="btn  fw-bold float-end bg-color-primary bg-color-primary-sm px-3 my-2 ml-2 mr-2 text-white">{{'SAVE_AND_NEXT' | translate}}</button>
                 <button *ngIf="isActive == 'ownership'" (click)="saveOwnershipAttributes();"
                     class="btn  fw-bold float-end bg-color-primary bg-color-primary-sm px-3 my-2 ml-2 mr-2 text-white">{{'SAVE_AS_DRAFT' | translate}}</button>
-                <button *ngIf="isActive == 'ownership'" (click)="saveOwnershipAttributes();"
-                    class="btn  fw-bold float-end bg-color-primary bg-color-primary-sm px-3 my-2 ml-2 mr-2 text-white">{{'SAVE_AND_NEXT' | translate}}</button>
-                <button *ngIf="isActive == 'create-vc'" (click)="nextStep();"
+                <button *ngIf="isActive == 'create-vc'"
                     class="btn  fw-bold float-end bg-color-primary bg-color-primary-sm px-3 my-2 ml-2 mr-2 text-white">{{'SAVE_AS_DRAFT' | translate}}</button>
                 &nbsp;
             </div>

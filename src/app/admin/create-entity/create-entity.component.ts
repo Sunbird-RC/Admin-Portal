@@ -1891,14 +1891,14 @@ export class CreateEntityComponent implements OnInit, AfterContentChecked {
     }, 700);
   }
 
-  saveOwnershipAttributes() {
+  saveOwnershipAttributes(moveNext = false) {
     this.OwnershipComp.submitOwnershipForm();
-    this.nextStep();
+    moveNext ? this.nextStep() : null;
   }
 
-  saveConfigWorkflow() {
+  saveConfigWorkflow(moveNext = false) {
     this.ConfigWorkflowComp.submitConfigWorkflowForm();
-    this.nextStep();
+    moveNext ? this.nextStep() : null;
   }
 
 }

@@ -112,6 +112,7 @@ export class CreateEntityComponent implements OnInit, AfterContentChecked {
   errArr: any[] = [];
   isModalOpen: boolean = false;
   duplicateSchemas: any[];
+  key: string;
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -1335,7 +1336,7 @@ export class CreateEntityComponent implements OnInit, AfterContentChecked {
         if (data.hasOwnProperty('description') && data.description) {
           tempjson1['description'] = data['description'];
         }
-
+       
         if (data.hasOwnProperty('placeholder') && data.placeholder) {
           tempjson1['placeholder'] = data['placeholder'];
         }
@@ -1596,7 +1597,7 @@ export class CreateEntityComponent implements OnInit, AfterContentChecked {
 
             if (i == this.usecaseSchema.length - 1 && !this.errArr.length) {
               this.getEntityProperties();
-              moveNext ? this.nextStep() : '';
+              moveNext ? this.nextStep() : this.saveAsDraftMsg();
              }
           
              else if (i == this.usecaseSchema.length - 1) {
@@ -1614,7 +1615,7 @@ export class CreateEntityComponent implements OnInit, AfterContentChecked {
 
              if (i == this.usecaseSchema.length - 1 && !this.errArr.length) {
               this.getEntityProperties();
-              moveNext ? this.nextStep() : '';
+              moveNext ? this.nextStep() : this.saveAsDraftMsg() ;
             } else if (i == this.usecaseSchema.length - 1) {
               this.showErrMsg(this.errArr);
             }
@@ -1633,7 +1634,7 @@ export class CreateEntityComponent implements OnInit, AfterContentChecked {
         } else {
           if (i == (this.usecaseSchema.length - 1)) {
             if (!i) {
-              moveNext ? this.nextStep() : '';
+              moveNext ? this.nextStep() : this.saveAsDraftMsg();
             }
           }
         }
@@ -1641,6 +1642,10 @@ export class CreateEntityComponent implements OnInit, AfterContentChecked {
     }
   }
 
+  saveAsDraftMsg(){
+    this.key = this.processSteps[this.currentTab].label; 
+    this.toastMsg.success('success', this.key + ' Saved as Draft Sucessfully!');
+  }
 
   showErrMsg(errArr) {
     this.getEntityProperties();
@@ -1893,12 +1898,12 @@ export class CreateEntityComponent implements OnInit, AfterContentChecked {
 
   saveOwnershipAttributes(moveNext = false) {
     this.OwnershipComp.submitOwnershipForm();
-    moveNext ? this.nextStep() : null;
+    moveNext ? this.nextStep() : this.saveAsDraftMsg();
   }
 
   saveConfigWorkflow(moveNext = false) {
     this.ConfigWorkflowComp.submitConfigWorkflowForm();
-    moveNext ? this.nextStep() : null;
+    moveNext ? this.nextStep() : this.saveAsDraftMsg();
   }
 
 }

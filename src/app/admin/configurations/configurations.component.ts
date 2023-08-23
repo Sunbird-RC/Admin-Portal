@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core'; 
 import { GeneralService } from 'src/app/services/general/general.service';
+import { SchemaService } from '../../services/data/schema.service';
 
 @Component({
   selector: 'configurations',
@@ -16,7 +17,8 @@ export class ConfigurationsComponent implements OnInit {
   addvc: boolean = true;
   params: any;
   currentTab: number;
-  constructor(public translate: TranslateService, public router : Router, public generalService: GeneralService) { 
+  allUsecases: any;
+  constructor(public translate: TranslateService, public router : Router, public generalService: GeneralService, public schemaService: SchemaService) { 
     this.tenantConfigList = ['Schema','Workflow','VC Template','Ownership','Roles','Theme']
   }
   imgUrl="/assets/images/certificate.svg";
@@ -32,16 +34,24 @@ export class ConfigurationsComponent implements OnInit {
         this.addvc = true;
       }
     })
+
+    this.schemaService.getEntitySchemaJSON().subscribe((data) => {
+      this.allUsecases = data['usecase'];
+    })
   }
 
   addVC(){
+    
     if(this.res.length > 1){
-      if(this.usecase == 'vcmodule' || this.usecase == 'divoc' || this.usecase == 'issuance'){
-        this.currentTab = 1;
-      }
-      else{
-        this.currentTab = 2;
-      }
+      Object.keys(this.allUsecases).forEach((key) => {
+        if(key === this.usecase){
+          this.allUsecases[key]['steps']?.forEach((step, i) => {
+            if(step['key'] === 'create-vc'){
+              this.currentTab = i.toString();
+            }
+          })
+        }
+      })
       this.router.navigateByUrl('/create/' + this.currentTab  + '/' + this.usecase + '/' );
     }
     else{

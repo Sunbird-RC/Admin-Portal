@@ -45,6 +45,7 @@ export class EditTemplateComponent implements OnInit {
   entityName: any;
   usecase: any;
   schemaOsid: string;
+  vcStep: string;
 
   constructor(public router: Router, public route: ActivatedRoute, public toastMsg: ToastMessageService,public translate: TranslateService,
     public generalService: GeneralService, public schemaService: SchemaService) {
@@ -89,6 +90,15 @@ export class EditTemplateComponent implements OnInit {
 
       }
     });
+
+    this.schemaService.getEntitySchemaJSON().subscribe((data) => {
+      let allSteps = data['usecase'][this.usecase]['steps'];
+      for(let i=0; i<allSteps.length; i++){
+        if(allSteps[i]['key'] === 'create-vc'){
+          this.vcStep = i.toString();
+        }
+      }
+    })
 
     await this.readHtmlSchemaContent(this.sampleData);
     this.grapesJSDefine();
@@ -524,7 +534,7 @@ export class EditTemplateComponent implements OnInit {
       }
 
      this.generalService.putData('/Schema/', this.schemaOsid, payload).subscribe((res) => {
-        this.router.navigate(['/create/2/' + this.usecase + '/' + this.entityName]);
+        this.router.navigate(['/create/' + this.vcStep + '/' + this.usecase + '/' + this.entityName]);
       });
     });
   });

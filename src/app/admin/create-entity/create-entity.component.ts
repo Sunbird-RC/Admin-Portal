@@ -1333,6 +1333,10 @@ export class CreateEntityComponent implements OnInit, AfterContentChecked {
         tempjson1['type'] = (data.type != 'number') ? 'string' : data.type;
         tempjson1['title'] = data.hasOwnProperty('label') ? data['label'] : data['title'];
 
+        if (data.hasOwnProperty('key') && data.key == 'dateTime') {
+          tempjson1['format'] = 'date';
+        }
+
         if (data.hasOwnProperty('description') && data.description) {
           tempjson1['description'] = data['description'];
         }
@@ -1436,6 +1440,10 @@ export class CreateEntityComponent implements OnInit, AfterContentChecked {
     tempjson1['type'] = data.hasOwnProperty('type') ? 'string' : 'string'
     tempjson1['title'] = data.hasOwnProperty('label') ? data['label'] : data['title'];
 
+    if (data.hasOwnProperty('key') && data.key == 'dateTime') {
+      tempjson1['format'] = 'date';
+    }
+    
     if (data.hasOwnProperty('description') && data.description) {
       tempjson1['description'] = data['description'];
     }
@@ -1519,14 +1527,10 @@ export class CreateEntityComponent implements OnInit, AfterContentChecked {
 
   getEnumValueFromFormio(enumList) {
     let enumArr = [];
-
     for (let i = 0; i < enumList.length; i++) {
-
       enumArr.push(enumList[i].value);
     }
-
     return enumArr;
-
   }
 
   saveData() {

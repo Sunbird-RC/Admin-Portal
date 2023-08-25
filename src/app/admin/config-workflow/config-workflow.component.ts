@@ -58,7 +58,7 @@ export class ConfigWorkflowComponent implements OnInit {
     var data = {
       workflowItems: [
         {
-          workflowname: 'Transfer Certificate',
+          workflowname: '',
           issuancesystem: '',
           attestation_type: 'auto_attestation',
           attestorConditions: [
@@ -140,11 +140,13 @@ export class ConfigWorkflowComponent implements OnInit {
 
   addWorkflowItems() {
     this.workflowItems().push(this.newWorkflowItems());
+    this.conditionSelectOptions.push({ "workflow": [] });
     console.log(this.conditionSelectOptions)
   }
 
   removeWorkflowItems(wIndex) {
     this.workflowItems().removeAt(wIndex);
+    this.conditionSelectOptions.splice(wIndex, 1);
   }
 
   //------------End - workflowItems----------------------
@@ -248,14 +250,25 @@ export class ConfigWorkflowComponent implements OnInit {
     }
   }
 
+  // Set options for attestation conditions dropdown with slected entity properties and sub properties
   setEntityProperties(item: any) {
     this.currentEntityProperties = [];
     const attest = this.fieldList.find((e) => e[item]);
     const properties = attest?.[item]?.properties;
     const propertiesKeys = Object.keys(properties);
-    for (let i = 0; i < propertiesKeys.length; i++) {
-      this.currentEntityProperties.push(item+"."+properties[propertiesKeys[i]].title);
+    const allOptions = [];
+    for(let i=0; i<propertiesKeys.length; i++){
+      if(properties[propertiesKeys[i]].properties){
+        const subProperties = properties[propertiesKeys[i]].properties;
+        const subPropertiesKeys = Object.keys(subProperties);
+        for(let j=0; j<subPropertiesKeys.length; j++){
+          allOptions.push(item+"."+propertiesKeys[i]+"."+subPropertiesKeys[j]);
+        }
+      } else {
+        allOptions.push(item+"."+propertiesKeys[i]);
+      }
     }
+    this.currentEntityProperties = allOptions;
   }
 
   ObjectbyString = function (o, s) {
@@ -310,15 +323,26 @@ export class ConfigWorkflowComponent implements OnInit {
     }
   }
 
+  // Set options for attestation conditions dropdown with properties and sub properties of selected attestor
   setSelectOptions(wIndex: number, aIndex: number, key: string) {
     console.log("setSelectOptions Triggered", key);
     this.conditionSelectOptions[wIndex]['workflow'][aIndex]['attestor'] = [];
     const attest = this.fieldList.find((e) => e[key]);
     const properties = attest?.[key]?.properties;
     const propertiesKeys = Object.keys(properties);
-    for (let i = 0; i < propertiesKeys.length; i++) {
-      this.conditionSelectOptions[wIndex]['workflow'][aIndex]['attestor'].push(key+"."+properties[propertiesKeys[i]].title);
+    const allOptions = [];
+    for(let i=0; i<propertiesKeys.length; i++){
+      if(properties[propertiesKeys[i]].properties){
+        const subProperties = properties[propertiesKeys[i]].properties;
+        const subPropertiesKeys = Object.keys(subProperties);
+        for(let j=0; j<subPropertiesKeys.length; j++){
+          allOptions.push(key+"."+propertiesKeys[i]+"."+subPropertiesKeys[j]);
+        }
+      } else {
+        allOptions.push(key+"."+propertiesKeys[i]);
+      }
     }
+    this.conditionSelectOptions[wIndex]['workflow'][aIndex]['attestor'] = allOptions;
   }
 
   onSelect(item: any) {
@@ -674,19 +698,33 @@ export class ConfigWorkflowComponent implements OnInit {
   submitConfigWorkflowForm() {
     let submittedWorkflowData = this.workflowForm.value.workflowItems;
     console.log(submittedWorkflowData);
-    let attestationPolicies = [];
+    // let attestationPolicies = [];
 
     if(submittedWorkflowData.length === 0){
       return;
     }
 
     for(let i = 0; i < submittedWorkflowData.length; i++) {
+      let setAttestationProperties = {}
+      for(let j = 0; j < submittedWorkflowData[i].attestorConditions.length; j++) {
+        let conditionsArray = submittedWorkflowData[i].attestorConditions[j].fieldConditions;
+        for(let k = 0; k < conditionsArray.length; k++) {
+          let entityProperty = conditionsArray[k].selectConditionTwo;
+          let keys = entityProperty.split(".");
+          entityProperty = entityProperty.replace(keys[0], "$");
+          setAttestationProperties = {
+            ...setAttestationProperties,
+            [keys[keys.length - 1]]: entityProperty
+          }
+        }
+      }
       let attestationPolicyItem = {
         "name": submittedWorkflowData[i].workflowname,
         "type": submittedWorkflowData[i].attestation_type,
+        "attestationProperties": setAttestationProperties
       }
+      console.log(attestationPolicyItem);
     }
-
   }
 }
 

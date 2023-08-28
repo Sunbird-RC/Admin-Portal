@@ -18,12 +18,13 @@ export class ConfigurationsComponent implements OnInit {
   params: any;
   currentTab: number;
   allUsecases: any;
+  entityKey: any;
   constructor(public translate: TranslateService, public router : Router, public generalService: GeneralService, public schemaService: SchemaService) { 
     this.tenantConfigList = ['Schema','Workflow','VC Template','Ownership','Roles','Theme']
   }
   imgUrl="/assets/images/certificate.svg";
+  
   ngOnInit(): void {
-
 
     this.generalService.getData('/Schema').subscribe((res) => {
       this.res = res;
@@ -43,6 +44,13 @@ export class ConfigurationsComponent implements OnInit {
   addVC(){
     
     if(this.res.length > 1){
+      for(let i = 0; i< this.res.length; i++){
+        let temp = JSON.parse(this.res[i]['schema'])
+        if(!temp.hasOwnProperty('isRefSchema')){
+          this.entityKey = temp.title;
+          break;
+        }
+      }
       Object.keys(this.allUsecases).forEach((key) => {
         if(key === this.usecase){
           this.allUsecases[key]['steps']?.forEach((step, i) => {
@@ -52,7 +60,7 @@ export class ConfigurationsComponent implements OnInit {
           })
         }
       })
-      this.router.navigateByUrl('/create/' + this.currentTab  + '/' + this.usecase + '/' );
+      this.router.navigateByUrl('/create/' + this.currentTab  + '/' + this.usecase + '/' + this.entityKey);
     }
     else{
       alert('No schema Exists, Please add the Schema');

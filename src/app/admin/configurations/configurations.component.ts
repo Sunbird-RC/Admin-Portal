@@ -18,9 +18,6 @@ export class ConfigurationsComponent implements OnInit {
   params: any;
   currentTab: number;
   allUsecases: any;
-  items: any;
-  entityName: any;
-  credTemp: any;
   entityKey: any;
   constructor(public translate: TranslateService, public router : Router, public generalService: GeneralService, public schemaService: SchemaService) { 
     this.tenantConfigList = ['Schema','Workflow','VC Template','Ownership','Roles','Theme']

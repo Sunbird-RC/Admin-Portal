@@ -49,6 +49,7 @@
   "ADD_CONDITION":"स्थिति जोड़ें",
   "ADD_NEXT_ATTESTOR":"अगला अनुप्रमाणक जोड़ें",
   "ATTRIBUTES_REQUIRED_FOR_ATTESTATION":"सत्यापन के लिए आवश्यक विशेषताएं",
+  "NO_ATTRIBUTE_SELECTED": "कोई विशेषता चयनित नहीं",
   "CERTIFICATE_RECORD_DATE_ISSUER_NAME":"प्रमाणपत्र का नाम, रिकॉर्ड का नाम, दिनांक, जारीकर्ता का नाम",
   "ADD_WORKFLOW":"कार्यप्रवाह जोड़ें",  
   "PROPERTIS_REQUIRED_FOR_ATTESTATION":"सत्यापन के लिए आवश्यक गुण",

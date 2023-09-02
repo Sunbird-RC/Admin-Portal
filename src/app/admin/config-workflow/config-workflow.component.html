@@ -138,7 +138,7 @@
                     <div class="fs-14 fw-bold my-2">{{'ATTRIBUTES_REQUIRED_FOR_ATTESTATION' | translate}}<button data-toggle="modal" data-target="#editWorlflowModal" (click)="setModalValues(workflowIndex)"
                             class="color-sec badge bg-color-secondary p-1 fs-12 mx-2">{{'EDIT' | translate}}</button></div>
                     <div class="p-4 bg-light w-100">
-                      {{ workflowForm.value.workflowItems[workflowIndex].attestationProperties ? workflowForm.value.workflowItems[workflowIndex].attestationProperties.join(', ').substring(0, 100) : "No Attributes Selected" }}
+                      {{ workflowForm.value.workflowItems[workflowIndex].attestationProperties ? workflowForm.value.workflowItems[workflowIndex].attestationProperties.join(', ').substring(0, 100) : "NO_ATTRIBUTE_SELECTED" | translate }}
                     </div>
                     <span
                         class="m-3 fs-14 btn fw-bold bg-light submit-button text-danger float-end py-2 px-4"

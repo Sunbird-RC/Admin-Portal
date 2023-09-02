@@ -36,7 +36,8 @@ export class ConfigWorkflowComponent implements OnInit {
   temp_arr: string[];
   additionInputArr: any = [];
   conditionSelectOptions: any = [];
-  currentEntityProperties: any = [];
+  saveModalWorkflowIndex: number;
+  modalSelectedAttributes: any = [];
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -65,11 +66,13 @@ export class ConfigWorkflowComponent implements OnInit {
             {
               selectEntity: '', anyOrAllCondition: '', fieldConditions: [{
                 selectConditionOne: '',
-                equalTo: 'equalTo',
+                method: 'equals',
                 selectConditionTwo: ''
               }]
             }
-          ]
+          ],
+          additionalInput: {},
+          attestationProperties: []
         }
       ]
     }
@@ -115,9 +118,8 @@ export class ConfigWorkflowComponent implements OnInit {
         this.fieldList.push(this.schemaName[i]["definitions"]);
         selectedMenuList = this.fieldList.find((e) => e[this.entityName]);
       }
-      this.setEntityProperties(this.entityName);
 
-    //  this.onChangeSelect(this.entityName);
+    this.onChangeSelect(this.entityName);
     });
   }
 
@@ -131,17 +133,18 @@ export class ConfigWorkflowComponent implements OnInit {
 
   newWorkflowItems(): FormGroup {
     return this.fb.group({
-      workflowname: 'Transfer Certificate',
+      workflowname: '',
       issuancesystem: '',
-      attestation_type: 'auto_attestation',
-      attestorConditions: this.fb.array([])
+      attestation_type: 'MANUAL',  // Currently only support for MANUAL
+      attestorConditions: this.fb.array([]),
+      additionalInput: {},
+      attestationProperties: []
     })
   }
 
   addWorkflowItems() {
     this.workflowItems().push(this.newWorkflowItems());
     this.conditionSelectOptions.push({ "workflow": [] });
-    console.log(this.conditionSelectOptions)
   }
 
   removeWorkflowItems(wIndex) {
@@ -185,7 +188,7 @@ export class ConfigWorkflowComponent implements OnInit {
   newFieldCondition(): FormGroup {
     return this.fb.group({
       selectConditionOne: '',
-      equalTo: 'equalTo',
+      method: 'equals',
       selectConditionTwo: ''
     })
   }
@@ -214,7 +217,6 @@ export class ConfigWorkflowComponent implements OnInit {
       this.global_properties_student = [];
 
       this.onChangeSelect(this.entityName);
-      this.setEntityProperties(this.entityName);
     }
   }
 
@@ -250,27 +252,6 @@ export class ConfigWorkflowComponent implements OnInit {
     }
   }
 
-  // Set options for attestation conditions dropdown with slected entity properties and sub properties
-  setEntityProperties(item: any) {
-    this.currentEntityProperties = [];
-    const attest = this.fieldList.find((e) => e[item]);
-    const properties = attest?.[item]?.properties;
-    const propertiesKeys = Object.keys(properties);
-    const allOptions = [];
-    for(let i=0; i<propertiesKeys.length; i++){
-      if(properties[propertiesKeys[i]].properties){
-        const subProperties = properties[propertiesKeys[i]].properties;
-        const subPropertiesKeys = Object.keys(subProperties);
-        for(let j=0; j<subPropertiesKeys.length; j++){
-          allOptions.push(item+"."+propertiesKeys[i]+"."+subPropertiesKeys[j]);
-        }
-      } else {
-        allOptions.push(item+"."+propertiesKeys[i]);
-      }
-    }
-    this.currentEntityProperties = allOptions;
-  }
-
   ObjectbyString = function (o, s) {
     s = s.replace(/\[(\w+)\]/g, '.$1');
     s = s.replace(/^\./, '');
@@ -287,6 +268,7 @@ export class ConfigWorkflowComponent implements OnInit {
   };
 
   getPropertiesStudent(item: any, main_item: any) {
+    this.global_properties_student = [];
     this.getSchemaPropertiesName(item, "", Object.keys(main_item), 0);
     return this.global_properties_student;
   }
@@ -323,26 +305,12 @@ export class ConfigWorkflowComponent implements OnInit {
     }
   }
 
-  // Set options for attestation conditions dropdown with properties and sub properties of selected attestor
+  // Set options for attestation conditions dropdown with properties and nested properties of selected attestor
   setSelectOptions(wIndex: number, aIndex: number, key: string) {
-    console.log("setSelectOptions Triggered", key);
     this.conditionSelectOptions[wIndex]['workflow'][aIndex]['attestor'] = [];
     const attest = this.fieldList.find((e) => e[key]);
-    const properties = attest?.[key]?.properties;
-    const propertiesKeys = Object.keys(properties);
-    const allOptions = [];
-    for(let i=0; i<propertiesKeys.length; i++){
-      if(properties[propertiesKeys[i]].properties){
-        const subProperties = properties[propertiesKeys[i]].properties;
-        const subPropertiesKeys = Object.keys(subProperties);
-        for(let j=0; j<subPropertiesKeys.length; j++){
-          allOptions.push(key+"."+propertiesKeys[i]+"."+subPropertiesKeys[j]);
-        }
-      } else {
-        allOptions.push(key+"."+propertiesKeys[i]);
-      }
-    }
-    this.conditionSelectOptions[wIndex]['workflow'][aIndex]['attestor'] = allOptions;
+    let arr = this.getPropertiesStudent(attest?.[key], attest);
+    this.conditionSelectOptions[wIndex]['workflow'][aIndex]['attestor'] = arr;
   }
 
   onSelect(item: any) {
@@ -448,13 +416,42 @@ export class ConfigWorkflowComponent implements OnInit {
 
   //-----------------------start -Attestatation Edit Modal ---------------------
 
+  setModalValues(workflowIndex: number) {
+    // set the initial values of additionalInput and attestationProperties to be visible in the workflow modal
+    this.saveModalWorkflowIndex = workflowIndex; // save the workflowIndex working upon in modal
+
+    let additionalInputs = this.workflowForm.value.workflowItems[workflowIndex].additionalInput;
+    let keys = Object.keys(additionalInputs);
+    this.values = [];
+    for(let i = 0; i < keys.length; i++){
+      this.values.push({ value: keys[i], select: additionalInputs[keys[i]]['type'] });
+    }
+
+    this.modalSelectedAttributes = this.workflowForm.value.workflowItems[workflowIndex].attestationProperties 
+                                    ? this.workflowForm.value.workflowItems[workflowIndex].attestationProperties : [];
+  }
+
   checks = false;
-  checkAll(x) {
-    if (x.target.checked == true) {
+  checkAll(x, val) {
+    if (x.target.id === 'form-check-input-select-all' && x.target.checked == true) {
+      this.modalSelectedAttributes = [...this.selectedMenuFields[0]];
+    } 
+    else if (x.target.id === 'form-check-input-select-all' && x.target.checked == false) {
+      this.modalSelectedAttributes = [];
+    }
+    else if (x.target.checked == true) {
       this.checks = true;
+      if(!this.modalSelectedAttributes?.includes(val)){
+        this.modalSelectedAttributes?.push(val);
+      }
     }
     else {
       this.checks = false;
+      for (var i = this.modalSelectedAttributes.length - 1; i >= 0; i--) {
+        if (this.modalSelectedAttributes[i] === val) {
+          this.modalSelectedAttributes.splice(i, 1);
+        }
+      }
     }
   }
 
@@ -464,11 +461,33 @@ export class ConfigWorkflowComponent implements OnInit {
 
   addfield() {
     this.values.push({ value: "", select: "" });
-
   }
 
   saveModaldata(){
     
+    this.workflowForm.controls['workflowItems']['controls'].at(this.saveModalWorkflowIndex).controls['additionalInput'].setValue({})
+    let attestationProperties = []
+    for(let i = 0; i < this.values.length; i++){
+      if(this.values[i].value === "" || this.values[i].select === ""){
+        continue;
+      }
+      else{
+        this.workflowForm.controls['workflowItems']['controls'].at(this.saveModalWorkflowIndex).controls['additionalInput'].setValue({
+          ...this.workflowForm.value.workflowItems[this.saveModalWorkflowIndex].additionalInput,
+          [this.values[i].value]: { type: this.values[i].select }
+        })
+        if(!attestationProperties.includes(this.values[i].value)){
+          attestationProperties.push(this.values[i].value);
+        }
+      }
+    }
+
+    for(let i=0; i<this.modalSelectedAttributes.length; i++){
+      if(!attestationProperties.includes(this.modalSelectedAttributes[i])){
+        attestationProperties.push(this.modalSelectedAttributes[i]);
+      }
+    }
+    this.workflowForm.controls['workflowItems']['controls'].at(this.saveModalWorkflowIndex).controls['attestationProperties'].setValue(attestationProperties)
   }
 
    findPath = (ob, key) => {
@@ -695,21 +714,42 @@ export class ConfigWorkflowComponent implements OnInit {
     return path.join(".");
   }
 
+  fromConditionToString = (condition) => {
+    let conditionOneArr = condition.selectConditionOne.split(".");
+    let conditionTwoArr = condition.selectConditionTwo.split(".");
+    let conditionString = "";
+    // Implemented for only "equals" method, To be implemented for different methods available in javaspeL
+    if (condition.method === "equals") {
+      conditionString = "(ATTESTOR#$."+conditionOneArr[conditionOneArr.length - 1]+"#.equals(REQUESTER#$."+conditionTwoArr[conditionTwoArr.length - 1]+"#))";
+    }
+    return conditionString;
+  }
+
   submitConfigWorkflowForm() {
     let submittedWorkflowData = this.workflowForm.value.workflowItems;
-    console.log(submittedWorkflowData);
-    // let attestationPolicies = [];
+    let attestationPolicies = [];
 
     if(submittedWorkflowData.length === 0){
       return;
     }
+    console.log("submittedWorkflowData", submittedWorkflowData)
+    for(let i = 0; i < submittedWorkflowData.length; i++) { // loop through each workflow in the array of workflows
 
-    for(let i = 0; i < submittedWorkflowData.length; i++) {
+      // validation for empty workflow name and attestation type
+      if(submittedWorkflowData[i].workflowname === "" || submittedWorkflowData[i].attestation_type === ""){
+        console.log("empty workflow name or attestation type");
+        continue;
+      }
+
       let setAttestationProperties = {}
-      for(let j = 0; j < submittedWorkflowData[i].attestorConditions.length; j++) {
-        let conditionsArray = submittedWorkflowData[i].attestorConditions[j].fieldConditions;
-        for(let k = 0; k < conditionsArray.length; k++) {
-          let entityProperty = conditionsArray[k].selectConditionTwo;
+      let setAdditionalInput = submittedWorkflowData[i].additionalInput; // additional Input field of the workflow
+      let additionalInputKeys = Object.keys(setAdditionalInput); 
+      
+      // Loop to change the attestationProperties to the desired format according to the schema
+      for(let j=0; j<submittedWorkflowData[i].attestationProperties?.length; j++){ 
+        if(!additionalInputKeys.includes(submittedWorkflowData[i].attestationProperties[j])){
+
+          let entityProperty = submittedWorkflowData[i].attestationProperties[j];
           let keys = entityProperty.split(".");
           entityProperty = entityProperty.replace(keys[0], "$");
           setAttestationProperties = {
@@ -718,13 +758,46 @@ export class ConfigWorkflowComponent implements OnInit {
           }
         }
       }
+
+      // Forming the conditions string using attestatorConditions
+      let attestorConditions = submittedWorkflowData[i].attestorConditions;
+      let attestorConditionsString = "";
+      for(let j=0; j<attestorConditions.length; j++){
+        let fieldConditions = attestorConditions[j].fieldConditions;
+
+        for(let k=0; k<fieldConditions.length; k++){
+          let fieldConditionString = this.fromConditionToString(fieldConditions[k]);
+          if(attestorConditionsString === ""){
+            attestorConditionsString = fieldConditionString;
+          } else {
+            attestorConditions[j].anyOrAllCondition === "any" ? attestorConditionsString += " || " + fieldConditionString : attestorConditionsString += " && " + fieldConditionString;
+          }
+        }
+      }
+      if(attestorConditions.length > 1)
+        attestorConditionsString = "(" + attestorConditionsString + ")";
+
+      // Validation for empty attestorConditions
+      if(attestorConditionsString === "" || Object.keys(setAttestationProperties).length === 0){
+        console.log("empty attestorConditions or attestationProperties");
+        continue;
+      }
+
       let attestationPolicyItem = {
         "name": submittedWorkflowData[i].workflowname,
         "type": submittedWorkflowData[i].attestation_type,
-        "attestationProperties": setAttestationProperties
+        "attestationProperties": setAttestationProperties,
+        "conditions": attestorConditionsString,
+        "attestorPlugin": `did:internal:ClaimPluginActor?entity=${attestorConditions[0]?.selectEntity}`  // Currently only support for internal
       }
-      console.log(attestationPolicyItem);
+
+      if(Object.keys(setAdditionalInput).length > 0){
+        attestationPolicyItem["additionalInput"] = setAdditionalInput;
+      }
+
+      attestationPolicies.push(attestationPolicyItem);
     }
+    console.log("attestationPolicies", attestationPolicies);
   }
 }
 

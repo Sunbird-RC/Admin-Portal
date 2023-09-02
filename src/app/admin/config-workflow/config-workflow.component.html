@@ -21,13 +21,12 @@
                     <select name="issuanceSystem" id="issuanceSystem" class="w-25 br-4 border-1 border-light fs-14 p-3" 
                       formControlName="issuancesystem">
                         <option value="" disabled hidden selected>{{'SELECT_FIELD' | translate}}</option>
-                        <option value="option1">option1</option>
-                        <option value="option2">option2</option>
+                        <option value="sunbird_rc_issuance_system">Sunbird RC issuance system</option>
                     </select>
                 </div>
                 <div class="mb-3 d-flex">
                     <div class="form-check">
-                        <input class="form-check-input" type="radio"
+                        <input class="form-check-input" type="radio" disabled
                             [id]="'autoAttestation'+workflowIndex" formControlName="attestation_type" value="AUTO_ATTESTATION" [defaultChecked]="true">
                         <label class="form-check-label" [for]="'autoAttestation'+workflowIndex">
                           {{'AUTO_ATTESTATION' | translate}}
@@ -97,11 +96,11 @@
                                 </div>
                                 <div class="col-2">
                                     <div class="mb-3">
-                                        <select name="equalTo" id="equalTo"
+                                        <select name="method" id="method"
                                             class="w-100 br-4 border-1 border-light fs-14 p-3"
-                                            formControlName="equalTo">
+                                            formControlName="method">
                                             <option value="" disabled hidden>{{'SELECT_FIELD' | translate}}</option>
-                                            <option value="equalTo">{{'EQUAL_TO' | translate}}</option>
+                                            <option value="equals">{{'EQUAL_TO' | translate}}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -111,7 +110,7 @@
                                             class="w-100 br-4 border-1 border-light fs-14 p-3"
                                             formControlName="selectConditionTwo">
                                             <option value="" disabled hidden>{{'SELECT_FIELD' | translate}}</option>
-                                            <option *ngFor="let child of currentEntityProperties" [value]="child">{{ child }}</option>
+                                            <option *ngFor="let child of workflowForm.get('workflowItems')['value'][workflowIndex]?.attestationProperties" [value]="child">{{ child }}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -130,16 +129,16 @@
                       </div>
                     </div>
                     </div>
-                    <button class="m-3 fs-14 btn fw-bold bg-color-secondary submit-button color-sec" (click)="addNewAttestCondition(workflowIndex)">
+                    <button *ngIf="workflowForm.value.workflowItems[workflowIndex].attestorConditions.length < 1" class="m-3 fs-14 btn fw-bold bg-color-secondary submit-button color-sec" (click)="addNewAttestCondition(workflowIndex)">
                         <i class="fa fa-plus" aria-hidden="true"></i>
                         {{'ADD_NEXT_ATTESTOR' | translate}} </button>
                 </div>
 
                 <div class="mb-3">
-                    <div class="fs-14 fw-bold my-2">{{'ATTRIBUTES_REQUIRED_FOR_ATTESTATION' | translate}}<span
-                            class="color-sec badge bg-color-secondary p-1 fs-12 mx-2">{{'EDIT' | translate}}</span></div>
+                    <div class="fs-14 fw-bold my-2">{{'ATTRIBUTES_REQUIRED_FOR_ATTESTATION' | translate}}<button data-toggle="modal" data-target="#editWorlflowModal" (click)="setModalValues(workflowIndex)"
+                            class="color-sec badge bg-color-secondary p-1 fs-12 mx-2">{{'EDIT' | translate}}</button></div>
                     <div class="p-4 bg-light w-100">
-                      {{'CERTIFICATE_RECORD_DATE_ISSUER_NAME' | translate}}
+                      {{ workflowForm.value.workflowItems[workflowIndex].attestationProperties ? workflowForm.value.workflowItems[workflowIndex].attestationProperties.join(', ').substring(0, 100) : "No Attributes Selected" }}
                     </div>
                     <span
                         class="m-3 fs-14 btn fw-bold bg-light submit-button text-danger float-end py-2 px-4"
@@ -172,7 +171,7 @@
           <thead>
             <tr>
               <th scope="col" class="fw-bold">
-                <input class="form-check-input" (change)="checkAll($event)" type="checkbox" /> &nbsp;
+                <input class="form-check-input" id="form-check-input-select-all" [checked]="modalSelectedAttributes.length === selectedMenuFields[0].length" (change)="checkAll($event, '')" type="checkbox" /> &nbsp;
                 <label class="p-1 ml-2"> {{'ATTRIBUTES' | translate}}</label>
               </th>
             </tr>
@@ -181,7 +180,7 @@
             <tr *ngFor="let val of selectedMenuFields[0]">
               <span class="p-3">
              
-                  <input class="form-check-input" (change)="checkAll($event)" type="checkbox" /> &nbsp;
+                  <input class="form-check-input" [checked]="modalSelectedAttributes.includes(val)" (change)="checkAll($event, val)" type="checkbox" /> &nbsp;
                 &nbsp; 
                 <label class="p-1 ml-2">{{val}}</label>
               </span>
@@ -229,7 +228,7 @@
 
 
         <div>
-          <button class="btn text-capitalize float-end bg-color-primary text-white fw-bold px-3 my-2"
+          <button class="btn text-capitalize float-end bg-color-primary text-white fw-bold px-3 my-2" data-dismiss="modal" aria-label="Close"
             (click)="saveModaldata()">{{'SAVE' | translate}}</button>
         </div>
 

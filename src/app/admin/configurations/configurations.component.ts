@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core'; 
+import { TranslateService } from '@ngx-translate/core';
 import { GeneralService } from 'src/app/services/general/general.service';
 import { SchemaService } from '../../services/data/schema.service';
 
@@ -10,7 +10,7 @@ import { SchemaService } from '../../services/data/schema.service';
   styleUrls: ['./configurations.component.scss']
 })
 export class ConfigurationsComponent implements OnInit {
-  tenantConfigList:  Array<String>;
+  tenantConfigList: Array<String>;
   @Input() schemaItems;
   usecase: any;
   public res;
@@ -19,19 +19,19 @@ export class ConfigurationsComponent implements OnInit {
   currentTab: number;
   allUsecases: any;
   entityKey: any;
-  constructor(public translate: TranslateService, public router : Router, public generalService: GeneralService, public schemaService: SchemaService) { 
-    this.tenantConfigList = ['Schema','Workflow','VC Template','Ownership','Roles','Theme']
+  constructor(public translate: TranslateService, public router: Router, public generalService: GeneralService, public schemaService: SchemaService) {
+    this.tenantConfigList = ['Schema', 'Workflow', 'VC Template', 'Ownership', 'Roles', 'Theme']
   }
-  imgUrl="/assets/images/certificate.svg";
-  
+  imgUrl = "/assets/images/certificate.svg";
+
   ngOnInit(): void {
 
     this.generalService.getData('/Schema').subscribe((res) => {
       this.res = res;
       this.usecase = res[0].referedSchema;
-      if(this.usecase === 'attestmodule' || this.usecase === 'ownershipmodule' || this.usecase === 'attestownershipmodule' || this.usecase === 'newmodule'){
+      if (this.usecase === 'attestmodule' || this.usecase === 'ownershipmodule' || this.usecase === 'attestownershipmodule' || this.usecase === 'newmodule') {
         this.addvc = false;
-      }else{
+      } else {
         this.addvc = true;
       }
     })
@@ -41,29 +41,38 @@ export class ConfigurationsComponent implements OnInit {
     })
   }
 
-  addVC(){
-    
-    if(this.res.length > 1){
-      for(let i = 0; i< this.res.length; i++){
+  addVC() {
+     if (this.res.length === 1) {
+      const temp = JSON.parse(this.res[0]['schema']);
+      if (temp.hasOwnProperty('isRefSchema')) {
+        alert('Only Common Schema exists, please add other schema!');
+      } else {
+        this.entityKey = temp.title;
+        this.navigateToCreateVC();
+      }
+    } else {
+      for (let i = 0; i < this.res.length; i++) {
         let temp = JSON.parse(this.res[i]['schema'])
-        if(!temp.hasOwnProperty('isRefSchema')){
+        if (!temp.hasOwnProperty('isRefSchema')) {
           this.entityKey = temp.title;
           break;
         }
       }
-      Object.keys(this.allUsecases).forEach((key) => {
-        if(key === this.usecase){
-          this.allUsecases[key]['steps']?.forEach((step, i) => {
-            if(step['key'] === 'create-vc'){
-              this.currentTab = i.toString();
-            }
-          })
-        }
-      })
-      this.router.navigateByUrl('/create/' + this.currentTab  + '/' + this.usecase + '/' + this.entityKey);
-    }
-    else{
-      alert('No schema Exists, Please add the Schema');
+      this.navigateToCreateVC();
     }
   }
+
+  navigateToCreateVC() {
+    Object.keys(this.allUsecases).forEach((key) => {
+      if (key === this.usecase) {
+        this.allUsecases[key]['steps']?.forEach((step, i) => {
+          if (step['key'] === 'create-vc') {
+            this.currentTab = i.toString();
+          }
+        });
+      }
+    });
+    this.router.navigateByUrl('/create/' + this.currentTab + '/' + this.usecase + '/' + this.entityKey);
+  }
+
 }

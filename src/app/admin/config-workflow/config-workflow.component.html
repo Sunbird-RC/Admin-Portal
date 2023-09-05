@@ -100,7 +100,7 @@
                                             class="w-100 br-4 border-1 border-light fs-14 p-3"
                                             formControlName="method">
                                             <option value="" disabled hidden>{{'SELECT_FIELD' | translate}}</option>
-                                            <option value="equals">{{'EQUAL_TO' | translate}}</option>
+                                            <option *ngFor="let ele of javaspelMethods" [value]="ele['value']" >{{ ele['name'] | translate }}</option>
                                         </select>
                                     </div>
                                 </div>

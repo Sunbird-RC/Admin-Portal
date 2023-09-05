@@ -38,6 +38,16 @@ export class ConfigWorkflowComponent implements OnInit {
   conditionSelectOptions: any = [];
   saveModalWorkflowIndex: number;
   modalSelectedAttributes: any = [];
+  javaspelMethods = [
+    { name: "EQUAL_TO", value: "equals" },
+    { name: "NOT_EQUAL_TO", value: "not_equals" },
+    { name: "GREATER_THAN", value: "greater_than" },
+    { name: "LESS_THAN", value: "less_than" },
+    { name: "GREATER_THAN_EQUAL_TO", value: "greater_than_equal_to" },
+    { name: "LESS_THAN_EQUAL_TO", value: "less_than_equal_to" },
+    { name: "CONTAINS", value: "contains" },
+    { name: "NOT_CONTAINS", value: "not_contains" },
+  ]
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -718,9 +728,30 @@ export class ConfigWorkflowComponent implements OnInit {
     let conditionOneArr = condition.selectConditionOne.split(".");
     let conditionTwoArr = condition.selectConditionTwo.split(".");
     let conditionString = "";
-    // Implemented for only "equals" method, To be implemented for different methods available in javaspeL
+    // Converting the selected condition to string according to the respective java spel method
     if (condition.method === "equals") {
       conditionString = "(ATTESTOR#$."+conditionOneArr[conditionOneArr.length - 1]+"#.equals(REQUESTER#$."+conditionTwoArr[conditionTwoArr.length - 1]+"#))";
+    }
+    else if (condition.method === "not_equals") {
+      conditionString = "(!ATTESTOR#$."+conditionOneArr[conditionOneArr.length - 1]+"#.equals(REQUESTER#$."+conditionTwoArr[conditionTwoArr.length - 1]+"#))";
+    }
+    else if (condition.method === "greater_than") {
+      conditionString = "(ATTESTOR#$."+conditionOneArr[conditionOneArr.length - 1]+">REQUESTER#$."+conditionTwoArr[conditionTwoArr.length - 1]+"#)"
+    }
+    else if (condition.method === "less_than") {
+      conditionString = "(ATTESTOR#$."+conditionOneArr[conditionOneArr.length - 1]+"<REQUESTER#$."+conditionTwoArr[conditionTwoArr.length - 1]+"#)"
+    }
+    else if (condition.method === "greater_than_equal_to") {
+      conditionString = "(ATTESTOR#$."+conditionOneArr[conditionOneArr.length - 1]+">=REQUESTER#$."+conditionTwoArr[conditionTwoArr.length - 1]+"#)"
+    }
+    else if (condition.method === "less_than_equal_to") {
+      conditionString = "(ATTESTOR#$."+conditionOneArr[conditionOneArr.length - 1]+"<=REQUESTER#$."+conditionTwoArr[conditionTwoArr.length - 1]+"#)"
+    }
+    else if (condition.method === "contains") {
+      conditionString = "(ATTESTOR#$."+conditionOneArr[conditionOneArr.length - 1]+"#.contains(REQUESTER#$."+conditionTwoArr[conditionTwoArr.length - 1]+"#))";
+    }
+    else if (condition.method === "not_contains") {
+      conditionString = "(!ATTESTOR#$."+conditionOneArr[conditionOneArr.length - 1]+"#.contains(REQUESTER#$."+conditionTwoArr[conditionTwoArr.length - 1]+"#))";
     }
     return conditionString;
   }

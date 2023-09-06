@@ -27,10 +27,8 @@ activeMenu: string = '';
   entityKey: any;
   res: any;
   allUsecases: any = {};
-  ACTION_ATTESTATION = 'attestation';
-  ACTION_VC = 'vc';
-  ACTION_OWNERSHIP = 'ownership';
-constructor(
+  
+  constructor(
   private activeRoute: ActivatedRoute,
   private generalService: GeneralService,
   public translate: TranslateService,
@@ -90,13 +88,13 @@ constructor(
   navigateTo(actionType: string){
     let currentTab = '';
   switch (actionType) {
-    case this.ACTION_ATTESTATION:
+    case 'attestation':
       currentTab = 'configurations';
       break;
-    case this.ACTION_VC:
+    case 'vc':
       currentTab = 'create-vc';
       break;
-    case this.ACTION_OWNERSHIP:
+    case 'ownership':
       currentTab = 'ownership';
       break;
   }

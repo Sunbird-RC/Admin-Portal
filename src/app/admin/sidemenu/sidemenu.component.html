@@ -12,16 +12,16 @@
             <li class="menu" routerLinkActive="active-link"  *ngIf="isSchemaCreated">
                 <a class="a-menu fs-14 p-3  d-block" routerLink="/schema"><b>{{'SCHEMA' | translate}}</b></a>
             </li>
-            <li class="menu" routerLinkActive="active-link">
-                <a class="a-menu fs-14 p-3  d-block" routerLink="/a"><b>{{'ATTESTATION_WORKFLOW' | translate}}</b></a>
+            <li class="menu" routerLinkActive="active-link" >
+                <a class="a-menu fs-14 p-3  d-block" type="button" (click)="navigateTo(ACTION_ATTESTATION)"><b>{{'ATTESTATION_WORKFLOW' | translate}}</b></a>
 
             </li>
             <li class="menu" routerLinkActive="active-link">
-                <a class="a-menu fs-14 p-3  d-block" routerLink="/a"><b>{{'VERIFIABLE_CREDENTIALS' | translate}}</b></a>
+                <a class="a-menu fs-14 p-3  d-block" type="button" (click)="navigateTo(ACTION_VC)"><b>{{'VERIFIABLE_CREDENTIALS' | translate}}</b></a>
             </li>
 
             <li class="menu" routerLinkActive="active-link">
-                <a class="a-menu fs-14 p-3  d-block" routerLink="/a"><b>{{'OWNERSHIP' | translate}}</b></a>
+                <a class="a-menu fs-14 p-3  d-block" type="button" (click)="navigateTo(ACTION_OWNERSHIP)"><b>{{'OWNERSHIP' | translate}}</b></a>
             </li>
             <li class="menu" routerLinkActive="active-link">
                 <a class="a-menu fs-14 p-3  d-block" routerLink="/a"><b>{{'ROLES' | translate}}</b></a>

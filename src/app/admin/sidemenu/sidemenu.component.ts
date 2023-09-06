@@ -1,7 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { GeneralService } from 'src/app/services/general/general.service';
 import { TranslateService } from '@ngx-translate/core';
+import { SchemaService } from 'src/app/services/data/schema.service';
 
 @Component({
   selector: 'sidemenu',
@@ -21,10 +22,20 @@ activeMenu: string = '';
   items = [];
   isLoading : boolean = true;
   isSchemaCreated: boolean = false;
+  usecase: string;
+  currentTab: any;
+  entityKey: any;
+  res: any;
+  allUsecases: any = {};
+  ACTION_ATTESTATION = 'attestation';
+  ACTION_VC = 'vc';
+  ACTION_OWNERSHIP = 'ownership';
 constructor(
   private activeRoute: ActivatedRoute,
   private generalService: GeneralService,
-  public translate: TranslateService
+  public translate: TranslateService,
+  public router: Router,
+  public schemaService: SchemaService
 ) { }
 
   ngOnInit(): void {
@@ -38,12 +49,18 @@ constructor(
     });
 
      this.generalService.getData('/Schema').subscribe((res) => {
+      this.res = res;
+      this.usecase = res[0].referedSchema;
      this.readSchema(res);
     }, (err)=>{
       this.items = [];
       this.isLoading = false;
 
     });
+
+    this.schemaService.getEntitySchemaJSON().subscribe((data) => {
+      this.allUsecases = data['usecase'];
+    })
   }
 
 
@@ -69,6 +86,45 @@ constructor(
 
   openMenu(menu){
   }
+
+  navigateTo(actionType: string){
+    let currentTab = '';
+  switch (actionType) {
+    case this.ACTION_ATTESTATION:
+      currentTab = 'configurations';
+      break;
+    case this.ACTION_VC:
+      currentTab = 'create-vc';
+      break;
+    case this.ACTION_OWNERSHIP:
+      currentTab = 'ownership';
+      break;
+  }
+
+    for (let i = 0; i < this.res.length; i++) {
+      let temp = this.res[i]['schema']
+      if (!temp.hasOwnProperty('isRefSchema')) {
+        this.entityKey = temp.title;
+        break;
+      }
+    }
+      Object.keys(this.allUsecases).forEach((key) => {
+        if (key === this.usecase) {
+          this.allUsecases[key]['steps']?.forEach((step, i) => {
+          if (step['key'] && step['key'] === currentTab) {
+            this.currentTab = i.toString();
+            this.router.navigateByUrl('/create/' + this.currentTab + '/' + this.usecase + '/' + this.entityKey);
+            return;
+          }     
+        });
+      }
+      return;
+    });
+    if(this.currentTab == undefined){
+      alert("The Selected Module does not involve this Step !");
+    }   
+  }
+
 
   clickEvent() {
     this.status = !this.status;

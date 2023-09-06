@@ -86,19 +86,8 @@ activeMenu: string = '';
   }
 
   navigateTo(actionType: string){
-    let currentTab = '';
-  switch (actionType) {
-    case 'attestation':
-      currentTab = 'configurations';
-      break;
-    case 'vc':
-      currentTab = 'create-vc';
-      break;
-    case 'ownership':
-      currentTab = 'ownership';
-      break;
-  }
-
+    let currentTab = actionType;
+  
     for (let i = 0; i < this.res.length; i++) {
       let temp = this.res[i]['schema']
       if (!temp.hasOwnProperty('isRefSchema')) {

@@ -140,7 +140,6 @@ export class CreateEntityComponent implements OnInit, AfterContentChecked {
       if (this.params.hasOwnProperty('step')) {
 
         this.currentTab = Number(params.step);
-        this.isActive = 'create-vc';
       } else {
         this.currentTab = 0;
         this.isActive = 'createSchema'

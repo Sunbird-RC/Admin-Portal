@@ -685,7 +685,7 @@ export class CreateEntityComponent implements OnInit, AfterContentChecked {
 
 
           let required: any = [];
-          required = (self.required != undefined) ? self.required.includes(key) : false;
+          required = propertyObj[key]?.hasOwnProperty('required') ? propertyObj[key].required : (self.required ?? []).includes(key);
 
           if (!self.usecaseSchema[self.activeMenuNo].hasOwnProperty('isRefSchema') && !self.usecaseSchema[self.activeMenuNo].isRefSchema) {
             if (!required && self.usecaseSchema[self.activeMenuNo].definitions[self.usecaseSchema[self.activeMenuNo].title].hasOwnProperty('required')) {
@@ -1295,7 +1295,9 @@ export class CreateEntityComponent implements OnInit, AfterContentChecked {
 
         let requiredSecFields = [];
         for (let j = 0; j < formioJson[i].components.length; j++) {
+          if(formioJson[i].components[j].hasOwnProperty('validate') && formioJson[i].components[j].validate.required){
                      requiredSecFields.push(formioJson[i].components[j].key);
+          }
         }
 
 

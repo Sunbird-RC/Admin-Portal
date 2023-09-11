@@ -24,7 +24,7 @@ export class SwaggeruiComponent implements OnInit {
         domNode: document.getElementById("swagger-ui-item"),
         deepLinking: true,
         layout: "BaseLayout",
-        url: "https://demo-admin-portal.xiv.in/registry/api/docs/user/swagger.json",
+        url: "https://demo-admin-portal.sunbirdrc.dev/registry/api/docs/user/swagger.json",
 
         'responseInterceptor':
           function (response: any) {

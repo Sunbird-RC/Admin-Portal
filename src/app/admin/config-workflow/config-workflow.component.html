@@ -110,7 +110,7 @@
                                             class="w-100 br-4 border-1 border-light fs-14 p-3"
                                             formControlName="selectConditionTwo">
                                             <option value="" disabled hidden>{{'SELECT_FIELD' | translate}}</option>
-                                            <option *ngFor="let child of workflowForm.get('workflowItems')['value'][workflowIndex]?.attestationProperties" [value]="child">{{ child }}</option>
+                                            <option *ngFor="let child of entityPropertiesOptions" [value]="child">{{ child }}</option>
                                         </select>
                                     </div>
                                 </div>

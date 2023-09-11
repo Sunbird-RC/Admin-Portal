@@ -112,7 +112,10 @@ export class ConfigWorkflowComponent implements OnInit {
 
   ngOnInit(): void {
 
-   // this.patchValueData();
+  this.addWorkflowItems();
+  this.addNewAttestCondition(0);
+  this.addFieldCondition(0, 0);
+  //  this.patchValueData();
 
 
     this.entityName = this.activeRoute.snapshot.params.entity;

@@ -1,147 +1,159 @@
-<div id="content" class="pl-5 py-5 lh-base">
-    <h3>{{'COMING_SOON' | translate}}</h3>
-    <!-- <div *ngIf="isSettingMenu"> -->
-  
-    <!-- <p class="fs-14">{{'YOUR_SCERNARIO_IS_CLOSE_GET_STARTED_IMMEDIATELY' | translate}}</p>
+<div class="col-md-12 pr-4 mb-6">
+    <form [formGroup]="ownershipForm">
+    <div class="step p-5">
+        <div class="mb-2">
+            <span class="fs-16 fw-bold mb-2">{{'HOW_CAN_ENTITIES_LOGIN' | translate}}</span>
+        </div>
+        <div class="card w-100 p-3">
+            <div class="px-3">
+                <div class="mb-3">
+                    <span class="fs-12 fw-bold">{{'UNIQUE_FIELD' | translate}}</span><br />
+                    <select name="uniqueField" id="uniqueField" formControlName="uniqueField"
+                        class="w-50 br-4 border-1 border-light fs-14 p-3">
+                        <option value="" disabled selected hidden>{{'SELECT_FIELD' | translate}}</option>
+                        <option *ngFor="let property of propertyNames; let i = index;" [value]="property">{{ property }}</option>
+                    </select>
+                </div>
+                <fieldset [disabled]="!ownershipForm.value.uniqueField">
+                <div class="mb-3" formGroupName="primaryLogin">
+                    <div class="row">
+                        <div class="col-3">
+                            <span class="fs-12 fw-bold">{{'AUTHENTICATION_TYPE' | translate}}</span><br />
+                            <select name="authenticationType" id="authenticationType" formControlName="authenticationType"
+                                class="w-100 br-4 border-1 border-light fs-14 p-3">
+                                <option value="" disabled selected hidden>{{'SELECT_FIELD' | translate}}</option>
+                                <option value="otp">{{'OTP' | translate}}</option>
+                            </select>
+                        </div>
 
-    <p class="fs-16 fw-bold">{{'WHO_IS_AUTHORISED_FOR_ISSUANCE' | translate}}</p>
-    <div class="card w-100  p-2 mb-3">
-        <div>
-            <input type="radio" name="exampleRadios" id="exampleRadios1" value="a" checked>
-            <label class="fs-14" for="exampleRadios1">
-            &nbsp; {{'ANONYMOUS' | translate}}
-            </label>
-         </div>
-         <div class="row">
-             <div class="col-2">
-                <input class="" type="radio" name="exampleRadios" id="exampleRadios2" value="b">
-                <label class="fs-14" for="exampleRadios2">
-                &nbsp; {{'ROLE' | translate}}
-                </label>
-             </div>
-            <div class="col-10">
-                <select name="visibility" id="visibility" class="fs-14 w-185 p-2 br-4 border-grey-3 bg-card ">
-                    <option value="public"> <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                        {{'ADD_ROLE' | translate}}
-                    </option>
-                </select>
+                        <div class="col-4">
+                            <span class="fs-12 fw-bold"></span><br />
+                            <div class="d-flex justify-content-center align-items-center">
+                            <fieldset class="form-check mr-2" [disabled]="!ownershipForm.value.primaryLogin.authenticationType">                                    
+                                <input class="form-check-input rounded-lg checkbox-lg" type="checkbox" id="flexCheckEmail" 
+                                    formControlName="emailCheckbox"
+                                    >
+                                <label class="form-check-label fs-14" for="flexCheckEmail">
+                                    {{'EMAIL' | translate}}
+                                </label>
+                            </fieldset>
+                            <fieldset [disabled]="!ownershipForm.value.primaryLogin.authenticationType || !ownershipForm.value.primaryLogin.emailCheckbox">
+                                <select name="email" id="email" formControlName="emailField"
+                                    class="w-100 br-4 border-1 border-light fs-14 p-3">
+                                    <option value="" disabled selected hidden>{{'SELECT_FIELD' | translate}}</option>
+                                    <option [value]="ownershipForm.value.uniqueField+'/email'">{{ownershipForm.value.uniqueField}}.emailID</option>
+                                </select>
+                            </fieldset>
+                            </div>
+                        </div>
+                        <div class="col-5">
+                            <span class="fs-12 fw-bold"></span><br />
+                            <div class="d-flex justify-content-center align-items-center">
+                            <fieldset class="form-check mr-2" [disabled]="!ownershipForm.value.primaryLogin.authenticationType">
+                                <input class="form-check-input rounded-lg checkbox-lg" type="checkbox" id="flexCheckMobile" formControlName="mobilenumberCheckbox">                                    
+                                <label class="form-check-label fs-14" for="flexCheckMobile">
+                                    {{'MOBILE_NUMBER' | translate}}
+                                </label>
+                            </fieldset>
+                            <fieldset [disabled]="!ownershipForm.value.primaryLogin.authenticationType || !ownershipForm.value.primaryLogin.mobilenumberCheckbox">
+                                <select name="mobile" id="mobile" formControlName="mobilenumberField"
+                                    class="w-80 br-4 border-1 border-light fs-14 p-3">
+                                    <option value="" disabled selected hidden>{{'SELECT_FIELD' | translate}}</option>
+                                    <option [value]="ownershipForm.value.uniqueField+'/contact'">{{ownershipForm.value.uniqueField}}.mobileNumber</option>
+                                </select>
+                            </fieldset>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="mb-3 p-2 bg-light w-100 px-3">
+                    <div class="form-check mr-2">
+                        <input class="form-check-input rounded-lg checkbox-lg" type="checkbox" id="flexCheckAlternateLogin" formControlName="alternateLoginCheckbox">                                    
+                        <label class="form-check-label fs-14" for="flexCheckAlternateLogin">
+                            {{'ALTERNATE_LOGIN' | translate}}
+                        </label>
+                    </div>
+
+                    <fieldset class="row" [disabled]="!ownershipForm.value.alternateLoginCheckbox">
+                        <div class="col-3">
+                            <span class="fs-12 fw-bold">{{'AUTHENTICATION_TYPE' | translate}}</span><br />
+                            <select name="authType" id="authType"
+                                class="w-100 br-4 border-1 border-light fs-14 p-3">
+                                <option value="" disabled selected hidden>{{'SELECT_FIELD' | translate}}</option>
+                                <option value="otp">{{'OTP' | translate}}</option>
+                            </select>
+                        </div>
+
+                        <div class="col-4">
+                            <span class="fs-12 fw-bold"></span><br />
+                            <div class="d-flex justify-content-center align-items-center">
+                            <div class="form-check mr-2">                                    
+                                <input class="form-check-input rounded-lg checkbox-lg" type="checkbox" value="" id="flexCheckAlternateEmail">
+                                <label class="form-check-label fs-14" for="flexCheckAlternateEmail">
+                                    {{'EMAIL' | translate}}
+                                </label>
+                            </div>
+                            
+                                <select name="alternateEmail" id="alternateEmail"
+                                    class="w-100 br-4 border-1 border-light fs-14 p-3">
+                                    <option value="" disabled selected hidden>{{'SELECT_FIELD' | translate}}</option>
+                                    <option [value]="ownershipForm.value.uniqueField+'/email'">{{ownershipForm.value.uniqueField}}.emailID</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-5">
+                            <span class="fs-12 fw-bold"></span><br />
+                            <div class="d-flex justify-content-center align-items-center">
+                            <div class="form-check mr-2">
+                                <input class="form-check-input rounded-lg checkbox-lg" type="checkbox" value="" id="flexCheckAlternateMobile">                                    
+                                <label class="form-check-label fs-14" for="flexCheckAlternateMobile">
+                                <span class="no-wrap-ws">{{'MOBILE_NUMBER' | translate}}</span>
+                                </label>
+                            </div>
+                            
+                                <select name="alternateMobile" id="alternateMobile"
+                                    class="select-box-w br-4 border-1 border-light fs-14 p-3">
+                                    <option value="" disabled selected hidden>{{'SELECT_FIELD' | translate}}</option>
+                                    <option [value]="ownershipForm.value.uniqueField+'/contact'">{{ownershipForm.value.uniqueField}}.mobileNumber</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </div>
+                </fieldset>
             </div>
-         </div>
+        </div>
     </div>
-</div>
 
-    <p class="fs-16 fw-bold">{{'HOW_CAN_ENTITIES_LOGIN' | translate}}</p>
-    <div class="card w-100 p-4 lh-base">
-
-        <div class="mb-1">
-            <span class="l12 fw-bold"> {{'ENTITY_NAME' | translate}} &nbsp; </span> <span class="fs-14">{{'EDUCATION_BOARD' | translate}}</span>
+    <div class="step px-5">
+        <div class="mb-2">
+            <span class="fs-16 fw-bold">{{'WHO_IS_AUTHORISED_FOR_ISSUANCE' | translate}}</span>
         </div>
+            <div class="card w-100 p-3">
+                <div class="px-3">
+                    <div class="mb-3">
+                        <div class="custom-control custom-radio my-4">
+                            <input type="radio" id="customRadio1" class="custom-control-input radio-lg" value="anonymous" formControlName="issuer" [defaultChecked]="true">
+                            <label class="custom-control-label fs-14" for="customRadio1">{{'ANONYMOUS' | translate}}</label>
+                        </div>
+                        <div class="custom-control custom-radio my-4">
+                            <input type="radio" id="customRadio2" class="custom-control-input radio-lg" value="role" formControlName="issuer">
+                            <label class="custom-control-label fs-14" for="customRadio2">{{'ROLE' | translate}}</label>
+                        </div>
+                        <fieldset class="ml-4" [disabled]="ownershipForm.value.issuer==='role'?false:true">
+                            <span class="fs-12 fw-bold">{{'SELECT_ROLE' | translate}}</span><br />
+                            <select name="issuerRole" id="issuerRole" formControlName="issuerRole"
+                                class="w-25 br-4 border-1 border-light fs-14 p-3">
+                                <option value="" disabled selected hidden>Add Role</option>
+                            </select>
+                        </fieldset>
+                    </div>
 
-
-        <div>
-            <span class="l12 fw-bold">{{'UNIQUE_FIELD' | translate}}</span> <br />
-            <select name="visibility" id="visibility" class="fs-14 w-50 p-2 mb-4 br-4 border-grey-3 bg-card ">
-                <option value="public"> <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                    {{'PUBLIC' | translate}}
-                </option>
-                <option value="private"> <i class="fa fa-ellipsis-h " aria-hidden="true"></i>
-                    {{'PRIVATE' | translate}}
-                </option>
-            </select>
-
-        </div>
-
-        <span class="l12 fw-bold">{{'AUTHENTICATION_TYPE' | translate}}</span>
-        <div class="d-flex">
-            <div>
-                <select name="visibility" id="visibility" class="fs-14 w-185 p-2 br-4 border-grey-3 bg-card ">
-                    <option value="public"> <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                        {{'OTP' | translate}}
-                    </option>
-                </select>
-
-            </div>
-
-            <div class="ml-2">
-                <span class="m-2 mr-3 fs-14">
-                    <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" unchecked />
-                    <label for="vehicle1" class="fs-14 mr-2"> &nbsp; {{'EMAIL' | translate}}</label>
-
-                    <select name="visibility" id="visibility" class="fs-14 p-2 w-185 br-4 border-grey-3 bg-card ">
-                        <option value="public"> <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                            {{'SELECT_FIELD' | translate}}
-                        </option>
-                    </select>
-                </span>
-            </div>
-
-
-            <div class="ml-2">
-                <span class="m-2 mr-3 fs-14">
-                    <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" unchecked />
-                    <label for="vehicle1" class="mr-2 fs-14"> &nbsp; {{'MOBILE_NUMBER' | translate}}</label>
-
-                    <select name="visibility" id="visibility" class="fs-14 w-185 p-2 br-4 border-grey-3 bg-card ">
-                        <option value="public"> <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                            {{'EDUCATIONBOARD_EMAIL' | translate}}
-                        </option>
-                    </select>
-                </span>
+                </div>  
             </div>
         </div>
-
-        <div class="card bg-grey-4 w-100 p-2 mt-2 lh-base">
-            <div class="d-flex">
-                <input type="checkbox" id="vehicle1" class="mt-1" name="vehicle1" value="Bike" checked >
-                <label for="vehicle1" class="fs-14 mr-2 "> &nbsp; {{'ALTERNATE_LOGIN' | translate}}</label>
-    
-            </div>
-          
-            <span class="l12 fw-bold">{{'AUTHENTICATION_TYPE' | translate}}</span>
-            <div class="d-flex">
-                <div>
-                    <select name="visibility" id="visibility" class="fs-14 w-185 p-2 br-4 border-grey-3 bg-card ">
-                        <option value="public"> <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                            {{'OTP' | translate}}
-                        </option>
-                    </select>
-    
-                </div>
-    
-                <div class="ml-2">
-                    <span class="m-2 mr-3 fs-14">
-                        <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" unchecked />
-                        <label for="vehicle1" class="fs-14 mr-2"> &nbsp; {{'EMAIL' | translate}}</label>
-    
-                        <select name="visibility" id="visibility" class="fs-14 p-2 w-185 br-4 border-grey-3 bg-card ">
-                            <option value="public"> <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                                {{'SELECT_TYPE' | translate}}
-                            </option>
-                        </select>
-                    </span>
-                </div>
-    
-    
-                <div class="ml-2">
-                    <span class="m-2 mr-3 fs-14">
-                        <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" unchecked />
-                        <label for="vehicle1" class="mr-2 fs-14"> &nbsp; {{'MOBILE_NUMBER' | translate}}</label>
-    
-                        <select name="visibility" id="visibility" class="fs-14 w-185 p-2 br-4 border-grey-3 bg-card ">
-                            <option value="public"> <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                                {{'EDUCATIONBOARD_EMAIL' | translate}}
-                            </option>
-                        </select>
-                    </span>
-                </div>
-            </div>
-            
-        </div>
-
-
-        <hr /> -->
-
-       
-<!-- 
-    </div> -->
+    </form>
 </div>

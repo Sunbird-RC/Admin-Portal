@@ -134,6 +134,7 @@ import { CreateVcTemplateComponent } from './admin/create-vc-template/create-vc-
 import { OwnershipComponent } from './admin/ownership/ownership.component';
 import { SidemenuComponent } from './admin/sidemenu/sidemenu.component';
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
+import { RolesComponent } from './admin/roles/roles.component';
 import { AddTemplateComponent } from './admin/add-template/add-template.component';
 import { TestAndLaunchComponent } from './admin/test-and-launch/test-and-launch.component';
 import { TestAndVerifyComponent } from './admin/test-and-verify/test-and-verify.component';
@@ -182,6 +183,7 @@ import { SwaggeruiComponent } from './admin/publish/swaggerui/swaggerui.componen
     OwnershipComponent,
     SidemenuComponent,
     DashboardComponent,
+    RolesComponent,
     AddTemplateComponent,
     TestAndLaunchComponent,
     TestAndVerifyComponent,

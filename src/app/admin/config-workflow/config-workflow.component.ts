@@ -35,6 +35,20 @@ export class ConfigWorkflowComponent implements OnInit {
   privateFieldsName: string;
   temp_arr: string[];
   additionInputArr: any = [];
+  conditionSelectOptions: any = [];
+  saveModalWorkflowIndex: number;
+  modalSelectedAttributes: any = [];
+  fullSchemas: any = [];
+  javaspelMethods = [
+    { name: "EQUAL_TO", value: "equals" },
+    { name: "NOT_EQUAL_TO", value: "not_equals" },
+    { name: "GREATER_THAN", value: "greater_than" },
+    { name: "LESS_THAN", value: "less_than" },
+    { name: "GREATER_THAN_EQUAL_TO", value: "greater_than_equal_to" },
+    { name: "LESS_THAN_EQUAL_TO", value: "less_than_equal_to" },
+    { name: "CONTAINS", value: "contains" },
+    { name: "NOT_CONTAINS", value: "not_contains" },
+  ]
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -56,18 +70,20 @@ export class ConfigWorkflowComponent implements OnInit {
     var data = {
       workflowItems: [
         {
-          workflowname: 'Transfer Certificate',
+          workflowname: '',
           issuancesystem: '',
           attestation_type: 'auto_attestation',
           attestorConditions: [
             {
               selectEntity: '', anyOrAllCondition: '', fieldConditions: [{
                 selectConditionOne: '',
-                equalTo: 'equalTo',
+                method: 'equals',
                 selectConditionTwo: ''
               }]
             }
-          ]
+          ],
+          additionalInput: {},
+          attestationProperties: []
         }
       ]
     }
@@ -103,6 +119,7 @@ export class ConfigWorkflowComponent implements OnInit {
 
     let selectedMenuList: any;
     this.generalService.getData("/Schema").subscribe((res) => {
+      this.fullSchemas = res;
       for (let i = 0; i < res.length; i++) {
         this.schemaName.push(JSON.parse(res[i]["schema"]));
 
@@ -114,7 +131,7 @@ export class ConfigWorkflowComponent implements OnInit {
         selectedMenuList = this.fieldList.find((e) => e[this.entityName]);
       }
 
-    //  this.onChangeSelect(this.entityName);
+    this.onChangeSelect(this.entityName);
     });
   }
 
@@ -128,19 +145,23 @@ export class ConfigWorkflowComponent implements OnInit {
 
   newWorkflowItems(): FormGroup {
     return this.fb.group({
-      workflowname: 'Transfer Certificate',
+      workflowname: '',
       issuancesystem: '',
-      attestation_type: 'auto_attestation',
-      attestorConditions: this.fb.array([])
+      attestation_type: 'MANUAL',  // Currently only support for MANUAL
+      attestorConditions: this.fb.array([]),
+      additionalInput: {},
+      attestationProperties: []
     })
   }
 
   addWorkflowItems() {
     this.workflowItems().push(this.newWorkflowItems());
+    this.conditionSelectOptions.push({ "workflow": [] });
   }
 
   removeWorkflowItems(wIndex) {
     this.workflowItems().removeAt(wIndex);
+    this.conditionSelectOptions.splice(wIndex, 1);
   }
 
   //------------End - workflowItems----------------------
@@ -161,10 +182,12 @@ export class ConfigWorkflowComponent implements OnInit {
 
   addNewAttestCondition(wIndex) {
     this.attestConditions(wIndex).push(this.newAttestCondition());
+    this.conditionSelectOptions[wIndex]?this.conditionSelectOptions[wIndex]['workflow'].push({ "attestor": [] }):this.conditionSelectOptions[wIndex] = { "workflow": [{ "attestor": [] }] };
   }
 
   removeAttestCondition(wIndex: number, aIndex: number) {
     this.attestConditions(wIndex).removeAt(aIndex);
+    this.conditionSelectOptions[wIndex]['workflow'].splice(aIndex, 1);
   }
 
 
@@ -177,7 +200,7 @@ export class ConfigWorkflowComponent implements OnInit {
   newFieldCondition(): FormGroup {
     return this.fb.group({
       selectConditionOne: '',
-      equalTo: 'equalTo',
+      method: 'equals',
       selectConditionTwo: ''
     })
   }
@@ -257,6 +280,7 @@ export class ConfigWorkflowComponent implements OnInit {
   };
 
   getPropertiesStudent(item: any, main_item: any) {
+    this.global_properties_student = [];
     this.getSchemaPropertiesName(item, "", Object.keys(main_item), 0);
     return this.global_properties_student;
   }
@@ -291,6 +315,14 @@ export class ConfigWorkflowComponent implements OnInit {
         }
       }
     }
+  }
+
+  // Set options for attestation conditions dropdown with properties and nested properties of selected attestor
+  setSelectOptions(wIndex: number, aIndex: number, key: string) {
+    this.conditionSelectOptions[wIndex]['workflow'][aIndex]['attestor'] = [];
+    const attest = this.fieldList.find((e) => e[key]);
+    let arr = this.getPropertiesStudent(attest?.[key], attest);
+    this.conditionSelectOptions[wIndex]['workflow'][aIndex]['attestor'] = arr;
   }
 
   onSelect(item: any) {
@@ -396,13 +428,42 @@ export class ConfigWorkflowComponent implements OnInit {
 
   //-----------------------start -Attestatation Edit Modal ---------------------
 
+  setModalValues(workflowIndex: number) {
+    // set the initial values of additionalInput and attestationProperties to be visible in the workflow modal
+    this.saveModalWorkflowIndex = workflowIndex; // save the workflowIndex working upon in modal
+
+    let additionalInputs = this.workflowForm.value.workflowItems[workflowIndex].additionalInput;
+    let keys = Object.keys(additionalInputs);
+    this.values = [];
+    for(let i = 0; i < keys.length; i++){
+      this.values.push({ value: keys[i], select: additionalInputs[keys[i]]['type'] });
+    }
+
+    this.modalSelectedAttributes = this.workflowForm.value.workflowItems[workflowIndex].attestationProperties 
+                                    ? this.workflowForm.value.workflowItems[workflowIndex].attestationProperties : [];
+  }
+
   checks = false;
-  checkAll(x) {
-    if (x.target.checked == true) {
+  checkAll(x, val) {
+    if (x.target.id === 'form-check-input-select-all' && x.target.checked == true) {
+      this.modalSelectedAttributes = [...this.selectedMenuFields[0]];
+    } 
+    else if (x.target.id === 'form-check-input-select-all' && x.target.checked == false) {
+      this.modalSelectedAttributes = [];
+    }
+    else if (x.target.checked == true) {
       this.checks = true;
+      if(!this.modalSelectedAttributes?.includes(val)){
+        this.modalSelectedAttributes?.push(val);
+      }
     }
     else {
       this.checks = false;
+      for (var i = this.modalSelectedAttributes.length - 1; i >= 0; i--) {
+        if (this.modalSelectedAttributes[i] === val) {
+          this.modalSelectedAttributes.splice(i, 1);
+        }
+      }
     }
   }
 
@@ -412,11 +473,33 @@ export class ConfigWorkflowComponent implements OnInit {
 
   addfield() {
     this.values.push({ value: "", select: "" });
-
   }
 
   saveModaldata(){
     
+    this.workflowForm.controls['workflowItems']['controls'].at(this.saveModalWorkflowIndex).controls['additionalInput'].setValue({})
+    let attestationProperties = []
+    for(let i = 0; i < this.values.length; i++){
+      if(this.values[i].value === "" || this.values[i].select === ""){
+        continue;
+      }
+      else{
+        this.workflowForm.controls['workflowItems']['controls'].at(this.saveModalWorkflowIndex).controls['additionalInput'].setValue({
+          ...this.workflowForm.value.workflowItems[this.saveModalWorkflowIndex].additionalInput,
+          [this.values[i].value]: { type: this.values[i].select }
+        })
+        if(!attestationProperties.includes(this.values[i].value)){
+          attestationProperties.push(this.values[i].value);
+        }
+      }
+    }
+
+    for(let i=0; i<this.modalSelectedAttributes.length; i++){
+      if(!attestationProperties.includes(this.modalSelectedAttributes[i])){
+        attestationProperties.push(this.modalSelectedAttributes[i]);
+      }
+    }
+    this.workflowForm.controls['workflowItems']['controls'].at(this.saveModalWorkflowIndex).controls['attestationProperties'].setValue(attestationProperties)
   }
 
    findPath = (ob, key) => {
@@ -641,6 +724,145 @@ export class ConfigWorkflowComponent implements OnInit {
     keyExists(ob);
   
     return path.join(".");
+  }
+
+  fromConditionToString = (condition) => {
+    let conditionOneArr = condition.selectConditionOne.split(".");
+    let conditionTwoArr = condition.selectConditionTwo.split(".");
+    let conditionString = "";
+    // Converting the selected condition to string according to the respective java spel method
+    if (condition.method === "equals") {
+      conditionString = "(ATTESTOR#$."+conditionOneArr[conditionOneArr.length - 1]+"#.equals(REQUESTER#$."+conditionTwoArr[conditionTwoArr.length - 1]+"#))";
+    }
+    else if (condition.method === "not_equals") {
+      conditionString = "(!ATTESTOR#$."+conditionOneArr[conditionOneArr.length - 1]+"#.equals(REQUESTER#$."+conditionTwoArr[conditionTwoArr.length - 1]+"#))";
+    }
+    else if (condition.method === "greater_than") {
+      conditionString = "(ATTESTOR#$."+conditionOneArr[conditionOneArr.length - 1]+">REQUESTER#$."+conditionTwoArr[conditionTwoArr.length - 1]+"#)"
+    }
+    else if (condition.method === "less_than") {
+      conditionString = "(ATTESTOR#$."+conditionOneArr[conditionOneArr.length - 1]+"<REQUESTER#$."+conditionTwoArr[conditionTwoArr.length - 1]+"#)"
+    }
+    else if (condition.method === "greater_than_equal_to") {
+      conditionString = "(ATTESTOR#$."+conditionOneArr[conditionOneArr.length - 1]+">=REQUESTER#$."+conditionTwoArr[conditionTwoArr.length - 1]+"#)"
+    }
+    else if (condition.method === "less_than_equal_to") {
+      conditionString = "(ATTESTOR#$."+conditionOneArr[conditionOneArr.length - 1]+"<=REQUESTER#$."+conditionTwoArr[conditionTwoArr.length - 1]+"#)"
+    }
+    else if (condition.method === "contains") {
+      conditionString = "(ATTESTOR#$."+conditionOneArr[conditionOneArr.length - 1]+"#.contains(REQUESTER#$."+conditionTwoArr[conditionTwoArr.length - 1]+"#))";
+    }
+    else if (condition.method === "not_contains") {
+      conditionString = "(!ATTESTOR#$."+conditionOneArr[conditionOneArr.length - 1]+"#.contains(REQUESTER#$."+conditionTwoArr[conditionTwoArr.length - 1]+"#))";
+    }
+    return conditionString;
+  }
+
+  submitConfigWorkflowForm() {
+    let submittedWorkflowData = this.workflowForm.value.workflowItems;
+    let attestationPolicies = [];
+
+    if(submittedWorkflowData.length === 0){
+      return;
+    }
+    console.log("submittedWorkflowData", submittedWorkflowData)
+    for(let i = 0; i < submittedWorkflowData.length; i++) { // loop through each workflow in the array of workflows
+
+      // validation for empty workflow name and attestation type
+      if(submittedWorkflowData[i].workflowname === "" || submittedWorkflowData[i].attestation_type === ""){
+        console.log("empty workflow name or attestation type");
+        continue;
+      }
+
+      let setAttestationProperties = {}
+      let setAdditionalInput = submittedWorkflowData[i].additionalInput; // additional Input field of the workflow
+      let additionalInputKeys = Object.keys(setAdditionalInput); 
+      
+      // Loop to change the attestationProperties to the desired format according to the schema
+      for(let j=0; j<submittedWorkflowData[i].attestationProperties?.length; j++){ 
+        if(!additionalInputKeys.includes(submittedWorkflowData[i].attestationProperties[j])){
+
+          let entityProperty = submittedWorkflowData[i].attestationProperties[j];
+          let keys = entityProperty.split(".");
+          entityProperty = entityProperty.replace(keys[0], "$");
+          setAttestationProperties = {
+            ...setAttestationProperties,
+            [keys[keys.length - 1]]: entityProperty
+          }
+        }
+      }
+
+      // Forming the conditions string using attestatorConditions
+      let attestorConditions = submittedWorkflowData[i].attestorConditions;
+      let attestorConditionsString = "";
+      for(let j=0; j<attestorConditions.length; j++){
+        let fieldConditions = attestorConditions[j].fieldConditions;
+
+        for(let k=0; k<fieldConditions.length; k++){
+          let fieldConditionString = this.fromConditionToString(fieldConditions[k]);
+          if(attestorConditionsString === ""){
+            attestorConditionsString = fieldConditionString;
+          } else {
+            attestorConditions[j].anyOrAllCondition === "any" ? attestorConditionsString += " || " + fieldConditionString : attestorConditionsString += " && " + fieldConditionString;
+          }
+        }
+      }
+      if(attestorConditions.length > 1)
+        attestorConditionsString = "(" + attestorConditionsString + ")";
+
+      // Validation for empty attestorConditions
+      if(attestorConditionsString === "" || Object.keys(setAttestationProperties).length === 0){
+        console.log("empty attestorConditions or attestationProperties");
+        continue;
+      }
+
+      let attestationPolicyItem = {
+        "name": submittedWorkflowData[i].workflowname,
+        "type": submittedWorkflowData[i].attestation_type,
+        "attestationProperties": setAttestationProperties,
+        "conditions": attestorConditionsString,
+        "attestorPlugin": `did:internal:ClaimPluginActor?entity=${attestorConditions[0]?.selectEntity}`  // Currently only support for internal
+      }
+
+      if(Object.keys(setAdditionalInput).length > 0){
+        attestationPolicyItem["additionalInput"] = setAdditionalInput;
+      }
+
+      attestationPolicies.push(attestationPolicyItem);
+    }
+    console.log("attestationPolicies", attestationPolicies);
+    let payload = {};
+    let osidOfSchema = "";
+    for(let i = 0; i < this.fullSchemas?.length; i++){
+      if(this.fullSchemas[i].name === this.entityName){
+        if (this.schemaName[i]["_osConfig"]) {
+          this.schemaName[i]["_osConfig"].attestationPolicies = attestationPolicies;
+        } else {
+          this.schemaName[i] = {
+            ...this.schemaName[i],
+            _osConfig: {
+              "attestationPolicies": attestationPolicies
+            }
+          }
+        }
+        
+        // Updated payload of schema to be sent to backend
+        payload = {
+          "name": this.fullSchemas[i].name,
+          "description": this.fullSchemas[i].description,
+          "schema": JSON.stringify(this.schemaName[i]),
+          "referedSchema": this.fullSchemas[i].referedSchema,
+          "status": this.fullSchemas[i].status
+        }
+        osidOfSchema = this.fullSchemas[i].osid;
+      }
+    }
+
+    this.generalService.putData('/Schema', osidOfSchema, payload).subscribe((res) => {
+      console.log(res)
+    }, (err) => {
+      console.log(err)
+    })
   }
 }
 

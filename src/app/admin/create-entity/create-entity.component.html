@@ -118,24 +118,22 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-
-
                                     <!-- <ng-template ngFor let-field [ngForOf]="usecaseSchema[activeMenuNo]?.definitions" let-i="index"> -->
-                                    <ng-template
-                                        [ngIf]="usecaseSchema[activeMenuNo]?.definitions?.type == 'array' || usecaseSchema[activeMenuNo]?.definitions?.type == 'object'"
-                                        class="p-4">
-                                        <!-- <p class="mt-3 fw-bold">
-                                            {{usecaseSchema[activeMenuNo]?.definitions?.propertyName}}
-                                        </p> -->
-
-
+                                        <ng-template
+                                            [ngIf]="usecaseSchema[activeMenuNo]?.definitions?.type == 'array' || usecaseSchema[activeMenuNo]?.definitions?.type == 'object' || usecaseSchema[activeMenuNo]?.type == 'object' || usecaseSchema[activeMenuNo]?.type == 'array' "
+                                            class="p-4">
+                                            <!-- <p class="mt-3 fw-bold">
+                                                {{usecaseSchema[activeMenuNo]?.definitions?.propertyName}}
+                                            </p> -->
+                                            
                                         <ng-template ngFor let-field
                                             [ngForOf]="usecaseSchema[activeMenuNo]?.definitions?.data || usecaseSchema[activeMenuNo]?.definitions?.propertyKey" let-j="index">
-
+                                           
                                             <ng-template [ngIf]="field?.type == 'array' || field?.type == 'object'">
                                                 <p class="mt-3 fw-bold p-2">
                                                     {{field?.propertyName}}
                                                 </p>
+                                               
                                                 <ng-template ngFor let-secArrayfield [ngForOf]="field?.data"
                                                     let-k="index">
 
@@ -143,19 +141,16 @@
                                                         [ngIf]="secArrayfield?.type == 'array' || secArrayfield?.type == 'object'">
                                                         <p class="mt-3 fw-bold">
                                                             {{secArrayfield?.propertyName}}
-
+                                                            
                                                         </p>
                                                         <ng-template ngFor let-childNastedArrayfield
                                                             [ngForOf]="secArrayfield?.data" let-m="index">
 
-                                                            <tr [hidden]="!childNastedArrayfield?.data?.title"
-                                                                style="border: white solid;">
-
+                                                            <tr [hidden]="!childNastedArrayfield?.data?.title">
                                                                 <td>
                                                                     <span
                                                                         class="fs-14 p-2">{{childNastedArrayfield?.data?.title}}</span>
                                                                 </td>
-
                                                                 <td>
                                                                     <span
                                                                         class="fs-14 p-2">{{childNastedArrayfield?.data?.type | titlecase}}</span>
@@ -198,13 +193,10 @@
                                                         </ng-template>
                                                     </ng-template>
 
-                                                    <tr [hidden]="!secArrayfield?.data?.title"
-                                                        style="border: white solid;">
-
+                                                    <tr [hidden]="!secArrayfield?.data?.title" class="border-bottom">
                                                         <td>
                                                             <span class="fs-14 p-2">{{secArrayfield?.data?.title}} </span>
                                                         </td>
-
                                                         <td>
                                                             <span class="fs-14 p-2">{{secArrayfield?.data?.type | titlecase}}</span>
                                                         </td>
@@ -243,12 +235,10 @@
 
                                                 </ng-template>
 
-                                                <tr style="border: white solid;"  [hidden]="!field[j]?.title">
-
+                                                <tr [hidden]="!field[j]?.title" >
                                                     <td>
                                                         <span class="fs-14 p-2">{{field[j]?.title}}</span>
                                                     </td>
-
                                                     <td>
                                                         <span class="fs-14 p-2">{{field?.data?.type | titlecase}}</span>
                                                     </td>
@@ -282,14 +272,11 @@
                                                 </tr>
                                             </ng-template>
 
-                                            <ng-template [ngIf]="field?.type == 'string'" >
-                                                <tr [hidden]="!field?.data?.title">
-
-
+                                            <ng-template [ngIf]="field?.type == 'string' || field?.type == 'number'" >
+                                                <tr [hidden]="!field?.data?.title" class="border-bottom">
                                                     <td>
                                                         <span class="fs-14 p-2">{{field?.data?.title}}</span>
                                                     </td>
-
                                                     <td>
                                                         <span class="fs-14 p-2">{{field?.data?.type | titlecase}}</span>
                                                     </td>
@@ -300,7 +287,6 @@
                                                     <td>
                                                        <span class="fs-14 p-2">{{field?.data?.description}} </span>
                                                     </td>
-
                                                     <td>
                                                         <select (change)="onVisibilityChange($event, field?.visiblity, 'string', j, k )"
                                                             class="br-4 bg-card border-grey-3 fs-14 m-2  py-1 px-3 mr-3">
@@ -308,8 +294,7 @@
                                                                 [selected]="opt?.key == field?.visiblity">
                                                                 {{opt.name}}
                                                             </option>
-                                                        </select>
-                                                      
+                                                        </select>                                                  
                                                     </td>
                                                     <td >
                                                         <div *ngIf="usecaseSchema[activeMenuNo]?.status != 'PUBLISHED'" class="dropdown fs-14" >
@@ -326,9 +311,7 @@
                                         </ng-template>
                                     </ng-template>
                                 </tbody>
-
                             </table>
-
                         </div>
                     </div>
                 </div>
@@ -385,7 +368,7 @@
                 <create-vc-template [usecaseSchema]="usecaseSchemaData"></create-vc-template>
             </div>
             <div *ngIf="isActive == 'ownership'">
-                <ownership></ownership>
+                <ownership [usecaseSchema]="usecaseSchemaData"></ownership>
             </div>
             <div class="ht-100" *ngIf="isActive == 'test-publish'"> 
                 <publish></publish>           
@@ -404,7 +387,8 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content mt-5">
                 <div class="modal-header pt-4 border-0">
-                    <h3 class="heading-5">{{'ADD_SCHEMA' | translate}}</h3>
+                    <h3 *ngIf="addSchema" class="heading-5">{{'ADD_SCHEMA' | translate}}</h3>
+                    <h3 *ngIf="!addSchema" class="heading-5">{{'EDIT_SCHEMA' | translate}}</h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
                 </div>
@@ -476,12 +460,12 @@
             <div>
                 <button (click)="backStep()"
                     class="fs-14 fw-bold btn bg-color-secondary submit-button color-sec px-3 my-2 ml-2 mr-2 ">{{'BACK' | translate}}</button> &nbsp;
-                <button (click)="createSchema('')" *ngIf="isActive == 'createSchema'"
+                <button (click)="createSchema(true)" *ngIf="isActive == 'createSchema'"
                     [disabled]="!usecaseSchema[activeMenuNo]?.definitions?.data?.length"
                     class="btn text-capitalize fw-bold float-end bg-color-primary bg-color-primary-sm px-3 my-2 text-white">{{'SAVE_AND_NEXT' | translate}}
                     </button>
 
-                    <button *ngIf="isActive == 'createSchema'" (click)="createSchema(activeMenuNo);"
+                    <button *ngIf="isActive == 'createSchema'" (click)="createSchema();"
                     class="btn fw-bold float-end bg-color-primary bg-color-primary-sm px-3 my-2 ml-2 mr-2 text-white">{{'SAVE_AS_DRAFT' | translate}}</button>
                 &nbsp;
 
@@ -490,9 +474,15 @@
                     </button>
                     <a  href="/home"> <button *ngIf="isActive == 'test-publish'"
                     class="btn text-capitalize float-end bg-color-primary text-white fw-bold px-3 my-2">{{'GO_TO_DASHBOARD' | translate}} </button></a>
-                <button *ngIf="isActive == 'configurations'" (click)="nextStep();"
-                    class="btn bg-color-secondary  color-sec fw-bold float-end submit-button px-3 my-2 ml-2 mr-2 ">{{'SKIP' | translate}}</button> &nbsp;
-                <button *ngIf="isActive == 'create-vc' || isActive == 'ownership'" (click)="nextStep();"
+                <button *ngIf="isActive == 'configurations'" (click)="saveConfigWorkflow(true);"
+                    class="btn  fw-bold float-end bg-color-primary bg-color-primary-sm px-3 my-2 ml-2 mr-2 text-white">{{'SAVE_AND_NEXT' | translate}}</button>
+                <button *ngIf="isActive == 'configurations'" (click)="saveConfigWorkflow();"
+                    class="btn  fw-bold float-end bg-color-primary bg-color-primary-sm px-3 my-2 ml-2 mr-2 text-white">{{'SAVE_AS_DRAFT' | translate}}</button>
+                <button *ngIf="isActive == 'ownership'" (click)="saveOwnershipAttributes(true);"
+                    class="btn  fw-bold float-end bg-color-primary bg-color-primary-sm px-3 my-2 ml-2 mr-2 text-white">{{'SAVE_AND_NEXT' | translate}}</button>
+                <button *ngIf="isActive == 'ownership'" (click)="saveOwnershipAttributes();"
+                    class="btn  fw-bold float-end bg-color-primary bg-color-primary-sm px-3 my-2 ml-2 mr-2 text-white">{{'SAVE_AS_DRAFT' | translate}}</button>
+                <button *ngIf="isActive == 'create-vc'" (click)="saveAsDraftMsg()"
                     class="btn  fw-bold float-end bg-color-primary bg-color-primary-sm px-3 my-2 ml-2 mr-2 text-white">{{'SAVE_AS_DRAFT' | translate}}</button>
                 &nbsp;
             </div>
@@ -518,3 +508,47 @@
     </div>
 </div>
 <!-- Modal End : Delete Entity -->
+
+<!-- Modal Start : Duplicate Entity -->
+<div class="modal right fade" #duplicateEntity tabindex="-1" role="dialog" aria-labelledby="addEntity"
+    data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content mt-5">
+            <div class="modal-header pt-4 border-0 justify-content-center">
+                <h3 class="heading-5 ">{{'Duplicate Schema Name' | translate}}</h3>
+            </div>
+            <div class="container mt-1 mb-2">
+                <div class="mb-3 justify-content-center p-3">
+                    <div class="l12 ml-4"><i class="fa fa-info-circle" aria-hidden="true" style="color: red;"></i>                        
+                        <ng-container *ngIf="duplicateSchemas.length > 1; else singleError">
+                            The Schema name
+                            <span *ngFor="let error of duplicateSchemas; let i = index; let last = last">
+                                <ng-container *ngIf="i === 0">
+                                    "<strong>{{ error }}</strong>"
+                                </ng-container>
+                                <ng-container *ngIf="i > 0 && !last">
+                                    , "<strong>{{ error }}</strong>"
+                                </ng-container>
+                                <ng-container *ngIf="i > 0 && last">
+                                    and "<strong>{{ error }}</strong>" already exist.
+                                </ng-container>
+                            </span>
+                        </ng-container>
+                        <ng-template #singleError>
+                            The Schema name "<strong>{{ duplicateSchemas[0] }}</strong>" already exists.
+                        </ng-template>
+                    </div>&nbsp;
+                    <div class="l12 ml-5">{{'Please rename schema name by clicking edit.' | translate}}</div>
+                </div>
+
+                <div class="mt-4 d-flex justify-content-center">
+                    <button data-dismiss="modal" aria-label="Close"
+                        class="btn text-capitalize bg-color-primary text-white fw-bold" (click)="hideModal()">{{'OK' |
+                        translate}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="custom-backdrop" [ngClass]="{ 'show': isModalOpen }"></div>
+<!-- Modal End : Duplicate Entity -->

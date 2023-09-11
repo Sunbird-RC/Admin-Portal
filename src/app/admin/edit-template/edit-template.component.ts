@@ -6,7 +6,6 @@ import { GeneralService } from 'src/app/services/general/general.service';
 declare var grapesjs: any;
 import { TranslateService } from '@ngx-translate/core'; 
 
-
 import 'grapesjs-preset-webpage';
 import { JsonEditorComponent, JsonEditorOptions } from 'ang-jsoneditor';
 import { ToastMessageService } from 'src/app/services/toast-message/toast-message.service';
@@ -46,6 +45,7 @@ export class EditTemplateComponent implements OnInit {
   entityName: any;
   usecase: any;
   schemaOsid: string;
+  vcStep: string;
 
   constructor(public router: Router, public route: ActivatedRoute, public toastMsg: ToastMessageService,public translate: TranslateService,
     public generalService: GeneralService, public schemaService: SchemaService) {
@@ -91,6 +91,15 @@ export class EditTemplateComponent implements OnInit {
       }
     });
 
+    this.schemaService.getEntitySchemaJSON().subscribe((data) => {
+      let allSteps = data['usecase'][this.usecase]['steps'];
+      for(let i=0; i<allSteps.length; i++){
+        if(allSteps[i]['key'] === 'create-vc'){
+          this.vcStep = i.toString();
+        }
+      }
+    })
+
     await this.readHtmlSchemaContent(this.sampleData);
     this.grapesJSDefine();
     /* ------END-------------------------Advance Editor ----------------------- */
@@ -109,6 +118,16 @@ export class EditTemplateComponent implements OnInit {
       panelManager.removeButton('options', 'undo');
       const um = this.editor.UndoManager;
       um.clear();
+
+      const iconsOptions = document.querySelector('.gjs-pn-options');
+        if (iconsOptions) {
+          iconsOptions.classList.add('custom-icons-margin-right');
+      }
+
+      const iconsViews = document.querySelector('.gjs-pn-views');
+        if (iconsViews) {
+          iconsViews.classList.add('custom-icons-margin-right');
+      }
     })
 
     this.editor.on('asset:add', () => {
@@ -191,9 +210,9 @@ export class EditTemplateComponent implements OnInit {
             const cardDiv = document.createElement('div');
             cardDiv.className = 'pcard p-3';
             cardDiv.setAttribute('style', 'text-align: left; color:white');
-            cardDiv.innerHTML = ` <div class="d-flex flex-justify-between px-2 py-2">
+            cardDiv.innerHTML = ` <div class="d-flex flex-justify-between py-2">
             <div class="heading-2">Preview</div>
-            <div>
+            <div class="adv-btn-div">
                 <button id="advanceBtn" (click)="editTemplate()"
                     class="float-end adv-btn btn"><i
                         class="fa fa-pencil-square-o" aria-hidden="true"></i>Advance Editor</button>
@@ -515,7 +534,7 @@ export class EditTemplateComponent implements OnInit {
       }
 
      this.generalService.putData('/Schema/', this.schemaOsid, payload).subscribe((res) => {
-        this.router.navigate(['/create/2/' + this.usecase + '/' + this.entityName]);
+        this.router.navigate(['/create/' + this.vcStep + '/' + this.usecase + '/' + this.entityName]);
       });
     });
   });

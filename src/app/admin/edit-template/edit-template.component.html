@@ -10,11 +10,11 @@
        </span>
     </nav>
  </header>
- <div class="container mt-2 bg-white py-1 px-3">
+ <div class="mt-2 bg-white py-1 px-3 ml-1 mr-0">
     <div>
        <div class="row d-flex mt-4 setHeight">
           <div class="preview-footer">
-             <button data-toggle="modal" data-target="#prewiewProfile" class="btn text-capitalize float-end bg-color-primary text-white fw-bold  p1">{{'SAVE_DOCUMENT' | translate}}</button>
+             <button  [hidden]="!htmlDiv" data-toggle="modal" data-target="#prewiewProfile" class="btn text-capitalize float-end bg-color-primary text-white fw-bold  p1">{{'SAVE_DOCUMENT' | translate}}</button>
           </div>
           <div class=" p-0 setHeight border-right mtn-28">
              <div  id="htmlDiv" [hidden]="!htmlDiv">
@@ -25,7 +25,7 @@
                    <div id="gjs">
                       {{userHtml}}
                    </div>
-                   <div id="blocks"></div>
+                   <div id="blocks" ></div>
                 </div>
              </div>
              <div  id="schemaDiv"[hidden]="!schemaDiv">

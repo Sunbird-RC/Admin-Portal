@@ -1,10 +1,159 @@
 <div id="content">
   <div class="p-4">
     <h4>{{ entityName }}</h4>
-     <p class="mt-3"><b>Coming Soon</b></p>
- 
+    <p class="fs-14 text-grey-color fw-bold">Attestation Workflow</p>
   </div>
+  
+  <!-- workflowForm Group -->
+  <form [formGroup]="workflowForm">
+      <div formArrayName="workflowItems">
+        <!-- Workflow Item Cards-->
+        <div class="card w-100 p-4 mb-3" *ngFor="let child of workflowForm.get('workflowItems')['controls']; let workflowIndex = index;">
+            <div class="px-3" class="form-group" formGroupName="{{workflowIndex}}">
+                <div class="mb-3">
+                    <span class="fs-12 fw-bold">{{'WORKFLOW_NAME' | translate}}</span>
+                    <input class="w-100 br-4 border border-light fs-14 p-3"
+                        placeholder="Enter Workflow name" type="text" required name="workflowname"
+                        formControlName="workflowname" />
+                </div>
+                <div class="mb-3">
+                    <span class="fs-12 fw-bold">{{'SELECT_ISSUANCE_SYSTEM' | translate}}</span><br />
+                    <select name="issuanceSystem" id="issuanceSystem" class="w-25 br-4 border-1 border-light fs-14 p-3" 
+                      formControlName="issuancesystem">
+                        <option value="" disabled hidden selected>{{'SELECT_FIELD' | translate}}</option>
+                        <option value="sunbird_rc_issuance_system">Sunbird RC issuance system</option>
+                    </select>
+                </div>
+                <div class="mb-3 d-flex">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" disabled
+                            [id]="'autoAttestation'+workflowIndex" formControlName="attestation_type" value="AUTO_ATTESTATION" [defaultChecked]="true">
+                        <label class="form-check-label" [for]="'autoAttestation'+workflowIndex">
+                          {{'AUTO_ATTESTATION' | translate}}
+                        </label>
+                    </div>
+                    <div class="form-check mx-3">
+                        <input class="form-check-input" type="radio"
+                            [id]="'manual'+workflowIndex" checked formControlName="attestation_type" value="MANUAL">
+                        <label class="form-check-label" [for]="'manual'+workflowIndex">
+                          {{'MANUAL_ATTESTATION' | translate}}
+                        </label>
+                    </div>
+                </div>
 
+                <div class="mb-3">
+                    <div class="fs-14 fw-bold mb-2">{{'ATTESTOR_DETAILS' | translate}}</div>
+                    <div formArrayName="attestorConditions">
+                      <div class="p-2 bg-light w-100 px-3 mb-2" *ngFor="let child of workflowForm.get('workflowItems')['controls'][workflowIndex].get('attestorConditions')['controls'];let attestorIndex = index;">
+                        <div formGroupName="{{attestorIndex}}">
+                          <div class="row">
+                              <div class="col-2">
+                                  <div class="mb-3">
+                                      <span class="fs-12 fw-bold">{{'ATTESTOR' | translate}}</span><br />
+                                      <select name="selectEntity" id="selectEntity" class="w-100 br-4 border-1 border-light fs-14 p-3"
+                                        formControlName="selectEntity" (change)="setSelectOptions(workflowIndex, attestorIndex, workflowForm.get('workflowItems')['value'][workflowIndex]?.attestorConditions[attestorIndex].selectEntity)">
+                                          <option value="" disabled selected hidden>{{'SELECT_FIELD' | translate}}</option>
+                                          <ng-container *ngFor="let entity of entityList">
+                                          <option *ngIf="entity!=entityName" [value]="entity">{{entity}}</option>
+                                        </ng-container>
+                                      </select>
+                                  </div>
+                              </div>
+                              <div class="col-4">
+                                  <div class="mb-3">
+                                      <span class="fs-12 fw-bold">{{'CONDITIONS_FOR_ATTESTOR' | translate}}</span><br />
+                                      <select name="anyOrAllCondition" id="anyOrAllCondition"
+                                          class="w-50 br-4 border-1 border-light fs-14 p-3 mr-2"
+                                          formControlName="anyOrAllCondition">
+                                          <option value="" disabled hidden>{{'SELECT_FIELD' | translate}}</option>
+                                          <option value="all">{{'ALL' | translate}}</option>
+                                          <option value="any">{{'ANY' | translate}}</option>
+                                      </select>
+                                      <span class="fs-14">{{'OF_THE_CONDITIONS_BELOW' | translate}}</span><br />
+                                  </div>
+                              </div>
+                              <div class="col-1 offset-5 d-flex flex-row-reverse">
+                              <div role="button" (click)="removeAttestCondition(workflowIndex, attestorIndex)">
+                                <i class="fa fa-times-circle-o mt-1 fa-lg" aria-hidden="true"></i>
+                              </div>
+                            </div>
+                          </div>
+                          <fieldset [disabled]="!workflowForm.get('workflowItems')['value'][workflowIndex]?.attestorConditions[attestorIndex].selectEntity" formArrayName="fieldConditions">
+                            <div
+                              *ngFor="let child of workflowForm.get('workflowItems')['controls'][workflowIndex].get('attestorConditions')['controls'][attestorIndex].get('fieldConditions')['controls'];
+                              let conditionIndex = index;"
+                              >
+                              <div class="row" formGroupName="{{conditionIndex}}">
+                                <div class="col-4 offset-2">
+                                    <div class="mb-3">
+                                        <select name="selectConditionOne" id="selectConditionOne"
+                                            class="w-100 br-4 border-1 border-light fs-14 p-3"
+                                            formControlName="selectConditionOne">
+                                            <option value="" disabled hidden>{{'SELECT_FIELD' | translate}}</option>
+                                            <option *ngFor="let child of conditionSelectOptions[workflowIndex]['workflow'][attestorIndex]['attestor']" [value]="child">{{child}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="mb-3">
+                                        <select name="method" id="method"
+                                            class="w-100 br-4 border-1 border-light fs-14 p-3"
+                                            formControlName="method">
+                                            <option value="" disabled hidden>{{'SELECT_FIELD' | translate}}</option>
+                                            <option *ngFor="let ele of javaspelMethods" [value]="ele['value']" >{{ ele['name'] | translate }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="mb-3">
+                                        <select name="selectConditionTwo" id="selectConditionTwo"
+                                            class="w-100 br-4 border-1 border-light fs-14 p-3"
+                                            formControlName="selectConditionTwo">
+                                            <option value="" disabled hidden>{{'SELECT_FIELD' | translate}}</option>
+                                            <option *ngFor="let child of workflowForm.get('workflowItems')['value'][workflowIndex]?.attestationProperties" [value]="child">{{ child }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-1">
+                                    <div class="mt-3" role="button" (click)="removeFieldCondition(workflowIndex, attestorIndex, conditionIndex)">
+                                        <i class="fa fa-times-circle-o mt-1 fa-lg" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                          </fieldset>
+                              <a class="link-primary offset-2" role="button" ><span class="fs-12 mt-n2"
+                                  (click)="addFieldCondition(workflowIndex, attestorIndex)">
+                                  + {{'ADD_CONDITION' | translate}}
+                              </span></a>
+                      </div>
+                    </div>
+                    </div>
+                    <button *ngIf="workflowForm.value.workflowItems[workflowIndex].attestorConditions.length < 1" class="m-3 fs-14 btn fw-bold bg-color-secondary submit-button color-sec" (click)="addNewAttestCondition(workflowIndex)">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                        {{'ADD_NEXT_ATTESTOR' | translate}} </button>
+                </div>
+
+                <div class="mb-3">
+                    <div class="fs-14 fw-bold my-2">{{'ATTRIBUTES_REQUIRED_FOR_ATTESTATION' | translate}}<span data-toggle="modal" data-target="#editWorlflowModal" (click)="setModalValues(workflowIndex)"
+                            class="color-sec bg-color-secondary px-2 py-1 fs-12 mx-2 border-0 rounded-4" role="button">{{'EDIT' | translate}}</span></div>
+                    <div class="p-4 bg-light w-100">
+                      {{ workflowForm.value.workflowItems[workflowIndex].attestationProperties ? workflowForm.value.workflowItems[workflowIndex].attestationProperties.join(', ').substring(0, 100) : "NO_ATTRIBUTE_SELECTED" | translate }}
+                    </div>
+                    <span
+                        class="m-3 fs-14 btn fw-bold bg-light submit-button text-danger float-end py-2 px-4"
+                        (click)="removeWorkflowItems(workflowIndex)">
+                        {{'DELETE' | translate}} </span>
+                </div>
+            </div>
+        </div>
+      </div>
+      <button class="m-3 fw-bold fs-14 btn bg-color-secondary submit-button color-sec"
+          data-toggle="modal" (click)="addWorkflowItems()">
+          <i class="fa fa-plus" aria-hidden="true"></i> {{'ADD_WORKFLOW' | translate}}
+      </button>
+  </form>
+  
 </div>
 
 <div class="modal right fade" id="editWorlflowModal" tabindex="-1" role="dialog" aria-labelledby="editWorlflowModal">
@@ -22,7 +171,7 @@
           <thead>
             <tr>
               <th scope="col" class="fw-bold">
-                <input class="form-check-input" (change)="checkAll($event)" type="checkbox" /> &nbsp;
+                <input class="form-check-input" id="form-check-input-select-all" [checked]="modalSelectedAttributes.length === selectedMenuFields[0].length" (change)="checkAll($event, '')" type="checkbox" /> &nbsp;
                 <label class="p-1 ml-2"> {{'ATTRIBUTES' | translate}}</label>
               </th>
             </tr>
@@ -31,7 +180,7 @@
             <tr *ngFor="let val of selectedMenuFields[0]">
               <span class="p-3">
              
-                  <input class="form-check-input" (change)="checkAll($event)" type="checkbox" /> &nbsp;
+                  <input class="form-check-input" [checked]="modalSelectedAttributes.includes(val)" (change)="checkAll($event, val)" type="checkbox" /> &nbsp;
                 &nbsp; 
                 <label class="p-1 ml-2">{{val}}</label>
               </span>
@@ -79,7 +228,7 @@
 
 
         <div>
-          <button class="btn text-capitalize float-end bg-color-primary text-white fw-bold px-3 my-2"
+          <button class="btn text-capitalize float-end bg-color-primary text-white fw-bold px-3 my-2" data-dismiss="modal" aria-label="Close"
             (click)="saveModaldata()">{{'SAVE' | translate}}</button>
         </div>
 

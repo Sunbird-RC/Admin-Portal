@@ -62,11 +62,14 @@ export class GetStartedComponent implements OnInit {
     this.checkEntity();
   }
 
-   checkEntity(){
-    return this.attestationCheckbox ? this.chooseEntity = "attestmodule"
-         : this.verifiableCredentialCheckbox && !this.ownershipCheckbox ? this.chooseEntity = "vcmodule"
-         : this.ownershipCheckbox && !this.verifiableCredentialCheckbox ? this.chooseEntity = "ownershipmodule" 
-         : this.verifiableCredentialCheckbox && this.ownershipCheckbox ? this.chooseEntity = "vcownershipmodule"
-         : this.chooseEntity = "newmodule" ;
+  checkEntity(){
+    return this.attestationCheckbox && !this.verifiableCredentialCheckbox && !this.ownershipCheckbox? this.chooseEntity = "attestmodule"
+        :  !this.attestationCheckbox && this.verifiableCredentialCheckbox && !this.ownershipCheckbox? this.chooseEntity = "vcmodule"
+        :  !this.attestationCheckbox && !this.verifiableCredentialCheckbox && this.ownershipCheckbox? this.chooseEntity = "ownershipmodule"
+        :  this.attestationCheckbox && this.verifiableCredentialCheckbox && this.ownershipCheckbox? this.chooseEntity = "registrymodule"
+        :  this.attestationCheckbox && this.verifiableCredentialCheckbox && !this.ownershipCheckbox? this.chooseEntity = "attestvcmodule"
+        :  this.attestationCheckbox && !this.verifiableCredentialCheckbox && this.ownershipCheckbox? this.chooseEntity = "attestownershipmodule"
+        :  !this.attestationCheckbox && this.verifiableCredentialCheckbox && this.ownershipCheckbox? this.chooseEntity = "vcownershipmodule"
+        :  this.chooseEntity = "newmodule";
   }
 }

@@ -38,6 +38,7 @@ export class ConfigWorkflowComponent implements OnInit {
   conditionSelectOptions: any = [];
   saveModalWorkflowIndex: number;
   modalSelectedAttributes: any = [];
+  fullSchemas: any = [];
   javaspelMethods = [
     { name: "EQUAL_TO", value: "equals" },
     { name: "NOT_EQUAL_TO", value: "not_equals" },
@@ -118,6 +119,7 @@ export class ConfigWorkflowComponent implements OnInit {
 
     let selectedMenuList: any;
     this.generalService.getData("/Schema").subscribe((res) => {
+      this.fullSchemas = res;
       for (let i = 0; i < res.length; i++) {
         this.schemaName.push(JSON.parse(res[i]["schema"]));
 
@@ -829,6 +831,38 @@ export class ConfigWorkflowComponent implements OnInit {
       attestationPolicies.push(attestationPolicyItem);
     }
     console.log("attestationPolicies", attestationPolicies);
+    let payload = {};
+    let osidOfSchema = "";
+    for(let i = 0; i < this.fullSchemas?.length; i++){
+      if(this.fullSchemas[i].name === this.entityName){
+        if (this.schemaName[i]["_osConfig"]) {
+          this.schemaName[i]["_osConfig"].attestationPolicies = attestationPolicies;
+        } else {
+          this.schemaName[i] = {
+            ...this.schemaName[i],
+            _osConfig: {
+              "attestationPolicies": attestationPolicies
+            }
+          }
+        }
+        
+        // Updated payload of schema to be sent to backend
+        payload = {
+          "name": this.fullSchemas[i].name,
+          "description": this.fullSchemas[i].description,
+          "schema": JSON.stringify(this.schemaName[i]),
+          "referedSchema": this.fullSchemas[i].referedSchema,
+          "status": this.fullSchemas[i].status
+        }
+        osidOfSchema = this.fullSchemas[i].osid;
+      }
+    }
+
+    this.generalService.putData('/Schema', osidOfSchema, payload).subscribe((res) => {
+      console.log(res)
+    }, (err) => {
+      console.log(err)
+    })
   }
 }
 

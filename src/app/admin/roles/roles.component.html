@@ -1,0 +1,130 @@
+<app-header></app-header>
+
+<div class="m-0 mt-5 row h-100">
+	<nav id="sidebar" class="col-2 border3 card">
+		<ul id="sideMenu" class="list-unstyled components">
+			<!-- <li class="menu" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">
+                <a class="a-menu"routerLink="/started/get-started" (click)="openMenu('get-started')">{{'GET_STARTED' | translate}}</a>
+            </li> -->
+			<li class="menu" routerLinkActive="active-link">
+				<a class="a-menu fs-14 p-3 d-block" routerLink="/#"
+					><b>{{ "DASHBOARD" | translate }}</b></a
+				>
+			</li>
+			<li class="menu" routerLinkActive="active-link" *ngIf="isSchemaCreated">
+				<a class="a-menu fs-14 p-3 d-block" routerLink="/schema"
+					><b>{{ "SCHEMA" | translate }}</b></a
+				>
+			</li>
+			<li class="menu" routerLinkActive="active-link">
+				<a class="a-menu fs-14 p-3 d-block" routerLink="/a"
+					><b>{{ "ATTESTATION_WORKFLOW" | translate }}</b></a
+				>
+			</li>
+			<li class="menu" routerLinkActive="active-link">
+				<a class="a-menu fs-14 p-3 d-block" routerLink="/a"
+					><b>{{ "VERIFIABLE_CREDENTIALS" | translate }}</b></a
+				>
+			</li>
+
+			<li class="menu" routerLinkActive="active-link">
+				<a class="a-menu fs-14 p-3 d-block" routerLink="/a"
+					><b>{{ "OWNERSHIP" | translate }}</b></a
+				>
+			</li>
+			<li
+				class="menu"
+				routerLinkActive="active-link"
+				class="active-link"
+				[routerLinkActiveOptions]="{ exact: true }"
+			>
+				<a class="a-menu fs-14 p-3 d-block" routerLink="/roles"
+					><b>{{ "ROLES" | translate }}</b></a
+				>
+			</li>
+			<li class="menu" routerLinkActive="active-link">
+				<a class="a-menu fs-14 p-3 d-block" routerLink="/a"
+					><b>{{ "THEME" | translate }}</b></a
+				>
+			</li>
+
+			<li class="menu" routerLinkActive="active-link">
+				<a class="a-menu fs-14 p-3 d-block" routerLink="/#"
+					><b>{{ "HELP" | translate }}</b></a
+				>
+			</li>
+			<li class="menu" routerLinkActive="active-link">
+				<a class="a-menu fs-14 p-3 d-block" routerLink="/#"
+					><b>{{ "ACCOUNT" | translate }}</b></a
+				>
+			</li>
+		</ul>
+	</nav>
+
+	<div class="col bg-grey-4 w-100">
+		<div class="col pr-4 mb-6 w-100">
+			<div
+				class="w-100 d-flex justify-content-between card-body py-2 mt-3 align-items-center"
+			>
+				<div class="heading-2">
+					<h3>Roles</h3>
+				</div>
+				<button
+					class="btn flex-end bg-color-primary bg-color-primary-sm px-3 my-2 ml-auto mr-2 text-white fs-16"
+				>
+					<i class="fa fa-plus mx-2" aria-hidden="true"></i>Add Role
+				</button>
+			</div>
+
+			<div class="card w-75 p-2">
+				<table class="table table-borderless">
+					<thead>
+						<tr>
+							<th scope="col" class="fw-bold">
+								<span class="p-1 ml-2"> {{ "ROLE" | translate }}</span>
+							</th>
+							<th scope="col" class="fw-bold">
+								<span class="p-1 ml-2">Last Updated</span>
+							</th>
+							<th scope="col" class="fw-bold">
+								<span class="p-1 ml-2"></span>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="border-bottom">
+							<td class="p-3">
+								<span class="p-1 ml-2">Admin</span>
+							</td>
+							<td class="p-3">
+								<span class="p-1 ml-2">14 Oct 2022</span>
+							</td>
+							<td class="p-3">
+								<button
+									class="btn bg-color-secondary color-sec fw-bold float-end submit-button px-3 my-2 ml-2 mr-2 mt-n2"
+								>
+									<i class="fa fa-edit mx-2" aria-hidden="true"></i>Edit
+								</button>
+							</td>
+						</tr>
+						<tr>
+							<td class="p-3">
+								<span class="p-1 ml-2">School Admin</span>
+							</td>
+							<td class="p-3">
+								<span class="p-1 ml-2">14 Oct 2022</span>
+							</td>
+							<td class="p-3">
+								<button
+									class="btn bg-color-secondary color-sec fw-bold float-end submit-button px-3 my-2 ml-2 mr-2 mt-n2"
+								>
+									<i class="fa fa-edit mx-2" aria-hidden="true"></i>Edit
+								</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

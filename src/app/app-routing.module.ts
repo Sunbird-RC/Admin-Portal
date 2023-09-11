@@ -25,6 +25,7 @@ import { CreateEntityComponent } from "../app/admin/create-entity/create-entity.
 import { ConfigWorkflowComponent } from "./admin/config-workflow/config-workflow.component";
 import { CreateVcTemplateComponent } from "./admin/create-vc-template/create-vc-template.component";
 import { OwnershipComponent } from "./admin/ownership/ownership.component";
+import { RolesComponent } from "./admin/roles/roles.component";
 import { SidemenuComponent } from "./admin/sidemenu/sidemenu.component";
 import { DashboardComponent } from "./admin/dashboard/dashboard.component";
 import { AddTemplateComponent } from "./admin/add-template/add-template.component";
@@ -213,6 +214,11 @@ const routes: Routes = [
   {
     path: "dashboard",
     component: DashboardComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: "roles",
+    component: RolesComponent,
     canActivate: [AuthGuard],
   },
   {

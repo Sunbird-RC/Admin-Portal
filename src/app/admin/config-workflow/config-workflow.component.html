@@ -59,8 +59,8 @@
                                       </select>
                                   </div>
                               </div>
-                              <div class="col-4">
-                                  <div class="mb-3">
+                              <div class="col-10 d-flex justify-content-between align-items-center">
+                                  <div class="mb-3 w-50">
                                       <span class="fs-12 fw-bold">{{'CONDITIONS_FOR_ATTESTOR' | translate}}</span><br />
                                       <select name="anyOrAllCondition" id="anyOrAllCondition"
                                           class="w-50 br-4 border-1 border-light fs-14 p-3 mr-2"
@@ -71,10 +71,10 @@
                                       </select>
                                       <span class="fs-14">{{'OF_THE_CONDITIONS_BELOW' | translate}}</span><br />
                                   </div>
-                              </div>
-                              <div class="col-1 offset-5 d-flex flex-row-reverse">
-                              <div role="button" (click)="removeAttestCondition(workflowIndex, attestorIndex)">
-                                <i class="fa fa-times-circle-o mt-1 fa-lg" aria-hidden="true"></i>
+                                  <div class="col-1 offset-5 d-flex">
+                                    <div role="button" (click)="removeAttestCondition(workflowIndex, attestorIndex)" class="d-flex justify-content-end">
+                                      <i class="fa fa-times-circle-o mt-1 fa-lg" aria-hidden="true"></i>
+                                    </div>
                               </div>
                             </div>
                           </div>

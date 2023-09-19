@@ -39,6 +39,7 @@ export class ConfigWorkflowComponent implements OnInit {
   saveModalWorkflowIndex: number;
   modalSelectedAttributes: any = [];
   fullSchemas: any = [];
+  entityPropertiesOptions: any = [];
   javaspelMethods = [
     { name: "EQUAL_TO", value: "equals" },
     { name: "NOT_EQUAL_TO", value: "not_equals" },
@@ -112,7 +113,10 @@ export class ConfigWorkflowComponent implements OnInit {
 
   ngOnInit(): void {
 
-   // this.patchValueData();
+  this.addWorkflowItems();
+  this.addNewAttestCondition(0);
+  this.addFieldCondition(0, 0);
+  //  this.patchValueData();
 
 
     this.entityName = this.activeRoute.snapshot.params.entity;
@@ -262,6 +266,7 @@ export class ConfigWorkflowComponent implements OnInit {
 
      // add key in additionInputArr - todo
     }
+    this.setEntityPropertiesOptions(this.entityName)
   }
 
   ObjectbyString = function (o, s) {
@@ -323,6 +328,13 @@ export class ConfigWorkflowComponent implements OnInit {
     const attest = this.fieldList.find((e) => e[key]);
     let arr = this.getPropertiesStudent(attest?.[key], attest);
     this.conditionSelectOptions[wIndex]['workflow'][aIndex]['attestor'] = arr;
+  }
+
+  setEntityPropertiesOptions(entityName: string) {
+    this.entityPropertiesOptions = [];
+    const attest = this.fieldList.find((e) => e[entityName]);
+    let arr = this.getPropertiesStudent(attest?.[entityName], attest);
+    this.entityPropertiesOptions = arr;
   }
 
   onSelect(item: any) {
@@ -488,8 +500,8 @@ export class ConfigWorkflowComponent implements OnInit {
           ...this.workflowForm.value.workflowItems[this.saveModalWorkflowIndex].additionalInput,
           [this.values[i].value]: { type: this.values[i].select }
         })
-        if(!attestationProperties.includes(this.values[i].value)){
-          attestationProperties.push(this.values[i].value);
+        if(!this.entityPropertiesOptions.includes(this.values[i].value)){
+          this.entityPropertiesOptions.push(this.values[i].value);
         }
       }
     }

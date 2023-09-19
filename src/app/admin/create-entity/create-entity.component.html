@@ -168,7 +168,7 @@
                                                                 <td>
                                                                     <select
                                                                         (change)="onVisibilityChange($event, childNastedArrayfield?.data?.visiblity, 'childNased', j, k , m)"
-                                                                        class="br-4 border-grey-3 bg-card fs-14 m-2  py-1 px-3 mr-3">
+                                                                        class="br-4 border-grey-3 bg-card fs-14 m-2  py-1 px-3 mr-3" [disabled]="usecaseSchema[activeMenuNo]['status'] == 'PUBLISHED'">
                                                                         <option *ngFor="let opt of visiblityOpt"
                                                                             value={{opt.key}}
                                                                             [selected]="opt?.key == childNastedArrayfield?.data?.visiblity">
@@ -212,7 +212,7 @@
                                                         <td>
                                                             <select
                                                                 (change)="onVisibilityChange($event, secArrayfield?.visiblity, 'nasted', j , k)"
-                                                                class="br-4 border-grey-3 bg-card fs-14 m-2  py-1 px-3 mr-3">
+                                                                class="br-4 border-grey-3 bg-card fs-14 m-2  py-1 px-3 mr-3" [disabled]="usecaseSchema[activeMenuNo]['status'] == 'PUBLISHED'">
                                                                 <option *ngFor="let opt of visiblityOpt"
                                                                     value={{opt.key}}
                                                                     [selected]="opt.key== secArrayfield?.visiblity">
@@ -251,7 +251,7 @@
                                                     </td>
                                                     <td>
                                                         <select (change)="onVisibilityChange($event, field?.data?.visiblity, j, k)"
-                                                            class="br-4 border-grey-3 bg-card fs-14 m-2  py-1 px-3 mr-3">
+                                                            class="br-4 border-grey-3 bg-card fs-14 m-2  py-1 px-3 mr-3" [disabled]="usecaseSchema[activeMenuNo]['status'] == 'PUBLISHED'">
                                                             <option *ngFor="let opt of visiblityOpt" value={{opt.key}}
                                                                 [selected]="opt.key== field?.data?.visiblity">
                                                                 {{opt.name}}
@@ -289,7 +289,7 @@
                                                     </td>
                                                     <td>
                                                         <select (change)="onVisibilityChange($event, field?.visiblity, 'string', j, k )"
-                                                            class="br-4 bg-card border-grey-3 fs-14 m-2  py-1 px-3 mr-3">
+                                                            class="br-4 bg-card border-grey-3 fs-14 m-2  py-1 px-3 mr-3" [disabled]="usecaseSchema[activeMenuNo]['status'] == 'PUBLISHED'">
                                                             <option *ngFor="let opt of visiblityOpt" value={{opt.key}}
                                                                 [selected]="opt?.key == field?.visiblity">
                                                                 {{opt.name}}

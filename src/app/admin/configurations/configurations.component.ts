@@ -74,5 +74,15 @@ export class ConfigurationsComponent implements OnInit {
     });
     this.router.navigateByUrl('/create/' + this.currentTab + '/' + this.usecase + '/' + this.entityKey);
   }
+    
+    viewOrEditSchema(status: string, schemaName : string) {
+      this.entityKey = schemaName;
+      if (status === 'PUBLISHED') {
+        this.router.navigateByUrl('/create/0' + '/' + this.usecase + '/' + this.entityKey);    
+      } else if (status === 'DRAFT') {
+        this.router.navigateByUrl('/create/0' + '/' + this.usecase + '/' + this.entityKey);
+      }
+    }
+  }
+  
 
-}

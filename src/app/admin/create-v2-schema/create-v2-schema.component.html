@@ -1,0 +1,199 @@
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light bg-header nav-b navbar-inverse">
+    <a class="nav-link pl-3 text-color" href="" onClick="goBack();"><i class="fa fa-angle-left primary-text"></i> </a>
+    <span class="fs-16">{{'GETING_STARTED' | translate}}</span>
+  </nav>
+</header>
+
+<div class="">
+  <div class="row bg-grey-4 m-0" *ngIf="!isAddFormPg">
+    <div class="col-3 p-0 mb-6">
+      <div class="wrapper">
+        <!--Top menu -->
+        <div id="sideMenu" class="sidebar bg-white ht-100 border-end border-bottom zi-1 w-90-p pt-4 pb-1 mb-5">
+          <p class="fs-16 fw-bold text-center text-uppercase">{{'SCHEMA' | translate}} </p>
+          <ul class="list-unstyled components">
+            <ng-container *ngFor="let menuItem of schemaList; let i = index">
+              <li class="menu my-3" (click)="openEntity(i, menuItem?.schema?.name)">
+                <a class="a-menu text-color fs-16 d-block border-grey-3" role="button"
+                  (click)="onSelect(menuItem?.schema?.name);">
+                  {{menuItem?.schema?.name}}
+                  <div class="dropdown fs-14 float-end" *ngIf="false">
+                    <i class="fa fa-ellipsis-h text-grey-color" aria-hidden="true"></i>
+                    <div class="dropdown-content dropdown-content-margin">
+                      <a data-toggle="modal" data-target="#addEntity" (click)="openEntityModal('edit', i)"
+                        class="ml-0">{{'EDIT' | translate}}</a>
+                      <a data-toggle="modal" data-target="#deleteEntity" (click)="deleteEntity(i, '')"
+                        class="ml-0">{{'DELETE' | translate}}</a>
+                    </div>
+                  </div>
+                </a>
+              </li>
+            </ng-container>
+          </ul>
+          <ul class="list-unstyled">
+            <li>
+              <button class="m-3 fw-bold fs-14 btn bg-color-secondary submit-button color-sec" data-toggle="modal"
+                data-target="#addEntity" (click)="openEntityModal('add')"><i class="fa fa-plus" aria-hidden="true"></i>
+                {{'ADD_SCHEMA' | translate}}</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-8 p-0">
+      <div class="d-flex justify-content-between card-body pr-2 py-2 mt-3">
+        <div class="heading-2">
+          <h3>{{schemaList[activeMenuNo]?.schema?.name}}</h3>
+          <p class="fs-14 text-grey-color">{{schemaList[activeMenuNo]?.schema?.schema?.description}}</p>
+        </div>
+        <div *ngIf="!isShowJson && schemaList[activeMenuNo]">
+          <button class="float-end fw-bold fs-14 btn bg-color-secondary submit-button color-sec"
+            (click)="showAddForm()">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+            {{'ADD_FIELDS' | translate}}
+          </button>
+          <button class="float-end fw-bold fs-14 btn bg-color-secondary submit-button color-sec"
+            (click)="toggleShowJson()" [disabled]="schemaList[activeMenuNo]['status'] == 'PUBLISHED'">
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i> {{'JSON_SCHEMA' | translate}}
+          </button>
+        </div>
+      </div>
+      <div *ngIf="!isShowJson && objectKeys(schemaList[activeMenuNo]?.schema?.schema?.properties || 0).length">
+        <!-- <p class="fs-16">{{objectKeys(schemaList[activeMenuNo]?.schema?.schema?.properties || 0).length}}</p> -->
+        <div class="card w-100">
+          <div class="px-3">
+            <table class="table table-borderless mb-0">
+              <thead>
+                <tr>
+                  <th class="fs-12 text-grey-color fw-bold pt-2" scope="col"> {{'LABEL' | translate}} </th>
+                  <th class="fs-12 text-grey-color fw-bold p-2" scope="col"> {{'FIELD_TYPE' | translate}}</th>
+                  <th class="fs-12 text-grey-color fw-bold p-2" scope="col"> {{'MANDATORY' | translate}}</th>
+                  <th class="fs-12 text-grey-color fw-bold p-2" scope="col"> {{'DESCRIPTION' | translate}} </th>
+                  <!-- <th class="fs-12 text-grey-color fw-bold p-2" scope="col"> {{'VISIBILITY' | translate}} </th> -->
+                  <!-- <th class="fs-12 text-grey-color fw-bold p-2 px-3" scope="col"> </th> -->
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let property of schemaList[activeMenuNo]?.schema?.schema?.properties | keyvalue">
+                  <td>{{property.key}}</td>
+                  <td>{{property.value.type}}</td>
+                  <td>{{schemaList[activeMenuNo]?.schema?.schema?.required.includes(property.key)}}</td>
+                  <td>{{property.value.description}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <button class="pt-3 fw-bold fs-14 btn bg-color-secondary submit-button color-sec" (click)="navigateToTemplates()" *ngIf="schemaList.length && schemaList[activeMenuNo]?.schema?.id">
+        {{'ADD_EDIT_TEMPLATES' | translate}}
+      </button>
+      <div *ngIf="isShowJson">
+        <div class="">
+          <json-editor *ngIf="properties" [options]="editorOptions" [data]="properties" [(ngModel)]="properties"
+            (change)="readConvertJsonData($event)"></json-editor>
+          <footer class="footer fixed-bottom bg-card fixed-bottom-json zi-2000">
+            <div class="container-fluid">
+              <div>
+                <button (click)="readConvertJsonData($event)"
+                  class="btn text-capitalize float-end bg-color-primary text-white fw-bold px-3 my-2">{{'SAVE' |
+                  translate}}</button>
+                <button (click)="toggleShowJson()"
+                  class="btn bg-color-secondary  color-sec fw-bold float-end submit-button px-3 my-2">{{'CANCEL' |
+                  translate}}</button>
+              </div>
+            </div>
+          </footer>
+        </div>
+      </div>
+
+      <!-- <div class="p-3 sm-card"
+        *ngIf="schemaList.length &&  !isShowJson && schemaList[activeMenuNo]?.status != 'PUBLISHED'">
+        <span class="m-3 fs-14 btn fw-bold bg-color-secondary submit-button color-sec" (click)="showAddForm()"
+          role="button">
+          <i class="fa fa-plus" aria-hidden="true"></i>
+          {{'ADD_FIELDS' | translate}} </span>
+      </div> -->
+
+      <div class="p-3" *ngIf="!schemaList.length">
+        <p class="fs-16fw-bold"> {{'NO_SCHEMA_ADDED' | translate}} </p>
+        <p class="fs-14"> {{'ADD_ENTITY_LEVEL_SCHEMA' | translate}}</p>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="isAddFormPg" class="p-5 bg-grey-4">
+    <add-field-form [jsonSchema]="compFieldJson" [commonSchema]="commonSchemaField"
+      (newItemEvent)="jsonSchemaData($event)" (backEvent)="goBackEvent($event)"></add-field-form>
+  </div>
+
+  <footer class="footer fixed-bottom bg-card border-grey-4 bs-1 border-top">
+    <div class="container-fluid">
+      <div>
+        <button (click)="backStep()"
+          class="fs-14 fw-bold btn bg-color-secondary submit-button color-sec px-3 my-2 ml-2 mr-2 ">{{'BACK' |
+          translate}}</button> &nbsp;
+        <button (click)="createSchema()" [disabled]="schemaList.length === 0 || schemaList[activeMenuNo]?.schema?.id"
+          class="btn text-capitalize fw-bold float-end bg-color-primary bg-color-primary-sm px-3 my-2 text-white">{{'SAVE'
+          | translate}}
+        </button>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<div class="modal right fade" id="addEntity" tabindex="-1" role="dialog" aria-labelledby="addEntity">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content mt-5">
+      <div class="modal-header pt-4 border-0">
+        <h3 *ngIf="addSchema" class="heading-5">{{'ADD_SCHEMA' | translate}}</h3>
+        <h3 *ngIf="!addSchema" class="heading-5">{{'EDIT_SCHEMA' | translate}}</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="container mt-1 mb-2">
+        <div>
+          <label for="issuer" class="fw-bold">{{'SELECT_ISSUER' | translate}} <span class="text-danger">*</span></label>
+          <select name="issuer" id="issuer" [(ngModel)]="issuer" class="form-select" #issuerModel="ngModel" required>
+            <option [ngValue]="undefined" [disabled]="true">{{'SELECT_A_ISSUER_AS_AUTHOR' | translate}}</option>
+            <option *ngFor="let issuerItem of issuerList" [value]="issuerItem.did">{{issuerItem.name}}</option>
+          </select>
+          <span class="mt-3 text-danger" *ngIf="(issuerModel.touched && !issuerModel.valid)">
+            {{'PLEASE_SELECT_AN_ISSUER' | translate}}
+          </span>
+        </div>
+
+        <div class="mb-3 mt-2">
+          <label class="l12 fw-bold">{{'ENTER_SCHEMA_NAME' | translate}} <span class="text-danger">*</span></label>
+          <input class="form-control" placeholder="{{'ENTER_SCHEMA_NAME' | translate}}" type="text" required name="entityName"
+            [(ngModel)]="entityName" (keydown)="space($event)" #entityNameModel="ngModel" />
+          <span class="mt-3 text-danger" *ngIf="(entityNameModel.dirty && !entityNameModel.valid)">
+            {{'PLEASE_ENTER_A_VALID_SCHEMA_NAME' | translate}}
+          </span>
+        </div>
+
+        <div class="mt-2">
+          <label class="l12 fw-bold">{{'ENTER_DESCRIPTION' | translate}}<i class="text-muted">({{'OPTIONAL' | translate}})</i></label>
+          <textarea [(ngModel)]="description" class="form-control"></textarea>
+          <span class="l12 text-grey-color">{{'DESCRIPTION_ABOUT_SCHEMA' | translate}}</span>
+        </div>
+
+        <div class="mt-2">
+          <label for="tags" class="l12 fw-bold">Tags <span class="text-danger">*</span><i class="text-muted">({{'ADD_COMMA_SEPARATED_TAGS' | translate}})</i></label>
+          <input type="text" [(ngModel)]="tags" name="tags" class="form-control" #tagsModel="ngModel">
+          <span class="mt-3 text-danger" *ngIf="(tagsModel.touched && !tagsModel.valid)">
+            {{'PLEASE_ENTER_A_VALID_TAGS' | translate}}
+          </span>
+        </div>
+        <div class="mt-4">
+          <button data-dismiss="modal" aria-label="Close"
+            class="btn text-capitalize float-end bg-color-primary text-white fw-bold p1" (click)="createEntity($event)"
+            [disabled]="!entityName || !issuer || !tags">{{'SAVE' | translate}}</button>
+          <button class="close" data-dismiss="modal" aria-label="Close"
+            class="btn btn-outline-primary text-capitalize float-end">{{'CANCEL' | translate}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

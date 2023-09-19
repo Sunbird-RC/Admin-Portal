@@ -36,12 +36,15 @@ import { EditTemplateComponent } from "./admin/edit-template/edit-template.compo
 import { DloginComponent } from "./admin/dlogin/dlogin.component";
 import { PublishComponent } from "./admin/publish/publish.component";
 import { SwaggeruiComponent } from "./admin/publish/swaggerui/swaggerui.component";
+import { CreateV2SchemaComponent } from "./admin/create-v2-schema/create-v2-schema.component";
+import { CreateV2TemplatesComponent } from "./admin/create-v2-templates/create-v2-templates.component";
+import { V2AccessGuardGuard } from "./admin/v2-access-guard.guard";
 
 // import { FaqComponent } from './custom-components/faq/faq.component';
 const routes: Routes = [
   // Home
   //{ path: '', component: SidemenuComponent },
-  { path: "", component: KeycloakloginComponent, canActivate: [AuthGuard] },
+  // { path: "", component: KeycloakloginComponent, canActivate: [AuthGuard] },
 
   {
     path: "setting/:page",
@@ -255,6 +258,16 @@ const routes: Routes = [
     path: "configurations",
     component: ConfigurationsComponent,
     canActivate: [AuthGuard],
+  },
+  {
+    path: "v2-schema",
+    component: CreateV2SchemaComponent,
+    canActivate: [AuthGuard, V2AccessGuardGuard]
+  },
+  {
+    path: "v2-schema/:schemaId/templates",
+    component: CreateV2TemplatesComponent,
+    canActivate: [AuthGuard, V2AccessGuardGuard]
   },
   { path: "dlogin", component: DloginComponent, canActivate: [AuthGuard] },
   { path: "publish", component: PublishComponent },

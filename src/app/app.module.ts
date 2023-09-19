@@ -144,6 +144,8 @@ import { DloginComponent } from './admin/dlogin/dlogin.component';
 import { AdvanceEditorComponent } from './admin/advance-editor/advance-editor.component';
 import { PublishComponent } from './admin/publish/publish.component';
 import { SwaggeruiComponent } from './admin/publish/swaggerui/swaggerui.component';
+import { CreateV2SchemaComponent } from './admin/create-v2-schema/create-v2-schema.component';
+import { CreateV2TemplatesComponent } from './admin/create-v2-templates/create-v2-templates.component';
 
 @NgModule({
   declarations: [
@@ -192,7 +194,9 @@ import { SwaggeruiComponent } from './admin/publish/swaggerui/swaggerui.componen
     DloginComponent,
     AdvanceEditorComponent,
     PublishComponent,
-    SwaggeruiComponent
+    SwaggeruiComponent,
+    CreateV2SchemaComponent,
+    CreateV2TemplatesComponent
   ],
   imports: [
     BrowserModule,

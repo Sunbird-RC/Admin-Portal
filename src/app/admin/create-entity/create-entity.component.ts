@@ -10,7 +10,6 @@ import { FormioJsonService } from './schema-to-formiojson';
 import { SchemaBodyService } from './schema-body';
 import { OwnershipComponent } from '../ownership/ownership.component'
 import { ConfigWorkflowComponent } from '../config-workflow/config-workflow.component'
-import { PropertyBindingType } from '@angular/compiler';
 
 
 @Component({

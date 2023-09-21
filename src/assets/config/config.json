@@ -10,6 +10,7 @@
     "languageFolder": "/assets/i18n",
     "title": "Admin Portal",
     "baseUrl": "https://demo-admin-portal.sunbirdrc.dev/registry/api/v1",
+    "bffUrl": "https://demo-admin-portal.sunbirdrc.dev/ulp-bff",
     "schemaUrl": "https://demo-admin-portal.sunbirdrc.dev/api/docs/swagger.json",
     "footerText": "Admin Portal",
     "languages": [

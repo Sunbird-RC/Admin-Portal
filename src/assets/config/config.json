@@ -1,17 +1,17 @@
 {
     "environment": "development",
     "keycloak": {
-        "url": "https://demo-admin-portal.sunbirdrc.dev/auth",
-        "clientId": "admin-portal",
+        "url": "https://devulp.uniteframework.io/auth",
+        "clientId": "registry-frontend",
         "realm": "sunbird-rc"
     },
     "configFolder": "/assets/config",
     "referanceSchema" : "/assets/config",
     "languageFolder": "/assets/i18n",
     "title": "Admin Portal",
-    "baseUrl": "https://demo-admin-portal.sunbirdrc.dev/registry/api/v1",
-    "bffUrl": "https://demo-admin-portal.sunbirdrc.dev/ulp-bff",
-    "schemaUrl": "https://demo-admin-portal.sunbirdrc.dev/api/docs/swagger.json",
+    "baseUrl": "https://devulp.uniteframework.io/registry/api/v1",
+    "schemaUrl": "https://devulp.uniteframework.io/registry/api/docs/swagger.json",
+    "bffUrl": "https://devulp.uniteframework.io/ulp-bff",
     "footerText": "Admin Portal",
     "languages": [
         "en",
@@ -37,7 +37,6 @@
         "cardColor":"#FFFFFF",
         "textColor":"#000000",
         "lightColorbtn":"#E8F3F8"
-
     },
     "dark_theme": {
         "logoPath": "https://raw.githubusercontent.com/Sunbird-RC/Admin-Portal/main/src/assets/images/admin_portal.svg",

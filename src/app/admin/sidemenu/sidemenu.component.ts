@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { GeneralService } from 'src/app/services/general/general.service';
 import { TranslateService } from '@ngx-translate/core';
 import { SchemaService } from 'src/app/services/data/schema.service';
+import { AppConfig } from 'src/app/app.config';
 
 @Component({
   selector: 'sidemenu',
@@ -27,17 +28,19 @@ activeMenu: string = '';
   entityKey: any;
   res: any;
   allUsecases: any = {};
+  isV2Enabled: boolean = false;
   
   constructor(
   private activeRoute: ActivatedRoute,
   private generalService: GeneralService,
   public translate: TranslateService,
   public router: Router,
-  public schemaService: SchemaService
+  public schemaService: SchemaService,
+  private config: AppConfig
 ) { }
 
   ngOnInit(): void {
-
+    this.isV2Enabled = !!this.config.getEnv('bffUrl');
     this.activeRoute.params.subscribe(params => {
       this.params = params;
 

@@ -367,7 +367,18 @@ var editSelectCompData = [
     }
 ];
 
-var editTextfieldApiTabs = { key: 'api', ignore: true };
+var editTextfieldCompApi = [
+    {
+        "key": "customProperties",
+        "ignore": true
+    }, 
+    {
+        "key": "fieldTag",
+        "ignore": true
+    }
+]
+
+// var editTextfieldApiTabs = { key: 'api', ignore: true };
 var editTextfieldDataTabs = { key: 'data', ignore: true };
 var editTextfieldConditionalTabs = { key: 'conditional', ignore: true };
 var editTextfieldLogicTabs = { key: 'logic', ignore: true };
@@ -384,7 +395,12 @@ var hideShowFormComponentConfig = [
         "ignore": false,
         "components": editTextfieldCompValidation
     },
-    editTextfieldApiTabs,
+    {
+        "key": "api",
+        "ignore": false,
+        "components": editTextfieldCompApi
+    },
+    // editTextfieldApiTabs,
     editTextfieldDataTabs,
     editTextfieldConditionalTabs,
     editTextfieldLogicTabs,
@@ -409,7 +425,12 @@ var selectHideShowFormComponentConfig = [
         "ignore": false,
         "components": editSelectCompData
     },
-    editTextfieldApiTabs,
+    {
+        "key": "api",
+        "ignore": false,
+        "components": editTextfieldCompApi
+    },
+    // editTextfieldApiTabs,
     editTextfieldConditionalTabs,
     editTextfieldLogicTabs,
     editTextfieldLayoutTabs

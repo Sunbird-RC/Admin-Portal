@@ -1,9 +1,8 @@
-import { Component, OnInit, Input, SimpleChanges, ViewChild, SimpleChange } from "@angular/core";
+import { Component, OnInit, Input, SimpleChanges } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { GeneralService } from "src/app/services/general/general.service";
 import { TranslateService } from '@ngx-translate/core';
 import { FormGroup, FormControl, FormArray, FormBuilder } from '@angular/forms';
-import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
 
 @Component({
   selector: "config-workflow",
@@ -110,7 +109,6 @@ export class ConfigWorkflowComponent implements OnInit {
       });
     });
 
-    console.log({ data });
     this.workflowForm.patchValue(data);
   }
 
@@ -248,7 +246,6 @@ export class ConfigWorkflowComponent implements OnInit {
                 }
               }
               this.setSelectOptions(l, 0, attestorEntity);
-              console.log(this.conditionSelectOptions);
               let workflowItems = [
                 {
                   workflowname: attestationPolicies[l].name,
@@ -400,12 +397,8 @@ export class ConfigWorkflowComponent implements OnInit {
   removeFieldCondition(wIndex, aIndex, fIndex) {
     this.fieldConditions(wIndex, aIndex).removeAt(fIndex);
   }
-  //------------Start - fieldConditions----------------------
+  //------------End - fieldConditions----------------------
 
-
-  onSubmit() {
-    console.log(this.workflowForm.value);
-  }
 
   //------------------------------------End - dynamic form ---------------------
 
@@ -432,25 +425,12 @@ export class ConfigWorkflowComponent implements OnInit {
 
     this.selectedMenuFields.push(arr);
 
-
-    console.log(this.selectedMenuFields[0]);
     for (let i = 0; i < this.selectedMenuFields[0].length; i++) {
 
       let fieldName = this.selectedMenuFields[0][i].split(".");
       fieldName = fieldName[fieldName.length - 1];
       let fieldFullPath = this.findPath(attest, fieldName);
-      // this.ObjectbyString(attest, this.findPath(attest, fieldName))
-
-      console.log(fieldFullPath);
-
-
-      //want key
-      // find key path , call findPath()
-      // pass key and fieldArr to ObjectbyString()
-
-      console.log(this.ObjectbyString(attest, fieldFullPath + '.' + fieldName));
       this.additionInputArr.push(this.ObjectbyString(attest, fieldFullPath + '.' + fieldName));
-      console.log(this.additionInputArr);
 
       // add key in additionInputArr - todo
     }
@@ -592,7 +572,6 @@ export class ConfigWorkflowComponent implements OnInit {
           let myArray = "";
           let feild_name = "";
           let commonSchema_name = item?.properties?.[temp_arr[i]]?.["$ref"];
-          console.log(commonSchema_name);
           myArray = commonSchema_name.split("/")[0].split(".")[0];
           feild_name = commonSchema_name.split("/")[3];
 
@@ -965,12 +944,10 @@ export class ConfigWorkflowComponent implements OnInit {
     if (submittedWorkflowData.length === 0) {
       return;
     }
-    console.log("submittedWorkflowData", submittedWorkflowData)
     for (let i = 0; i < submittedWorkflowData.length; i++) { // loop through each workflow in the array of workflows
 
       // validation for empty workflow name and attestation type
       if (submittedWorkflowData[i].workflowname === "" || submittedWorkflowData[i].attestation_type === "") {
-        console.log("empty workflow name or attestation type");
         continue;
       }
 
@@ -1011,7 +988,6 @@ export class ConfigWorkflowComponent implements OnInit {
 
       // Validation for empty attestorConditions
       if (attestorConditionsString === "" || Object.keys(setAttestationProperties).length === 0) {
-        console.log("empty attestorConditions or attestationProperties");
         continue;
       }
 
@@ -1029,7 +1005,6 @@ export class ConfigWorkflowComponent implements OnInit {
 
       attestationPolicies.push(attestationPolicyItem);
     }
-    console.log("attestationPolicies", attestationPolicies);
     let payload = {};
     let osidOfSchema = "";
     for (let i = 0; i < this.fullSchemas?.length; i++) {

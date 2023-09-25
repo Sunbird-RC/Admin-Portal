@@ -138,7 +138,7 @@ export class DataService {
     };
     return this.http.put(requestParam.url, requestParam.data, httpOptions).pipe(
       mergeMap((data: any) => {
-        if (data.responseCode !== 'OK') {
+        if (data.responseCode && data.responseCode !== 'OK') {
           return observableThrowError(data);
         }
         return observableOf(data);
@@ -159,7 +159,6 @@ export class DataService {
 
     return this.http.delete(requestParam.url, httpOptions).pipe(
       mergeMap((data: any) => {
-
         return observableOf(data);
       }));
 

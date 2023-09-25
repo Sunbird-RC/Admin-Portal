@@ -167,7 +167,12 @@ export class CreateV2TemplatesComponent implements OnInit {
         this.toastMessageService.error('', this.generalService.translateString('UNABLE_TO_CREATE_TEMPLATE'));
       });
     } else {
-      this.v2schemaService.updateTemplate(template, this.templateType, this.selectedTemplate.templateId).subscribe(res => {
+      const data = {
+        schema: this.selectedTemplate.schemaId,
+        template,
+        type: this.templateType || this.selectedTemplate.type
+      }
+      this.v2schemaService.updateTemplate(this.selectedTemplate.templateId, data).subscribe(res => {
         console.log("res", res);
         this.showAddTemplate = false;
         this.toastMessageService.success('', this.generalService.translateString('TEMPLATE_UPDATED_SUCCESSFULLY'));

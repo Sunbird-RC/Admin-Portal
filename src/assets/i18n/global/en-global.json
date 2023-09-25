@@ -416,5 +416,6 @@
     "ENTER_A_TYPE": "Enter a type",
     "SAVE_TEMPLATE": "Save Template",
     "ADD_TEMPLATES": "Add Templates",
-    "V2_VERIFIABLE_CREDENTIALS": "V2 Verifiable Credentials"
+    "V2_VERIFIABLE_CREDENTIALS": "V2 Verifiable Credentials",
+    "PLEASE_ADD_ATLEAST_ONE_FIELD": "Please add at least one field"
 }

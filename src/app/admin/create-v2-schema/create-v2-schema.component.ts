@@ -275,6 +275,8 @@ export class CreateV2SchemaComponent implements OnInit {
           console.log(error);
         });
       }
+    } else {
+      this.toastMsgService.error('', this.generalService.translateString('PLEASE_ADD_ATLEAST_ONE_FIELD'));
     }
   }
 

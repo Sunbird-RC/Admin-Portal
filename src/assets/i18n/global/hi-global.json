@@ -416,5 +416,6 @@
   "ENTER_A_TYPE": "एक प्रकार दर्ज करें",
   "SAVE_TEMPLATE": "टेम्पलेट सहेजें",
   "ADD_TEMPLATES": "टेम्पलेट जोड़ें",
-  "V2_VERIFIABLE_CREDENTIALS": "V2 सत्यापनीय प्रमाणपत्र"
+  "V2_VERIFIABLE_CREDENTIALS": "V2 सत्यापनीय प्रमाणपत्र",
+  "PLEASE_ADD_ATLEAST_ONE_FIELD": "कृपया कम से कम एक फ़ील्ड जोड़ें"
  }

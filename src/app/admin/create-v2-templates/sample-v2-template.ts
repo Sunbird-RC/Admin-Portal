@@ -22,19 +22,20 @@ export const sampleV2Template = `<html lang="en">
           <div class="line">
             <div>Certified to</div>
             <div>
-              <b>{{record.name}}</b>
+              <b>{{student_name}}</b>
             </div>
             <div>issued on</div>
             <div style="padding: 1em;font-family: 'Open Sans', sans-serif">
               {{ credential.issuancedate}}
             </div>
             <div>issued by </div>
-            <div>{{issuer.name}}</div>
+            <div>Issuer Name</div>
           </div>
           </td>
           </tr>
           <td valign="bottom">
-          <img class="certTemp" src="{{qrCode}}" alt="qr_code" />
+          <img class="certTemp" src="" id="qrcode" alt="qr_code" />
+          {{dob}}{{gender}}
         </td>
     </table>
   </div>

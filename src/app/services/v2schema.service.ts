@@ -198,22 +198,17 @@ export class V2schemaService {
     return this.dataService.post(payload).pipe(map(res => res.result));
   }
 
-  updateTemplate(template: string, type: string, templateId: string) {
-    const baseUrl = new URL(this.bffUrl).origin;
+  updateTemplate(templateId: string, data: any) {
     const payload = {
-      url: `${baseUrl}/cred-schema/template/${templateId}`,
-      data: {
-        template,
-        type
-      }
+      url: `${this.bffUrl}/v1/credential/schema/template/update/${templateId}`,
+      data
     }
     return this.dataService.put(payload);
   }
 
   deleteTemplate(templateId: string) {
-    const baseUrl = new URL(this.bffUrl).origin;
     const payload = {
-      url: `${baseUrl}/rendering-template/${templateId}`
+      url: `${this.bffUrl}/v1/credential/schema/template/delete/${templateId}`
     }
     return this.dataService.delete(payload);
   }

@@ -415,5 +415,6 @@
     "GO_BACK_TO_LIST": "Go back to List",
     "ENTER_A_TYPE": "Enter a type",
     "SAVE_TEMPLATE": "Save Template",
-    "ADD_TEMPLATES": "Add Templates"
+    "ADD_TEMPLATES": "Add Templates",
+    "V2_VERIFIABLE_CREDENTIALS": "V2 Verifiable Credentials"
 }

@@ -44,7 +44,7 @@ import { V2AccessGuardGuard } from "./admin/v2-access-guard.guard";
 const routes: Routes = [
   // Home
   //{ path: '', component: SidemenuComponent },
-  // { path: "", component: KeycloakloginComponent, canActivate: [AuthGuard] },
+  { path: "", component: KeycloakloginComponent, canActivate: [AuthGuard] },
 
   {
     path: "setting/:page",

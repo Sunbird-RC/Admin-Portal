@@ -415,5 +415,6 @@
   "GO_BACK_TO_LIST": "सूची पर वापस जाएं",
   "ENTER_A_TYPE": "एक प्रकार दर्ज करें",
   "SAVE_TEMPLATE": "टेम्पलेट सहेजें",
-  "ADD_TEMPLATES": "टेम्पलेट जोड़ें"
+  "ADD_TEMPLATES": "टेम्पलेट जोड़ें",
+  "V2_VERIFIABLE_CREDENTIALS": "V2 सत्यापनीय प्रमाणपत्र"
  }

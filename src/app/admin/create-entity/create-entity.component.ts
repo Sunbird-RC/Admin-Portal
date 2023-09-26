@@ -1320,8 +1320,8 @@ export class CreateEntityComponent implements OnInit, AfterContentChecked {
       if (formioJson[i].type == "container") {
         let key
 
-        if (formioJson[i].key) {
-          key = formioJson[i].key;
+        if (formioJson[i].label) {
+          key = formioJson[i].label;
         } else {
           key = formioJson[i].label.replaceAll(/\s/g, '');
           key = key.charAt(0).toLowerCase() + key.slice(1);
@@ -1339,7 +1339,7 @@ export class CreateEntityComponent implements OnInit, AfterContentChecked {
         let requiredSecFields = [];
         for (let j = 0; j < formioJson[i].components.length; j++) {
           if(formioJson[i].components[j].hasOwnProperty('validate') && formioJson[i].components[j].validate.required){
-                     requiredSecFields.push(formioJson[i].components[j].key);
+               requiredSecFields.push(formioJson[i].components[j].label);
           }
         }
 
@@ -1358,8 +1358,8 @@ export class CreateEntityComponent implements OnInit, AfterContentChecked {
 
 
         let key;
-        if (formioJson[i].key) {
-          key = formioJson[i].key;
+        if (formioJson[i].label) {
+          key = formioJson[i].label;
         } else {
           key = formioJson[i].label.replaceAll(/\s/g, '');
           key = key.charAt(0).toLowerCase() + key.slice(1);
@@ -1367,7 +1367,7 @@ export class CreateEntityComponent implements OnInit, AfterContentChecked {
 
 
         if (formioJson[i].hasOwnProperty('validate') && formioJson[i].validate.required) {
-          requiredFields.push(formioJson[i].key);
+          requiredFields.push(key);
         }
 
         let data = formioJson[i];

@@ -1,158 +1,172 @@
 <div class="col-md-12 pr-4 mb-6">
     <form [formGroup]="ownershipForm">
-    <div class="step p-5">
-        <div class="mb-2">
-            <span class="fs-16 fw-bold mb-2">{{'HOW_CAN_ENTITIES_LOGIN' | translate}}</span>
-        </div>
-        <div class="card w-100 p-3">
-            <div class="px-3">
-                <div class="mb-3">
-                    <span class="fs-12 fw-bold">{{'UNIQUE_FIELD' | translate}}</span><br />
-                    <select name="uniqueField" id="uniqueField" formControlName="uniqueField"
-                        class="w-50 br-4 border-1 border-light fs-14 p-3">
-                        <option value="" disabled selected hidden>{{'SELECT_FIELD' | translate}}</option>
-                        <option *ngFor="let property of propertyNames; let i = index;" [value]="property">{{ property }}</option>
-                    </select>
-                </div>
-                <fieldset [disabled]="!ownershipForm.value.uniqueField">
-                <div class="mb-3" formGroupName="primaryLogin">
-                    <div class="row">
-                        <div class="col-3">
-                            <span class="fs-12 fw-bold">{{'AUTHENTICATION_TYPE' | translate}}</span><br />
-                            <select name="authenticationType" id="authenticationType" formControlName="authenticationType"
-                                class="w-100 br-4 border-1 border-light fs-14 p-3">
-                                <option value="" disabled selected hidden>{{'SELECT_FIELD' | translate}}</option>
-                                <option value="otp">{{'OTP' | translate}}</option>
-                            </select>
-                        </div>
-
-                        <div class="col-4">
-                            <span class="fs-12 fw-bold"></span><br />
-                            <div class="d-flex justify-content-center align-items-center">
-                            <fieldset class="form-check mr-2" [disabled]="!ownershipForm.value.primaryLogin.authenticationType">                                    
-                                <input class="form-check-input rounded-lg checkbox-lg" type="checkbox" id="flexCheckEmail" 
-                                    formControlName="emailCheckbox"
-                                    >
-                                <label class="form-check-label fs-14" for="flexCheckEmail">
-                                    {{'EMAIL' | translate}}
-                                </label>
-                            </fieldset>
-                            <fieldset [disabled]="!ownershipForm.value.primaryLogin.authenticationType || !ownershipForm.value.primaryLogin.emailCheckbox">
-                                <select name="email" id="email" formControlName="emailField"
-                                    class="w-100 br-4 border-1 border-light fs-14 p-3">
-                                    <option value="" disabled selected hidden>{{'SELECT_FIELD' | translate}}</option>
-                                    <option [value]="ownershipForm.value.uniqueField+'/email'">{{ownershipForm.value.uniqueField}}.emailID</option>
-                                </select>
-                            </fieldset>
-                            </div>
-                        </div>
-                        <div class="col-5">
-                            <span class="fs-12 fw-bold"></span><br />
-                            <div class="d-flex justify-content-center align-items-center">
-                            <fieldset class="form-check mr-2" [disabled]="!ownershipForm.value.primaryLogin.authenticationType">
-                                <input class="form-check-input rounded-lg checkbox-lg" type="checkbox" id="flexCheckMobile" formControlName="mobilenumberCheckbox">                                    
-                                <label class="form-check-label fs-14" for="flexCheckMobile">
-                                    {{'MOBILE_NUMBER' | translate}}
-                                </label>
-                            </fieldset>
-                            <fieldset [disabled]="!ownershipForm.value.primaryLogin.authenticationType || !ownershipForm.value.primaryLogin.mobilenumberCheckbox">
-                                <select name="mobile" id="mobile" formControlName="mobilenumberField"
-                                    class="w-80 br-4 border-1 border-light fs-14 p-3">
-                                    <option value="" disabled selected hidden>{{'SELECT_FIELD' | translate}}</option>
-                                    <option [value]="ownershipForm.value.uniqueField+'/contact'">{{ownershipForm.value.uniqueField}}.mobileNumber</option>
-                                </select>
-                            </fieldset>
-                            </div>
-                        </div>
-
+        <div class="step p-5">
+            <div class="mb-2">
+                <span class="fs-16 fw-bold mb-2">{{'HOW_CAN_ENTITIES_LOGIN' | translate}}</span>
+            </div>
+            <div class="card w-100 p-3">
+                <div class="px-3">
+                    <div class="mb-3">
+                        <span class="fs-14 fw-bold">{{'FIELD_MAPPING' | translate}}</span><br />
                     </div>
-                </div>
-
-                <div class="mb-3 p-2 bg-light w-100 px-3">
-                    <div class="form-check mr-2">
-                        <input class="form-check-input rounded-lg checkbox-lg" type="checkbox" id="flexCheckAlternateLogin" formControlName="alternateLoginCheckbox">                                    
-                        <label class="form-check-label fs-14" for="flexCheckAlternateLogin">
-                            {{'ALTERNATE_LOGIN' | translate}}
-                        </label>
-                    </div>
-
-                    <fieldset class="row" [disabled]="!ownershipForm.value.alternateLoginCheckbox">
-                        <div class="col-3">
-                            <span class="fs-12 fw-bold">{{'AUTHENTICATION_TYPE' | translate}}</span><br />
-                            <select name="authType" id="authType"
-                                class="w-100 br-4 border-1 border-light fs-14 p-3">
-                                <option value="" disabled selected hidden>{{'SELECT_FIELD' | translate}}</option>
-                                <option value="otp">{{'OTP' | translate}}</option>
-                            </select>
-                        </div>
-
-                        <div class="col-4">
-                            <span class="fs-12 fw-bold"></span><br />
-                            <div class="d-flex justify-content-center align-items-center">
-                            <div class="form-check mr-2">                                    
-                                <input class="form-check-input rounded-lg checkbox-lg" type="checkbox" value="" id="flexCheckAlternateEmail">
-                                <label class="form-check-label fs-14" for="flexCheckAlternateEmail">
-                                    {{'EMAIL' | translate}}
-                                </label>
+                    <fieldset>
+                        <div class="mb-3" formGroupName="primaryLogin">
+                            <div class="row">
+                                <div class="col-6 ml-3">
+                                    <span class="fs-12 fw-bold"></span><br />
+                                    <div class="d-flex justify-content-center align-items-center mr-5">
+                                        <fieldset class="form-check mr-3">
+                                            <input class="form-check-input rounded-lg checkbox-lg" type="checkbox" id="flexCheckUserID" formControlName="userIDCheckbox">
+                                            <label class="form-check-label fs-14" for="flexCheckUserID">
+                                                {{'USERID' | translate}}
+                                            </label>
+                                        </fieldset>
+                                        <fieldset [disabled]="!ownershipForm.value.primaryLogin.userIDCheckbox">
+                                            <select name="userID" id="userID" formControlName="userIDField"
+                                                class="w-100 br-4 border-1 border-light fs-14 p-3 ml-5">
+                                                <option value="" disabled selected hidden>{{'SELECT_FIELD' | translate}}</option>
+                                                <option *ngFor="let property of propertyNames; let i = index;"
+                                                    [value]="property">{{ property }}</option>
+                                            </select>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                                <div class="col-4 mr-3">
+                                    <span class="fs-12 fw-bold"></span><br />
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <fieldset class="form-check mr-2" required>
+                                            <input class="form-check-input rounded-lg checkbox-lg" type="checkbox"
+                                                id="flexCheckEmail" formControlName="emailCheckbox">
+                                            <label class="form-check-label fs-14" for="flexCheckEmail">
+                                                {{'EMAIL' | translate}}<span class="text-danger">*</span>
+                                            </label>
+                                        </fieldset>
+                                        <fieldset [disabled]="!ownershipForm.value.primaryLogin.emailCheckbox">
+                                            <select name="email" id="email" formControlName="emailField"
+                                                class="w-100 br-4 border-1 border-light fs-14 p-3 ml-3 px-7">
+                                                <option value="" disabled selected hidden>{{'SELECT_FIELD' | translate}}</option>
+                                                <option *ngFor="let property of propertyNames; let i = index;"
+                                                    [value]="property">{{ property }}</option>
+                                            </select>
+                                        </fieldset>
+                                    </div>
+                                </div>
                             </div>
-                            
-                                <select name="alternateEmail" id="alternateEmail"
-                                    class="w-100 br-4 border-1 border-light fs-14 p-3">
-                                    <option value="" disabled selected hidden>{{'SELECT_FIELD' | translate}}</option>
-                                    <option [value]="ownershipForm.value.uniqueField+'/email'">{{ownershipForm.value.uniqueField}}.emailID</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-5">
-                            <span class="fs-12 fw-bold"></span><br />
-                            <div class="d-flex justify-content-center align-items-center">
-                            <div class="form-check mr-2">
-                                <input class="form-check-input rounded-lg checkbox-lg" type="checkbox" value="" id="flexCheckAlternateMobile">                                    
-                                <label class="form-check-label fs-14" for="flexCheckAlternateMobile">
-                                <span class="no-wrap-ws">{{'MOBILE_NUMBER' | translate}}</span>
-                                </label>
-                            </div>
-                            
-                                <select name="alternateMobile" id="alternateMobile"
-                                    class="select-box-w br-4 border-1 border-light fs-14 p-3">
-                                    <option value="" disabled selected hidden>{{'SELECT_FIELD' | translate}}</option>
-                                    <option [value]="ownershipForm.value.uniqueField+'/contact'">{{ownershipForm.value.uniqueField}}.mobileNumber</option>
-                                </select>
+                            <div class="row">
+                                <div class="col-6">
+                                    <span class="fs-12 fw-bold"></span><br />
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <fieldset class="form-check" required>
+                                            <input class="form-check-input rounded-lg checkbox-lg" type="checkbox"
+                                                id="flexCheckMobile" formControlName="mobilenumberCheckbox">
+                                            <label class="form-check-label fs-14" for="flexCheckMobile">
+                                                {{'MOBILE_NUMBER' | translate}}<span class="text-danger">*</span>
+                                            </label>
+                                        </fieldset>                                        
+                                        <fieldset [disabled]="!ownershipForm.value.primaryLogin.mobilenumberCheckbox">
+                                            <select name="mobile" id="mobile" formControlName="mobilenumberField"
+                                                class="w-100 br-4 border-1 border-light fs-14 p-3 ml-3">
+                                                <option value="" disabled selected hidden>{{'SELECT_FIELD' | translate}}</option>
+                                                <option *ngFor="let property of propertyNames; let i = index;"
+                                                    [value]="property">{{ property }}</option>
+                                            </select>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                                <div class="col-4 mr-3">
+                                    <span class="fs-12 fw-bold"></span><br />
+                                    <div class="d-flex justify-content-center align-items-center ml-3">
+                                        <fieldset class="form-check ">
+                                            <input class="form-check-input rounded-lg checkbox-lg" type="checkbox"
+                                                id="flexCheckPassword" formControlName="passwordCheckbox">
+                                            <label class="form-check-label fs-14" for="flexCheckPassword">
+                                                {{'PASSWORD' | translate}}
+                                            </label>
+                                        </fieldset>
+                                        <fieldset [disabled]="!ownershipForm.value.primaryLogin.passwordCheckbox">
+                                            <select name="passord" id="passord" formControlName="passwordField"
+                                                class="w-100 br-4 border-1 border-light fs-14 p-3 ml-3">
+                                                <option value="" disabled selected hidden>{{'SELECT_FIELD' | translate}}</option>
+                                                <option *ngFor="let property of propertyNames; let i = index;"
+                                                    [value]="property">{{ property }}</option>
+                                            </select>
+                                        </fieldset>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
                     </fieldset>
                 </div>
-                </fieldset>
             </div>
         </div>
-    </div>
 
-    <div class="step px-5">
-        <div class="mb-2">
-            <span class="fs-16 fw-bold">{{'WHO_IS_AUTHORISED_FOR_ISSUANCE' | translate}}</span>
-        </div>
+        <div class="step px-5">
+            <div class="mb-2">
+                <span class="fs-16 fw-bold">{{'WHO_IS_AUTHORISED_FOR_ISSUANCE' | translate}}</span>
+            </div>
             <div class="card w-100 p-3">
                 <div class="px-3">
                     <div class="mb-3">
                         <div class="custom-control custom-radio my-4">
-                            <input type="radio" id="customRadio1" class="custom-control-input radio-lg" value="anonymous" formControlName="issuer" [defaultChecked]="true">
-                            <label class="custom-control-label fs-14" for="customRadio1">{{'ANONYMOUS' | translate}}</label>
+                            <input type="radio" id="customRadio1" class="custom-control-input radio-lg"
+                                value="anonymous" formControlName="issuer" [defaultChecked]="true">
+                            <label class="custom-control-label fs-14" for="customRadio1">{{'ANONYMOUS' |
+                                translate}}</label>
                         </div>
                         <div class="custom-control custom-radio my-4">
-                            <input type="radio" id="customRadio2" class="custom-control-input radio-lg" value="role" formControlName="issuer">
+                            <input type="radio" id="customRadio2" class="custom-control-input radio-lg" value="role"
+                                formControlName="issuer">
                             <label class="custom-control-label fs-14" for="customRadio2">{{'ROLE' | translate}}</label>
                         </div>
-                        <fieldset class="ml-4" [disabled]="ownershipForm.value.issuer==='role'?false:true">
-                            <span class="fs-12 fw-bold">{{'SELECT_ROLE' | translate}}</span><br />
+                        <fieldset class="ml-4" [disabled]="ownershipForm.value.issuer ==='role'?false:true">
+                            <span class="fs-14 fw-bold">{{'SELECT_ROLE' | translate}}</span><br />
                             <select name="issuerRole" id="issuerRole" formControlName="issuerRole"
                                 class="w-25 br-4 border-1 border-light fs-14 p-3">
                                 <option value="" disabled selected hidden>Add Role</option>
+                                <option *ngFor="let entity of entityList; let i = index;" [value]="entity">{{ entity }}</option>
                             </select>
                         </fieldset>
                     </div>
+                    <div class="px-3 form-inline">
+                        <label for="newRole" class="fs-14 fw-bold">Create a New Role:</label>
+                        <input type="text" class="form-control col-4 ml-2" id="newRole" name="newRole" placeholder="Enter new role" />
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                </div>  
+        <div class="step px-5 mt-5">
+            <div class="mb-2">
+                <span class="fs-16 fw-bold">{{'WHO_IS_AUTHORISED_TO_INVITE_ROLES' | translate}}</span>
+            </div>
+            <div class="card w-100 p-3">
+                <div class="px-3">
+                    <div class="mb-3" id="forchemaPublished">
+                        <div class="custom-control custom-radio my-4">
+                            <input type="radio" id="inviteCustomRadio1" class="custom-control-input radio-lg"
+                                value="anonymous" formControlName="invitee" [defaultChecked]="true">
+                            <label class="custom-control-label fs-14" for="inviteCustomRadio1">{{'ANONYMOUS' | translate}}</label>
+                        </div>
+                        <div class="custom-control custom-radio my-4">
+                            <input type="radio" id="inviteCustomRadio2" class="custom-control-input radio-lg" value="inviteRoles"
+                                formControlName="invitee">
+                            <label class="custom-control-label fs-14" for="inviteCustomRadio2">{{'INVITE_ROLES' | translate}}</label>
+                        </div>
+                        <fieldset class="ml-4" [disabled]="ownershipForm.value.invitee ==='inviteRoles'?false:true">
+                            <span class="fs-14 fw-bold">{{'SELECT_ROLE' | translate}}</span><br />
+                            <select name="inviteRole" id="inviteRole" formControlName="inviteRole"
+                                class="w-25 br-4 border-1 border-light fs-14 p-3">
+                                <option value="" disabled selected hidden>Add Role</option>
+                                <option *ngFor="let entity of entityList; let i = index;" [value]="entity">{{ entity }}</option>
+                            </select>
+                        </fieldset>
+                    </div>
+                    <div class="px-3 form-inline">
+                        <label for="newRole" class="fs-14 fw-bold">Create a New Role:</label>
+                        <input type="text" class="form-control col-4 ml-2" id="newRole" name="newRole" placeholder="Enter new role" />
+                    </div>
+                </div>
             </div>
         </div>
     </form>

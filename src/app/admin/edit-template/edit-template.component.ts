@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AnyARecord } from 'dns';
 import { map } from 'rxjs/operators';
@@ -16,7 +16,7 @@ import { SchemaService } from '../../services/data/schema.service';
   templateUrl: './edit-template.component.html',
   styleUrls: ['./edit-template.component.scss']
 })
-export class EditTemplateComponent implements OnInit {
+export class EditTemplateComponent implements OnInit, OnDestroy {
 
   public editorOptions: JsonEditorOptions;
   public data: any;
@@ -569,5 +569,8 @@ export class EditTemplateComponent implements OnInit {
     this.htmlDiv = true;
   }
 
-
+  ngOnDestroy(){
+    this.userHtml = '';
+    this.editor.runCommand('core:canvas-clear');
+  }
 }

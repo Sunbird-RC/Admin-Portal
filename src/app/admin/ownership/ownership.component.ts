@@ -20,6 +20,7 @@ export class OwnershipComponent implements OnInit, OnChanges {
   propertyNames = [];
   selectedProperty: any;
   entityList: any[];
+  schemaStatus: any;
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -87,6 +88,7 @@ export class OwnershipComponent implements OnInit, OnChanges {
     for (let i = 0; i < this.items.length; i++) {
       this.entityList.push(this.items[i].name);
       if (this.items[i]["name"] == this.entityName) {
+        this.schemaStatus = this.items[i].status;
         let properties = this.items[i]["schema"]["definitions"][this.entityName]["properties"];
         let requiredProperties = this.items[i]["schema"]["definitions"][this.entityName]["required"];
         for(let j=0; j< requiredProperties.length; j++){
@@ -106,7 +108,7 @@ export class OwnershipComponent implements OnInit, OnChanges {
   }
 
   submitOwnershipForm() {
-    if (this.ownershipForm.value.uniqueField.length === 0) {
+    if (this.ownershipForm.value.uniqueField == undefined || this.ownershipForm.value.uniqueField.length === 0) {
       return;
     }
 

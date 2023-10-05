@@ -176,6 +176,7 @@
     "SCHEMA_IS_PUBLISHED": "Schema is Published",
     "EXPLORE_API_HERE": "Explore API here",
     "SCHEMA_PUBLISHED":"Schema(s) published.",
+    "OWNERSHIP_IS_READONLY":"Ownership flow is read-only because the schema has been published.",
    
     "DASHBOARD": "Dashboard",
     "ATTESTATION_WORKFLOW": "Attestation Workflow",

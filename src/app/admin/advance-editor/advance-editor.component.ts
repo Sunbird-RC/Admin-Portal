@@ -52,13 +52,16 @@ export class AdvanceEditorComponent implements OnInit {
 
   showLessVc() {
     this.isShowLessVc = !this.isShowLessVc;
+    if(this.jsonSchema.status == 'PUBLISHED'){
+    var credTemp = document.getElementsByClassName("jsoneditor-text");
+    credTemp[0].setAttribute("disabled", "true");
+    }   
   }
 
   ngOnInit(): void {
     this.formioJsonBuild(this.jsonSchema);
 
     var coll = document.getElementsByClassName("collapsible");
-
     for (let i = 0; i < coll.length; i++) {
       coll[i].addEventListener("click", function () {
         this.classList.toggle("active");
@@ -73,7 +76,7 @@ export class AdvanceEditorComponent implements OnInit {
   }
 
   formioJsonBuild(jsonFields) {
-
+    jsonFields = JSON.parse(jsonFields['schema']);
     if (typeof (jsonFields['_osConfig']['credentialTemplate']) == 'string') {
       fetch(jsonFields['_osConfig']['credentialTemplate'])
         .then(response => response.text())

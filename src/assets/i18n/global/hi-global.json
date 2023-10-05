@@ -177,6 +177,7 @@
   "SCHEMA_IS_PUBLISHED": "स्कीमा प्रकाशित हो चुकी है",
   "EXPLORE_API_HERE": "एपीआई को यहां एक्सप्लोर करें", 
   "SCHEMA_PUBLISHED":"स्कीमा प्रकाशित।", 
+  "OWNERSHIP_IS_READONLY":"स्वामित्व प्रवाह केवल पढ़ने के लिए है क्योंकि स्कीमा प्रकाशित हो चुकी है।",
   
   "DASHBOARD": "डैशबोर्ड",
   "ATTESTATION_WORKFLOW": "प्रमाणन कार्यप्रवाह",

@@ -563,7 +563,6 @@ export class EditTemplateComponent implements OnInit, OnDestroy {
   }
 
   jsonSchemaData(jsonSchema) {
-    console.log(jsonSchema);
     this.schemaContent = jsonSchema._data;
     this.getCrtTempFields(this.schemaContent);
     this.schemaDiv = false;

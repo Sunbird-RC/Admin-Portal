@@ -1,6 +1,11 @@
 <div class="col-md-12 pr-4 mb-6">
+    <div class="ml-4 mt-5 w-70" *ngIf="schemaStatus == 'PUBLISHED'">
+        <span class="bg-color-secondary p-3">
+            {{ 'OWNERSHIP_IS_READONLY' | translate }}
+        </span> 
+    </div>
     <form [formGroup]="ownershipForm">
-        <div class="step p-5">
+        <div class="step p-4">
             <div class="mb-2">
                 <span class="fs-16 fw-bold mb-2">{{'HOW_CAN_ENTITIES_LOGIN' | translate}}</span>
             </div>
@@ -14,16 +19,18 @@
                             <div class="row">
                                 <div class="col-6 ml-3">
                                     <span class="fs-12 fw-bold"></span><br />
-                                    <div class="d-flex justify-content-center align-items-center mr-5">
-                                        <fieldset class="form-check mr-3">
-                                            <input class="form-check-input rounded-lg checkbox-lg" type="checkbox" id="flexCheckUserID" formControlName="userIDCheckbox">
+                                    <div class="d-flex justify-content-center align-items-center ml-1">
+                                        <fieldset class="form-check mr-3" [disabled]="schemaStatus == 'PUBLISHED'">
+                                            <div style="margin-left: -80%">
+                                            <input class="form-check-input rounded-lg checkbox-lg" type="checkbox" id="flexCheckUserID" formControlName="userIDCheckbox" >
                                             <label class="form-check-label fs-14" for="flexCheckUserID">
                                                 {{'USERID' | translate}}
                                             </label>
+                                            </div>
                                         </fieldset>
                                         <fieldset [disabled]="!ownershipForm.value.primaryLogin.userIDCheckbox">
                                             <select name="userID" id="userID" formControlName="userIDField"
-                                                class="w-100 br-4 border-1 border-light fs-14 p-3 ml-5">
+                                                class="w-100 br-4 border-1 border-light fs-14 p-3 ml-3">
                                                 <option value="" disabled selected hidden>{{'SELECT_FIELD' | translate}}</option>
                                                 <option *ngFor="let property of propertyNames; let i = index;"
                                                     [value]="property">{{ property }}</option>
@@ -34,12 +41,14 @@
                                 <div class="col-4 mr-3">
                                     <span class="fs-12 fw-bold"></span><br />
                                     <div class="d-flex justify-content-center align-items-center">
-                                        <fieldset class="form-check mr-2" required>
+                                        <fieldset class="form-check mr-2" [disabled]="schemaStatus == 'PUBLISHED'">
+                                            <div style="margin-left: -40%">
                                             <input class="form-check-input rounded-lg checkbox-lg" type="checkbox"
                                                 id="flexCheckEmail" formControlName="emailCheckbox">
                                             <label class="form-check-label fs-14" for="flexCheckEmail">
                                                 {{'EMAIL' | translate}}<span class="text-danger">*</span>
                                             </label>
+                                            </div>
                                         </fieldset>
                                         <fieldset [disabled]="!ownershipForm.value.primaryLogin.emailCheckbox">
                                             <select name="email" id="email" formControlName="emailField"
@@ -56,7 +65,7 @@
                                 <div class="col-6">
                                     <span class="fs-12 fw-bold"></span><br />
                                     <div class="d-flex justify-content-center align-items-center">
-                                        <fieldset class="form-check" required>
+                                        <fieldset class="form-check"  [disabled]="schemaStatus == 'PUBLISHED'">
                                             <input class="form-check-input rounded-lg checkbox-lg" type="checkbox"
                                                 id="flexCheckMobile" formControlName="mobilenumberCheckbox">
                                             <label class="form-check-label fs-14" for="flexCheckMobile">
@@ -76,7 +85,7 @@
                                 <div class="col-4 mr-3">
                                     <span class="fs-12 fw-bold"></span><br />
                                     <div class="d-flex justify-content-center align-items-center ml-3">
-                                        <fieldset class="form-check ">
+                                        <fieldset class="form-check"  [disabled]="schemaStatus == 'PUBLISHED'">
                                             <input class="form-check-input rounded-lg checkbox-lg" type="checkbox"
                                                 id="flexCheckPassword" formControlName="passwordCheckbox">
                                             <label class="form-check-label fs-14" for="flexCheckPassword">
@@ -101,16 +110,17 @@
             </div>
         </div>
 
-        <div class="step px-5">
+        <div class="step px-4">
             <div class="mb-2">
                 <span class="fs-16 fw-bold">{{'WHO_IS_AUTHORISED_FOR_ISSUANCE' | translate}}</span>
             </div>
             <div class="card w-100 p-3">
                 <div class="px-3">
                     <div class="mb-3">
-                        <div class="custom-control custom-radio my-4">
+                        <fieldset class="form-check"  [disabled]="schemaStatus == 'PUBLISHED'">
+                        <div class="custom-control custom-radio my-4" >
                             <input type="radio" id="customRadio1" class="custom-control-input radio-lg"
-                                value="anonymous" formControlName="issuer" [defaultChecked]="true">
+                                value="anonymous" formControlName="issuer" [defaultChecked]="true" >
                             <label class="custom-control-label fs-14" for="customRadio1">{{'ANONYMOUS' |
                                 translate}}</label>
                         </div>
@@ -119,6 +129,7 @@
                                 formControlName="issuer">
                             <label class="custom-control-label fs-14" for="customRadio2">{{'ROLE' | translate}}</label>
                         </div>
+                        </fieldset>
                         <fieldset class="ml-4" [disabled]="ownershipForm.value.issuer ==='role'?false:true">
                             <span class="fs-14 fw-bold">{{'SELECT_ROLE' | translate}}</span><br />
                             <select name="issuerRole" id="issuerRole" formControlName="issuerRole"
@@ -128,21 +139,24 @@
                             </select>
                         </fieldset>
                     </div>
-                    <div class="px-3 form-inline">
+                    <fieldset class="form-check"  [disabled]="schemaStatus == 'PUBLISHED'">
+                    <div class="px-1 form-inline">
                         <label for="newRole" class="fs-14 fw-bold">Create a New Role:</label>
                         <input type="text" class="form-control col-4 ml-2" id="newRole" name="newRole" placeholder="Enter new role" />
                     </div>
+                    </fieldset>
                 </div>
             </div>
         </div>
 
-        <div class="step px-5 mt-5">
+        <div class="step px-4 mt-5">
             <div class="mb-2">
                 <span class="fs-16 fw-bold">{{'WHO_IS_AUTHORISED_TO_INVITE_ROLES' | translate}}</span>
             </div>
             <div class="card w-100 p-3">
                 <div class="px-3">
-                    <div class="mb-3" id="forchemaPublished">
+                    <div class="mb-3">
+                        <fieldset class="form-check"  [disabled]="schemaStatus == 'PUBLISHED'">
                         <div class="custom-control custom-radio my-4">
                             <input type="radio" id="inviteCustomRadio1" class="custom-control-input radio-lg"
                                 value="anonymous" formControlName="invitee" [defaultChecked]="true">
@@ -153,6 +167,7 @@
                                 formControlName="invitee">
                             <label class="custom-control-label fs-14" for="inviteCustomRadio2">{{'INVITE_ROLES' | translate}}</label>
                         </div>
+                        </fieldset>
                         <fieldset class="ml-4" [disabled]="ownershipForm.value.invitee ==='inviteRoles'?false:true">
                             <span class="fs-14 fw-bold">{{'SELECT_ROLE' | translate}}</span><br />
                             <select name="inviteRole" id="inviteRole" formControlName="inviteRole"
@@ -162,10 +177,12 @@
                             </select>
                         </fieldset>
                     </div>
-                    <div class="px-3 form-inline">
+                    <fieldset class="form-check"  [disabled]="schemaStatus == 'PUBLISHED'">
+                    <div class="px-1 form-inline">
                         <label for="newRole" class="fs-14 fw-bold">Create a New Role:</label>
                         <input type="text" class="form-control col-4 ml-2" id="newRole" name="newRole" placeholder="Enter new role" />
                     </div>
+                    </fieldset>
                 </div>
             </div>
         </div>

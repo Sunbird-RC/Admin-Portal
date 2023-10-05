@@ -370,7 +370,7 @@ export class EditTemplateComponent implements OnInit, OnDestroy {
               this.generalService.getData('/Schema/' + this.schemaOsid).subscribe((response) => {
                 let data = JSON.parse(response['schema']);
                 this.certificateTitle = response['name'];
-                this.userJson = data;
+                this.userJson = response;              
               });
             
             }

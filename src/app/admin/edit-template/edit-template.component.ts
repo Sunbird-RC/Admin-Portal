@@ -10,7 +10,6 @@ import 'grapesjs-preset-webpage';
 import { JsonEditorComponent, JsonEditorOptions } from 'ang-jsoneditor';
 import { ToastMessageService } from 'src/app/services/toast-message/toast-message.service';
 import { SchemaService } from '../../services/data/schema.service';
-import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-edit-template',
@@ -502,8 +501,6 @@ export class EditTemplateComponent implements OnInit, OnDestroy {
        this.schemaContent = data;
      
      var htmlWithCss = this.editor.runCommand('gjs-get-inlined-html');
- 
- 
      var parser = new DOMParser();
      var htmlDoc = parser.parseFromString(htmlWithCss, 'text/html');
      this.userHtml = htmlDoc.documentElement.innerHTML;
@@ -522,10 +519,6 @@ export class EditTemplateComponent implements OnInit, OnDestroy {
          delete this.schemaContent._osConfig['certificateTemplates'][this.oldTemplateName];
          this.schemaContent._osConfig['certificateTemplates'][this.templateName] = 'minio://' + this.certificateData;
        }
-     
- 
-       console.log(this.schemaContent)
-
        let result = this.schemaContent;
        let payload = {
          "schema": JSON.stringify(result)

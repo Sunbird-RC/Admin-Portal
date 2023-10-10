@@ -185,7 +185,7 @@
             <tr>
               <th scope="col" class="fw-bold">
                 <input class="form-check-input" id="form-check-input-select-all"
-                  [checked]="modalSelectedAttributes.length === selectedMenuFields[0].length"
+                [checked]="modalSelectedAttributes.length === (selectedMenuFields[0]?.length || 0)"
                   (change)="checkAll($event, '')" type="checkbox" /> &nbsp;
                 <label class="p-1 ml-2"> {{'ATTRIBUTES' | translate}}</label>
               </th>

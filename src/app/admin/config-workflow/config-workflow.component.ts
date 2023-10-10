@@ -53,6 +53,7 @@ export class ConfigWorkflowComponent implements OnInit {
   workflow: any;
   cardData: any[] = [];
   CurrentSchema: any;
+  executed: boolean = false;
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -113,9 +114,15 @@ export class ConfigWorkflowComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (!this.executed) {
+    this.addWorkflowItems();
+    this.addNewAttestCondition(0);
+    this.addFieldCondition(0, 0);
+    this.executed = true;
+    }
     this.entityName = this.activeRoute.snapshot.params.entity;
     let selectedMenuList: any;
-    this.generalService.getData("/Schema").subscribe((res) => {
+    this.generalService.getData("/Schema").subscribe((res) => {  
       this.fullSchemas = res;
       for (let i = 0; i < res.length; i++) {
         this.schemaName.push(JSON.parse(res[i]["schema"]));
@@ -138,32 +145,47 @@ export class ConfigWorkflowComponent implements OnInit {
         if (typeof (this.fullSchemas[i].schema) == 'string') {
           this.CurrentSchema = JSON.parse(this.fullSchemas[i].schema);
         }
-        if (!this.CurrentSchema['_osConfig']['attestationPolicies']) {
+        if (!this.CurrentSchema['_osConfig']['attestationPolicies'] || this.CurrentSchema['_osConfig']['attestationPolicies'].length == 0) {
+          if (!this.executed) {
           this.addWorkflowItems();
           this.addNewAttestCondition(0);
           this.addFieldCondition(0, 0);
+          this.executed = true;
+          }
         }
         if (this.CurrentSchema['_osConfig']['attestationPolicies'] && this.CurrentSchema['_osConfig']['attestationPolicies'].length > 0) {
           this.CurrentSchema['_osConfig']['attestationPolicies'].forEach((policy, index) => {
+            if (!this.executed) {
+            if (index === 0) {
+              this.addWorkflowItems();
+              this.addNewAttestCondition(0);
+              this.addFieldCondition(0, 0);
+              this.executed = true;
+            }
+          }else{
+            if (index === 0) {
+              return;
+            }
             this.addWorkflowItems();
             this.addNewAttestCondition(index);
             this.addFieldCondition(index, 0);
+          }
           });
         }
       }
     }
-
   }
 
   async readAttestationPolicy() {
-    for (let i = 0; i < this.fullSchemas.length; i++) {
-      if (this.entityName == this.fullSchemas[i].name) {
-        if (typeof (this.fullSchemas[i].schema) == 'string') {
-          this.fullSchemas[i].schema = JSON.parse(this.fullSchemas[i].schema);
+    this.generalService.getData("/Schema").subscribe((res) => {
+    for (let i = 0; i < res.length; i++) {
+      if (this.entityName == res[i].name) {
+        if (typeof (res[i].schema) == 'string') {
+          res[i].schema = JSON.parse(res[i].schema);
         }
-        if (this.fullSchemas[i].schema['_osConfig']['attestationPolicies']) {
-          if (!this.fullSchemas[i].schema['isRefSchema'] && this.fullSchemas[i].schema['_osConfig']['attestationPolicies'] && this.fullSchemas[i].schema['_osConfig']['attestationPolicies'].length > 0) {
-            let attestationPolicies = this.fullSchemas[i].schema['_osConfig']['attestationPolicies'];
+        if (res[i].schema['_osConfig']['attestationPolicies']) {
+          if (!res[i].schema['isRefSchema'] && res[i].schema['_osConfig']['attestationPolicies'] && res[i].schema['_osConfig']['attestationPolicies'].length > 0) {
+            let attestationPolicies = res[i].schema['_osConfig']['attestationPolicies'];
             for (let l = 0; l < attestationPolicies.length; l++) {
               this.workflow = this.workflowForm.value.workflowItems[l];
               let pIndex = l;
@@ -293,6 +315,7 @@ export class ConfigWorkflowComponent implements OnInit {
         }
       }
     }
+  });
   }
 
   setHigherOderAttestorProp(wIndex, aIndex, key, property) {
@@ -404,6 +427,7 @@ export class ConfigWorkflowComponent implements OnInit {
 
 
   ngOnChanges(changes: SimpleChanges): void {
+    this.executed = false;
     const latestRequest = changes['usecaseSchema'];
     if (latestRequest.currentValue) {
       this.entityName = latestRequest.currentValue;
@@ -953,11 +977,12 @@ export class ConfigWorkflowComponent implements OnInit {
 
       let setAttestationProperties = {}
       let setAdditionalInput = submittedWorkflowData[i].additionalInput; // additional Input field of the workflow
-      let additionalInputKeys = Object.keys(setAdditionalInput);
-
+     if(setAdditionalInput != undefined){
+      var additionalInputKeys = Object.keys(setAdditionalInput);
+     }
       // Loop to change the attestationProperties to the desired format according to the schema
       for (let j = 0; j < submittedWorkflowData[i].attestationProperties?.length; j++) {
-        if (!additionalInputKeys.includes(submittedWorkflowData[i].attestationProperties[j])) {
+        if (additionalInputKeys && !additionalInputKeys.includes(submittedWorkflowData[i].attestationProperties[j])) {
 
           let entityProperty = submittedWorkflowData[i].attestationProperties[j];
           let keys = entityProperty.split(".");

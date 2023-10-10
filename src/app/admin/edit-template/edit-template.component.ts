@@ -10,6 +10,7 @@ import 'grapesjs-preset-webpage';
 import { JsonEditorComponent, JsonEditorOptions } from 'ang-jsoneditor';
 import { ToastMessageService } from 'src/app/services/toast-message/toast-message.service';
 import { SchemaService } from '../../services/data/schema.service';
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-edit-template',
@@ -46,6 +47,8 @@ export class EditTemplateComponent implements OnInit, OnDestroy {
   usecase: any;
   schemaOsid: string;
   vcStep: string;
+  isCreatingNewTemplate: boolean = true;
+  certificateData: any;
 
   constructor(public router: Router, public route: ActivatedRoute, public toastMsg: ToastMessageService,public translate: TranslateService,
     public generalService: GeneralService, public schemaService: SchemaService) {
@@ -66,7 +69,10 @@ export class EditTemplateComponent implements OnInit, OnDestroy {
       this.sampleData = this.router.getCurrentNavigation().extras.state.item;
       localStorage.setItem('sampleData', JSON.stringify(this.sampleData));
     }
-
+    if (localStorage.getItem('certificateTitle')) {
+    this.oldTemplateName = localStorage.getItem('certificateTitle');
+    this.isCreatingNewTemplate = false;
+    }
     this.route.params.subscribe(params => {
       this.params = params;
   
@@ -81,16 +87,15 @@ export class EditTemplateComponent implements OnInit, OnDestroy {
 
 
   async ngOnInit() {
-
+    
     this.route.params.subscribe(params => {
       this.params = params;
       if (this.params.hasOwnProperty('entity')) {
         this.entityName = params.entity;
         this.usecase = params.usecase.toLowerCase();
-
       }
     });
-
+    
     this.schemaService.getEntitySchemaJSON().subscribe((data) => {
       let allSteps = data['usecase'][this.usecase]['steps'];
       for(let i=0; i<allSteps.length; i++){
@@ -99,59 +104,59 @@ export class EditTemplateComponent implements OnInit, OnDestroy {
         }
       }
     })
-
+    
     await this.readHtmlSchemaContent(this.sampleData);
     this.grapesJSDefine();
     /* ------END-------------------------Advance Editor ----------------------- */
-
+    
   }  //onInit();
-
-
+  
+  
   grapesJSDefine() {
     this.editor = this.initializeEditor();
     this.editor.on('load', () => {
       var panelManager = this.editor.Panels;
-
+      
       panelManager.removePanel('devices-c');
       panelManager.removeButton('options', 'gjs-toggle-images');
       panelManager.removeButton('options', 'gjs-open-import-webpage');
       panelManager.removeButton('options', 'undo');
       const um = this.editor.UndoManager;
       um.clear();
-
+      
       const iconsOptions = document.querySelector('.gjs-pn-options');
-        if (iconsOptions) {
-          iconsOptions.classList.add('custom-icons-margin-right');
+      if (iconsOptions) {
+        iconsOptions.classList.add('custom-icons-margin-right');
       }
-
+      
       const iconsViews = document.querySelector('.gjs-pn-views');
-        if (iconsViews) {
-          iconsViews.classList.add('custom-icons-margin-right');
+      if (iconsViews) {
+        iconsViews.classList.add('custom-icons-margin-right');
       }
     })
-
+    
     this.editor.on('asset:add', () => {
       this.editor.runCommand('open-assets');
     });
-
-
+    
+    
     // This will execute once asset manager will be open
     this.editor.on("run:select-assets", function () {
       var dateNow = 'img-' + Date.now();
-
+      
       // Using below line i am changing the id of img tag on which user has clicked.
       this.editor.getSelected().setId(dateNow);
 
       // Store active asset manager image id and it's src
       localStorage.setItem('activeAssetManagerImageId', dateNow);
     })
-
+    
     const pn = this.editor.Panels;
     const panelViews = pn.addPanel({
       id: "views"
     });
-
-
+    
+    
     panelViews.get("buttons").add([
       {
         attributes: {
@@ -163,12 +168,12 @@ export class EditTemplateComponent implements OnInit, OnDestroy {
         id: "open-code"
       }
     ]);
-
-
+    
+    
     const panelOp1 = pn.addPanel({
       id: "options"
     });
-
+    
     panelOp1.get("buttons").add([
       {
         attributes: {
@@ -180,16 +185,16 @@ export class EditTemplateComponent implements OnInit, OnDestroy {
         id: "preview"
       }
     ]);
-
-
+    
+    
     /* ---------Start----------------------Advance Editor ----------------------- */
-
-
+    
+    
     const panelOp = pn.addPanel({
       id: "options"
     });
-
-
+    
+    
     let editPanel = null
     let self = this;
     pn.addButton('views', {
@@ -200,11 +205,11 @@ export class EditTemplateComponent implements OnInit, OnDestroy {
       command: {
         run: function (editor) {
           if (editPanel == null) {
+            
 
-
-
+            
             const editMenuDiv = document.createElement('div');
-
+            
             const arr = ['alpha', 'bravo', 'charlie', 'delta', 'echo', 'alpha', 'bravo', 'charlie', 'delta', 'echo', 'alpha', 'bravo', 'charlie', 'delta', 'echo'];
 
             const cardDiv = document.createElement('div');
@@ -213,22 +218,22 @@ export class EditTemplateComponent implements OnInit, OnDestroy {
             cardDiv.innerHTML = ` <div class="d-flex flex-justify-between py-2">
             <div class="heading-2">Preview</div>
             <div class="adv-btn-div">
-                <button id="advanceBtn" (click)="editTemplate()"
-                    class="float-end adv-btn btn"><i
-                        class="fa fa-pencil-square-o" aria-hidden="true"></i>Advance Editor</button>
+            <button id="advanceBtn" (click)="editTemplate()"
+            class="float-end adv-btn btn"><i
+            class="fa fa-pencil-square-o" aria-hidden="true"></i>Advance Editor</button>
             </div>
-        </div>
-        <p style="color:white;font-size:12px"> <i class="fa fa-asterisk" style="color: #FFD965; font-size: 7px;" aria-hidden="true"></i>
-        These propeties are mandatory to make it <org> complaint</p>`;
-
+            </div>
+            <p style="color:white;font-size:12px"> <i class="fa fa-asterisk" style="color: #FFD965; font-size: 7px;" aria-hidden="true"></i>
+            These propeties are mandatory to make it <org> complaint</p>`;
+            
             const cardBContainer = document.createElement('div');
             cardBContainer.className = 'card-body-container p-3';
             cardDiv.appendChild(cardBContainer);
-
+            
             // ul.setAttribute('id', 'theList');
             for (let i = 0; i <= self.propertyArr.length - 1; i++) {
               const cardBdiv = document.createElement('div');	// create li element.
-
+              
               if (self.propertyArr[i].require) {
                 cardBdiv.innerHTML = `<i class="fa fa-asterisk" style="color: red; font-size: 7px;" aria-hidden="true"></i> &nbsp` + self.propertyArr[i].propertyTag;
               } else {
@@ -238,50 +243,50 @@ export class EditTemplateComponent implements OnInit, OnDestroy {
               cardBdiv.setAttribute('style', 'padding-bottom: 10px; border-bottom: 2px solid #000');	// remove the bullets.
               cardBContainer.appendChild(cardBdiv);		// append li to ul.
             }
-
+            
 
 
             editMenuDiv.appendChild(cardDiv);
-
+            
 
 
             const panels = pn.getPanel('views-container')
             panels.set('appendContent', editMenuDiv).trigger('change:appendContent')
             editPanel = editMenuDiv;
-
+            
             const urlInputElemen = document.getElementById('advanceBtn');
             urlInputElemen.onclick = function () {
-
-
+              
+              
               // here is where you put your ajax logic
               self.editTemplate();
-
-
+              
+              
             };
           }
           editPanel.style.display = 'block';
-
-
-
+          
+          
+          
         },
         stop: function (editor) {
           if (editPanel != null) {
             editPanel.style.display = 'none'
           }
         }
-
+        
       }
     })
-
+    
   }
-
+  
   editTemplate() {
     this.schemaDiv = true;
     this.htmlDiv = false;
   }
-
+  
   private initializeEditor(): any {
-
+    
     return grapesjs.init({
       // Indicate where to init the editor. You can also pass an HTMLElement
       container: '#gjs',
@@ -314,9 +319,9 @@ export class EditTemplateComponent implements OnInit, OnDestroy {
           }
         },
         'gjs-preset-newsletter': {
-
+          
         }
-
+        
       },
 
       assetManager: {
@@ -335,45 +340,45 @@ export class EditTemplateComponent implements OnInit, OnDestroy {
         ]
       },
     });
-
+    
     var html = this.editor.getHtml();
-    }
+  }
 
   dataChange() {
     window.location.reload();
   }
-
+  
   back() {
     history.back();    //this.router.navigate(['/certificate']);
     this.editor.runCommand('core:canvas-clear')
   }
-
+  
   backToHtmlEditor() {
     this.schemaDiv = false;
     this.htmlDiv = true;
   }
-
+  
   cancel() {
     localStorage.setItem('sampleData', '');
     this.router.navigate(['/dashboard']);
   }
 
   async readHtmlSchemaContent(doc) {
-   this.userHtml = doc;
-   await this.generalService.getData('/Schema').subscribe((res) => {
-          for(let i =0; i < res.length; i++)
-          {
-            if(res[i]["name"] == this.entityName)
-            {
-
-              this.schemaOsid = res[i].osid;
-              this.generalService.getData('/Schema/' + this.schemaOsid).subscribe((response) => {
-                let data = JSON.parse(response['schema']);
-                this.certificateTitle = response['name'];
-                this.userJson = response;              
-              });
-            
-            }
+    this.userHtml = doc;
+    await this.generalService.getData('/Schema').subscribe((res) => {
+      for(let i =0; i < res.length; i++)
+      {
+        if(res[i]["name"] == this.entityName)
+        {
+          
+          this.schemaOsid = res[i].osid;
+          this.generalService.getData('/Schema/' + this.schemaOsid).subscribe((response) => {
+            let data = JSON.parse(response['schema']);
+            this.certificateTitle = response['name'];
+            this.userJson = response;              
+          });
+          
+        }
       
           }
          
@@ -490,56 +495,69 @@ export class EditTemplateComponent implements OnInit, OnDestroy {
   }
 
   async submit() {
-   this.generalService.getData('/Schema/' + this.schemaOsid).subscribe((res) => {
-      let data = JSON.parse(res['schema']);
-      this.certificateTitle = res['name'];
-      this.userJson = data;
-      this.schemaContent = data;
-    
-    var htmlWithCss = this.editor.runCommand('gjs-get-inlined-html');
+    this.generalService.getData('/Schema/' + this.schemaOsid).subscribe((res) => {
+       let data = JSON.parse(res['schema']);
+       this.certificateTitle = res['name'];
+       this.userJson = data;
+       this.schemaContent = data;
+     
+     var htmlWithCss = this.editor.runCommand('gjs-get-inlined-html');
+ 
+ 
+     var parser = new DOMParser();
+     var htmlDoc = parser.parseFromString(htmlWithCss, 'text/html');
+     this.userHtml = htmlDoc.documentElement.innerHTML;
+  
+    const { vcTemplate, formData } = this.createVCTemplateAndFormData();
 
+     localStorage.setItem('schemaVc', JSON.stringify(vcTemplate));
 
-    var parser = new DOMParser();
-    var htmlDoc = parser.parseFromString(htmlWithCss, 'text/html');
-    this.userHtml = htmlDoc.documentElement.innerHTML;
+     this.generalService.postData('/Schema/' + this.schemaOsid + '/certificateTemplate/documents', formData).subscribe((res) => {
+      this.certificateData = res.documentLocations[0];     
 
-    let vcTrmplate = {
+      if(!this.oldTemplateName){
+        this.schemaContent._osConfig['certificateTemplates'][this.templateName] = 'minio://' + this.certificateData;
+       }
+       if(this.oldTemplateName){
+         delete this.schemaContent._osConfig['certificateTemplates'][this.oldTemplateName];
+         this.schemaContent._osConfig['certificateTemplates'][this.templateName] = 'minio://' + this.certificateData;
+       }
+     
+ 
+       console.log(this.schemaContent)
+
+       let result = this.schemaContent;
+       let payload = {
+         "schema": JSON.stringify(result)
+       }
+      
+      this.generalService.putData('/Schema/', this.schemaOsid, payload).subscribe((res) => {
+         this.router.navigate(['/create/' + this.vcStep + '/' + this.usecase + '/' + this.entityName]);
+       });
+     });
+    });
+   }
+ 
+   createVCTemplateAndFormData(): { vcTemplate: any, formData: FormData } {
+    this.templateName = this.templateName.replace(/\s+/g, '');
+    this.templateName = this.templateName.charAt(0).toUpperCase() + this.templateName.slice(1);
+  
+    const vcTemplate = {
       [this.entityName]: {
         'name': this.templateName,
         'description': this.description,
         'html': this.userHtml
       },
       'title': this.usecase
-    }
+    };
+  
+    const fileObj = new File([this.userHtml], this.templateName + '.html');
 
-    localStorage.setItem('schemaVc', JSON.stringify(vcTrmplate));
-
-
-    // Creating a file object with some content
-    var fileObj = new File([this.userHtml], this.templateName.replace(/\s+/g, '') + '.html');
-
-
-    let str = this.templateName.replace(/\s+/g, '');
-    this.templateName = str.charAt(0).toUpperCase() + str.slice(1);
-
-    // Create form data
     const formData = new FormData();
-    // Store form name as "file" with file data
     formData.append("files", fileObj, fileObj.name);
-    this.generalService.postData('/Schema/' + this.schemaOsid + '/certificateTemplate/documents', formData).subscribe((res) => {
-      this.schemaContent._osConfig['certificateTemplates'][this.templateName] = 'minio://' + res.documentLocations[0];
-      let result = this.schemaContent;
-      let payload = {
-        "schema": JSON.stringify(result)
-      }
-
-     this.generalService.putData('/Schema/', this.schemaOsid, payload).subscribe((res) => {
-        this.router.navigate(['/create/' + this.vcStep + '/' + this.usecase + '/' + this.entityName]);
-      });
-    });
-  });
+  
+    return { vcTemplate, formData };
   }
-
 
   injectHTML() {
 

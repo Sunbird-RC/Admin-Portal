@@ -35,7 +35,11 @@
             <div class="wrap">
               <iframe id="iframe{{i}}" class="iframe-container embed-responsive-item iframeCert"></iframe>
             </div>
-            <div class="l12 fw-bold">{{item?.title}}</div>
+            <div class="l12 fw-bold">{{item?.title}}
+              <a id="editLink" [routerLink]="['/add-template', usecase, entityName]" [queryParams]="{ fromEdit: true, certificateIndex: i }"class="ml-1">
+                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+              </a>
+            </div>
           </div>
         </div>
      </div>

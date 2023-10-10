@@ -16,7 +16,7 @@
         </form> -->
 
         <div class="row d-flex">
-            <div class="col-12 col-sm-4 card h-card ">
+            <div class="col-12 col-sm-4 card h-card " *ngIf="!fromEdit">
                 <!-- <form [formGroup]="form2" (ngSubmit)="submit()" *ngIf="fields">
                             <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form2"></formly-form>
                         </form> -->
@@ -90,13 +90,16 @@
              
 
             </div>
-            <div class=" col-12 col-sm-8 p-sm-0" *ngIf="userHtml">
+            <div class=" col-12 col-sm-8 p-sm-0" *ngIf="userHtml" [ngClass]="{'col-sm-12': fromEdit}">
                 <div class="card">
                     <div class="d-flex justify-content-between card-body px-4 py-2">
                         <div class="heading-2">{{'PREVIEW' | translate}}</div>
                         <div>
+                            <button class="float-end heading-3 btn bg-color-secondary  color-sec fw-bold submit-button" data-toggle="modal" data-target="#deleteDocument" *ngIf="fromEdit"><i
+                                class="fa fa-trash" aria-hidden="true"></i> {{'DELETE_TEMPLATE' | translate}}</button> &nbsp;
+
                             <button (click)="editTemplate()"
-                                class="float-end heading-3 btn bg-color-secondary  color-sec fw-bold submit-button"><i
+                                class="float-end heading-3 btn bg-color-secondary  color-sec fw-bold submit-button mr-3"><i
                                     class="fa fa-pencil-square-o" aria-hidden="true"></i> {{'EDIT_TEMPLATE' | translate}}</button>
                         </div>
                     </div>
@@ -121,4 +124,26 @@
 
 
 
+</div>
+
+<div class="modal right fade" id="deleteDocument" tabindex="-1" role="dialog"
+aria-labelledby="deleteDocument">
+<div class="modal-dialog" role="document">
+   <div class="modal-content d-flex">
+      <div class="modal-header pt-4 border-0">
+         <h3 class="heading-5">{{'DELETE_TEMPLATE' | translate}}</h3>
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="container mt-1 justify-content-center pb-3">
+        <p class="heading-4 font-700 mb-05 pl-3">{{ 'DELETE_CONFIRM' | translate}}</p>
+         <div class="mt-2">
+            <button (click)="deleteTemplate()" data-dismiss="modal" aria-label="Close"
+               class="btn text-capitalize float-end btn-danger text-white fw-bold p1">{{'DELETE' | translate}}</button>
+            <button class="close" data-dismiss="modal" aria-label="Close"
+               class="btn text-capitalize bg-color-primary text-white fw-bold p1 sb-text-primary mr-2 bg-none">{{'CANCEL' | translate}}</button>
+         </div>
+      </div>
+   </div>
+</div>
 </div>

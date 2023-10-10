@@ -8,7 +8,7 @@ import { GeneralService } from 'src/app/services/general/general.service';
 import { ToastMessageService } from 'src/app/services/toast-message/toast-message.service';
 import { SchemaService } from '../../services/data/schema.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { TranslateService } from '@ngx-translate/core'; 
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-add-template',
@@ -57,6 +57,11 @@ export class AddTemplateComponent implements OnInit {
   params: any;
   entityName: any;
   usecase: any;
+  fromEdit: boolean = false;
+  certificateIndex: number;
+  certificateTitle: any;
+  schemaOsid: any;
+  vcStep: string;
   constructor(public schemaService: SchemaService,
     public toastMsg: ToastMessageService,
     private route: ActivatedRoute,
@@ -70,7 +75,14 @@ export class AddTemplateComponent implements OnInit {
   ngOnInit(): void {
 
     this.getDocument();
+    this.route.queryParams.subscribe(params => {
+      this.fromEdit = params['fromEdit'] === 'true';
+      this.certificateIndex = +params['certificateIndex'];
 
+    });
+    if (this.fromEdit) {
+      this.previewScreen();
+    }
     // this.generalService.getData('/Issuer').subscribe((res) => {
     //   console.log(res);
     //   this.issuerOsid = res[0].osid;
@@ -78,15 +90,21 @@ export class AddTemplateComponent implements OnInit {
 
     this.activeRoute.params.subscribe(params => {
       this.params = params;
-      console.log({params});
+      console.log({ params });
 
       if (this.params.hasOwnProperty('entity')) {
         this.entityName = params.entity;
         this.usecase = params.usecase.toLowerCase();
-
-
       }
-  });
+      this.schemaService.getEntitySchemaJSON().subscribe((data) => {
+        let allSteps = data['usecase'][this.usecase]['steps'];
+        for(let i=0; i<allSteps.length; i++){
+          if(allSteps[i]['key'] === 'create-vc'){
+            this.vcStep = i.toString();
+          }
+        }
+      })
+    });
 
   }
 
@@ -125,7 +143,14 @@ export class AddTemplateComponent implements OnInit {
     //  this.isPreview = true;
     //  localStorage.setItem('isPreview', 'yes');
 
-    this.userHtml = `<html lang="en">
+    if (this.fromEdit && this.certificateIndex !== undefined) {
+      const credTemp = this.generalService.getCertificateData();
+      const certificateData = credTemp[this.certificateIndex]['html'];
+      this.certificateTitle = credTemp[this.certificateIndex]['title'];
+      this.userHtml = certificateData;
+    }
+    if (!this.fromEdit) {
+      this.userHtml = `<html lang="en">
     <head>
       <style>
         .line {
@@ -170,12 +195,16 @@ export class AddTemplateComponent implements OnInit {
     </body>
   </html>
   `
-  this.injectHTML();
+    }
+    this.injectHTML();
   }
 
   editTemplate() {
-     localStorage.setItem('sampleData', JSON.stringify(this.userHtml));
-   this.router.navigate(['/edit-template/' + this.usecase + '/' +this.entityName], { state: { item: this.userHtml } });
+    localStorage.setItem('sampleData', JSON.stringify(this.userHtml));
+    if (this.certificateTitle) {
+      localStorage.setItem('certificateTitle', this.certificateTitle);
+    }
+    this.router.navigate(['/edit-template/' + this.usecase + '/' + this.entityName], { state: { item: this.userHtml } });
   }
 
 
@@ -184,9 +213,9 @@ export class AddTemplateComponent implements OnInit {
       "filters": {}
     }
 
-     this.documentTypeList = [{"osUpdatedAt":"2022-05-24T10:24:21.515Z","osCreatedAt":"2022-05-24T10:24:21.515Z","osUpdatedBy":"anonymous","name":"Proof of skill","osCreatedBy":"anonymous","samples":[{"osUpdatedAt":"2022-05-24T10:24:21.515Z","osCreatedAt":"2022-05-24T10:24:21.515Z","osUpdatedBy":"anonymous","osCreatedBy":"anonymous","certificateUrl":"https://raw.githubusercontent.com/Sunbird-RC/demo-certificate-issuance/main/samples/SkillCertificate.html","osid":"1-cf863d16-c827-446b-93bf-8ce98cb92ece","schemaUrl":"https://raw.githubusercontent.com/Sunbird-RC/demo-certificate-issuance/main/samples/SkillCertificate.json"}],"osid":"1-69ff3505-99b5-4271-9996-7c0e31624bb9","osOwner":["anonymous"]},{"osUpdatedAt":"2022-05-24T10:06:42.920Z","osCreatedAt":"2022-05-24T10:06:42.920Z","osUpdatedBy":"anonymous","name":"Proof of Work","osCreatedBy":"anonymous","samples":[{"osUpdatedAt":"2022-05-24T10:06:42.920Z","osCreatedAt":"2022-05-24T10:06:42.920Z","osUpdatedBy":"anonymous","osCreatedBy":"anonymous","certificateUrl":"https://raw.githubusercontent.com/Sunbird-RC/demo-certificate-issuance/main/samples/TrainingCertificate.html","osid":"1-93537196-1a5f-4fd2-bbc9-8934b451b2e6","schemaUrl":"https://raw.githubusercontent.com/Sunbird-RC/demo-certificate-issuance/main/samples/TrainingCertificate.json","thumbnailUrl":"https://i.ibb.co/7n2pjt6/A4-Template-5.png"}],"osid":"1-0f708c3f-1430-47ea-a107-55bb22c7a225","osOwner":["anonymous"]}];
-      this.selectedDecType = [{"osUpdatedAt":"2022-05-24T10:24:21.515Z","osCreatedAt":"2022-05-24T10:24:21.515Z","osUpdatedBy":"anonymous","name":"Proof of skill","osCreatedBy":"anonymous","samples":[{"osUpdatedAt":"2022-05-24T10:24:21.515Z","osCreatedAt":"2022-05-24T10:24:21.515Z","osUpdatedBy":"anonymous","osCreatedBy":"anonymous","certificateUrl":"https://raw.githubusercontent.com/Sunbird-RC/demo-certificate-issuance/main/samples/SkillCertificate.html","osid":"1-cf863d16-c827-446b-93bf-8ce98cb92ece","schemaUrl":"https://raw.githubusercontent.com/Sunbird-RC/demo-certificate-issuance/main/samples/SkillCertificate.json"}],"osid":"1-69ff3505-99b5-4271-9996-7c0e31624bb9","osOwner":["anonymous"]},{"osUpdatedAt":"2022-05-24T10:06:42.920Z","osCreatedAt":"2022-05-24T10:06:42.920Z","osUpdatedBy":"anonymous","name":"Proof of Work","osCreatedBy":"anonymous","samples":[{"osUpdatedAt":"2022-05-24T10:06:42.920Z","osCreatedAt":"2022-05-24T10:06:42.920Z","osUpdatedBy":"anonymous","osCreatedBy":"anonymous","certificateUrl":"https://raw.githubusercontent.com/Sunbird-RC/demo-certificate-issuance/main/samples/TrainingCertificate.html","osid":"1-93537196-1a5f-4fd2-bbc9-8934b451b2e6","schemaUrl":"https://raw.githubusercontent.com/Sunbird-RC/demo-certificate-issuance/main/samples/TrainingCertificate.json","thumbnailUrl":"https://i.ibb.co/7n2pjt6/A4-Template-5.png"}],"osid":"1-0f708c3f-1430-47ea-a107-55bb22c7a225","osOwner":["anonymous"]}];
-   
+    this.documentTypeList = [{ "osUpdatedAt": "2022-05-24T10:24:21.515Z", "osCreatedAt": "2022-05-24T10:24:21.515Z", "osUpdatedBy": "anonymous", "name": "Proof of skill", "osCreatedBy": "anonymous", "samples": [{ "osUpdatedAt": "2022-05-24T10:24:21.515Z", "osCreatedAt": "2022-05-24T10:24:21.515Z", "osUpdatedBy": "anonymous", "osCreatedBy": "anonymous", "certificateUrl": "https://raw.githubusercontent.com/Sunbird-RC/demo-certificate-issuance/main/samples/SkillCertificate.html", "osid": "1-cf863d16-c827-446b-93bf-8ce98cb92ece", "schemaUrl": "https://raw.githubusercontent.com/Sunbird-RC/demo-certificate-issuance/main/samples/SkillCertificate.json" }], "osid": "1-69ff3505-99b5-4271-9996-7c0e31624bb9", "osOwner": ["anonymous"] }, { "osUpdatedAt": "2022-05-24T10:06:42.920Z", "osCreatedAt": "2022-05-24T10:06:42.920Z", "osUpdatedBy": "anonymous", "name": "Proof of Work", "osCreatedBy": "anonymous", "samples": [{ "osUpdatedAt": "2022-05-24T10:06:42.920Z", "osCreatedAt": "2022-05-24T10:06:42.920Z", "osUpdatedBy": "anonymous", "osCreatedBy": "anonymous", "certificateUrl": "https://raw.githubusercontent.com/Sunbird-RC/demo-certificate-issuance/main/samples/TrainingCertificate.html", "osid": "1-93537196-1a5f-4fd2-bbc9-8934b451b2e6", "schemaUrl": "https://raw.githubusercontent.com/Sunbird-RC/demo-certificate-issuance/main/samples/TrainingCertificate.json", "thumbnailUrl": "https://i.ibb.co/7n2pjt6/A4-Template-5.png" }], "osid": "1-0f708c3f-1430-47ea-a107-55bb22c7a225", "osOwner": ["anonymous"] }];
+    this.selectedDecType = [{ "osUpdatedAt": "2022-05-24T10:24:21.515Z", "osCreatedAt": "2022-05-24T10:24:21.515Z", "osUpdatedBy": "anonymous", "name": "Proof of skill", "osCreatedBy": "anonymous", "samples": [{ "osUpdatedAt": "2022-05-24T10:24:21.515Z", "osCreatedAt": "2022-05-24T10:24:21.515Z", "osUpdatedBy": "anonymous", "osCreatedBy": "anonymous", "certificateUrl": "https://raw.githubusercontent.com/Sunbird-RC/demo-certificate-issuance/main/samples/SkillCertificate.html", "osid": "1-cf863d16-c827-446b-93bf-8ce98cb92ece", "schemaUrl": "https://raw.githubusercontent.com/Sunbird-RC/demo-certificate-issuance/main/samples/SkillCertificate.json" }], "osid": "1-69ff3505-99b5-4271-9996-7c0e31624bb9", "osOwner": ["anonymous"] }, { "osUpdatedAt": "2022-05-24T10:06:42.920Z", "osCreatedAt": "2022-05-24T10:06:42.920Z", "osUpdatedBy": "anonymous", "name": "Proof of Work", "osCreatedBy": "anonymous", "samples": [{ "osUpdatedAt": "2022-05-24T10:06:42.920Z", "osCreatedAt": "2022-05-24T10:06:42.920Z", "osUpdatedBy": "anonymous", "osCreatedBy": "anonymous", "certificateUrl": "https://raw.githubusercontent.com/Sunbird-RC/demo-certificate-issuance/main/samples/TrainingCertificate.html", "osid": "1-93537196-1a5f-4fd2-bbc9-8934b451b2e6", "schemaUrl": "https://raw.githubusercontent.com/Sunbird-RC/demo-certificate-issuance/main/samples/TrainingCertificate.json", "thumbnailUrl": "https://i.ibb.co/7n2pjt6/A4-Template-5.png" }], "osid": "1-0f708c3f-1430-47ea-a107-55bb22c7a225", "osOwner": ["anonymous"] }];
+
   }
 
   onChange(index) {
@@ -219,5 +248,33 @@ export class AddTemplateComponent implements OnInit {
     }, 500)
   }
 
+  deleteTemplate() {
+    this.generalService.getData('/Schema').subscribe((res) => {
+      for (let i = 0; i < res.length; i++) {
+        if (res[i]["name"] == this.entityName) {
+          this.schemaOsid = res[i].osid;
+          let data = JSON.parse(res[i]['schema']);
+          var certificateTemplates = data._osConfig['certificateTemplates'];
+          var templateKeys = Object.keys(certificateTemplates);
+          if (this.certificateIndex >= 0 && this.certificateIndex < templateKeys.length) {
+            var templateName = templateKeys[this.certificateIndex];
+            var certificateTemplateData = certificateTemplates[templateName];
+          }
+          if (certificateTemplates.hasOwnProperty(templateName)) {
+            delete certificateTemplates[templateName];
+          }
 
+          let payload = {
+            "schema": JSON.stringify(data)
+          };
+
+          this.generalService.putData('/Schema/', this.schemaOsid, payload).subscribe((res) => {
+            this.router.navigate(['/create/' + this.vcStep + '/' + this.usecase + '/' + this.entityName]);
+          });
+
+        }
+      }
+    });
+
+  }
 }

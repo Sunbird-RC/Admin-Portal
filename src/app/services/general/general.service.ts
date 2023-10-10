@@ -12,6 +12,16 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class GeneralService {
+  private credTemp;
+ 
+  setCertificateData(data: string) {
+    this.credTemp = data;
+  }
+
+  getCertificateData(): string | null {
+    return this.credTemp;
+  }
+
   baseUrl = this.config.getEnv('baseUrl');
   translatedString: string;
   constructor(public dataService: DataService, 

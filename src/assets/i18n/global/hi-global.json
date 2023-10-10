@@ -24,6 +24,8 @@
 
   "ADD_DOCUMENT":"दस्तावेज़ जोड़ें",
   "EDIT_TEMPLATE":"टेम्पलेट संपादित करें",
+  "DELETE_TEMPLATE": "टेम्पलेट हटाएँ",
+  "DELETE_CONFIRM":"क्या आप वाकई इस टेम्पलेट को हटाना चाहते हैं?",
   "GENERAL_TEMPLATE":"सामान्य टेम्पलेट्स",
   "A4":"ए4",
   "DONT_HAVE_TEMPLATES_UPLOAD_SVG_CODE":"आपके पास कोई टेम्प्लेट नहीं है। आप SVG या HTML कोड अपलोड कर सकते हैं",

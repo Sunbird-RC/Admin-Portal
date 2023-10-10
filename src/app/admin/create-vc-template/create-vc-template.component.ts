@@ -177,8 +177,8 @@ export class CreateVcTemplateComponent implements OnInit, OnChanges {
             // Put the content in the iframe
             iframedoc.open();
             iframedoc.writeln(this.credTemp[i].html);
-
             iframedoc.close();
+            this.generalService.setCertificateData(this.credTemp);
           } else {
             alert('Cannot inject dynamic contents into iframe.');
           }
@@ -195,6 +195,11 @@ export class CreateVcTemplateComponent implements OnInit, OnChanges {
     this.location.replaceState('/add-template/' + this.usecase + '/' + this.entityName);
   }
 
-
+  editCertificate(){
+    const anchorTag = document.getElementById('editLink');
+    if (anchorTag) {
+      anchorTag.click();
+    }
+  }
 
 }

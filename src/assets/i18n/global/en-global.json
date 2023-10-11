@@ -23,6 +23,7 @@
 
     "ADD_DOCUMENT": "Add Document",
     "EDIT_TEMPLATE": "Edit Template",
+    "EDIT_SCHEMA": "Edit Schema",
     "DELETE_TEMPLATE": "Delete Template",
     "DELETE_CONFIRM":"Are you sure you want to delete this template?",
     "GENERAL_TEMPLATE": "General Templates",

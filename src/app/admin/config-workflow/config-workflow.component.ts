@@ -348,7 +348,7 @@ export class ConfigWorkflowComponent implements OnInit {
     return this.fb.group({
       workflowname: '',
       issuancesystem: '',
-      attestation_type: 'MANUAL',  // Currently only support for MANUAL
+      attestation_type: '',  
       attestorConditions: this.fb.array([]),
       additionalInput: {},
       attestationProperties: []

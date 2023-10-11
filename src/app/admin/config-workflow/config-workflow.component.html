@@ -28,7 +28,7 @@
           </div>
           <div class="mb-3 d-flex">
             <div class="form-check">
-              <input class="form-check-input" type="radio" disabled [id]="'autoAttestation'+workflowIndex"
+              <input class="form-check-input" type="radio" [id]="'autoAttestation'+workflowIndex"
                 formControlName="attestation_type" value="AUTO_ATTESTATION" [defaultChecked]="true">
               <label class="form-check-label" [for]="'autoAttestation'+workflowIndex">
                 {{'AUTO_ATTESTATION' | translate}}

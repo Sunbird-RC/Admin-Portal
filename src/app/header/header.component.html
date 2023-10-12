@@ -32,17 +32,15 @@
           ><img class="logo" src="{{ logo }}"
         /></a>
       </div>
-      <div class="position-absolute text-center mr-48 top-8">
-        <!-- <p class="center">A</p>   -->
-        <span class="fs-12 text-color" *ngIf="loggedInUser">{{ loggedInUser }}</span> &nbsp;
-        <!-- <a *ngIf="loggedInUser" href="/logout" class="fs-12"> <img style="width: 25px;" src="assets/images/logout.png" /></a> -->
-        <span class="dropdown position-relative d-inline-block">
-          <i class="fa fa-chevron-down fs-10 text-color"></i>
-          <div class="dropdown-content">
+      <div class="dropdown position-absolute text-center mr-48 top-8"> 
+          <button class="btn dropdown-toggle fs-12 text-color" type="button" id="dropdownMenuButton"  *ngIf="loggedInUser" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{ loggedInUser }}
+          </button>
+          <div class="dropdown-content" aria-labelledby="dropdownMenuButton">
             <a *ngIf="loggedInUser" href="/logout">Logout</a>
-          </div></span
-        >
-      </div>
+          </div>
+        </div>
+      
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <ng-template [ngIf]="headerSchema?.left">
           <ul class="navbar-nav nav-tabs-line mb-2 mb-lg-0">

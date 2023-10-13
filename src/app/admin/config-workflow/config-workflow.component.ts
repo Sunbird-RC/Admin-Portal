@@ -76,7 +76,7 @@ export class ConfigWorkflowComponent implements OnInit {
         {
           workflowname: '',
           issuancesystem: '',
-          attestation_type: 'auto_attestation',
+          attestation_type: '',
           attestorConditions: [
             {
               selectEntity: '', anyOrAllCondition: '', fieldConditions: [{
@@ -297,7 +297,7 @@ export class ConfigWorkflowComponent implements OnInit {
               {
                 workflowname: '',
                 issuancesystem: '',
-                attestation_type: 'auto_attestation',
+                attestation_type: '',
                 attestorConditions: [
                   {
                     selectEntity: '', anyOrAllCondition: '', fieldConditions: [{

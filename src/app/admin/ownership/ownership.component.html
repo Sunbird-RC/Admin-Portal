@@ -14,7 +14,7 @@
                     <div class="mb-3">
                         <span class="fs-14 fw-bold">{{'FIELD_MAPPING' | translate}}</span><br />
                     </div>
-                    <fieldset>
+                    <fieldset  [disabled]="schemaStatus == 'PUBLISHED'">
                         <div class="mb-3" formGroupName="primaryLogin">
                             <div class="row">
                                 <div class="col-6 ml-3">
@@ -22,16 +22,16 @@
                                     <div class="d-flex justify-content-center align-items-center ml-1">
                                         <fieldset class="form-check mr-3" [disabled]="schemaStatus == 'PUBLISHED'">
                                             <div style="margin-left: -80%">
-                                            <input class="form-check-input rounded-lg checkbox-lg" type="checkbox" id="flexCheckUserID" formControlName="userIDCheckbox" >
+                                            <input class="form-check-input rounded-lg checkbox-lg" type="checkbox" id="flexCheckUserID" formControlName="userIDCheckbox" (change)="onCheckboxChange($event)">
                                             <label class="form-check-label fs-14" for="flexCheckUserID">
-                                                {{'USERID' | translate}}
+                                                {{'USERID' | translate}}<span class="text-danger">*</span>
                                             </label>
                                             </div>
                                         </fieldset>
                                         <fieldset [disabled]="!ownershipForm.value.primaryLogin.userIDCheckbox">
                                             <select name="userID" id="userID" formControlName="userIDField"
                                                 class="w-100 br-4 border-1 border-light fs-14 p-3 ml-3">
-                                                <option value="" disabled selected hidden>{{'SELECT_FIELD' | translate}}</option>
+                                                <option value="{{defaultOptionValue}}" disabled selected hidden>{{'SELECT_FIELD' | translate}}</option>
                                                 <option *ngFor="let property of propertyNames; let i = index;"
                                                     [value]="property">{{ property }}</option>
                                             </select>
@@ -44,7 +44,7 @@
                                         <fieldset class="form-check mr-2" [disabled]="schemaStatus == 'PUBLISHED'">
                                             <div style="margin-left: -40%">
                                             <input class="form-check-input rounded-lg checkbox-lg" type="checkbox"
-                                                id="flexCheckEmail" formControlName="emailCheckbox">
+                                                id="flexCheckEmail" formControlName="emailCheckbox" (change)="onCheckboxChange($event)">
                                             <label class="form-check-label fs-14" for="flexCheckEmail">
                                                 {{'EMAIL' | translate}}<span class="text-danger">*</span>
                                             </label>
@@ -53,7 +53,7 @@
                                         <fieldset [disabled]="!ownershipForm.value.primaryLogin.emailCheckbox">
                                             <select name="email" id="email" formControlName="emailField"
                                                 class="w-100 br-4 border-1 border-light fs-14 p-3 ml-3 px-7">
-                                                <option value="" disabled selected hidden>{{'SELECT_FIELD' | translate}}</option>
+                                                <option value="{{defaultOptionValue}}" disabled selected hidden>{{'SELECT_FIELD' | translate}}</option>
                                                 <option *ngFor="let property of propertyNames; let i = index;"
                                                     [value]="property">{{ property }}</option>
                                             </select>
@@ -67,7 +67,7 @@
                                     <div class="d-flex justify-content-center align-items-center">
                                         <fieldset class="form-check"  [disabled]="schemaStatus == 'PUBLISHED'">
                                             <input class="form-check-input rounded-lg checkbox-lg" type="checkbox"
-                                                id="flexCheckMobile" formControlName="mobilenumberCheckbox">
+                                                id="flexCheckMobile" formControlName="mobilenumberCheckbox" (change)="onCheckboxChange($event)">
                                             <label class="form-check-label fs-14" for="flexCheckMobile">
                                                 {{'MOBILE_NUMBER' | translate}}<span class="text-danger">*</span>
                                             </label>
@@ -75,7 +75,7 @@
                                         <fieldset [disabled]="!ownershipForm.value.primaryLogin.mobilenumberCheckbox">
                                             <select name="mobile" id="mobile" formControlName="mobilenumberField"
                                                 class="w-100 br-4 border-1 border-light fs-14 p-3 ml-3">
-                                                <option value="" disabled selected hidden>{{'SELECT_FIELD' | translate}}</option>
+                                                <option value="{{defaultOptionValue}}" disabled selected hidden>{{'SELECT_FIELD' | translate}}</option>
                                                 <option *ngFor="let property of propertyNames; let i = index;"
                                                     [value]="property">{{ property }}</option>
                                             </select>
@@ -87,7 +87,7 @@
                                     <div class="d-flex justify-content-center align-items-center ml-3">
                                         <fieldset class="form-check"  [disabled]="schemaStatus == 'PUBLISHED'">
                                             <input class="form-check-input rounded-lg checkbox-lg" type="checkbox"
-                                                id="flexCheckPassword" formControlName="passwordCheckbox">
+                                                id="flexCheckPassword" formControlName="passwordCheckbox" (change)="onCheckboxChange($event)">
                                             <label class="form-check-label fs-14" for="flexCheckPassword">
                                                 {{'PASSWORD' | translate}}
                                             </label>
@@ -95,7 +95,7 @@
                                         <fieldset [disabled]="!ownershipForm.value.primaryLogin.passwordCheckbox">
                                             <select name="passord" id="passord" formControlName="passwordField"
                                                 class="w-100 br-4 border-1 border-light fs-14 p-3 ml-3">
-                                                <option value="" disabled selected hidden>{{'SELECT_FIELD' | translate}}</option>
+                                                <option value="{{defaultOptionValue}}" disabled selected hidden>{{'SELECT_FIELD' | translate}}</option>
                                                 <option *ngFor="let property of propertyNames; let i = index;"
                                                     [value]="property">{{ property }}</option>
                                             </select>
@@ -120,29 +120,30 @@
                         <fieldset class="form-check"  [disabled]="schemaStatus == 'PUBLISHED'">
                         <div class="custom-control custom-radio my-4" >
                             <input type="radio" id="customRadio1" class="custom-control-input radio-lg"
-                                value="anonymous" formControlName="issuer" [defaultChecked]="true" >
+                                value="anonymous" formControlName="issuer" [defaultChecked]="true" (change)="onIssuerRadioChange($event)">
                             <label class="custom-control-label fs-14" for="customRadio1">{{'ANONYMOUS' |
                                 translate}}</label>
                         </div>
                         <div class="custom-control custom-radio my-4">
                             <input type="radio" id="customRadio2" class="custom-control-input radio-lg" value="role"
-                                formControlName="issuer">
+                                formControlName="issuer"  (change)="onIssuerRadioChange($event)">
                             <label class="custom-control-label fs-14" for="customRadio2">{{'ROLE' | translate}}</label>
                         </div>
-                        </fieldset>
                         <fieldset class="ml-4" [disabled]="ownershipForm.value.issuer ==='role'?false:true">
                             <span class="fs-14 fw-bold">{{'SELECT_ROLE' | translate}}</span><br />
                             <select name="issuerRole" id="issuerRole" formControlName="issuerRole"
                                 class="w-25 br-4 border-1 border-light fs-14 p-3">
-                                <option value="" disabled selected hidden>Add Role</option>
+                                <option value="{{defaultOptionValue}}" disabled selected hidden>{{'SELECT_FIELD' | translate}}</option>
                                 <option *ngFor="let entity of entityList; let i = index;" [value]="entity">{{ entity }}</option>
                             </select>
                         </fieldset>
+                    </fieldset>
                     </div>
                     <fieldset class="form-check"  [disabled]="schemaStatus == 'PUBLISHED'">
                     <div class="px-1 form-inline">
                         <label for="newRole" class="fs-14 fw-bold">Create a New Role:</label>
-                        <input type="text" class="form-control col-4 ml-2" id="newRole" name="newRole" placeholder="Enter new role" />
+                        <input type="text" class="form-control col-4 ml-2" id="newRole" name="newRole"  formControlName="newRole" placeholder="Enter new role" />
+                        <button (click)="createRole()" class="btn  fw-bold float-end bg-color-primary bg-color-primary-sm px-3 my-2 ml-2 mr-2 text-white">{{'CREATE_NEW_ROLE' | translate}}</button>
                     </div>
                     </fieldset>
                 </div>
@@ -159,28 +160,29 @@
                         <fieldset class="form-check"  [disabled]="schemaStatus == 'PUBLISHED'">
                         <div class="custom-control custom-radio my-4">
                             <input type="radio" id="inviteCustomRadio1" class="custom-control-input radio-lg"
-                                value="anonymous" formControlName="invitee" [defaultChecked]="true">
+                                value="anonymous" formControlName="invitee" [defaultChecked]="true" (change)="onInviteRadioChange($event)">
                             <label class="custom-control-label fs-14" for="inviteCustomRadio1">{{'ANONYMOUS' | translate}}</label>
                         </div>
                         <div class="custom-control custom-radio my-4">
                             <input type="radio" id="inviteCustomRadio2" class="custom-control-input radio-lg" value="inviteRoles"
-                                formControlName="invitee">
+                                formControlName="invitee" (change)="onInviteRadioChange($event)">
                             <label class="custom-control-label fs-14" for="inviteCustomRadio2">{{'INVITE_ROLES' | translate}}</label>
-                        </div>
-                        </fieldset>
+                        </div>                        
                         <fieldset class="ml-4" [disabled]="ownershipForm.value.invitee ==='inviteRoles'?false:true">
                             <span class="fs-14 fw-bold">{{'SELECT_ROLE' | translate}}</span><br />
                             <select name="inviteRole" id="inviteRole" formControlName="inviteRole"
                                 class="w-25 br-4 border-1 border-light fs-14 p-3">
-                                <option value="" disabled selected hidden>Add Role</option>
+                                <option value="{{defaultOptionValue}}" disabled selected hidden>{{'SELECT_FIELD' | translate}}</option>
                                 <option *ngFor="let entity of entityList; let i = index;" [value]="entity">{{ entity }}</option>
                             </select>
                         </fieldset>
+                    </fieldset>
                     </div>
                     <fieldset class="form-check"  [disabled]="schemaStatus == 'PUBLISHED'">
                     <div class="px-1 form-inline">
                         <label for="newRole" class="fs-14 fw-bold">Create a New Role:</label>
-                        <input type="text" class="form-control col-4 ml-2" id="newRole" name="newRole" placeholder="Enter new role" />
+                        <input type="text" class="form-control col-4 ml-2" id="newRole" name="newRole" formControlName="newRole" placeholder="Enter new role" />
+                        <button (click)="createRole()" class="btn  fw-bold float-end bg-color-primary bg-color-primary-sm px-3 my-2 ml-2 mr-2 text-white">{{'CREATE_NEW_ROLE' | translate}}</button>
                     </div>
                     </fieldset>
                 </div>

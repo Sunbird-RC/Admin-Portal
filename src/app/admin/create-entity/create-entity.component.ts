@@ -1945,8 +1945,8 @@ export class CreateEntityComponent implements OnInit, AfterContentChecked {
   }
 
   saveOwnershipAttributes(moveNext = false) {
-    this.OwnershipComp.submitOwnershipForm();
-    moveNext ? this.nextStep() : this.saveAsDraftMsg();
+   let toMoveNext =  this.OwnershipComp.submitOwnershipForm(moveNext);
+   (moveNext ? (toMoveNext ? this.nextStep() : undefined) : (toMoveNext ? undefined : this.saveAsDraftMsg()));
   }
 
   saveConfigWorkflow(moveNext = false) {

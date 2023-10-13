@@ -149,6 +149,7 @@
   "WHO_IS_AUTHORISED_FOR_ISSUANCE" : "जारी करने के लिए कौन अधिकृत है?",
   "WHO_IS_AUTHORISED_TO_INVITE_ROLES":"भूमिकाएँ आमंत्रित करने के लिए कौन अधिकृत है?",
   "COMING_SOON" : "जल्द आ रहा है",
+  "CREATE_NEW_ROLE":"भूमिका बनाएँ",
   "ANONYMOUS" : "बेनामी",
   "ROLE" : "भूमिका",
   "INVITE_ROLES": "भूमिकाएँ आमंत्रित करें",

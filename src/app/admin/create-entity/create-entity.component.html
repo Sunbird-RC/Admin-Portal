@@ -485,6 +485,8 @@
                 <button *ngIf="isActive == 'create-vc'" (click)="saveAsDraftMsg()"
                     class="btn  fw-bold float-end bg-color-primary bg-color-primary-sm px-3 my-2 ml-2 mr-2 text-white">{{'SAVE_AS_DRAFT' | translate}}</button>
                 &nbsp;
+                <button (click)="nextStep()" *ngIf="isActive == 'ownership' "
+                class="fs-14 fw-bold float-end btn bg-color-secondary submit-button color-sec  px-3 my-2 ml-2 mr-2 ">{{'SKIP' | translate}}</button> &nbsp;
             </div>
         </div>
     </footer>

@@ -209,7 +209,7 @@ export class AddDocumentComponent implements OnInit {
         if (this.steps_length == this.step) {
           this.schemaloaded = false;
           this.schema_property = JSON.parse(this.doc_data['additionalInput'])
-          for (var [key, value] of Object.entries(this.schema_property)) {
+          for (let [key, value] of Object.entries(this.schema_property)) {
             console.log(key, value);
             if (value["value"]) {
               var datavalue = this.getValue(value["value"], this.doc_data);

@@ -188,7 +188,7 @@ export class OwnershipComponent implements OnInit, OnChanges {
         let requiredProperties = this.useCaseSchema[i]["schema"]["definitions"][this.entityName]["required"];
         if (this.useCaseSchema[i]["schema"]["definitions"][this.entityName]?.properties) {
           var nestedFields = this.useCaseSchema[i]["schema"]["definitions"][this.entityName].properties;
-          for (var c in nestedFields) {
+          for (let c in nestedFields) {
             if (nestedFields.hasOwnProperty(c)) {
               if (nestedFields[c].required) {
                 for (let k = 0; k < nestedFields[c].required.length; k++) {

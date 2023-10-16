@@ -465,7 +465,7 @@ export class ConfigWorkflowComponent implements OnInit {
     s = s.replace(/\[(\w+)\]/g, '.$1');
     s = s.replace(/^\./, '');
     var a = s.split('.');
-    for (var i = 0, n = a.length; i < n; ++i) {
+    for (let i = 0, n = a.length; i < n; ++i) {
       var k = a[i];
       if (k in o) {
         o = o[k];
@@ -662,7 +662,7 @@ export class ConfigWorkflowComponent implements OnInit {
     }
     else {
       this.checks = false;
-      for (var i = this.modalSelectedAttributes.length - 1; i >= 0; i--) {
+      for (let i = this.modalSelectedAttributes.length - 1; i >= 0; i--) {
         if (this.modalSelectedAttributes[i] === val) {
           this.modalSelectedAttributes.splice(i, 1);
         }

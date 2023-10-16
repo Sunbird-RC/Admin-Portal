@@ -127,7 +127,7 @@ export class LayoutsComponent implements OnInit, OnChanges {
 
       if (block.fields.includes && block.fields.includes.length > 0) {
         if (block.fields.includes == "*") {
-          for (var element in this.model) {
+          for (let element in this.model) {
             if (!Array.isArray(this.model[element])) {
               if (typeof this.model[element] == 'string') {
                 temp_object = this.responseData['definitions'][block.definition]['properties'][element]
@@ -386,7 +386,7 @@ export class LayoutsComponent implements OnInit, OnChanges {
 
   pushData(data) {
     var object = {};
-    for (var key in data) {
+    for (let key in data) {
       if (data.hasOwnProperty(key))
         object[key] = data[key];
     }

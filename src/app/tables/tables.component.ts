@@ -102,7 +102,7 @@ export class TablesComponent implements OnInit {
 
   pushData(data) {
     var object = {};
-    for (var key in data) {
+    for (let key in data) {
       if (data.hasOwnProperty(key))
         object[key] = data[key];
     }

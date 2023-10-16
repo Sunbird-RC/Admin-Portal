@@ -697,7 +697,7 @@ exLength : number = 0
                 this.generalService.getPrefillData(apiurl).subscribe((res) => {
                   if (field.autofill.fields) {
                     field.autofill.fields.forEach(element => {
-                      for (var [key1, value1] of Object.entries(element)) {
+                      for (let [key1, value1] of Object.entries(element)) {
                         this.createPath(this.model, key1, this.ObjectbyString(res, value1))
                         this.form2.get(key1).setValue(this.ObjectbyString(res, value1))
                       }
@@ -705,7 +705,7 @@ exLength : number = 0
                   }
                   if (field.autofill.dropdowns) {
                     field.autofill.dropdowns.forEach(element => {
-                      for (var [key1, value1] of Object.entries(element)) {
+                      for (let [key1, value1] of Object.entries(element)) {
                         if (Array.isArray(res)) {
                           res = res[0]
                         }
@@ -726,7 +726,7 @@ exLength : number = 0
                     if (field.autofill.fields) {
                       field.autofill.fields.forEach(element => {
 
-                        for (var [key1, value1] of Object.entries(element)) {
+                        for (let [key1, value1] of Object.entries(element)) {
                           this.createPath(this.model, key1, this.ObjectbyString(res, value1))
                           this.form2.get(key1).setValue(this.ObjectbyString(res, value1))
                         }
@@ -734,7 +734,7 @@ exLength : number = 0
                     }
                     if (field.autofill.dropdowns) {
                       field.autofill.dropdowns.forEach(element => {
-                        for (var [key1, value1] of Object.entries(element)) {
+                        for (let [key1, value1] of Object.entries(element)) {
                           this.schema["properties"][key1]['items']['enum'] = this.ObjectbyString(res, value1)
                         }
                       });
@@ -1232,7 +1232,7 @@ let entity = this.entityName.charAt(0).toUpperCase() + this.entityName.slice(1);
     s = s.replace(/\[(\w+)\]/g, '.$1');
     s = s.replace(/^\./, '');
     var a = s.split('.');
-    for (var i = 0, n = a.length; i < n; ++i) {
+    for (let i = 0, n = a.length; i < n; ++i) {
       var k = a[i];
       if (k in o) {
         o = o[k];
@@ -1262,7 +1262,7 @@ let entity = this.entityName.charAt(0).toUpperCase() + this.entityName.slice(1);
     if (typeof obj !== 'object') {
       return false;
     }
-    for (var key in obj) {
+    for (let key in obj) {
       if (obj.hasOwnProperty(key)) {
         var t = path;
         var v = obj[key];

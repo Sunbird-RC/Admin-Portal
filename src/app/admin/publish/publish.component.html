@@ -53,16 +53,20 @@
 
 <!-- -----------Publish Table------------------- -->
 
+<div  *ngIf="!isShowJson">
 <div class="fs-16 fw-700 d-flex text-color ml-5 mt-4">{{'PUBLISH' | translate}}</div>
 
 <div class="ml-5 mt-4 w-50 p-3 bg-color-secondary" *ngIf="count >= 1">
   {{count}} {{'SCHEMA_PUBLISHED' | translate}} 
   <a href="/explore-api" target="_blank">{{'EXPLORE_API_HERE' | translate}}</a>
   </div>
-<table class="ml-5 mt-4 bg-card vw-60 border-sp table">
+
+<table class="ml-5 mt-4 bg-card vw-0 border-sp table" style="width:85%;">
   <tr>
     <th><b class="px-0">{{'SCHEMA' | translate}}</b></th>
     <th><b class="px-0">{{'LAST_UPDATE' | translate}}</b></th>
+    <th><b class="px-0">Status</b></th>
+    <th><b class="px-0 float-end mr-4">{{'JSON_SCHEMA' | translate}}</b></th>
   </tr>
 
   <tr *ngFor="let item of publishData; let i=index" >
@@ -73,5 +77,26 @@
       <button type="button" class="draftbtn common-btn p-2" *ngIf="item.status== 'DRAFT'">{{'DRAFT' | translate}}</button>
       <button type="button" class="btn text-capitalize float-end bg-color-primary text-white fw-bold p-2" *ngIf="item.status== 'DRAFT'" (click)="changeStatus(item.osid, i)">{{'PUBLISH' | translate}}</button>
     </td>
+    <td>
+      <button class="btn text-capitalize float-end bg-color-secondary color-sec fw-bold p-2" (click)="showJson(i)">
+       <i class="fa fa-pencil-square-o" aria-hidden="true"></i> {{'JSON_SCHEMA' | translate}}
+      </button>
+    </td>
   </tr>
 </table>
+</div>
+<div *ngIf="isShowJson">
+  <div class="fs-16 fw-700 d-flex text-color ml-5 mt-4 mb-3">{{'JSON_SCHEMA' | translate}}</div>
+  <div class="">
+      <json-editor *ngIf="properties" [options]="editorOptions" [data]="properties"
+          [(ngModel)]="properties"></json-editor>
+          <footer class="footer fixed-bottom bg-card fixed-bottom-json zi-2000">
+            <div class="container-fluid">
+                <div>
+                  <button (click)="showTable()" class="btn text-capitalize float-end bg-color-primary text-white fw-bold px-3 my-2">{{'CLOSE' | translate}}</button>
+                  <button (click)="copyToClipboard()" class="btn text-capitalize float-end bg-color-primary text-white fw-bold px-3 my-2 mr-2">{{ 'COPY_JSON' | translate }} </button>
+                </div>
+            </div>
+        </footer>
+  </div>
+</div>

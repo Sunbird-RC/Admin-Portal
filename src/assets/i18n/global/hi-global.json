@@ -21,6 +21,8 @@
   "PUBLISHED": "प्रकाशित",
   "SAVE": "सहेजें",
   "CANCEL": "रद्द करें",
+  "CLOSE":"बंद करें",
+  "COPY_JSON":"Json कॉपी करें",
 
   "ADD_DOCUMENT":"दस्तावेज़ जोड़ें",
   "EDIT_TEMPLATE":"टेम्पलेट संपादित करें",

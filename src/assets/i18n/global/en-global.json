@@ -20,6 +20,8 @@
     "PUBLISHED": "Published",
     "SAVE": "Save",
     "CANCEL": "Cancel",
+    "CLOSE":"Close",
+    "COPY_JSON":"Copy Json",
 
     "ADD_DOCUMENT": "Add Document",
     "EDIT_TEMPLATE": "Edit Template",

@@ -27,7 +27,7 @@
     "EDIT_TEMPLATE": "Edit Template",
     "EDIT_SCHEMA": "Edit Schema",
     "DELETE_TEMPLATE": "Delete Template",
-    "DELETE_CONFIRM":"Are you sure you want to delete this template?",
+    "DELETE_CONFIRM":"This action is irreversible and cannot be undone. Are you sure you want to delete this template?",
     "GENERAL_TEMPLATE": "General Templates",
     "A4": "A4",
     "DONT_HAVE_TEMPLATES_UPLOAD_SVG_CODE": "You don't have any templates. You can upload SVG or HTML code",

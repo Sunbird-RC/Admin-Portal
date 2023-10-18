@@ -6,8 +6,8 @@
             <!-- <li class="menu" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">
                 <a class="a-menu"routerLink="/started/get-started" (click)="openMenu('get-started')">{{'GET_STARTED' | translate}}</a>
             </li> -->
-            <li class="menu" class="active-link" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">
-                <a class="a-menu fs-14 p-3  d-block" routerLink="/#"><b>{{'DASHBOARD' | translate}}</b></a>
+            <li class="menu" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">
+                <a class="a-menu fs-14 p-3  d-block" type="button" (click)="show('dashboard')"><b>{{'DASHBOARD' | translate}}</b></a>
             </li>
             <li class="menu" routerLinkActive="active-link"  *ngIf="isSchemaCreated">
                 <a class="a-menu fs-14 p-3  d-block" routerLink="/schema"><b>{{'SCHEMA' | translate}}</b></a>
@@ -24,18 +24,17 @@
                 <a class="a-menu fs-14 p-3  d-block" type="button" (click)="navigateTo('ownership')"><b>{{'OWNERSHIP' | translate}}</b></a>
             </li>
             <li class="menu" routerLinkActive="active-link">
-                <a class="a-menu fs-14 p-3  d-block" routerLink="/roles"><b>{{'ROLES' | translate}}</b></a>
+                <a class="a-menu fs-14 p-3  d-block" type="button" (click)="show('roles')"><b>{{'ROLES' | translate}}</b></a>
             </li>
             <li class="menu" routerLinkActive="active-link">
+                <a class="a-menu fs-14 p-3  d-block" type="button" (click)="show('help')"><b>{{'HELP' | translate}}</b></a>
+            </li>
+            <!-- <li class="menu" routerLinkActive="active-link">
                 <a class="a-menu fs-14 p-3  d-block" routerLink="/a"><b>{{'THEME' | translate}}</b></a>
-            </li>
-
-            <li class="menu" routerLinkActive="active-link">
-                <a class="a-menu fs-14 p-3  d-block" routerLink="/#"><b>{{'HELP' | translate}}</b></a>
-            </li>
-            <li class="menu" routerLinkActive="active-link">
+            </li> -->
+            <!-- <li class="menu" routerLinkActive="active-link">
                 <a class="a-menu fs-14 p-3  d-block" routerLink="/#"><b>{{'ACCOUNT' | translate}}</b></a>
-            </li>
+            </li> -->
 
         </ul>
     </nav>
@@ -48,8 +47,14 @@
         <div *ngIf="!isSchemaCreated ">
             <get-started></get-started>
         </div>
-        <div *ngIf="isSchemaCreated && !isLoading"> 
-            <configurations [schemaItems]="items"></configurations>
+        <div *ngIf="isSchemaCreated && !isLoading && showDashboard"> 
+            <configurations [schemaItems]="items" [fromRoles]="isFromRoles"></configurations>
+        </div>
+        <div *ngIf="showRoles">
+            <roles-template></roles-template>
+        </div>
+        <div *ngIf="showHelp">
+            <app-help></app-help>
         </div>
        
         <!-- <div *ngIf="activeMenu === 'ownership'">

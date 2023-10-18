@@ -196,6 +196,13 @@
     "SETTINGS": "Settings",
     "WORKFLOW": "Workflow",
     "VC_TEMPLATE": "VC template",
+    "GET_HELP":"Whether you're just starting or a seasoned pro, our help center is designed to assist you at every step. Get answers to your questions and tap into additional resources for a smoother product experience.",
+    "OFFICIAL_DOCUMENTATION":"Official Documentation",
+    "SBRC_OFFICIAL_DOC":"Our official documentation is your complete guide, offering everything from basic setup to advanced features, troubleshooting, and best practices. It's the best place to begin for detailed information and instructions.",
+    "EXPLORE_OFFICIAL_DOC":"Explore Official Documentation",
+    "COMMUNITY_DISCUSSION":"Community Discussion Forum",
+    "SBRC_GITHUB_COMMUNITY":"Our community discussion forum is the hub for connecting with fellow users. Share your experiences, ask questions, and learn from the collective knowledge of our community. It's a great place to get quick answers, share tips, and be part of a supportive user network.",
+    "EXPLORE_GITHUB_COMMUNITY":"Explore Community Discussion Forum",
     
     "YOU_ARE_READY_AND_CAN_TEST_VERIFIED_CERTIFICATE": "Now, you are ready and can Test Verified Certifcate",
     "SAVED_VC_TEMPLATE": "Saved VC Template",

@@ -116,11 +116,10 @@ activeMenu: string = '';
   }
 
   show(menu){
-    menu == 'dashboard' ? this.showDashboard = true : this.showDashboard = false;
-    menu == 'roles' ? this.showRoles = true : this.showRoles = false;
-    menu == 'help' ? this.showHelp = true : this.showHelp = false;
+    this.showDashboard = (menu == 'dashboard' ) ? true : false;
+    this.showRoles = (menu == 'roles' ) ? true : false;
+    this.showHelp = (menu == 'help' ) ? true : false;
     }
-    
 
   clickEvent() {
     this.status = !this.status;

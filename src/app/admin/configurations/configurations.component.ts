@@ -41,14 +41,14 @@ export class ConfigurationsComponent implements OnInit {
     })
   }
 
-  addVC() {
+  addVC(schemaName) {
      if (this.res.length === 1) {
       const temp = JSON.parse(this.res[0]['schema']);
       if (temp.hasOwnProperty('isRefSchema')) {
         alert('Only Common Schema exists, please add other schema!');
       } else {
         this.entityKey = temp.title;
-        this.navigateToCreateVC();
+        this.navigateToCreateVC(schemaName);
       }
     } else {
       for (let i = 0; i < this.res.length; i++) {
@@ -58,11 +58,11 @@ export class ConfigurationsComponent implements OnInit {
           break;
         }
       }
-      this.navigateToCreateVC();
+      this.navigateToCreateVC(schemaName);
     }
   }
 
-  navigateToCreateVC() {
+  navigateToCreateVC(schemaName) {
     Object.keys(this.allUsecases).forEach((key) => {
       if (key === this.usecase) {
         this.allUsecases[key]['steps']?.forEach((step, i) => {
@@ -72,7 +72,14 @@ export class ConfigurationsComponent implements OnInit {
         });
       }
     });
+    if(schemaName == ''){
     this.router.navigateByUrl('/create/' + this.currentTab + '/' + this.usecase + '/' + this.entityKey);
+    }
+    if(schemaName !== ''){
+      this.entityKey = schemaName;
+      this.router.navigateByUrl('/create/' + this.currentTab + '/' + this.usecase + '/' + this.entityKey);
+      }
+
   }
     
     viewOrEditSchema(status: string, schemaName : string) {

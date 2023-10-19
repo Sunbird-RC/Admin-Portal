@@ -59,7 +59,7 @@
           <p class="card-title text-color fw-bold"> {{'VERIFIABLE_CREDENTIAL' | translate}}</p>
         </div>
         <div class="col-2">
-          <button class="btn bg-color-secondary submit-button color-sec" (click)="addVC()">
+          <button class="btn bg-color-secondary submit-button color-sec" (click)="addVC('')">
             +{{'ADD' | translate}}
           </button>
         </div>
@@ -75,7 +75,7 @@
               <p class="fs-16 fw-bold">{{ item?.name }}</p>
               <div class="d-flex align-items-center" *ngFor="let certName of item?.schema?._osConfig?.certificateTemplates | keyvalue">
                
-                <img src="{{imgUrl}}" class="float-left mr-2  img16" alt="">
+                <img src="{{imgUrl}}" type="button" class="float-left mr-2  img16" alt="" (click)="addVC(item?.name)">
                 <span class="fs-14 fw-bold" >
                   {{certName.key}}
                 </span>

@@ -27,6 +27,9 @@ activeMenu: string = '';
   entityKey: any;
   res: any;
   allUsecases: any = {};
+  showRoles: boolean = false;
+  showHelp: boolean = false;
+  showDashboard: boolean = true;
   
   constructor(
   private activeRoute: ActivatedRoute,
@@ -112,6 +115,11 @@ activeMenu: string = '';
     }   
   }
 
+  show(menu){
+    this.showDashboard = (menu == 'dashboard' ) ? true : false;
+    this.showRoles = (menu == 'roles' ) ? true : false;
+    this.showHelp = (menu == 'help' ) ? true : false;
+    }
 
   clickEvent() {
     this.status = !this.status;

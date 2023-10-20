@@ -174,15 +174,15 @@ export class AddTemplateComponent implements OnInit {
               <div class="line">
                 <div>Certified to</div>
                 <div>
-                  <b>{{record.name}}</b>
+                  <b>{{credentialSubject.name}}</b>
                 </div>
                 <div>issued on</div>
                 <div style="padding: 1em;font-family: 'Open Sans', sans-serif">
-                  {{ credential.issuancedate}}
+                  {{issuanceDate}}
                    
                 </div>
                 <div>issued by </div>
-                <div>{{issuer.name}}</div>
+                <div>{{issuer}}</div>
               </div>
               </td>
               </tr>

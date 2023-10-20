@@ -74,8 +74,7 @@ export class ConfigWorkflowComponent implements OnInit {
     var data = {
       workflowItems: [
         {
-          workflowname: '',
-          issuancesystem: '',
+          workflowname: '',          
           attestation_type: '',
           attestorConditions: [
             {
@@ -270,8 +269,7 @@ export class ConfigWorkflowComponent implements OnInit {
               this.setSelectOptions(l, 0, attestorEntity);
               let workflowItems = [
                 {
-                  workflowname: attestationPolicies[l].name,
-                  issuancesystem: 'sunbird_rc_issuance_system',
+                  workflowname: attestationPolicies[l].name,                 
                   attestation_type: attestationPolicies[l].type,
                   attestorConditions: [
                     {
@@ -296,7 +294,6 @@ export class ConfigWorkflowComponent implements OnInit {
             workflowItems: [
               {
                 workflowname: '',
-                issuancesystem: '',
                 attestation_type: '',
                 attestorConditions: [
                   {
@@ -346,8 +343,7 @@ export class ConfigWorkflowComponent implements OnInit {
 
   newWorkflowItems(): FormGroup {
     return this.fb.group({
-      workflowname: '',
-      issuancesystem: '',
+      workflowname: '',      
       attestation_type: '',  
       attestorConditions: this.fb.array([]),
       additionalInput: {},

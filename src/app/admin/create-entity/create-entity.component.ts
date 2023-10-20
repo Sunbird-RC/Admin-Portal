@@ -1779,89 +1779,91 @@ export class CreateEntityComponent implements OnInit, AfterContentChecked {
     if (!certTmpJson.isRefSchema) {
       this.schemaContent = certTmpJson;
       this.certificateTitle = certTmpJson.title;
-      certTmpJson['_osConfig']['credentialTemplate'] = {
-        "@context": [
-          "https://www.w3.org/2018/credentials/v1",
-          {
-            "@context": {
-              "@version": 1.1,
-              "@protected": true,
-              [this.certificateTitle]: {
-                "@id": "https://github.com/sunbird-specs/vc-specs#" + this.certificateTitle,
-                "@context": {
-                  "id": "@id",
-                  "@version": 1.1,
-                  "@protected": true,
-                }
-              }
-            }
-          }
-        ],
-        "type": [
-          "VerifiableCredential"
-        ],
-        "issuanceDate": "2021-08-27T10:57:57.237Z",
-        "credentialSubject": {
-          "type": this.certificateTitle,
-        },
-        "issuer": "did:web:sunbirdrc.dev/vc/skill"
-      };
+      certTmpJson['_osConfig']['credentialTemplate'] = {}
+      // certTmpJson['_osConfig']['credentialTemplate'] = {
+      //   "@context": [
+      //     "https://www.w3.org/2018/credentials/v1",
+      //     {
+      //       "@context": {
+      //         "@version": 1.1,
+      //         "@protected": true,
+      //         [this.certificateTitle]: {
+      //           "@id": "https://github.com/sunbird-specs/vc-specs#" + this.certificateTitle,
+      //           "@context": {
+      //             "id": "@id",
+      //             "@version": 1.1,
+      //             "@protected": true,
+      //           }
+      //         }
+      //       }
+      //     }
+      //   ],
+      //   "type": [
+      //     "VerifiableCredential"
+      //   ],
+      //   "issuanceDate": "2021-08-27T10:57:57.237Z",
+      //   "credentialSubject": {},
+      //   "issuer": "did:web:sunbirdrc.dev/vc/skill"
+      // };
 
-      if (typeof (certTmpJson) == 'string') {
-        let jsonUrl = certTmpJson;
+      // if (typeof (certTmpJson) == 'string') {
+      //   let jsonUrl = certTmpJson;
 
-        fetch(jsonUrl)
-          .then(response => response.text())
-          .then(data => {
-          });
-
-
-      } else {
-
-        certTmpJson['_osConfig']['credentialTemplate']['credentialSubject'] = {};
-
-        if (this.schemaContent) {
-          let _self = this;
-          let propertyData = this.schemaContent.definitions.data ? this.schemaContent.definitions.data : this.schemaContent.definitions;
-          // this.schemaContent._osConfig.credentialTemplate["@context"][1]["@context"][this.certificateTitle]["@context"] = {};
-          let contextProperty = this.schemaContent._osConfig.credentialTemplate["@context"][1]["@context"][this.certificateTitle]["@context"];
+      //   fetch(jsonUrl)
+      //     .then(response => response.text())
+      //     .then(data => {
+      //     });
 
 
-          for (let i = 0; i < propertyData.length; i++) {
-            if (propertyData[i].type != 'object' && propertyData[i].type != 'array') {
-              if (propertyData[i].key != undefined) {
-                contextProperty[propertyData[i].key] = "schema:Text";
-                certTmpJson['_osConfig']['credentialTemplate']['credentialSubject'][contextProperty[propertyData[i].key]] = "{{" + contextProperty[propertyData[i].key] + "}}"
-              }
-            } else {
-              let stringKey = propertyData[i].propertyKey;
-              stringKey = stringKey.charAt(0).toLowerCase() + stringKey.slice(1);
-              contextProperty[stringKey] = {
-                "@id": "https://github.com/sunbird-specs/vc-specs#" + stringKey,
-                "@context": {
-                }
-              }
-              for (let j = 0; j < propertyData[i].data.length; j++) {
-                if (propertyData[i].data[j].type != 'object' && propertyData[i].data[j].type != 'array') {
-                  let keyName = propertyData[i].data[j].key;
+      // } else {
 
-                  let stringKey = propertyData[i].propertyKey;
-                  stringKey = stringKey.charAt(0).toLowerCase() + stringKey.slice(1);
-                  if (stringKey != undefined && keyName != undefined) {
+      //   certTmpJson['_osConfig']['credentialTemplate']['credentialSubject'] = {};
+        // certTmpJson['_osConfig']['credentialTemplate']['credentialSubject']["type"] = this.certificateTitle;
 
-                    contextProperty[stringKey]["@context"][keyName] = "schema:Text";
-                    certTmpJson['_osConfig']['credentialTemplate']['credentialSubject'][keyName] = "{{" + stringKey + "." + keyName + "}}"
-                  }
-                }
-              }
-            }
-          }
+        // if (this.schemaContent) {
+        //   let _self = this;
+        //   let propertyData = this.schemaContent.definitions.data ? this.schemaContent.definitions.data : this.schemaContent.definitions;
+        //   // this.schemaContent._osConfig.credentialTemplate["@context"][1]["@context"][this.certificateTitle]["@context"] = {};
+        //   let contextProperty = this.schemaContent._osConfig.credentialTemplate["@context"][1]["@context"][this.certificateTitle]["@context"];
+
+
+        //   for (let i = 0; i < propertyData.length; i++) {
+        //     if (propertyData[i].type != 'object' && propertyData[i].type != 'array') {
+        //       if (propertyData[i].key != undefined) {
+        //         contextProperty[propertyData[i].key] = "schema:Text";
+        //         // certTmpJson['_osConfig']['credentialTemplate']['credentialSubject'][propertyData[i].key] = "{{" + propertyData[i].data["title"] + "}}"
+        //       }
+        //     } else {
+        //       let stringKey = propertyData[i].propertyKey;
+        //       stringKey = stringKey.charAt(0).toLowerCase() + stringKey.slice(1);
+        //       contextProperty[stringKey] = {
+        //         "@id": "https://github.com/sunbird-specs/vc-specs#" + stringKey,
+        //         "@context": {
+        //         }
+        //       }
+        //       for (let j = 0; j < propertyData[i].data.length; j++) {
+        //         if (propertyData[i].data[j].type != 'object' && propertyData[i].data[j].type != 'array') {
+        //           let key = propertyData[i].data[j].key;
+        //           let keyName = propertyData[i].data[j].data["title"];
+
+        //           let stringKey = propertyData[i].propertyKey;
+        //           stringKey = stringKey.charAt(0).toLowerCase() + stringKey.slice(1);
+        //           if (stringKey != undefined && keyName != undefined) {
+
+        //             contextProperty[stringKey]["@context"][keyName] = "schema:Text";
+                    // certTmpJson['_osConfig']['credentialTemplate']['credentialSubject'][stringKey] = {}
+                    // certTmpJson['_osConfig']['credentialTemplate']['credentialSubject'][stringKey][key] = "{{" + stringKey + "." + keyName + "}}"
+              //     }
+              //   }
+              // }
+            // }
+          // }
 
 
           let temp = JSON.stringify(certTmpJson);
 
-        }
-      }
+        // }
+      // }
     }
   }
 

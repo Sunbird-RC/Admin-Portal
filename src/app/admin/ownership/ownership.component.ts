@@ -192,7 +192,8 @@ export class OwnershipComponent implements OnInit, OnChanges {
             if (nestedFields.hasOwnProperty(c)) {
               if (nestedFields[c].required) {
                 for (let k = 0; k < nestedFields[c].required.length; k++) {
-                  requiredProperties.push(nestedFields[c].required[k])
+                  let prop = c + '/' + nestedFields[c].required[k];
+                  requiredProperties.push(prop);
                 }
               }
             }
@@ -301,6 +302,9 @@ export class OwnershipComponent implements OnInit, OnChanges {
         } else {
           if (Object.keys(ownershipObj).length !== 0) {
             entitySchema["_osConfig"]["ownershipAttributes"].push(ownershipObj);
+            if(entitySchema["_osConfig"]["ownershipAttributes"].length > 0){
+              entitySchema["_osConfig"]["enableLogin"] = true;
+            }  
           }
           if (this.ownershipForm.value['issuerRole']) {
             entitySchema["_osConfig"]["roles"].push(this.ownershipForm.value['issuerRole'])
@@ -308,7 +312,6 @@ export class OwnershipComponent implements OnInit, OnChanges {
           if (this.ownershipForm.value['inviteRole']) {
             entitySchema["_osConfig"]["inviteRoles"].push(this.ownershipForm.value['inviteRole'])
           }
-
 
           let schemaOsid = this.useCaseSchema[i].osid;
           let payload = {

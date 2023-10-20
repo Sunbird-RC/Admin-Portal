@@ -16,16 +16,6 @@
           <input class="w-100 br-4 border border-light fs-14 p-3" placeholder="Enter Workflow name" type="text"
           required name="workflowname" formControlName="workflowname" />
         </div>
-        <div class="mb-3">
-
-          <span class="fs-12 fw-bold">{{'SELECT_ISSUANCE_SYSTEM' | translate}}</span><br />
-          <select name="issuanceSystem" id="issuanceSystem" class="w-25 br-4 border-1 border-light fs-14 p-3"
-          formControlName="issuancesystem" [ngModel]="workflowForm.value.workflowItems[workflowIndex].issuancesystem">
-          {{workflow | json}}
-          <option value="" disabled hidden selected>{{'SELECT_FIELD' | translate}}</option>
-          <option value="sunbird_rc_issuance_system">Sunbird RC issuance system</option>
-            </select>
-          </div>
           <div class="mb-3 d-flex">
             <div class="form-check">
               <input class="form-check-input" type="radio" [id]="'autoAttestation'+workflowIndex"

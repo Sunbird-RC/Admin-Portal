@@ -32,7 +32,7 @@
                 <div class="d-flex flex-justify-between py-1 px-4">
                    <div class="heading-2">{{'JSON_SCHEMA' | translate}}</div>
                 </div>
-                <advance-editor *ngIf="userJson" [jsonSchema]="userJson" (newItemEvent)="jsonSchemaData($event)"></advance-editor>
+                <advance-editor *ngIf="userJson" [jsonSchema]="userJson" (newItemEvent)="jsonSchemaData($event)" [schemaOsid]="schemaOsid"></advance-editor>
              </div>
           </div>
        </div>

@@ -4,7 +4,7 @@ import { AnyARecord } from 'dns';
 import { map } from 'rxjs/operators';
 import { GeneralService } from 'src/app/services/general/general.service';
 declare var grapesjs: any;
-import { TranslateService } from '@ngx-translate/core'; 
+import { TranslateService } from '@ngx-translate/core';
 
 import 'grapesjs-preset-webpage';
 import { JsonEditorComponent, JsonEditorOptions } from 'ang-jsoneditor';
@@ -48,12 +48,13 @@ export class EditTemplateComponent implements OnInit, OnDestroy {
   vcStep: string;
   isCreatingNewTemplate: boolean = true;
   certificateData: any;
+  credSubjData: void;
 
-  constructor(public router: Router, public route: ActivatedRoute, public toastMsg: ToastMessageService,public translate: TranslateService,
+  constructor(public router: Router, public route: ActivatedRoute, public toastMsg: ToastMessageService, public translate: TranslateService,
     public generalService: GeneralService, public schemaService: SchemaService) {
 
     this.editorOptions = new JsonEditorOptions()
-  
+
     this.editorOptions.mode = 'code';
     this.editorOptions.history = true;
     this.editorOptions.onChange = () => this.jsonEditor.get();
@@ -69,12 +70,12 @@ export class EditTemplateComponent implements OnInit, OnDestroy {
       localStorage.setItem('sampleData', JSON.stringify(this.sampleData));
     }
     if (localStorage.getItem('certificateTitle')) {
-    this.oldTemplateName = localStorage.getItem('certificateTitle');
-    this.isCreatingNewTemplate = false;
+      this.oldTemplateName = localStorage.getItem('certificateTitle');
+      this.isCreatingNewTemplate = false;
     }
     this.route.params.subscribe(params => {
       this.params = params;
-  
+
       if (this.params.hasOwnProperty('usecase')) {
         this.usecase = params.usecase;
         this.entityName = params.entity;
@@ -86,7 +87,7 @@ export class EditTemplateComponent implements OnInit, OnDestroy {
 
 
   async ngOnInit() {
-    
+
     this.route.params.subscribe(params => {
       this.params = params;
       if (this.params.hasOwnProperty('entity')) {
@@ -94,68 +95,68 @@ export class EditTemplateComponent implements OnInit, OnDestroy {
         this.usecase = params.usecase.toLowerCase();
       }
     });
-    
+
     this.schemaService.getEntitySchemaJSON().subscribe((data) => {
       let allSteps = data['usecase'][this.usecase]['steps'];
-      for(let i=0; i<allSteps.length; i++){
-        if(allSteps[i]['key'] === 'create-vc'){
+      for (let i = 0; i < allSteps.length; i++) {
+        if (allSteps[i]['key'] === 'create-vc') {
           this.vcStep = i.toString();
         }
       }
     })
-    
+
     await this.readHtmlSchemaContent(this.sampleData);
     this.grapesJSDefine();
     /* ------END-------------------------Advance Editor ----------------------- */
-    
+
   }  //onInit();
-  
-  
+
+
   grapesJSDefine() {
     this.editor = this.initializeEditor();
     this.editor.on('load', () => {
       var panelManager = this.editor.Panels;
-      
+
       panelManager.removePanel('devices-c');
       panelManager.removeButton('options', 'gjs-toggle-images');
       panelManager.removeButton('options', 'gjs-open-import-webpage');
       panelManager.removeButton('options', 'undo');
       const um = this.editor.UndoManager;
       um.clear();
-      
+
       const iconsOptions = document.querySelector('.gjs-pn-options');
       if (iconsOptions) {
         iconsOptions.classList.add('custom-icons-margin-right');
       }
-      
+
       const iconsViews = document.querySelector('.gjs-pn-views');
       if (iconsViews) {
         iconsViews.classList.add('custom-icons-margin-right');
       }
     })
-    
+
     this.editor.on('asset:add', () => {
       this.editor.runCommand('open-assets');
     });
-    
-    
+
+
     // This will execute once asset manager will be open
     this.editor.on("run:select-assets", function () {
       var dateNow = 'img-' + Date.now();
-      
+
       // Using below line i am changing the id of img tag on which user has clicked.
       this.editor.getSelected().setId(dateNow);
 
       // Store active asset manager image id and it's src
       localStorage.setItem('activeAssetManagerImageId', dateNow);
     })
-    
+
     const pn = this.editor.Panels;
     const panelViews = pn.addPanel({
       id: "views"
     });
-    
-    
+
+
     panelViews.get("buttons").add([
       {
         attributes: {
@@ -167,12 +168,12 @@ export class EditTemplateComponent implements OnInit, OnDestroy {
         id: "open-code"
       }
     ]);
-    
-    
+
+
     const panelOp1 = pn.addPanel({
       id: "options"
     });
-    
+
     panelOp1.get("buttons").add([
       {
         attributes: {
@@ -184,16 +185,16 @@ export class EditTemplateComponent implements OnInit, OnDestroy {
         id: "preview"
       }
     ]);
-    
-    
+
+
     /* ---------Start----------------------Advance Editor ----------------------- */
-    
-    
+
+
     const panelOp = pn.addPanel({
       id: "options"
     });
-    
-    
+
+
     let editPanel = null
     let self = this;
     pn.addButton('views', {
@@ -204,11 +205,11 @@ export class EditTemplateComponent implements OnInit, OnDestroy {
       command: {
         run: function (editor) {
           if (editPanel == null) {
-            
 
-            
+
+
             const editMenuDiv = document.createElement('div');
-            
+
             const arr = ['alpha', 'bravo', 'charlie', 'delta', 'echo', 'alpha', 'bravo', 'charlie', 'delta', 'echo', 'alpha', 'bravo', 'charlie', 'delta', 'echo'];
 
             const cardDiv = document.createElement('div');
@@ -224,15 +225,15 @@ export class EditTemplateComponent implements OnInit, OnDestroy {
             </div>
             <p style="color:white;font-size:12px"> <i class="fa fa-asterisk" style="color: #FFD965; font-size: 7px;" aria-hidden="true"></i>
             These propeties are mandatory to make it <org> complaint</p>`;
-            
+
             const cardBContainer = document.createElement('div');
             cardBContainer.className = 'card-body-container p-3';
             cardDiv.appendChild(cardBContainer);
-            
+
             // ul.setAttribute('id', 'theList');
             for (let i = 0; i <= self.propertyArr.length - 1; i++) {
               const cardBdiv = document.createElement('div');	// create li element.
-              
+
               if (self.propertyArr[i].require) {
                 cardBdiv.innerHTML = `<i class="fa fa-asterisk" style="color: red; font-size: 7px;" aria-hidden="true"></i> &nbsp` + self.propertyArr[i].propertyTag;
               } else {
@@ -242,50 +243,50 @@ export class EditTemplateComponent implements OnInit, OnDestroy {
               cardBdiv.setAttribute('style', 'padding-bottom: 10px; border-bottom: 2px solid #000');	// remove the bullets.
               cardBContainer.appendChild(cardBdiv);		// append li to ul.
             }
-            
+
 
 
             editMenuDiv.appendChild(cardDiv);
-            
+
 
 
             const panels = pn.getPanel('views-container')
             panels.set('appendContent', editMenuDiv).trigger('change:appendContent')
             editPanel = editMenuDiv;
-            
+
             const urlInputElemen = document.getElementById('advanceBtn');
             urlInputElemen.onclick = function () {
-              
-              
+
+
               // here is where you put your ajax logic
               self.editTemplate();
-              
-              
+
+
             };
           }
           editPanel.style.display = 'block';
-          
-          
-          
+
+
+
         },
         stop: function (editor) {
           if (editPanel != null) {
             editPanel.style.display = 'none'
           }
         }
-        
+
       }
     })
-    
+
   }
-  
+
   editTemplate() {
     this.schemaDiv = true;
     this.htmlDiv = false;
   }
-  
+
   private initializeEditor(): any {
-    
+
     return grapesjs.init({
       // Indicate where to init the editor. You can also pass an HTMLElement
       container: '#gjs',
@@ -318,9 +319,9 @@ export class EditTemplateComponent implements OnInit, OnDestroy {
           }
         },
         'gjs-preset-newsletter': {
-          
+
         }
-        
+
       },
 
       assetManager: {
@@ -339,24 +340,24 @@ export class EditTemplateComponent implements OnInit, OnDestroy {
         ]
       },
     });
-    
+
     var html = this.editor.getHtml();
   }
 
   dataChange() {
     window.location.reload();
   }
-  
+
   back() {
     history.back();    //this.router.navigate(['/certificate']);
     this.editor.runCommand('core:canvas-clear')
   }
-  
+
   backToHtmlEditor() {
     this.schemaDiv = false;
     this.htmlDiv = true;
   }
-  
+
   cancel() {
     localStorage.setItem('sampleData', '');
     this.router.navigate(['/dashboard']);
@@ -365,24 +366,22 @@ export class EditTemplateComponent implements OnInit, OnDestroy {
   async readHtmlSchemaContent(doc) {
     this.userHtml = doc;
     await this.generalService.getData('/Schema').subscribe((res) => {
-      for(let i =0; i < res.length; i++)
-      {
-        if(res[i]["name"] == this.entityName)
-        {
-          
+      for (let i = 0; i < res.length; i++) {
+        if (res[i]["name"] == this.entityName) {
+
           this.schemaOsid = res[i].osid;
           this.generalService.getData('/Schema/' + this.schemaOsid).subscribe((response) => {
             let data = JSON.parse(response['schema']);
             this.certificateTitle = response['name'];
-            this.userJson = response;              
+            this.userJson = response;
           });
-          
+
         }
-      
-          }
-         
-        });
-      
+
+      }
+
+    });
+
   }
 
   addCrtTemplateFields111(userJson) {
@@ -399,7 +398,7 @@ export class EditTemplateComponent implements OnInit, OnDestroy {
   getCrtTempFields(certificateSchema) {
     this.propertyArr = [];
     let temp = certificateSchema.definitions[this.certificateTitle].properties.hasOwnProperty('data') ? certificateSchema.definitions[this.certificateTitle].properties.data : certificateSchema.definitions[this.certificateTitle].properties;
-
+    let credSubj = certificateSchema._osConfig.hasOwnProperty('credentialTemplate') ? certificateSchema._osConfig.credentialTemplate : null;
 
     let required = certificateSchema.definitions[this.certificateTitle].required;
     let _self = this;
@@ -409,19 +408,31 @@ export class EditTemplateComponent implements OnInit, OnDestroy {
       if (temp[key].type == 'string' || temp[key].type == 'number') {
         propertyName = "{{credentialSubject." + key + "}}";
         let isRequire = required.includes(key) ? true : false;
-      
-        _self.propertyArr.push({ 'propertyTag': propertyName, 'require': isRequire });
 
+        _self.propertyArr.push({ 'propertyTag': propertyName, 'require': isRequire });
+        if(!certificateSchema._osConfig['credentialTemplate']['credentialSubject'].hasOwnProperty(key)){
+          certificateSchema._osConfig['credentialTemplate']['credentialSubject'][key] = "{{" + key + "}}";
+        }
 
       } else if (temp[key].type == 'object') {
+        let objKey = temp[key].label;
         let objPro = temp[key].properties;
         let objProReq = temp[key].required;
         Object.keys(objPro).forEach(function (key2) {
 
-          propertyName = "{{credentialSubject." + key2 + "}}";
+          propertyName = "{{credentialSubject." + objKey + "."+ key2 + "}}";
           let isRequire = objProReq.includes(key2) ? true : false;
-         
+
           _self.propertyArr.push({ 'propertyTag': propertyName, 'require': isRequire });
+          if(certificateSchema._osConfig['credentialTemplate']['credentialSubject'].hasOwnProperty(objKey)){
+            if(!certificateSchema._osConfig['credentialTemplate']['credentialSubject'][objKey].hasOwnProperty(key2)){
+            certificateSchema._osConfig['credentialTemplate']['credentialSubject'][objKey][key2]  = "{{" +objKey+ "."+ key2 + "}}";
+            }
+          }
+          if(!certificateSchema._osConfig['credentialTemplate']['credentialSubject'].hasOwnProperty(objKey)){
+            certificateSchema._osConfig['credentialTemplate']['credentialSubject'][objKey] ={};
+            certificateSchema._osConfig['credentialTemplate']['credentialSubject'][objKey][key2] = "{{" +objKey+ "."+ key2 + "}}";
+          }
         })
       } else if (temp[key].type == 'array') {
         propertyName = "{{#each credentialSubject." + key + "}} {{this}} {{/each}}";
@@ -429,8 +440,13 @@ export class EditTemplateComponent implements OnInit, OnDestroy {
       }
     });
 
+    Object.keys(credSubj).forEach(function (key) {
+      if (typeof credSubj[key] !== 'object') {
+        _self.propertyArr.push({ 'propertyTag': key, 'require': true });
+      }
+    });
+    this.credSubjData = certificateSchema;
     this.grapesJSDefine();
-
   }
 
   stringToHTML(str) {
@@ -445,96 +461,51 @@ export class EditTemplateComponent implements OnInit, OnDestroy {
     return str.replace(new RegExp(escapedFind, 'g'), replace);
   }
 
-  addCrtTemplateFields() {
-    let certTmpJson = (this.schemaContent) ? this.schemaContent : this.userJson;
-    certTmpJson = certTmpJson['_osConfig']['credentialTemplate'];
-    if (typeof (certTmpJson) == 'string') {
-      let jsonUrl = certTmpJson;
 
-      fetch(jsonUrl)
-        .then(response => response.text())
-        .then(data => {
-        });
-
-
-    } else {
-
-      certTmpJson = certTmpJson['credentialSubject'];
-   
-      if (this.schemaContent) {
-        let _self = this;
-        let propertyData = this.schemaContent.definitions[this.certificateTitle].properties;
-        let contextJson = this.schemaContent._osConfig.credentialTemplate["@context"][1]["@context"];
-        Object.keys(propertyData).forEach(function (key) {
-       
-          if (key != 'name') {
-            if (propertyData[key].type == 'string' || propertyData[key].type == 'number') {
-              certTmpJson[key] = "{{" + key + "}}";
-
-              contextJson[key] = {
-                "@id": "https://github.com/sunbird-specs/vc-specs#" + key,
-                "@context": {
-                  "name": "schema:Text"
-                }
-              }
-            } else if (propertyData[key].type == 'object') {
-              let objPro = propertyData[key].properties;
-              Object.keys(objPro).forEach(function (key2) {
-              
-                certTmpJson[key2] = "{{" + key + "." + key2 + "}}";
-              })
-            }
-          }
-        });
-
-        this.schemaContent['_osConfig']['credentialTemplate']['credentialSubject'] = certTmpJson;
-        this.schemaContent._osConfig.credentialTemplate["@context"][1]["@context"] = contextJson;
-      }
-    }
-  }
 
   async submit() {
     this.generalService.getData('/Schema/' + this.schemaOsid).subscribe((res) => {
-       let data = JSON.parse(res['schema']);
-       this.certificateTitle = res['name'];
-       this.userJson = data;
-       this.schemaContent = data;
-     
-     var htmlWithCss = this.editor.runCommand('gjs-get-inlined-html');
-     var parser = new DOMParser();
-     var htmlDoc = parser.parseFromString(htmlWithCss, 'text/html');
-     this.userHtml = htmlDoc.documentElement.innerHTML;
-  
-    const { vcTemplate, formData } = this.createVCTemplateAndFormData();
+      let data = JSON.parse(res['schema']);
+      this.certificateTitle = res['name'];
+      this.userJson = data;
+      this.schemaContent = data;
 
-     localStorage.setItem('schemaVc', JSON.stringify(vcTemplate));
+      var htmlWithCss = this.editor.runCommand('gjs-get-inlined-html');
+      var parser = new DOMParser();
+      var htmlDoc = parser.parseFromString(htmlWithCss, 'text/html');
+      this.userHtml = htmlDoc.documentElement.innerHTML;
 
-     this.generalService.postData('/Schema/' + this.schemaOsid + '/certificateTemplate/documents', formData).subscribe((res) => {
-      this.certificateData = res.documentLocations[0];     
+      const { vcTemplate, formData } = this.createVCTemplateAndFormData();
 
-      if(!this.oldTemplateName){
-        this.schemaContent._osConfig['certificateTemplates'][this.templateName] = 'minio://' + this.certificateData;
-       }
-       if(this.oldTemplateName){
-         delete this.schemaContent._osConfig['certificateTemplates'][this.oldTemplateName];
-         this.schemaContent._osConfig['certificateTemplates'][this.templateName] = 'minio://' + this.certificateData;
-       }
-       let result = this.schemaContent;
-       let payload = {
-         "schema": JSON.stringify(result)
-       }
-      
-      this.generalService.putData('/Schema/', this.schemaOsid, payload).subscribe((res) => {
-         this.router.navigate(['/create/' + this.vcStep + '/' + this.usecase + '/' + this.entityName]);
-       });
-     });
+      localStorage.setItem('schemaVc', JSON.stringify(vcTemplate));
+
+      this.generalService.postData('/Schema/' + this.schemaOsid + '/certificateTemplate/documents', formData).subscribe((res) => {
+        this.certificateData = res.documentLocations[0];
+
+        if (!this.oldTemplateName) {
+          this.schemaContent._osConfig['certificateTemplates'][this.templateName] = 'minio://' + this.certificateData;
+        }
+        if (this.oldTemplateName) {
+          delete this.schemaContent._osConfig['certificateTemplates'][this.oldTemplateName];
+          this.schemaContent._osConfig['certificateTemplates'][this.templateName] = 'minio://' + this.certificateData;
+        }
+        this.schemaContent._osConfig['credentialTemplate']['credentialSubject'] = this.credSubjData['_osConfig']['credentialTemplate']['credentialSubject'];
+        let result = this.schemaContent;
+        let payload = {
+          "schema": JSON.stringify(result)
+        }
+
+        this.generalService.putData('/Schema/', this.schemaOsid, payload).subscribe((res) => {
+          this.router.navigate(['/create/' + this.vcStep + '/' + this.usecase + '/' + this.entityName]);
+        });
+      });
     });
-   }
- 
-   createVCTemplateAndFormData(): { vcTemplate: any, formData: FormData } {
+  }
+
+  createVCTemplateAndFormData(): { vcTemplate: any, formData: FormData } {
     this.templateName = this.templateName.replace(/\s+/g, '');
     this.templateName = this.templateName.charAt(0).toUpperCase() + this.templateName.slice(1);
-  
+
     const vcTemplate = {
       [this.entityName]: {
         'name': this.templateName,
@@ -543,12 +514,12 @@ export class EditTemplateComponent implements OnInit, OnDestroy {
       },
       'title': this.usecase
     };
-  
+
     const fileObj = new File([this.userHtml], this.templateName + '.html');
 
     const formData = new FormData();
     formData.append("files", fileObj, fileObj.name);
-  
+
     return { vcTemplate, formData };
   }
 
@@ -580,7 +551,7 @@ export class EditTemplateComponent implements OnInit, OnDestroy {
     this.htmlDiv = true;
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.userHtml = '';
     this.editor.runCommand('core:canvas-clear');
   }

@@ -95,10 +95,10 @@
                         <p class="fs-14 text-grey-color">{{usecaseSchema[activeMenuNo]?.description}}</p>
                     </div>
                     <div *ngIf="!isShowJson && usecaseSchema[activeMenuNo]?.definitions?.data?.length">
-                        <button class="float-end fw-bold fs-14 btn bg-color-secondary submit-button color-sec"
+                        <!-- <button class="float-end fw-bold fs-14 btn bg-color-secondary submit-button color-sec"
                             (click)="showJson()" [disabled]="usecaseSchema[activeMenuNo]['status'] == 'PUBLISHED'">
                             <i class="fa fa-pencil-square-o" aria-hidden="true"></i> {{'JSON_SCHEMA' | translate}}
-                            </button>
+                            </button> -->
                     </div>
                 </div>
 

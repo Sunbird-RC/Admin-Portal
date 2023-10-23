@@ -4,7 +4,7 @@ import { Formio } from 'formiojs';
 import { TranslateService } from '@ngx-translate/core'; 
 import { editorConfig } from './advance-editor-config';
 import { JsonEditorComponent, JsonEditorOptions } from 'ang-jsoneditor';
-
+import { GeneralService } from 'src/app/services/general/general.service';
 import { Output, EventEmitter } from '@angular/core';
 
 @Component({
@@ -14,6 +14,7 @@ import { Output, EventEmitter } from '@angular/core';
 })
 export class AdvanceEditorComponent implements OnInit {
   @Input() jsonSchema;
+  @Input() schemaOsid;
   @ViewChild('json') jsonElement?: ElementRef;
   public editorOptions: JsonEditorOptions;
   public vcEditorOptions: JsonEditorOptions;
@@ -33,7 +34,10 @@ export class AdvanceEditorComponent implements OnInit {
   isShowLessJson = false;
   isShowLessVc = false;
   isVcString = false;
-  constructor(public translate: TranslateService) {
+  certificateTitle: any;
+  schemaContent: any;
+  
+  constructor(public translate: TranslateService, public generalService: GeneralService) {
     
     this.editorOptions = new JsonEditorOptions();
     this.editorOptions.mode = 'code';
@@ -91,7 +95,8 @@ export class AdvanceEditorComponent implements OnInit {
       this.vcFields = jsonFields['_osConfig']['credentialTemplate'];
     }
 
-    delete jsonFields['_osConfig']['credentialTemplate'];
+    // delete jsonFields['_osConfig']['credentialTemplate'];
+    this.vcFields = this.addCrtTemplateFields(jsonFields)
     this.jsonFields = jsonFields;
     this.jsonTitle = jsonFields['title'];
     let jsonSchema = jsonFields.definitions[this.jsonTitle].properties;
@@ -118,6 +123,81 @@ export class AdvanceEditorComponent implements OnInit {
       this.options.disabled.push(jsonFields.definitions[this.jsonTitle].required[j]);
     }
 
+  }
+
+  addCrtTemplateFields(credTempJson) {
+    this.schemaContent = credTempJson;
+    this.certificateTitle = credTempJson.title;
+    credTempJson['_osConfig']['credentialTemplate'] = {
+      "@context": [
+        "https://www.w3.org/2018/credentials/v1",
+        {
+          "@context": {
+            "@version": 1.1,
+            "@protected": true,
+            [this.certificateTitle]: {
+              "@id": "https://github.com/sunbird-specs/vc-specs#" + this.certificateTitle,
+              "@context": {
+                "id": "@id",
+                "@version": 1.1,
+                "@protected": true,
+              }
+            }
+          }
+        }
+      ],
+      "type": [
+        "VerifiableCredential"
+      ],
+      "issuanceDate": "2021-08-27T10:57:57.237Z",
+      "credentialSubject": {},
+      "issuer": "did:web:sunbirdrc.dev/vc/skill"
+    };
+
+    if (typeof (credTempJson) == 'string') {
+      let jsonUrl = credTempJson;
+
+      fetch(jsonUrl)
+        .then(response => response.text())
+        .then(data => {
+        });
+
+
+    } else {
+      credTempJson['_osConfig']['credentialTemplate']['credentialSubject'] = {};
+      credTempJson['_osConfig']['credentialTemplate']['credentialSubject']["type"] = this.certificateTitle;
+
+      if (this.schemaContent) {
+        let _self = this;
+        let properties = this.schemaContent.definitions[this.certificateTitle].properties;
+        for (const key in properties) {
+          if (properties.hasOwnProperty(key)) {
+            let propertyData = properties[key];
+            if (propertyData.type != 'object' && propertyData.type != 'array') {
+              credTempJson['_osConfig']['credentialTemplate']['credentialSubject'][key] = "{{" + propertyData["title"] + "}}"
+            } else {
+              let nestedPropertyData = properties[key].properties;
+              credTempJson['_osConfig']['credentialTemplate']['credentialSubject'][key] = {}
+              for (const keyName in nestedPropertyData) {
+                if (nestedPropertyData.hasOwnProperty(keyName)) {
+                  let fieldData = nestedPropertyData[keyName];
+                  if (fieldData.type != 'object' && fieldData.type != 'array') {
+                    credTempJson['_osConfig']['credentialTemplate']['credentialSubject'][key][keyName] = "{{" + key + "." + fieldData["title"] + "}}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    };
+    let payload = {
+      "schema": JSON.stringify(credTempJson)
+    };
+    this.generalService.putData('/Schema', this.schemaOsid, payload).subscribe((res) => {
+      console.log(res);
+    });
+    return credTempJson['_osConfig']['credentialTemplate'];
   }
 
   nastedJsonSep(jsonSchema, key, definationName) {

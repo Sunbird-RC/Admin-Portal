@@ -76,7 +76,24 @@ export class PublishComponent implements OnInit {
 
   showJson(i) {
     this.isShowJson = !this.isShowJson;
-    this.properties = this.publishData[i]['schema']; 
+    this.properties = this.removeSpacesFromKeys(this.publishData[i]['schema']);
+  }
+
+  removeSpacesFromKeys(obj: any): any {
+    if (typeof obj !== 'object' || obj === null) {
+      return obj; 
+    }  
+    if (Array.isArray(obj)) {
+      return obj.map((item) => this.removeSpacesFromKeys(item));
+    }
+    const result: any = {};
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        const newKey = key.replace(/\s/g, ''); 
+        result[newKey] = this.removeSpacesFromKeys(obj[key]);
+      }
+    }
+    return result;
   }
 
   showTable() {

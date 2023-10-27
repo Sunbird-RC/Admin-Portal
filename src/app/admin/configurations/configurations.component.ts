@@ -75,10 +75,10 @@ export class ConfigurationsComponent implements OnInit {
     if(schemaName == ''){
     this.router.navigateByUrl('/create/' + this.currentTab + '/' + this.usecase + '/' + this.entityKey);
     }
-    // if(schemaName !== ''){
-    //   this.entityKey = schemaName;
-    //   this.router.navigateByUrl('/create/' + this.currentTab + '/' + this.usecase + '/' + this.entityKey);
-    //   }
+    if(schemaName !== ''){
+      this.entityKey = schemaName;
+      this.router.navigateByUrl('/create/' + this.currentTab + '/' + this.usecase + '/' + this.entityKey);
+      }
 
   }
     
@@ -99,4 +99,3 @@ export class ConfigurationsComponent implements OnInit {
     }
   }
   
-

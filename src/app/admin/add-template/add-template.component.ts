@@ -64,7 +64,6 @@ export class AddTemplateComponent implements OnInit {
   vcStep: string;
   fromPreview: boolean;
   credTemp: any[];
-  flag: boolean;
   certificateName: any;
   constructor(public schemaService: SchemaService,
     public toastMsg: ToastMessageService,

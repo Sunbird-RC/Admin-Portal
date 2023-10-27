@@ -62,6 +62,10 @@ export class AddTemplateComponent implements OnInit {
   certificateTitle: any;
   schemaOsid: any;
   vcStep: string;
+  fromPreview: boolean;
+  credTemp: any[];
+  flag: boolean;
+  certificateName: any;
   constructor(public schemaService: SchemaService,
     public toastMsg: ToastMessageService,
     private route: ActivatedRoute,
@@ -72,21 +76,18 @@ export class AddTemplateComponent implements OnInit {
     public translate: TranslateService,
     public router: Router) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
 
     this.getDocument();
     this.route.queryParams.subscribe(params => {
       this.fromEdit = params['fromEdit'] === 'true';
       this.certificateIndex = +params['certificateIndex'];
-
+      this.fromPreview = params['fromPreview'] === 'true';
+      this.certificateName = params['certificateName'];
     });
     if (this.fromEdit) {
       this.previewScreen();
     }
-    // this.generalService.getData('/Issuer').subscribe((res) => {
-    //   console.log(res);
-    //   this.issuerOsid = res[0].osid;
-    // });
 
     this.activeRoute.params.subscribe(params => {
       this.params = params;
@@ -98,16 +99,45 @@ export class AddTemplateComponent implements OnInit {
       }
       this.schemaService.getEntitySchemaJSON().subscribe((data) => {
         let allSteps = data['usecase'][this.usecase]['steps'];
-        for(let i=0; i<allSteps.length; i++){
-          if(allSteps[i]['key'] === 'create-vc'){
+        for (let i = 0; i < allSteps.length; i++) {
+          if (allSteps[i]['key'] === 'create-vc') {
             this.vcStep = i.toString();
           }
         }
       })
     });
 
+    if (this.fromPreview) {
+      await this.getCertTemplate();
+      await this.previewScreen();
+    }
   }
 
+  async getCertTemplate() {
+    this.credTemp = [];
+  
+    const res = await this.generalService.getData('/Schema').toPromise(); 
+    for (let i = 0; i < res.length; i++) {
+      if (res[i]["name"] === this.entityName) {
+        const data = JSON.parse(res[i]['schema']);
+        const certificateTemplate = data["_osConfig"]["certificateTemplates"];
+  
+        for (const k of Object.keys(certificateTemplate)) {
+          const CertTitle = k;
+          const certVal = certificateTemplate[k];
+          const c = certVal.toString();
+          const d = c.split("Schema/");
+  
+          const getHtml = await this.generalService.getText('/Schema/' + d[1]).toPromise();
+  
+          this.credTemp.push({
+            "title": CertTitle,
+            "html": getHtml,
+          });
+        }
+      }
+    }
+  }
 
   dataChange() {
     window.location.reload();
@@ -119,37 +149,21 @@ export class AddTemplateComponent implements OnInit {
   }
 
   previewScreen() {
-    // console.log({ doc });
-    // this.sampleData = doc;
-
-
-    // fetch(doc.schemaUrl)
-    //   .then(response => response.text())
-    //   .then(data => {
-    //     this.schemaContent = data;
-    //     this.userJson = data;
-    //     // Do something with your data
-    //     console.log(this.userJson);
-    //   });
-
-    // fetch(doc.certificateUrl)
-    //   .then(response => response.text())
-    //   .then(data => {
-    //     this.certificateContent = data;
-    //     this.userHtml = data;
-    //     this.injectHTML();
-    //   });
-
-    //  this.isPreview = true;
-    //  localStorage.setItem('isPreview', 'yes');
-
-    if (this.fromEdit && this.certificateIndex !== undefined) {
+    if (this.fromEdit || this.fromPreview && this.certificateIndex !== undefined) {
       const credTemp = this.generalService.getCertificateData();
-      const certificateData = credTemp[this.certificateIndex]['html'];
-      this.certificateTitle = credTemp[this.certificateIndex]['title'];
+      if(this.certificateName){
+        for(let i=0; i < this.credTemp.length; i++){
+          if(this.credTemp[i].title == this.certificateName){
+            this.certificateIndex = i;
+            break;
+          }
+        }
+      }
+      const certificateData = credTemp ? credTemp[this.certificateIndex]['html'] : this.credTemp[this.certificateIndex]['html'];
+      this.certificateTitle = credTemp ? credTemp[this.certificateIndex]['title'] : this.credTemp[this.certificateIndex]['title'];
       this.userHtml = certificateData;
     }
-    if (!this.fromEdit) {
+    if (!this.fromEdit && !this.fromPreview) {
       this.userHtml = `<html lang="en">
     <head>
       <style>

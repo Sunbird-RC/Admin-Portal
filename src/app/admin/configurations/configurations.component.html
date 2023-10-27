@@ -74,8 +74,8 @@
             
               <p class="fs-16 fw-bold">{{ item?.name }}</p>
               <div class="d-flex align-items-center" *ngFor="let certName of item?.schema?._osConfig?.certificateTemplates | keyvalue">
-               
-                <img src="{{imgUrl}}" type="button" class="float-left mr-2  img16" alt="" (click)="addVC(item?.name)">
+                <a id="previewLink" [routerLink]="['/add-template', usecase, item?.name]" [queryParams]="{ fromPreview: true, certificateName: certName.key }"class="ml-1">
+                <img src="{{imgUrl}}" type="button" class="float-left mr-2  img16" alt="" ></a>
                 <span class="fs-14 fw-bold" >
                   {{certName.key}}
                 </span>

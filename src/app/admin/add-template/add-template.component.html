@@ -16,7 +16,7 @@
         </form> -->
 
         <div class="row d-flex">
-            <div class="col-12 col-sm-4 card h-card " *ngIf="!fromEdit">
+            <div class="col-12 col-sm-4 card h-card " *ngIf="!fromEdit &&  !fromPreview">
                 <!-- <form [formGroup]="form2" (ngSubmit)="submit()" *ngIf="fields">
                             <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form2"></formly-form>
                         </form> -->
@@ -90,11 +90,11 @@
              
 
             </div>
-            <div class=" col-12 col-sm-8 p-sm-0" *ngIf="userHtml" [ngClass]="{'col-sm-12': fromEdit}">
+            <div class=" col-12 col-sm-8 p-sm-0" *ngIf="userHtml" [ngClass]="{'col-sm-12': fromEdit || fromPreview}">
                 <div class="card">
                     <div class="d-flex justify-content-between card-body px-4 py-2">
                         <div class="heading-2">{{'PREVIEW' | translate}}</div>
-                        <div>
+                        <div *ngIf="fromEdit">
                             <button class="float-end heading-3 btn bg-color-secondary  color-sec fw-bold submit-button" data-toggle="modal" data-target="#deleteDocument" *ngIf="fromEdit"><i
                                 class="fa fa-trash" aria-hidden="true"></i> {{'DELETE_TEMPLATE' | translate}}</button> &nbsp;
 

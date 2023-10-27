@@ -90,6 +90,12 @@ export class ConfigurationsComponent implements OnInit {
         this.router.navigateByUrl('/create/0' + '/' + this.usecase + '/' + this.entityKey);
       }
     }
+
+    previewCertificate(){
+      const anchorTag = document.getElementById('previewLink');
+      if (anchorTag) {
+        anchorTag.click();
+      }
+    }
   }
   
-
